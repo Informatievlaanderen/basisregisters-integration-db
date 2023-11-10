@@ -1,0 +1,38 @@
+framework: net6.0
+strategy: min
+source https://api.nuget.org/v3/index.json
+
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.5
+
+// MISSING ASSEMBLY REFERENCES
+nuget Microsoft.IdentityModel.Tokens 6.25.1
+nuget Microsoft.IdentityModel.Protocols 6.25.1
+nuget Microsoft.IdentityModel.Logging 6.25.1
+nuget Microsoft.IdentityModel.Abstractions 6.25.1
+nuget Microsoft.Identity.Client 4.57.0
+nuget IdentityModel 6.0.0
+
+
+// PRODUCTION STUFF
+nuget Microsoft.Extensions.Configuration 6.0.1
+nuget Microsoft.Extensions.Configuration.CommandLine 6.0.0
+nuget Microsoft.Extensions.Configuration.FileExtensions 6.0.0
+nuget Microsoft.Extensions.Configuration.EnvironmentVariables 6.0.1
+
+nuget NetTopologySuite 2.4.0
+nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
+
+nuget Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite 6.0.3
+nuget Microsoft.EntityFrameworkCore.Design 6.0.3
+
+nuget GeoJSON.NET 1.2.19
+
+nuget Microsoft.NET.Test.Sdk 17.3.2
+nuget Microsoft.NET.StringTools 17.3.2
+nuget Microsoft.TestPlatform.TestHost 17.3.2
+nuget Microsoft.NET.Test.Sdk 17.3.2
+nuget Microsoft.NETCore.Platforms 6.0.6
+
+// BUILD STUFF
+nuget SourceLink.Embed.AllSourceFiles 2.8.3 copy_local: true
+nuget SourceLink.Copy.PdbFiles 2.8.3 copy_local: true

@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C2F8FF63-7A48-4179-A720-86206C42F496}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C63AF54F-DF0D-4ED0-812A-020FC555B0DC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Basisregisters.Integration.Db.sln.DotSettings = Basisregisters.Integration.Db.sln.DotSettings
+		global.json = global.json
+		package.json = package.json
+		paket.dependencies = paket.dependencies
+		README.md = README.md
+		SEMVER.md = SEMVER.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.Integration.Db.Schema", "src\Basisregisters.Integration.Db.Schema\Basisregisters.Integration.Db.Schema.csproj", "{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Debug|x64.Build.0 = Debug|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Debug|x86.Build.0 = Debug|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Release|x64.ActiveCfg = Release|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Release|x64.Build.0 = Release|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Release|x86.ActiveCfg = Release|Any CPU
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3E0A522-3EBD-4971-B1AF-B7C3527FE4E3} = {C2F8FF63-7A48-4179-A720-86206C42F496}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2EB87445-E263-4E1E-89CC-3839170028E5}
+	EndGlobalSection
+EndGlobal
