@@ -12,25 +12,30 @@ nuget Microsoft.IdentityModel.Abstractions 6.25.1
 nuget Microsoft.Identity.Client 4.57.0
 nuget IdentityModel 6.0.0
 
-
-// PRODUCTION STUFF
+// MICROSOFT EXTENSIONS
 nuget Microsoft.Extensions.Configuration 6.0.1
 nuget Microsoft.Extensions.Configuration.CommandLine 6.0.0
+nuget Microsoft.Extensions.DependencyInjection.Abstractions 6.0.0
 nuget Microsoft.Extensions.Configuration.FileExtensions 6.0.0
+nuget Microsoft.Extensions.Configuration.Json 6.0.0
 nuget Microsoft.Extensions.Configuration.EnvironmentVariables 6.0.1
 
+nuget Microsoft.EntityFrameworkCore.Design 6.0.0
+
+// ENTITY FRAMEWORK
 nuget NetTopologySuite 2.4.0
+nuget Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite 6.0.22
+nuget Npgsql.EntityFrameworkCore.PostgreSQL 6.0.22
+nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
+nuget Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime 6.0.22
+
+// GEO
 nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
-
-nuget Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite 6.0.3
-nuget Microsoft.EntityFrameworkCore.Design 6.0.3
-
 nuget GeoJSON.NET 1.2.19
 
-nuget Microsoft.NET.Test.Sdk 17.3.2
-nuget Microsoft.NET.StringTools 17.3.2
-nuget Microsoft.TestPlatform.TestHost 17.3.2
-nuget Microsoft.NET.Test.Sdk 17.3.2
+//nuget Microsoft.NET.Test.Sdk 17.3.1
+nuget Microsoft.NET.StringTools 17.3.1
+//nuget Microsoft.TestPlatform.TestHost 17.3.1
 nuget Microsoft.NETCore.Platforms 6.0.6
 
 // BUILD STUFF
