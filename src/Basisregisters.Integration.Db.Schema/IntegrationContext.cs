@@ -5,13 +5,14 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
+    using Models;
 
     public class IntegrationContext : DbContext
     {
         public const string Schema = "Integration";
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
 
-        public DbSet<Municipalities> Municipalities { get; set; }
+        public DbSet<Municipality> Municipalities { get; set; }
 
         public IntegrationContext() { }
 
