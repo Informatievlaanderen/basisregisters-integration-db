@@ -3,6 +3,7 @@ using System;
 using Basisregisters.IntegrationDb.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
     [DbContext(typeof(IntegrationContext))]
-    partial class IntegrationContextModelSnapshot : ModelSnapshot
+    [Migration("20231201120000_add_views")]
+    partial class add_views
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,577 +37,10 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .HasColumnType("text");
 
                     b.Property<Geometry>("Geometry")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("geometry")
-                        .HasComputedColumnSql("ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", true);
-
-                    b.Property<string>("GeometryGml")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HouseNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool?>("IsOfficiallyAssigned")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NisCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PositionMethod")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PositionSpecification")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("StreetNamePersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("PersistentLocalId");
-
-                    b.HasIndex("BoxNumber");
-
-                    b.HasIndex("Geometry");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Geometry"), "GIST");
-
-                    b.HasIndex("HouseNumber");
-
-                    b.HasIndex("IsRemoved");
-
-                    b.HasIndex("NisCode");
-
-                    b.HasIndex("PersistentLocalId");
-
-                    b.HasIndex("PostalCode");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("StreetNamePersistentLocalId");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("Addresses", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Building", b =>
-                {
-                    b.Property<int>("PersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.Property<Geometry>("Geometry")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("geometry")
-                        .HasComputedColumnSql("ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", true);
-
-                    b.Property<string>("GeometryGml")
-                        .HasColumnType("text");
-
-                    b.Property<string>("GeometryMethod")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("PersistentLocalId");
-
-                    b.HasIndex("Geometry");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Geometry"), "GIST");
-
-                    b.HasIndex("IsRemoved");
-
-                    b.HasIndex("PersistentLocalId");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("Buildings", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.BuildingUnit", b =>
-                {
-                    b.Property<int>("PersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Addresses")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("BuildingPersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Function")
-                        .HasColumnType("text");
-
-                    b.Property<Geometry>("Geometry")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("geometry")
-                        .HasComputedColumnSql("ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", true);
-
-                    b.Property<string>("GeometryGml")
-                        .HasColumnType("text");
-
-                    b.Property<string>("GeometryMethod")
-                        .HasColumnType("text");
-
-                    b.Property<bool?>("HasDeviation")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("PersistentLocalId");
-
-                    b.HasIndex("Geometry");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Geometry"), "GIST");
-
-                    b.HasIndex("IsRemoved");
-
-                    b.HasIndex("PersistentLocalId");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("BuildingUnits", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Municipality", b =>
-                {
-                    b.Property<int>("NisCode")
-                        .HasColumnType("integer");
-
-                    b.Property<bool?>("FacilityLanguageDutch")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("FacilityLanguageEnglish")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("FacilityLanguageFrench")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("FacilityLanguageGerman")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("NameDutch")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameEnglish")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameFrench")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameGerman")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<bool?>("OfficialLanguageDutch")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("OfficialLanguageEnglish")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("OfficialLanguageFrench")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("OfficialLanguageGerman")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("NisCode");
-
-                    b.HasIndex("IsRemoved");
-
-                    b.HasIndex("NameDutch");
-
-                    b.HasIndex("NameEnglish");
-
-                    b.HasIndex("NameFrench");
-
-                    b.HasIndex("NameGerman");
-
-                    b.HasIndex("NisCode");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("Municipalities", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Parcel", b =>
-                {
-                    b.Property<string>("CaPaKey")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Addresses")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("CaPaKey");
-
-                    b.HasIndex("CaPaKey");
-
-                    b.HasIndex("IsRemoved");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("Parcels", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.PostInfo", b =>
-                {
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("NisCode")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PostalNameDutch")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostalNameEnglish")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostalNameFrench")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostalNameGerman")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("PostalCode");
-
-                    b.HasIndex("NisCode");
-
-                    b.HasIndex("PostalCode");
-
-                    b.HasIndex("PostalNameDutch");
-
-                    b.HasIndex("PostalNameEnglish");
-
-                    b.HasIndex("PostalNameFrench");
-
-                    b.HasIndex("PostalNameGerman");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("PostInfo", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.RoadSegment", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("AccessRestrictionDutchName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("AccessRestrictionId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("BeginRoadNodeId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CategoryDutchName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("EndRoadNodeId")
-                        .HasColumnType("integer");
-
-                    b.Property<Geometry>("GeometryAsHex")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("geometry")
-                        .HasComputedColumnSql("ST_AsHEXEWKB(ST_GeomFromText(\"GeometryAsWkt\"));", true);
-
-                    b.Property<string>("GeometryAsWkt")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("GeometrySrid")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("GeometryVersion")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset?>("LastChangedTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LeftSideMunicipalityId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LeftSideMunicipalityNisCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LeftSideStreetName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("LeftSideStreetNameId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("MaintainerId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MaintainerName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MethodDutchName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("MethodId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("MorphologyDutchName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("MorphologyId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Organization")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RecordingDate")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Removed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("RightSideMunicipalityId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RightSideMunicipalityNisCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RightSideStreetName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("RightSideStreetNameId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("RoadSegmentVersion")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("StatusDutchName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("StreetNameCachePosition")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset?>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("TransactionId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Version")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GeometryAsHex");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("GeometryAsHex"), "GIST");
-
-                    b.HasIndex("MorphologyId");
-
-                    b.HasIndex("StreetNameCachePosition");
-
-                    b.ToTable("RoadSegments", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.StreetName", b =>
-                {
-                    b.Property<int>("PersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("HomonymAdditionDutch")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HomonymAdditionEnglish")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HomonymAdditionFrench")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HomonymAdditionGerman")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("NameDutch")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameEnglish")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameFrench")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameGerman")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Namespace")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("NisCode")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PuriId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("VersionString")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("VersionTimestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("PersistentLocalId");
-
-                    b.HasIndex("IsRemoved");
-
-                    b.HasIndex("NameDutch");
-
-                    b.HasIndex("NameEnglish");
-
-                    b.HasIndex("NameFrench");
-
-                    b.HasIndex("NameGerman");
-
-                    b.HasIndex("NisCode");
-
-                    b.HasIndex("PersistentLocalId");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VersionTimestamp");
-
-                    b.ToTable("StreetNames", "Integration");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ActiveHouseNumberWithoutLinkedParcel", b =>
-                {
-                    b.Property<string>("BoxNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("text");
-
-                    b.Property<Geometry>("Geometry")
                         .IsRequired()
-                        .HasColumnType("geometry");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("geometry")
+                        .HasComputedColumnSql("ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", true);
 
                     b.Property<string>("GeometryGml")
                         .IsRequired()
@@ -629,9 +64,6 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PersistentLocalId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("PositionMethod")
                         .IsRequired()
                         .HasColumnType("text");
@@ -651,8 +83,9 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("StreetNamePersistentLocalId")
-                        .HasColumnType("integer");
+                    b.Property<string>("StreetNamePersistentLocalId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("VersionString")
                         .IsRequired()
@@ -661,9 +94,398 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<DateTimeOffset>("VersionTimestamp")
                         .HasColumnType("timestamp with time zone");
 
-                    b.ToView("ActiveHouseNumberWithoutLinkedParcel", "Integration");
+                    b.HasKey("PersistentLocalId");
 
-                    b.ToSqlQuery("select\r\n                                \"PersistentLocalId\"\r\n                                ,\"NisCode\"\r\n                                ,\"PostalCode\"\r\n                                ,\"StreetNamePersistentLocalId\"\r\n                                ,\"Status\"\r\n                                ,\"HouseNumber\"\r\n                                ,\"BoxNumber\"\r\n                                ,\"FullName\"\r\n                                ,\"GeometryGml\"\r\n                                ,\"Geometry\"\r\n                                ,\"PositionMethod\"\r\n                                ,\"PositionSpecification\"\r\n                                ,\"IsOfficiallyAssigned\"\r\n                                ,\"IsRemoved\"\r\n                                ,\"PuriId\"\r\n                                ,\"Namespace\"\r\n                                ,\"VersionString\"\r\n                                ,\"VersionTimestamp\"\r\n                            FROM \"Integration\".\"VIEW_ActiveHouseNumberWithoutLinkedParcel\";");
+                    b.HasIndex("BoxNumber");
+
+                    b.HasIndex("Geometry");
+
+                    b.HasIndex("HouseNumber");
+
+                    b.HasIndex("IsRemoved");
+
+                    b.HasIndex("NisCode");
+
+                    b.HasIndex("PostalCode");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("StreetNamePersistentLocalId");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("Addresses", "Integration");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Building", b =>
+                {
+                    b.Property<int>("PersistentLocalId")
+                        .HasColumnType("integer");
+
+                    b.Property<Geometry>("Geometry")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("geometry")
+                        .HasComputedColumnSql("ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", true);
+
+                    b.Property<string>("GeometryGml")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("GeometryMethod")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Namespace")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PuriId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("VersionTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("PersistentLocalId");
+
+                    b.HasIndex("Geometry");
+
+                    b.HasIndex("IsRemoved");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("Buildings", "Integration");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.BuildingUnit", b =>
+                {
+                    b.Property<int>("PersistentLocalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Addresses")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("BuildingPersistentLocalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Function")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Geometry>("Geometry")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("geometry")
+                        .HasComputedColumnSql("ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", true);
+
+                    b.Property<string>("GeometryGml")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("GeometryMethod")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("HasDeviation")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Namespace")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PuriId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("VersionTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("PersistentLocalId");
+
+                    b.HasIndex("Geometry");
+
+                    b.HasIndex("IsRemoved");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("BuildingUnits", "Integration");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Municipality", b =>
+                {
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("FacilityLanguageDutch")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("FacilityLanguageEnglish")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("FacilityLanguageFrench")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("FacilityLanguageGerman")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("NameDutch")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameEnglish")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameFrench")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameGerman")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Namespace")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("OfficialLanguageDutch")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OfficialLanguageEnglish")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OfficialLanguageFrench")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OfficialLanguageGerman")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PuriId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("VersionTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("NisCode");
+
+                    b.HasIndex("IsRemoved");
+
+                    b.HasIndex("NameDutch");
+
+                    b.HasIndex("NameEnglish");
+
+                    b.HasIndex("NameFrench");
+
+                    b.HasIndex("NameGerman");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("Municipalities", "Integration");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Parcel", b =>
+                {
+                    b.Property<string>("CaPaKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Addresses")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Namespace")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PuriId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("VersionTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("CaPaKey");
+
+                    b.HasIndex("IsRemoved");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("Parcels", "Integration");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.PostInfo", b =>
+                {
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Namespace")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PostalNameDutch")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PostalNameFrench")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PostalNameGerman")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PuriId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("VersionTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("PostalCode");
+
+                    b.HasIndex("NisCode");
+
+                    b.HasIndex("PostalNameDutch");
+
+                    b.HasIndex("PostalNameFrench");
+
+                    b.HasIndex("PostalNameGerman");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("PostInfo", "Integration");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.StreetName", b =>
+                {
+                    b.Property<int>("PersistentLocalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HomonymAdditionDutch")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("HomonymAdditionFrench")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("HomonymAdditionGerman")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("NameDutch")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameFrench")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameGerman")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Namespace")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PuriId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("VersionTimestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("PersistentLocalId");
+
+                    b.HasIndex("IsRemoved");
+
+                    b.HasIndex("NameDutch");
+
+                    b.HasIndex("NameFrench");
+
+                    b.HasIndex("NameGerman");
+
+                    b.HasIndex("NisCode");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("VersionTimestamp");
+
+                    b.ToTable("StreetNames", "Integration");
                 });
 
             modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.AddressesLinkedToMultipleBuildingUnits", b =>
@@ -679,42 +501,7 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasIndex("PersistentLocalId");
-
-                    b.HasIndex("Status");
-
                     b.ToView("AddressesLinkedToMultipleBuildingUnits", "Integration");
-
-                    b.ToSqlQuery("select \"PersistentLocalId\", \"FullName\", \"Status\" FROM \"Integration\".\"VIEW_AddressesLinkedToMultipleBuildingUnits\"; ");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.BuildingUnitAddressRelations", b =>
-                {
-                    b.Property<string>("AddressId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("PersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.ToView("BuildingUnitAddressRelations", "Integration");
-
-                    b.ToSqlQuery("select \"PersistentLocalId\", \"AddressId\" FROM \"Integration\".\"VIEW_BuildingUnitAddressRelations\"; ");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ParcelAddressRelations", b =>
-                {
-                    b.Property<string>("AddressId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CaPaKey")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.ToView("ParcelAddressRelations", "Integration");
-
-                    b.ToSqlQuery("select \"CaPaKey\", \"AddressId\" FROM \"Integration\".\"VIEW_ParcelAddressRelations\"; ");
                 });
 
             modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ParcelsLinkedToMultipleHouseNumbers", b =>
@@ -723,17 +510,14 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("CaPaKey")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("CaPaKey")
+                        .HasColumnType("integer");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.ToView("ParcelsLinkedToMultipleHouseNumbers", "Integration");
-
-                    b.ToSqlQuery("select \"CaPaKey\", \"FullName\", \"Addresses\" FROM \"Integration\".\"VIEW_ParcelsLinkedToMultipleHouseNumbers\"; ");
                 });
 #pragma warning restore 612, 618
         }

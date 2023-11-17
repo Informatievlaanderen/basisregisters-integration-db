@@ -7,28 +7,29 @@
     public sealed class Municipality
     {
         public int NisCode { get; set; }
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
-        public bool OfficialLanguageDutch { get; set; }
-        public bool OfficialLanguageFrench { get; set; }
-        public bool OfficialLanguageGerman { get; set; }
-        public bool OfficialLanguageEnglish { get; set; }
+        public bool? OfficialLanguageDutch { get; set; }
+        public bool? OfficialLanguageFrench { get; set; }
+        public bool? OfficialLanguageGerman { get; set; }
+        public bool? OfficialLanguageEnglish { get; set; }
 
-        public bool FacilityLanguageDutch { get; set; }
-        public bool FacilityLanguageFrench { get; set; }
-        public bool FacilityLanguageGerman { get; set; }
-        public bool FacilityLanguageEnglish { get; set; }
+        public bool? FacilityLanguageDutch { get; set; }
+        public bool? FacilityLanguageFrench { get; set; }
+        public bool? FacilityLanguageGerman { get; set; }
+        public bool? FacilityLanguageEnglish { get; set; }
 
         public string? NameDutch { get; set; }
         public string? NameFrench { get; set; }
         public string? NameGerman { get; set; }
         public string? NameEnglish { get; set; }
-
-        public string PuriId { get; set; }
-        public string Namespace { get; set; }
-        public string VerionString { get; set; }
-        public DateTimeOffset VersionTimestamp { get; set; }
         public bool IsRemoved { get; set; }
+
+
+        public string? PuriId { get; set; }
+        public string? Namespace { get; set; }
+        public string? VersionString { get; set; }
+        public DateTimeOffset? VersionTimestamp { get; set; }
 
         public Municipality() { }
     }
@@ -44,6 +45,7 @@
             builder.Property(x => x.NisCode)
                 .ValueGeneratedNever();
 
+            builder.HasIndex(x => x.NisCode);
             builder.HasIndex(x => x.VersionTimestamp);
             builder.HasIndex(x => x.NameDutch);
             builder.HasIndex(x => x.NameFrench);

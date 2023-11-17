@@ -19,26 +19,23 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     PersistentLocalId = table.Column<int>(type: "integer", nullable: false),
-                    NisCode = table.Column<int>(type: "integer", nullable: false),
+                    NisCode = table.Column<string>(type: "text", nullable: true),
                     PostalCode = table.Column<string>(type: "text", nullable: true),
-                    StreetNamePersistentLocalId = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    HouseNumber = table.Column<string>(type: "text", nullable: false),
+                    StreetNamePersistentLocalId = table.Column<int>(type: "integer", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    HouseNumber = table.Column<string>(type: "text", nullable: true),
                     BoxNumber = table.Column<string>(type: "text", nullable: true),
-                    FullNameDutch = table.Column<string>(type: "text", nullable: true),
-                    FullNameFrench = table.Column<string>(type: "text", nullable: true),
-                    FullNameGerman = table.Column<string>(type: "text", nullable: true),
-                    FullNameEnglish = table.Column<string>(type: "text", nullable: true),
-                    GeometryGml = table.Column<string>(type: "text", nullable: false),
-                    Geometry = table.Column<Geometry>(type: "geometry", nullable: false, computedColumnSql: "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", stored: true),
-                    PositionMethod = table.Column<string>(type: "text", nullable: false),
-                    PositionSpecification = table.Column<string>(type: "text", nullable: false),
-                    IsOfficiallyAssigned = table.Column<bool>(type: "boolean", nullable: false),
-                    PuriId = table.Column<string>(type: "text", nullable: false),
-                    Namespace = table.Column<string>(type: "text", nullable: false),
-                    VerionString = table.Column<string>(type: "text", nullable: false),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false)
+                    FullName = table.Column<string>(type: "text", nullable: true),
+                    GeometryGml = table.Column<string>(type: "text", nullable: true),
+                    Geometry = table.Column<Geometry>(type: "geometry", nullable: true, computedColumnSql: "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", stored: true),
+                    PositionMethod = table.Column<string>(type: "text", nullable: true),
+                    PositionSpecification = table.Column<string>(type: "text", nullable: true),
+                    IsOfficiallyAssigned = table.Column<bool>(type: "boolean", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,15 +48,15 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     PersistentLocalId = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    GeometryMethod = table.Column<string>(type: "text", nullable: false),
-                    GeometryGml = table.Column<string>(type: "text", nullable: false),
-                    Geometry = table.Column<Geometry>(type: "geometry", nullable: false, computedColumnSql: "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", stored: true),
-                    PuriId = table.Column<string>(type: "text", nullable: false),
-                    Namespace = table.Column<string>(type: "text", nullable: false),
-                    VerionString = table.Column<string>(type: "text", nullable: false),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false)
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    GeometryMethod = table.Column<string>(type: "text", nullable: true),
+                    GeometryGml = table.Column<string>(type: "text", nullable: true),
+                    Geometry = table.Column<Geometry>(type: "geometry", nullable: true, computedColumnSql: "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", stored: true),
+                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,18 +69,19 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     PersistentLocalId = table.Column<int>(type: "integer", nullable: false),
-                    BuildingPersistentLocalId = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    Function = table.Column<string>(type: "text", nullable: false),
-                    GeometryMethod = table.Column<string>(type: "text", nullable: false),
-                    GeometryGml = table.Column<string>(type: "text", nullable: false),
-                    Geometry = table.Column<Geometry>(type: "geometry", nullable: false, computedColumnSql: "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", stored: true),
-                    HasDeviation = table.Column<bool>(type: "boolean", nullable: false),
-                    PuriId = table.Column<string>(type: "text", nullable: false),
-                    Namespace = table.Column<string>(type: "text", nullable: false),
-                    VerionString = table.Column<string>(type: "text", nullable: false),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false)
+                    BuildingPersistentLocalId = table.Column<int>(type: "integer", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    Function = table.Column<string>(type: "text", nullable: true),
+                    GeometryMethod = table.Column<string>(type: "text", nullable: true),
+                    GeometryGml = table.Column<string>(type: "text", nullable: true),
+                    Addresses = table.Column<string>(type: "text", nullable: true),
+                    Geometry = table.Column<Geometry>(type: "geometry", nullable: true, computedColumnSql: "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ", stored: true),
+                    HasDeviation = table.Column<bool>(type: "boolean", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,28 +94,47 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     NisCode = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    OfficialLanguageDutch = table.Column<bool>(type: "boolean", nullable: false),
-                    OfficialLanguageFrench = table.Column<bool>(type: "boolean", nullable: false),
-                    OfficialLanguageGerman = table.Column<bool>(type: "boolean", nullable: false),
-                    OfficialLanguageEnglish = table.Column<bool>(type: "boolean", nullable: false),
-                    FacilityLanguageDutch = table.Column<bool>(type: "boolean", nullable: false),
-                    FacilityLanguageFrench = table.Column<bool>(type: "boolean", nullable: false),
-                    FacilityLanguageGerman = table.Column<bool>(type: "boolean", nullable: false),
-                    FacilityLanguageEnglish = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    OfficialLanguageDutch = table.Column<bool>(type: "boolean", nullable: true),
+                    OfficialLanguageFrench = table.Column<bool>(type: "boolean", nullable: true),
+                    OfficialLanguageGerman = table.Column<bool>(type: "boolean", nullable: true),
+                    OfficialLanguageEnglish = table.Column<bool>(type: "boolean", nullable: true),
+                    FacilityLanguageDutch = table.Column<bool>(type: "boolean", nullable: true),
+                    FacilityLanguageFrench = table.Column<bool>(type: "boolean", nullable: true),
+                    FacilityLanguageGerman = table.Column<bool>(type: "boolean", nullable: true),
+                    FacilityLanguageEnglish = table.Column<bool>(type: "boolean", nullable: true),
                     NameDutch = table.Column<string>(type: "text", nullable: true),
                     NameFrench = table.Column<string>(type: "text", nullable: true),
                     NameGerman = table.Column<string>(type: "text", nullable: true),
                     NameEnglish = table.Column<string>(type: "text", nullable: true),
-                    PuriId = table.Column<string>(type: "text", nullable: false),
-                    Namespace = table.Column<string>(type: "text", nullable: false),
-                    VerionString = table.Column<string>(type: "text", nullable: false),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false)
+                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Municipalities", x => x.NisCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parcels",
+                schema: "Integration",
+                columns: table => new
+                {
+                    CaPaKey = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    Addresses = table.Column<string>(type: "text", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parcels", x => x.CaPaKey);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,15 +143,16 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     PostalCode = table.Column<string>(type: "text", nullable: false),
-                    NisCode = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
+                    NisCode = table.Column<int>(type: "integer", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: true),
                     PostalNameDutch = table.Column<string>(type: "text", nullable: true),
                     PostalNameFrench = table.Column<string>(type: "text", nullable: true),
                     PostalNameGerman = table.Column<string>(type: "text", nullable: true),
-                    PuriId = table.Column<string>(type: "text", nullable: false),
-                    Namespace = table.Column<string>(type: "text", nullable: false),
-                    VerionString = table.Column<string>(type: "text", nullable: false),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                    PostalNameEnglish = table.Column<string>(type: "text", nullable: true),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -147,19 +165,21 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     PersistentLocalId = table.Column<int>(type: "integer", nullable: false),
-                    NisCode = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    NameDutch = table.Column<string>(type: "text", nullable: false),
-                    NameFrench = table.Column<string>(type: "text", nullable: false),
-                    NameGerman = table.Column<string>(type: "text", nullable: false),
-                    HomonymAdditionDutch = table.Column<string>(type: "text", nullable: false),
-                    HomonymAdditionFrench = table.Column<string>(type: "text", nullable: false),
-                    HomonymAdditionGerman = table.Column<string>(type: "text", nullable: false),
-                    PuriId = table.Column<string>(type: "text", nullable: false),
-                    Namespace = table.Column<string>(type: "text", nullable: false),
-                    VerionString = table.Column<string>(type: "text", nullable: false),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false)
+                    NisCode = table.Column<int>(type: "integer", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: true),
+                    NameDutch = table.Column<string>(type: "text", nullable: true),
+                    NameFrench = table.Column<string>(type: "text", nullable: true),
+                    NameGerman = table.Column<string>(type: "text", nullable: true),
+                    NameEnglish = table.Column<string>(type: "text", nullable: true),
+                    HomonymAdditionDutch = table.Column<string>(type: "text", nullable: true),
+                    HomonymAdditionFrench = table.Column<string>(type: "text", nullable: true),
+                    HomonymAdditionGerman = table.Column<string>(type: "text", nullable: true),
+                    HomonymAdditionEnglish = table.Column<string>(type: "text", nullable: true),
+                    IsRemoved = table.Column<bool>(type: "boolean", nullable: false),
+                    PuriId = table.Column<string>(type: "text", nullable: true),
+                    Namespace = table.Column<string>(type: "text", nullable: true),
+                    VersionString = table.Column<string>(type: "text", nullable: true),
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,7 +196,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 name: "IX_Addresses_Geometry",
                 schema: "Integration",
                 table: "Addresses",
-                column: "Geometry");
+                column: "Geometry")
+                .Annotation("Npgsql:IndexMethod", "GIST");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_HouseNumber",
@@ -195,6 +216,12 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 schema: "Integration",
                 table: "Addresses",
                 column: "NisCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_PersistentLocalId",
+                schema: "Integration",
+                table: "Addresses",
+                column: "PersistentLocalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_PostalCode",
@@ -224,13 +251,20 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 name: "IX_Buildings_Geometry",
                 schema: "Integration",
                 table: "Buildings",
-                column: "Geometry");
+                column: "Geometry")
+                .Annotation("Npgsql:IndexMethod", "GIST");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buildings_IsRemoved",
                 schema: "Integration",
                 table: "Buildings",
                 column: "IsRemoved");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Buildings_PersistentLocalId",
+                schema: "Integration",
+                table: "Buildings",
+                column: "PersistentLocalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buildings_Status",
@@ -248,13 +282,20 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 name: "IX_BuildingUnits_Geometry",
                 schema: "Integration",
                 table: "BuildingUnits",
-                column: "Geometry");
+                column: "Geometry")
+                .Annotation("Npgsql:IndexMethod", "GIST");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuildingUnits_IsRemoved",
                 schema: "Integration",
                 table: "BuildingUnits",
                 column: "IsRemoved");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BuildingUnits_PersistentLocalId",
+                schema: "Integration",
+                table: "BuildingUnits",
+                column: "PersistentLocalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuildingUnits_Status",
@@ -299,6 +340,12 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 column: "NameGerman");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Municipalities_NisCode",
+                schema: "Integration",
+                table: "Municipalities",
+                column: "NisCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Municipalities_Status",
                 schema: "Integration",
                 table: "Municipalities",
@@ -311,16 +358,52 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 column: "VersionTimestamp");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Parcels_CaPaKey",
+                schema: "Integration",
+                table: "Parcels",
+                column: "CaPaKey");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Parcels_IsRemoved",
+                schema: "Integration",
+                table: "Parcels",
+                column: "IsRemoved");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Parcels_Status",
+                schema: "Integration",
+                table: "Parcels",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Parcels_VersionTimestamp",
+                schema: "Integration",
+                table: "Parcels",
+                column: "VersionTimestamp");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PostInfo_NisCode",
                 schema: "Integration",
                 table: "PostInfo",
                 column: "NisCode");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PostInfo_PostalCode",
+                schema: "Integration",
+                table: "PostInfo",
+                column: "PostalCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PostInfo_PostalNameDutch",
                 schema: "Integration",
                 table: "PostInfo",
                 column: "PostalNameDutch");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostInfo_PostalNameEnglish",
+                schema: "Integration",
+                table: "PostInfo",
+                column: "PostalNameEnglish");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostInfo_PostalNameFrench",
@@ -359,6 +442,12 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 column: "NameDutch");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StreetNames_NameEnglish",
+                schema: "Integration",
+                table: "StreetNames",
+                column: "NameEnglish");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StreetNames_NameFrench",
                 schema: "Integration",
                 table: "StreetNames",
@@ -375,6 +464,12 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 schema: "Integration",
                 table: "StreetNames",
                 column: "NisCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StreetNames_PersistentLocalId",
+                schema: "Integration",
+                table: "StreetNames",
+                column: "PersistentLocalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StreetNames_Status",
@@ -405,6 +500,10 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
 
             migrationBuilder.DropTable(
                 name: "Municipalities",
+                schema: "Integration");
+
+            migrationBuilder.DropTable(
+                name: "Parcels",
                 schema: "Integration");
 
             migrationBuilder.DropTable(
