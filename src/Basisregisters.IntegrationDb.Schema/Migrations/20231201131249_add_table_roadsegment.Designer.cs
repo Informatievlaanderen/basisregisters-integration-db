@@ -3,6 +3,7 @@ using System;
 using Basisregisters.IntegrationDb.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
     [DbContext(typeof(IntegrationContext))]
-    partial class IntegrationContextModelSnapshot : ModelSnapshot
+    [Migration("20231201131249_add_table_roadsegment")]
+    partial class add_table_roadsegment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -423,7 +425,7 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<Geometry>("GeometryAsHex")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("geometry")
-                        .HasComputedColumnSql("ST_AsHEXEWKB(ST_GeomFromText(\"GeometryAsWkt\"));", true);
+                        .HasComputedColumnSql("ST_AsHEXEWKB(ST_GeomFromText(\"GeometryAsWkt\"))", true);
 
                     b.Property<string>("GeometryAsWkt")
                         .HasColumnType("text");

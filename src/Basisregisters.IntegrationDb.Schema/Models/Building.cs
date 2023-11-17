@@ -8,16 +8,17 @@
     public class Building
     {
         public int PersistentLocalId { get; set; }
-        public string Status { get; set; }
-        public string GeometryMethod { get; set; }
-        public string GeometryGml { get; set; }
-        public Geometry Geometry { get; set; }
-
-        public string PuriId { get; set; }
-        public string Namespace { get; set; }
-        public string VerionString { get; set; }
-        public DateTimeOffset VersionTimestamp { get; set; }
+        public string? Status { get; set; }
+        public string? GeometryMethod { get; set; }
+        public string? GeometryGml { get; set; }
+        public Geometry? Geometry { get; set; }
         public bool IsRemoved { get; set; }
+
+
+        public string? PuriId { get; set; }
+        public string? Namespace { get; set; }
+        public string? VersionString { get; set; }
+        public DateTimeOffset? VersionTimestamp { get; set; }
 
         public Building()
         { }
@@ -35,12 +36,13 @@
                 .ValueGeneratedNever();
 
             builder.Property(x => x.Geometry)
-                .HasComputedColumnSql(IntegrationContext.GmlComputedValueQuery, stored: true);
+                .HasComputedColumnSql(IntegrationContext.GeomFromGmlComputedQuery, stored: true);
 
+            builder.HasIndex(x => x.PersistentLocalId);
             builder.HasIndex(x => x.Status);
             builder.HasIndex(x => x.IsRemoved);
             builder.HasIndex(x => x.VersionTimestamp);
-            builder.HasIndex(x => x.Geometry);
+            builder.HasIndex(x => x.Geometry).HasMethod("GIST");
         }
     }
 }
