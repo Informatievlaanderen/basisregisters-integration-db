@@ -11,8 +11,14 @@
     {
         public const string Schema = "Integration";
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
+        public const string GmlComputedValueQuery = "ST_GeomFromGML(REPLACE(\"GeometryGml\",'https://www.opengis.net/def/crs/EPSG/0/', 'EPSG:')) ";
 
         public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<StreetName> StreetNames { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<BuildingUnit> BuildingUnits { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<PostInfo> PostInfo { get; set; }
 
         public IntegrationContext() { }
 
@@ -24,7 +30,6 @@
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IntegrationContext).Assembly);
         }
-
     }
 
     public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<IntegrationContext>
