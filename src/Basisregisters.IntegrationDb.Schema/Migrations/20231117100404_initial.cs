@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace Basisregisters.Integration.Db.Schema.Migrations
+namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
     public partial class initial : Migration
     {

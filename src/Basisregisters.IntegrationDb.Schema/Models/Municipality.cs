@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.Integration.Db.Schema.Models
+﻿namespace Basisregisters.IntegrationDb.Schema.Models
 {
     using System;
     using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.Integration.Db.Schema
+﻿namespace Basisregisters.IntegrationDb.Schema
 {
     using System;
     using System.IO;
