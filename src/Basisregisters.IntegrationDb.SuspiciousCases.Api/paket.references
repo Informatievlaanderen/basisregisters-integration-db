@@ -1,0 +1,11 @@
+AspNetCore.HealthChecks.SqlServer
+
+Autofac
+
+Be.Vlaanderen.Basisregisters.Auth.AcmIdm
+Be.Vlaanderen.Basisregisters.Api
+
+MediatR
+
+SourceLink.Embed.AllSourceFiles
+SourceLink.Copy.PdbFiles

@@ -4,13 +4,19 @@ source https://api.nuget.org/v3/index.json
 
 nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.5
 
+nuget Autofac 6.3.0
+
 // MISSING ASSEMBLY REFERENCES
 nuget Microsoft.IdentityModel.Tokens 6.25.1
 nuget Microsoft.IdentityModel.Protocols 6.25.1
 nuget Microsoft.IdentityModel.Logging 6.25.1
 nuget Microsoft.IdentityModel.Abstractions 6.25.1
+nuget Microsoft.IdentityModel.JsonWebTokens 6.25.1
 nuget Microsoft.Identity.Client 4.57.0
 nuget IdentityModel 6.0.0
+
+// ASPNET
+nuget AspNetCore.HealthChecks.SqlServer 6.0.2
 
 // MICROSOFT EXTENSIONS
 nuget Microsoft.Extensions.Configuration 6.0.1
@@ -29,9 +35,18 @@ nuget Npgsql.EntityFrameworkCore.PostgreSQL 6.0.22
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime 6.0.22
 
-// GEO
-nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
 nuget GeoJSON.NET 1.2.19
+nuget MediatR 12.0.1
+nuget MediatR.Contracts 2.0.1
+
+// VBR STUFF
+nuget Be.Vlaanderen.Basisregisters.Api 20.0.0
+
+nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 1.4.1
+
+nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
+
+// TEST STUFF
 
 //nuget Microsoft.NET.Test.Sdk 17.3.1
 nuget Microsoft.NET.StringTools 17.3.1
