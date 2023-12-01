@@ -35,7 +35,7 @@ nuget Microsoft.Extensions.Configuration.FileExtensions 6.0.0
 nuget Microsoft.Extensions.Configuration.Json 6.0.0
 nuget Microsoft.Extensions.Configuration.EnvironmentVariables 6.0.1
 nuget Microsoft.Extensions.DependencyInjection.Abstractions 6.0.0
-nuget Microsoft.Extensions.Hosting 6.0.0
+nuget Microsoft.Extensions.Hosting 6.0.1
 
 nuget Microsoft.EntityFrameworkCore.Design 6.0.0
 
@@ -49,6 +49,7 @@ nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
 
 // VBR STUFF
 nuget Be.Vlaanderen.Basisregisters.Api 20.0.0
+
 nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 1.4.1
 nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 3.0.1
 nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.5
@@ -58,10 +59,16 @@ nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Consumer 4.9.1
 nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
 
 // TEST STUFF
-//nuget Microsoft.NET.Test.Sdk 17.3.1
+nuget Microsoft.NET.Test.Sdk 17.3.1
 nuget Microsoft.NET.StringTools 17.8.3
 //nuget Microsoft.TestPlatform.TestHost 17.3.1
 nuget Microsoft.NETCore.Platforms 6.0.6
+nuget Be.Vlaanderen.Basisregisters.DockerUtilities 1.0.1
+nuget Microsoft.AspNetCore.Mvc.Testing 6.0.11
+nuget Microsoft.AspNetCore.TestHost 6.0.11
+nuget FluentAssertions 6.5.1
+nuget xunit.runner.visualstudio 2.4.3
+nuget xunit.categories 2.0.6
 
 nuget Serilog 2.10.0
 nuget Serilog.Settings.Configuration 3.3.0

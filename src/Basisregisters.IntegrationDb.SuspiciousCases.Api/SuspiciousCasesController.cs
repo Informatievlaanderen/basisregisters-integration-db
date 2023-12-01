@@ -1,6 +1,5 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
 {
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Api;
@@ -24,8 +23,15 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.IngemetenGebouw.GrbBijwerker)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> GetSuspiciousCases(CancellationToken cancellationToken)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{type}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
+        public async Task<IActionResult> GetSuspiciousCases([FromRoute] string type, CancellationToken cancellationToken)
         {
             return Ok();
         }
