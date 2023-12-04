@@ -36,6 +36,12 @@
         /// Gebouweenheid.
         /// </summary>
         [EnumMember]
-        Buildingunit = 5
+        Buildingunit = 5,
+
+        /// <summary>
+        /// Straatnaam.
+        /// </summary>
+        [EnumMember]
+        StreetName = 6
     }
 }
