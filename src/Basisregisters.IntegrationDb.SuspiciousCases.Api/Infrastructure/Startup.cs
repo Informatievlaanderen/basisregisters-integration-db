@@ -106,8 +106,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                         }
                     }
                     .EnableJsonErrorActionFilterOption())
-                .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"));
-            //.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"))
+                .AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // Used to retrieve the authenticated user claims.
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new ApiModule(_configuration, services, _loggerFactory));
