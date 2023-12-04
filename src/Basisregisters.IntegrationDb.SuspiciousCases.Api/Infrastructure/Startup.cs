@@ -83,7 +83,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                     Url = new Uri("https://backoffice.basisregisters.vlaanderen")
                                 }
                             },
-                            XmlCommentPaths = new[] {typeof(Startup).GetTypeInfo().Assembly.GetName().Name}
+                            XmlCommentPaths = new[] { typeof(Startup).GetTypeInfo().Assembly.GetName().Name }
                         },
                         MiddlewareHooks =
                         {
@@ -100,16 +100,14 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                     health.AddSqlServer(
                                         connectionString.Value,
                                         name: $"sqlserver-{connectionString.Key.ToLowerInvariant()}",
-                                        tags: new[] {DatabaseTag, "sql", "sqlserver"});
+                                        tags: new[] { DatabaseTag, "sql", "sqlserver" });
                             },
-                            Authorization = options =>
-                            {
-                                options.AddAcmIdmAuthorization();
-                            }
+                            Authorization = options => { options.AddAcmIdmAuthorization(); }
                         }
                     }
-                    .EnableJsonErrorActionFilterOption());
-                //.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                    .EnableJsonErrorActionFilterOption())
+                .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"));
+            //.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new ApiModule(_configuration, services, _loggerFactory));
@@ -148,7 +146,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                         ServiceName = _configuration["DataDog:ServiceName"],
                     }
                 })
-
                 .UseDefaultForApi(new StartupUseOptions
                 {
                     Common =
@@ -192,6 +189,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
         }
 
         private static string GetApiLeadingText(ApiVersionDescription description)
-            => $"Momenteel leest u de documentatie voor versie {description.ApiVersion} van de Basisregisters Vlaanderen Verdachte Gevallen API{string.Format(description.IsDeprecated ? ", **deze API versie is niet meer ondersteund * *." : ".")}";
+            =>
+                $"Momenteel leest u de documentatie voor versie {description.ApiVersion} van de Basisregisters Vlaanderen Verdachte Gevallen API{string.Format(description.IsDeprecated ? ", **deze API versie is niet meer ondersteund * *." : ".")}";
     }
 }
