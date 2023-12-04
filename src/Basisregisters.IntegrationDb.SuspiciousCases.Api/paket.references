@@ -4,6 +4,7 @@ Autofac
 
 Be.Vlaanderen.Basisregisters.Auth.AcmIdm
 Be.Vlaanderen.Basisregisters.Api
+Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded
 
 MediatR
 
