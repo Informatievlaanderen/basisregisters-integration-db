@@ -3,7 +3,9 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
     using System.Threading;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Api;
+    using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
+    using List;
     using MediatR;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
@@ -26,12 +28,18 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> GetSuspiciousCases(CancellationToken cancellationToken)
         {
-            return Ok();
+            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>();
+            var response = await _mediator.Send(new SuspiciousCasesListRequest(filtering), cancellationToken);
+
+            return Ok(response);
         }
 
-        [HttpGet("{type}")]
+        [HttpGet("{query}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
-        public async Task<IActionResult> GetSuspiciousCases([FromRoute] string type, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetSuspiciousCases(
+            [FromRoute] string query,
+            [FromQuery] string nisCode,
+            CancellationToken cancellationToken)
         {
             return Ok();
         }
