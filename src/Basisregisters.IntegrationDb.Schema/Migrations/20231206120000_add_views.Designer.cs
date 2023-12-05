@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
     [DbContext(typeof(IntegrationContext))]
-    [Migration("20231201120000_add_views")]
+    [Migration("20231206120000_add_views")]
     partial class add_views
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
