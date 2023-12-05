@@ -3,23 +3,23 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class ParcelsLinkedToMultipleHouseNumbers
+    public class ParcelsLinkedToMultipleAddresses
     {
         public string CaPaKey { get; set; }
         public string FullName { get; set; }
         public string Addresses { get; set; }
 
-        public ParcelsLinkedToMultipleHouseNumbers() { }
+        public ParcelsLinkedToMultipleAddresses() { }
     }
 
-    public sealed class ParcelsLinkedToMultipleHouseNumbersConfiguration : IEntityTypeConfiguration<ParcelsLinkedToMultipleHouseNumbers>
+    public sealed class ParcelsLinkedToMultipleAddressesConfiguration : IEntityTypeConfiguration<ParcelsLinkedToMultipleAddresses>
     {
-        public void Configure(EntityTypeBuilder<ParcelsLinkedToMultipleHouseNumbers> builder)
+        public void Configure(EntityTypeBuilder<ParcelsLinkedToMultipleAddresses> builder)
         {
             builder
-                .ToView(nameof(ParcelsLinkedToMultipleHouseNumbers), IntegrationContext.Schema)
+                .ToView(nameof(ParcelsLinkedToMultipleAddresses), IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@$"select ""CaPaKey"", ""FullName"", ""Addresses"" FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelsLinkedToMultipleHouseNumbers)}""; ");
+                .ToSqlQuery(@$"select ""CaPaKey"", ""FullName"", ""Addresses"" FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelsLinkedToMultipleAddresses)}"" ");
         }
     }
 }

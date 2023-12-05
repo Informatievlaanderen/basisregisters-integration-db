@@ -19,7 +19,7 @@
             builder
                 .ToView(nameof(AddressesLinkedToMultipleBuildingUnits), IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@"select ""PersistentLocalId"", ""FullName"", ""Status"" FROM ""Integration"".""VIEW_AddressesLinkedToMultipleBuildingUnits""; ");
+                .ToSqlQuery(@"select ""PersistentLocalId"", ""FullName"", ""Status"" FROM ""Integration"".""VIEW_AddressesLinkedToMultipleBuildingUnits"" ");
 
             builder.HasIndex(x => x.PersistentLocalId);
             builder.HasIndex(x => x.Status);

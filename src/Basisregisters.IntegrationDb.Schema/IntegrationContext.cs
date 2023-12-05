@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
     using Models;
+    using Models.Views;
 
     public class IntegrationContext : DbContext
     {
@@ -22,6 +23,9 @@
         public DbSet<Parcel> Parcels { get; set; }
         public DbSet<PostInfo> PostInfo { get; set; }
         public DbSet<RoadSegment> RoadSegments { get; set; }
+        public DbSet<ParcelAddressRelation> ParcelAddressRelations { get; set; }
+        public DbSet<BuildingUnitAddressRelation> BuildingUnitAddressRelations { get; set; }
+        public DbSet<ActiveAddressWithoutLinkedParcelOrBuildingUnits> ActiveAddressWithoutParcelOrBuildingUnitRelations { get; set; }
 
         public IntegrationContext() { }
 
