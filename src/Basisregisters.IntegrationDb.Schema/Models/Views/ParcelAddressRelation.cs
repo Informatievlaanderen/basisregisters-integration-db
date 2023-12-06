@@ -26,9 +26,6 @@
                                 ""AddressPersistentLocalId""
                             FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelAddressRelations)}"" ");
 
-            // Must be lower case because the materialized view defaults to lower case column for aliases.
-            //builder.Property(x => x.AddressPersistentLocalId).HasColumnName("addresspersistentlocalid");
-
             builder.HasIndex(x => x.CaPaKey);
             builder.HasIndex(x => x.AddressPersistentLocalId);
         }
