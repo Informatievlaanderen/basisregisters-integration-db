@@ -1,0 +1,103 @@
+namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
+{
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Be.Vlaanderen.Basisregisters.Api;
+    using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
+    using Be.Vlaanderen.Basisregisters.Auth;
+    using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
+    using Detail;
+    using List;
+    using MediatR;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using NisCodeService.Abstractions;
+
+    [ApiVersion("2.0")]
+    [AdvertiseApiVersions("2.0")]
+    [ApiRoute("verdachte-gevallen")]
+    [ApiExplorerSettings(GroupName = "SuspiciousCases")]
+    public class SuspiciousCasesController : ApiController
+    {
+        private readonly IMediator _mediator;
+        private readonly IActionContextAccessor _actionContextAccessor;
+        private readonly IOvoCodeWhiteList _ovoCodeWhiteList;
+        private readonly INisCodeService _nisCodeService;
+
+        public SuspiciousCasesController(
+            IMediator mediator,
+            IActionContextAccessor actionContextAccessor,
+            IOvoCodeWhiteList ovoCodeWhiteList,
+            INisCodeService nisCodeService)
+        {
+            _mediator = mediator;
+            _actionContextAccessor = actionContextAccessor;
+            _ovoCodeWhiteList = ovoCodeWhiteList;
+            _nisCodeService = nisCodeService;
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
+        public async Task<IActionResult> List(CancellationToken cancellationToken)
+        {
+            var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
+
+            if (string.IsNullOrWhiteSpace(ovoCode))
+            {
+                return Forbid();
+            }
+
+            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>();
+
+            if (!_ovoCodeWhiteList.IsWhiteListed(ovoCode))
+            {
+                var nisCode = await _nisCodeService.Get(ovoCode, cancellationToken);
+
+                if (string.IsNullOrWhiteSpace(nisCode))
+                {
+                    return Forbid();
+                }
+
+                filtering.Filter.NisCode = nisCode;
+            }
+
+            var response = await _mediator.Send(new SuspiciousCasesListRequest(filtering), cancellationToken);
+
+            return Ok(response);
+        }
+
+        [HttpGet("{type}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
+        public async Task<IActionResult> Detail(
+            [FromRoute] string type,
+            CancellationToken cancellationToken)
+        {
+            var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
+
+            if (string.IsNullOrWhiteSpace(ovoCode))
+            {
+                return Forbid();
+            }
+
+            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesDetailFilter>();
+
+            if (!_ovoCodeWhiteList.IsWhiteListed(ovoCode))
+            {
+                var nisCode = await _nisCodeService.Get(ovoCode, cancellationToken);
+
+                if (string.IsNullOrWhiteSpace(nisCode))
+                {
+                    return Forbid();
+                }
+
+                filtering.Filter.NisCode = nisCode;
+            }
+
+            var response = await _mediator.Send(new SuspiciousCasesDetailRequest(filtering, type), cancellationToken);
+            
+            return Ok(response);
+        }
+    }
+}

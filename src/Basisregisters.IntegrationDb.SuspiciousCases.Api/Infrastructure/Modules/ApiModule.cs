@@ -1,15 +1,17 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Modules
 {
+    using System.Collections.Generic;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
+    using Be.Vlaanderen.Basisregisters.Auth;
+    using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Microsoft;
     using Be.Vlaanderen.Basisregisters.DependencyInjection;
-
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using NisCodeService.HardCoded.Extensions;
 
     public class ApiModule : Module
     {
@@ -39,6 +41,11 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
                 .RegisterModule(new MediatRModule());
 
             _services.AddAcmIdmAuthorizationHandlers();
+
+            var ovoCodeWhiteList = _configuration.GetSection("OvoCodeWhiteList").Get<List<string>>();
+            _services
+                .AddHardCodedNisCodeService()
+                .AddOvoCodeWhiteList(ovoCodeWhiteList);
 
             builder.Populate(_services);
         }
