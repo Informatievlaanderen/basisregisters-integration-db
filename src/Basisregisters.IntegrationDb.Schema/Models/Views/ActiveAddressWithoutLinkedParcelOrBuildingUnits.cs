@@ -6,7 +6,7 @@
 
     public class ActiveAddressWithoutLinkedParcelOrBuildingUnits
     {
-        public int PersistentLocalId { get; set; }
+        public int AddressPersistentLocalId { get; set; }
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
 
@@ -21,12 +21,12 @@
                 .ToView("ActiveAddressWithoutLinkedParcelOrBuildings", IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"select
-                                ""PersistentLocalId"",
+                                ""AddressPersistentLocalId"",
                                 ""NisCode"",
                                 ""Timestamp""
-                                FROM ""Integration"".""{nameof(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcelOrBuildingUnit)}"" ");
+                                FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcelOrBuildingUnit)}"" ");
 
-            builder.HasIndex(x => x.PersistentLocalId);
+            builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.NisCode);
         }
     }

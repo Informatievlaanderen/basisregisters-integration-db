@@ -1,12 +1,15 @@
 ﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
 {
+    using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     public class AddressesLinkedToMultipleBuildingUnits
     {
-        public int PersistentLocalId { get; set; }
-        public string FullName { get; set; }
+        public int AddressPersistentLocalId { get; set; }
+        public int LinkedBuildingUnitCount { get; set; }
+        public int NisCode { get; set; }
+        public DateTime Timestamp { get; set; }
         public string Status { get; set; }
 
         public AddressesLinkedToMultipleBuildingUnits() { }
@@ -19,9 +22,15 @@
             builder
                 .ToView(nameof(AddressesLinkedToMultipleBuildingUnits), IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@"select ""PersistentLocalId"", ""FullName"", ""Status"" FROM ""Integration"".""VIEW_AddressesLinkedToMultipleBuildingUnits"" ");
+                .ToSqlQuery(@$"
+                            select
+                                ""AddressPersistentLocalId"",
+                                ""LinkedBuildingUnitCount"",
+                                ""NisCode"",
+                                ""Timestamp""
+                            FROM ""{IntegrationContext.Schema}"".""{ViewQueries.VIEW_AddressesLinkedToMultipleBuildingUnits}"" ");
 
-            builder.HasIndex(x => x.PersistentLocalId);
+            builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.Status);
         }
     }

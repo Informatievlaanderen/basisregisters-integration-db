@@ -214,34 +214,34 @@ where [ADRESSEN_OBJECTIDS] like '%1274940%'
 
 
 --INTEGRATION DB RE-WRITE--
-SELECT *
+
+-- Huisnummers in gebruik zonder koppeling met terrein of gebouweenheid
+SELECT "PersistentLocalId"
 FROM "Integration"."Addresses"
-WHERE "Status" = 'ingebruik'
-  AND "PersistentLocalId" NOT IN (
-    SELECT REPLACE(value, ' ', '') AS Address_ObjectID
-    FROM "Integration"."Parcels"
-    CROSS JOIN LATERAL unnest(string_to_array("ADDRESSES", ',')) AS value
-    WHERE rtrim(value) <> '' 
-      AND "Status" = 'gerealiseerd'
-      AND "IsRemoved" = 0
-  );
+WHERE EXISTS (
+    SELECT 1
+    FROM "Integration"."Addresses" AS address
+    LEFT JOIN "Integration"."VIEW_ParcelAddressRelations" AS parcelRelations
+        ON address."PersistentLocalId" = parcelRelations."addressid"
+    LEFT JOIN "Integration"."VIEW_BuildingUnitAddressRelations" AS buildingUnitRelations
+        ON address."PersistentLocalId" = buildingUnitRelations."addressid"
+    WHERE address."PersistentLocalId" = "PersistentLocalId"
+        AND (parcelRelations."addressid" IS NULL AND buildingUnitRelations."addressid" IS NULL)
+        AND address."Status" ILIKE 'inGebruik'
+        AND address."IsRemoved" = false
+)
+ORDER BY "PersistentLocalId"
 
-SELECT *
-FROM "Integration"."Addresses"
-WHERE "Status" = 'ingebruik'
-  AND "PersistentLocalId" NOT IN (
-    SELECT REPLACE(value, ' ', '') AS Address_ObjectID
-    FROM "Integration"."Parcels"
-    CROSS JOIN LATERAL unnest(string_to_array("ADDRESSES", ',')) AS value
-    WHERE rtrim(value) <> '' 
-      AND "Status" = 'gerealiseerd'
-      AND "IsRemoved" = 0
-  )
-  AND "PositionSpecification" = 'perceel';
+-- control
+select  "CaPaKey"
+,addressid
+from "Integration"."VIEW_ParcelAddressRelations"
+where addressid = 200008;
 
-SELECT *
-FROM "Integration"."Parcels"
-WHERE "ADDRESSES" LIKE '%1274940%';
+select *
+from "Integration"."VIEW_BuildingUnitAddressRelations"
+where addressid = 200008;
 
+-- INTEGRATION DB RE-WRITE WITH VIEWS
 
 ----------------------------------------------------------
