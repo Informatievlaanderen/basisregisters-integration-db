@@ -28,7 +28,7 @@
                                 ""LinkedBuildingUnitCount"",
                                 ""NisCode"",
                                 ""Timestamp""
-                            FROM ""{IntegrationContext.Schema}"".""{ViewQueries.VIEW_AddressesLinkedToMultipleBuildingUnits}"" ");
+                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_AddressesLinkedToMultipleBuildingUnits)}"" ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.Status);
