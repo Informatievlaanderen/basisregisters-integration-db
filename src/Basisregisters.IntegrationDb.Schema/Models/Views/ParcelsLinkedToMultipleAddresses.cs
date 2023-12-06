@@ -1,13 +1,15 @@
 ﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
 {
+    using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     public class ParcelsLinkedToMultipleAddresses
     {
         public string CaPaKey { get; set; }
-        public string FullName { get; set; }
-        public string Addresses { get; set; }
+        public int NisCode { get; set; }
+        public int LinkedAddressCount { get; set; }
+        public DateTime Timestamp { get; set; }
 
         public ParcelsLinkedToMultipleAddresses() { }
     }
@@ -19,7 +21,12 @@
             builder
                 .ToView(nameof(ParcelsLinkedToMultipleAddresses), IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@$"select ""CaPaKey"", ""FullName"", ""Addresses"" FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelsLinkedToMultipleAddresses)}"" ");
+                .ToSqlQuery(@$"
+                            select
+                                ""CaPaKey"",
+                                ""NisCode"",
+                                ""LinkedAddressCount""
+                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelsLinkedToMultipleAddresses)}"" ");
         }
     }
 }

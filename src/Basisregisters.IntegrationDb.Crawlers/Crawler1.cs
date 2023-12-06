@@ -2,7 +2,6 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
     using Schema;
 
@@ -17,7 +16,6 @@
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _integrationContext.Database.ExecuteSqlRaw("");
             return Task.CompletedTask;
         }
     }

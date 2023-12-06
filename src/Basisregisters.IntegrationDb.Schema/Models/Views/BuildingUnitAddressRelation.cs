@@ -18,10 +18,11 @@
             builder
                 .ToView("BuildingUnitAddressRelations", IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@$"select ""PersistentLocalId"", ""AddressId"" FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_BuildingUnitAddressRelations)}"" ");
-
-            builder.Property(x => x.AddressPersistentLocalId).HasColumnName("addresspersistentlocalid");
-            builder.Property(x => x.BuildingUnitPersistentLocalId).HasColumnName("PersistentLocalId");
+                .ToSqlQuery(@$"
+                            select
+                                ""BuildingUnitPersistentLocalId"",
+                                ""AddressPersistentLocalId""
+                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_BuildingUnitAddressRelations)}"" ");
 
             builder.HasIndex(x => x.BuildingUnitPersistentLocalId);
             builder.HasIndex(x => x.AddressPersistentLocalId);

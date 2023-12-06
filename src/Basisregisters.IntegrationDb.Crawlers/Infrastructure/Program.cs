@@ -68,6 +68,10 @@
                 {
                     var loggerFactory = new SerilogLoggerFactory(Log.Logger); //NOSONAR logging configuration is safe
 
+                    var connectionString = hostContext.Configuration.GetConnectionString("IntegrationDb")
+                                           ?? throw new InvalidOperationException(
+                                               $"Could not find a connection string with name 'IntegrationDb'");
+
                     services
                         // .AddScoped(s => new TraceDbConnection<IntegrationContext>(
                         //     new SqlConnection(hostContext.Configuration.GetConnectionString("IntegrationDb")),
@@ -75,10 +79,11 @@
                         .AddDbContext<IntegrationContext>((provider, options) =>
                         {
                             options.UseLoggerFactory(loggerFactory);
-                            options.UseNpgsql(sqlServerOptions =>
+                            options.UseNpgsql(connectionString, sqlServerOptions =>
                                 {
                                     sqlServerOptions.EnableRetryOnFailure();
                                     sqlServerOptions.MigrationsHistoryTable(IntegrationContext.MigrationsTableName, IntegrationContext.Schema);
+                                    sqlServerOptions.UseNetTopologySuite();
                                 });
                         });
 
@@ -87,9 +92,9 @@
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
                 {
-                    var services = new ServiceCollection();
-                    builder.RegisterModule(new DataDogModule(hostContext.Configuration));
-                    builder.Populate(services);
+                    // var services = new ServiceCollection();
+                    // builder.RegisterModule(new DataDogModule(hostContext.Configuration));
+                    // builder.Populate(services);
                 })
                 .UseConsoleLifetime()
                 .Build();
@@ -97,7 +102,6 @@
             Log.Information("Starting IntegrationDb Crawlers");
 
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
-            var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
             var configuration = host.Services.GetRequiredService<IConfiguration>();
 
             try
