@@ -7,6 +7,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Detail;
+    using FluentValidation;
+    using FluentValidation.Results;
     using List;
     using MediatR;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -63,6 +65,17 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                 filtering.Filter.NisCode = nisCode;
             }
 
+            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
+            {
+                throw new ValidationException(new[]
+                {
+                    new ValidationFailure("NisCode", "Niscode ontbreekt.")
+                    {
+                        ErrorCode = "OntbrekendeNiscode"
+                    }
+                });
+            }
+
             var response = await _mediator.Send(new SuspiciousCasesListRequest(filtering), cancellationToken);
 
             return Ok(response);
@@ -95,8 +108,19 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                 filtering.Filter.NisCode = nisCode;
             }
 
+            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
+            {
+                throw new ValidationException(new[]
+                {
+                    new ValidationFailure("NisCode", "Niscode ontbreekt.")
+                    {
+                        ErrorCode = "OntbrekendeNiscode"
+                    }
+                });
+            }
+
             var response = await _mediator.Send(new SuspiciousCasesDetailRequest(filtering, type), cancellationToken);
-            
+
             return Ok(response);
         }
     }
