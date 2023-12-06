@@ -26,6 +26,8 @@
         public DbSet<PostInfo> PostInfo { get; set; }
         public DbSet<RoadSegment> RoadSegments { get; set; }
 
+        public DbSet<SuspiciousCaseListItem> SuspiciousCaseListItems { get; set; }
+
         public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
         public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
 
@@ -61,6 +63,8 @@
     {
         public IntegrationContext CreateDbContext(string[] args)
         {
+            var migrationConnectionStringName = "IntegrationDbAdmin";
+
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
@@ -71,11 +75,9 @@
 
             var builder = new DbContextOptionsBuilder<IntegrationContext>();
 
-            var connectionStringName = "IntegrationDbAdmin";
-
             var connectionString = configuration
-                                    .GetConnectionString(connectionStringName)
-                                    ?? throw new InvalidOperationException($"Could not find a connection string with name '{connectionStringName}'");
+                                    .GetConnectionString(migrationConnectionStringName)
+                                    ?? throw new InvalidOperationException($"Could not find a connection string with name '{migrationConnectionStringName}'");
 
             builder
                 .UseNpgsql(connectionString, npgSqlOptions =>

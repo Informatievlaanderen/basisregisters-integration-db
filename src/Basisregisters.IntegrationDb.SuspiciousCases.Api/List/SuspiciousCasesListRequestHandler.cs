@@ -1,33 +1,44 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.List
 {
     using System;
-    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Infrastructure;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
+    using Schema;
 
     public sealed class SuspiciousCasesListRequestHandler : IRequestHandler<SuspiciousCasesListRequest, SuspiciousCasesListResponse>
     {
+        private readonly IntegrationContext _context;
         private readonly ResponseOptions _responseOptions;
 
-        public SuspiciousCasesListRequestHandler(IOptions<ResponseOptions> responseOptions)
+        public SuspiciousCasesListRequestHandler(IntegrationContext context, IOptions<ResponseOptions> responseOptions)
         {
+            _context = context;
             _responseOptions = responseOptions.Value;
         }
 
         public async Task<SuspiciousCasesListResponse> Handle(SuspiciousCasesListRequest listRequest, CancellationToken cancellationToken)
         {
-            return new SuspiciousCasesListResponse(new List<SuspiciousCasesListResponseItem>
-            {
-                new SuspiciousCasesListResponseItem(
-                    "Huisnummers \"in gebruik\" zonder koppeling met perceel",
-                    Category.Address,
-                    Severity.Incorrect,
-                    10,
-                    new Uri(string.Format(_responseOptions.SuspiciousCasesTypeUrl, "TODO")))
-            });
+            var suspiciousCases = await _context.SuspiciousCaseListItems
+                .Where(x => x.NisCode == listRequest.FilteringHeader.Filter.NisCode)
+                .ToListAsync(cancellationToken: cancellationToken);
+
+            return new SuspiciousCasesListResponse(
+                suspiciousCases.Select(x =>
+                {
+                    var suspiciousCase = SuspiciousCase.AllCases[x.Type];
+
+                    return new SuspiciousCasesListResponseItem(
+                        suspiciousCase.Description,
+                        suspiciousCase.Category,
+                        suspiciousCase.Severity,
+                        x.Count,
+                        new Uri(string.Format(_responseOptions.SuspiciousCasesTypeUrl, (int)x.Type)));
+                }).ToList());
         }
     }
 }
