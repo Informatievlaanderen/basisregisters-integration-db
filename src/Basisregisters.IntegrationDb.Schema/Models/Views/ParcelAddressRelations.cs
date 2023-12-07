@@ -4,24 +4,24 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class ParcelAddressRelation
+    public class ParcelAddressRelations
     {
         public string CaPaKey { get; set; }
         public int? AddressPersistentLocalId { get; set; }
         public DateTime Timestamp { get; set; }
 
-        public ParcelAddressRelation() { }
+        public ParcelAddressRelations() { }
     }
 
-    public sealed class ParcelAddressRelationConfiguration : IEntityTypeConfiguration<ParcelAddressRelation>
+    public sealed class ParcelAddressRelationConfiguration : IEntityTypeConfiguration<ParcelAddressRelations>
     {
-        public void Configure(EntityTypeBuilder<ParcelAddressRelation> builder)
+        public void Configure(EntityTypeBuilder<ParcelAddressRelations> builder)
         {
             builder
-                .ToView("ParcelAddressRelations", IntegrationContext.Schema)
+                .ToView(nameof(ParcelAddressRelations), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
-                            select
+                            SELECT
                                 ""CaPaKey"",
                                 ""AddressPersistentLocalId""
                             FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelAddressRelations)}"" ");

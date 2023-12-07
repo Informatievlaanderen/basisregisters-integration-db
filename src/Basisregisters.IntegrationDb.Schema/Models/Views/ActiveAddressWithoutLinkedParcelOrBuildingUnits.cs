@@ -18,9 +18,9 @@
         public void Configure(EntityTypeBuilder<ActiveAddressWithoutLinkedParcelOrBuildingUnits> builder)
         {
             builder
-                .ToView("ActiveAddressWithoutLinkedParcelOrBuildings", IntegrationContext.Schema)
+                .ToView(nameof(ActiveAddressWithoutLinkedParcelOrBuildingUnits), IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@$"select
+                .ToSqlQuery(@$"SELECT
                                 ""AddressPersistentLocalId"",
                                 ""NisCode"",
                                 ""Timestamp""
