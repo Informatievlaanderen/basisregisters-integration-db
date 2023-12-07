@@ -58,10 +58,28 @@
             COUNT(*) > 1;
         ";
 
+        public const string VIEW_AddressesWithMultipleLinks = $@"
+        CREATE MATERIALIZED VIEW IF NOT EXISTS ""Integration"".""{nameof(VIEW_AddressesWithMultipleLinks)}"" AS
+        SELECT
+            address.""PersistentLocalId"" AS ""AddressPersistentLocalId"",
+            address.""Status"",
+            address.""IsRemoved"",
+            buLinks.""LinkedBuildingUnitCount"",
+            parcelLinks.""LinkedParcelCount"",
+            address.""NisCode"",
+            CURRENT_TIMESTAMP AS ""Timestamp""
+        FROM ""Integration"".""Addresses"" address
+        JOIN ""Integration"".""VIEW_AddressesLinkedToMultipleBuildingUnits"" buLinks
+            on address.""PersistentLocalId"" = buLinks.""AddressPersistentLocalId""
+        JOIN ""Integration"".""VIEW_AddressesLinkedToMultipleParcels"" parcelLinks
+            on address.""PersistentLocalId"" = parcelLinks.""AddressPersistentLocalId""
+        ";
+
         public const string VIEW_ParcelsLinkedToMultipleAddresses = $@"
         CREATE MATERIALIZED VIEW IF NOT EXISTS ""Integration"".""{nameof(VIEW_ParcelsLinkedToMultipleAddresses)}"" AS
          SELECT
             p.""CaPaKey"",
+            p.""Status"",
             COUNT(*) AS ""LinkedAddressCount"",
             CURRENT_TIMESTAMP AS ""Timestamp""
 
@@ -116,6 +134,34 @@
                 AND address.""IsRemoved"" = false
         )
         ORDER BY a.""PersistentLocalId""
+        ";
+
+        public const string VIEW_ActiveStreetnameWithoutLinkedRoadSegments = $@"
+        CREATE MATERIALIZED VIEW IF NOT EXISTS ""Integration"".""{nameof(VIEW_ActiveStreetnameWithoutLinkedRoadSegments)}"" AS
+        SELECT
+            streetname.""PersistentLocalId"" AS ""StreetNamePersistentLocalId"",
+            streetname.""NisCode"",
+            CURRENT_TIMESTAMP AS ""Timestamp""
+        FROM ""Integration"".""StreetNames"" streetname
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM ""Integration"".""RoadSegments"" roadsegment
+            WHERE roadsegment.""LeftSideStreetNameId"" = streetname.""PersistentLocalId""
+            AND roadsegment.""RightSideStreetNameId"" = streetname.""PersistentLocalId""
+        )
+        AND streetname.""Status"" ILIKE 'ingebruik'
+        AND streetname.""IsRemoved"" = false
+        ";
+
+        public const string VIEW_AddressesWithoutPostalCode = $@"
+        CREATE MATERIALIZED VIEW IF NOT EXISTS ""Integration"".""{nameof(VIEW_AddressesWithoutPostalCode)}"" AS
+        SELECT
+            ""PersistentLocalId"" AS ""AddressPersistentLocalId"",
+            ""NisCode""::int,
+             CURRENT_TIMESTAMP AS ""Timestamp""
+
+        FROM ""Integration"".""Addresses""
+        WHERE ""PostalCode"" = '' OR ""PostalCode"" IS NULL
         ";
     }
 }

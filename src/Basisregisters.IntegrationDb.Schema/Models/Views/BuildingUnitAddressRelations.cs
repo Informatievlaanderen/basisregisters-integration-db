@@ -3,23 +3,23 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class BuildingUnitAddressRelation
+    public class BuildingUnitAddressRelations
     {
         public int BuildingUnitPersistentLocalId { get; set; }
         public string AddressPersistentLocalId { get; set; }
 
-        public BuildingUnitAddressRelation() { }
+        public BuildingUnitAddressRelations() { }
     }
 
-    public sealed class BuildingUnitAddressRelationConfiguration : IEntityTypeConfiguration<BuildingUnitAddressRelation>
+    public sealed class BuildingUnitAddressRelationConfiguration : IEntityTypeConfiguration<BuildingUnitAddressRelations>
     {
-        public void Configure(EntityTypeBuilder<BuildingUnitAddressRelation> builder)
+        public void Configure(EntityTypeBuilder<BuildingUnitAddressRelations> builder)
         {
             builder
-                .ToView("BuildingUnitAddressRelations", IntegrationContext.Schema)
+                .ToView(nameof(BuildingUnitAddressRelations), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
-                            select
+                            SELECT
                                 ""BuildingUnitPersistentLocalId"",
                                 ""AddressPersistentLocalId""
                             FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_BuildingUnitAddressRelations)}"" ");

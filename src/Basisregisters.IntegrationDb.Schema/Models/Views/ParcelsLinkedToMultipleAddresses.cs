@@ -22,7 +22,7 @@
                 .ToView(nameof(ParcelsLinkedToMultipleAddresses), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
-                            select
+                            SELECT
                                 ""CaPaKey"",
                                 ""NisCode"",
                                 ""LinkedAddressCount""

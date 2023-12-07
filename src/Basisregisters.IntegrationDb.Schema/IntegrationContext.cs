@@ -23,8 +23,8 @@
         public DbSet<Parcel> Parcels { get; set; }
         public DbSet<PostInfo> PostInfo { get; set; }
         public DbSet<RoadSegment> RoadSegments { get; set; }
-        public DbSet<ParcelAddressRelation> ParcelAddressRelations { get; set; }
-        public DbSet<BuildingUnitAddressRelation> BuildingUnitAddressRelations { get; set; }
+        public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
+        public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
         public DbSet<ActiveAddressWithoutLinkedParcelOrBuildingUnits> ActiveAddressWithoutParcelOrBuildingUnitRelations { get; set; }
 
         public IntegrationContext() { }

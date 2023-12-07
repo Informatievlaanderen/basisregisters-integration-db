@@ -21,11 +21,11 @@
             builder
                 .ToView(nameof(ActiveAddressWithoutLinkedParcels), IntegrationContext.Schema)
                 .HasNoKey()
-                .ToSqlQuery(@$"select
+                .ToSqlQuery(@$"SELECT
                                 ""AddressPersistentLocalId""
                                 ,""NisCode""
                                 ,""Timestamp""
-                            FROM ""Integration"".""{ViewQueries.VIEW_ActiveAddressWithoutLinkedParcels}"" ");
+                            FROM ""{IntegrationContext.Schema}"".""{ViewQueries.VIEW_ActiveAddressWithoutLinkedParcels}"" ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.NisCode);

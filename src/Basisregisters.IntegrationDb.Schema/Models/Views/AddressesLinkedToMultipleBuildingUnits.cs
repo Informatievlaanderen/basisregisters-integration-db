@@ -23,7 +23,7 @@
                 .ToView(nameof(AddressesLinkedToMultipleBuildingUnits), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
-                            select
+                            SELECT
                                 ""AddressPersistentLocalId"",
                                 ""LinkedBuildingUnitCount"",
                                 ""NisCode"",
