@@ -16,6 +16,7 @@
         public const string GeomFromEwkbComputedQuery = $"ST_AsHEXEWKB(ST_GeomFromText(\"GeometryAsWkt\"))";
 
         public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<MunicipalityGeometry> MunicipalityGeometries { get; set; }
         public DbSet<StreetName> StreetNames { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<BuildingUnit> BuildingUnits { get; set; }
@@ -23,6 +24,9 @@
         public DbSet<Parcel> Parcels { get; set; }
         public DbSet<PostInfo> PostInfo { get; set; }
         public DbSet<RoadSegment> RoadSegments { get; set; }
+
+
+
         public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
         public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
         public DbSet<ActiveAddressWithoutLinkedParcelOrBuildingUnits> ActiveAddressWithoutParcelOrBuildingUnitRelations { get; set; }

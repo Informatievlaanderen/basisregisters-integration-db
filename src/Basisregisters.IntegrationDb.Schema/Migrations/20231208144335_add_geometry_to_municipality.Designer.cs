@@ -3,6 +3,7 @@ using System;
 using Basisregisters.IntegrationDb.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
     [DbContext(typeof(IntegrationContext))]
-    partial class IntegrationContextModelSnapshot : ModelSnapshot
+    [Migration("20231208144335_add_geometry_to_municipality")]
+    partial class add_geometry_to_municipality
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

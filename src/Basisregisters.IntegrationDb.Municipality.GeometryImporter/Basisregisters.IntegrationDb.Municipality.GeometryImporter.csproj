@@ -17,10 +17,7 @@
 
   <ItemGroup>
     <Content Include="appsettings.json" CopyToOutputDirectory="Always" />
-    <None Remove="appsettings.development.json" />
-    <Content Include="appsettings.development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="appsettings.*.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>
