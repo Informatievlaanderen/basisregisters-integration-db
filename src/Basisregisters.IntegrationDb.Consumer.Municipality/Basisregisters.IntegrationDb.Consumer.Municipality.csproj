@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Basisregisters.IntegrationDb.Consumer\Basisregisters.IntegrationDb.Consumer.csproj" />
-    <ProjectReference Include="..\Basisregisters.IntegrationDb.Schema\Basisregisters.IntegrationDb.Schema.csproj" />
   </ItemGroup>
 
   <ItemGroup>
