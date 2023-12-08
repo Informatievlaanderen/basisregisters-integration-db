@@ -29,6 +29,7 @@
         public string? Namespace { get; set; }
         public string? VersionString { get; set; }
         public DateTimeOffset? VersionTimestamp { get; set; }
+        public long? IdempotenceKey { get; set; }
 
         public Address()
         { }

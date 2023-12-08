@@ -18,11 +18,11 @@
         public bool? HasDeviation { get; set; }
         public bool IsRemoved { get; set; }
 
-
         public string? PuriId { get; set; }
         public string? Namespace { get; set; }
         public string? VersionString { get; set; }
         public DateTimeOffset? VersionTimestamp { get; set; }
+        public long? IdempotenceKey { get; set; }
 
         public BuildingUnit()
         { }
