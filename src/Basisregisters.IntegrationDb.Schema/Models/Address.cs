@@ -8,7 +8,7 @@
     public class Address
     {
         public int PersistentLocalId { get; set; }
-        public string? NisCode { get; set; }
+        public int? NisCode { get; set; }
         public string? PostalCode { get; set; }
         public int? StreetNamePersistentLocalId { get; set; }
         public string? Status { get; set; }
