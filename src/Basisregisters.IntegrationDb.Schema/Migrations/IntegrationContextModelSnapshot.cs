@@ -57,8 +57,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<string>("Namespace")
                         .HasColumnType("text");
 
-                    b.Property<string>("NisCode")
-                        .HasColumnType("text");
+                    b.Property<int?>("NisCode")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PositionMethod")
                         .HasColumnType("text");

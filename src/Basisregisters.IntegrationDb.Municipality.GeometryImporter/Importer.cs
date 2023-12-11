@@ -22,6 +22,7 @@
             "&request=GetFeature" +
             "&typeName=VRBG:Refgem" +
             "&maxFeatures=1" +
+            "&srsName=EPSG:31370" +
             "&CQL_FILTER=NISCODE=";
 
         private readonly IntegrationContext _integrationContext;
@@ -62,6 +63,7 @@
 
                 var gmlReader = new GMLReader();
                 var geometry = gmlReader.Read(gml?.ToString());
+                geometry.SRID = 31370;
 
                 var validOp = new IsValidOp(geometry)
                 {
@@ -96,7 +98,7 @@
                 }
 
                 await _integrationContext.SaveChangesAsync();
-                Log.Information($"Municipality {nisCode} geometry has been updated.");
+                Log.Information($"Municipality {nisCode} geometry has been inserted/updated.");
             }
         }
     }
