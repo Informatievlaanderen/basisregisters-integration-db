@@ -4,30 +4,30 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class AddressesWithoutPostalCode
+    public class CurrentAddressesOutsideMunicipalityBounds
     {
         public int AddressPersistentLocalId { get; set; }
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
 
-        public AddressesWithoutPostalCode() { }
+        public CurrentAddressesOutsideMunicipalityBounds() { }
     }
 
-    public sealed class AddressesWithoutPostalCodeConfiguration : IEntityTypeConfiguration<AddressesWithoutPostalCode>
+    public sealed class CurrentAddressesOutsideMunicipalityBoundsConfiguration : IEntityTypeConfiguration<CurrentAddressesOutsideMunicipalityBounds>
     {
-        public void Configure(EntityTypeBuilder<AddressesWithoutPostalCode> builder)
+        public void Configure(EntityTypeBuilder<CurrentAddressesOutsideMunicipalityBounds> builder)
         {
             builder
-                .ToView(nameof(AddressesWithoutPostalCode), IntegrationContext.Schema)
+                .ToView(nameof(CurrentAddressesOutsideMunicipalityBounds), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
                                 ""AddressPersistentLocalId"",
                                 ""NisCode"",
                                 ""Timestamp""
-                            FROM  {Views.AddressesWithoutPostalCode.Table} ");
+                            FROM  {Views.CurrentAddressesOutsideMunicipalityBounds.Table} ");
 
-            builder.HasIndex(x => x.AddressPersistentLocalId);
+            builder.HasIndex(x => x.NisCode);
         }
     }
 }

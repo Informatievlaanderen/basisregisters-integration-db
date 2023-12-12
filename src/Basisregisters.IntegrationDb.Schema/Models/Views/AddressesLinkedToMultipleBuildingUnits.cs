@@ -9,7 +9,7 @@
         public int AddressPersistentLocalId { get; set; }
         public int LinkedBuildingUnitCount { get; set; }
         public int NisCode { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
         public string Status { get; set; }
 
         public AddressesLinkedToMultipleBuildingUnits() { }
@@ -28,7 +28,7 @@
                                 ""LinkedBuildingUnitCount"",
                                 ""NisCode"",
                                 ""Timestamp""
-                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_AddressesLinkedToMultipleBuildingUnits)}"" ");
+                            FROM {Views.AddressesLinkedToMultipleBuildingUnits.Table} ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.Status);

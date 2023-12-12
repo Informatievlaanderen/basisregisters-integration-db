@@ -11,39 +11,39 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(ViewQueries.VIEW_BuildingUnitAddressRelations);
-            migrationBuilder.Sql(ViewQueries.VIEW_ParcelAddressRelations);
+            migrationBuilder.Sql(Views.BuildingUnitAddressRelations.Create);
+            migrationBuilder.Sql(Views.ParcelAddressRelations.Create);
 
-            migrationBuilder.Sql(ViewQueries.VIEW_AddressesLinkedToMultipleBuildingUnits);
-            migrationBuilder.Sql(ViewQueries.VIEW_AddressesLinkedToMultipleParcels);
-            migrationBuilder.Sql(ViewQueries.VIEW_AddressesWithMultipleLinks);
-            migrationBuilder.Sql(ViewQueries.VIEW_AddressesWithoutPostalCode);
+            migrationBuilder.Sql(Views.AddressesLinkedToMultipleBuildingUnits.Create);
+            migrationBuilder.Sql(Views.AddressesLinkedToMultipleParcels.Create);
+            migrationBuilder.Sql(Views.AddressesWithMultipleLinks.Create);
+            migrationBuilder.Sql(Views.AddressesWithoutPostalCode.Create);
 
-            migrationBuilder.Sql(ViewQueries.VIEW_ParcelsLinkedToMultipleAddresses);
+            migrationBuilder.Sql(Views.ParcelsLinkedToMultipleAddresses.Create);
 
-            migrationBuilder.Sql(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcels);
-            migrationBuilder.Sql(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcelOrBuildingUnit);
-            migrationBuilder.Sql(ViewQueries.VIEW_ActiveStreetnameWithoutLinkedRoadSegments);
+            migrationBuilder.Sql(Views.CurrentAddressWithoutLinkedParcels.Create);
+            migrationBuilder.Sql(Views.CurrentAddressWithoutLinkedParcelOrBuildingUnit.Create);
+            migrationBuilder.Sql(Views.CurrentStreetnameWithoutLinkedRoadSegments.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            string DropView(string viewName) => @$"DROP VIEW ""{IntegrationContext.Schema}"".""{viewName}""";
+            string DropView(string viewName) => @$"DROP VIEW {viewName}";
 
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_AddressesWithMultipleLinks)));
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_AddressesLinkedToMultipleBuildingUnits)));
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_AddressesLinkedToMultipleParcels)));
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_AddressesWithoutPostalCode)));
+            migrationBuilder.Sql(DropView(nameof(Views.AddressesWithMultipleLinks.Table)));
+            migrationBuilder.Sql(DropView(nameof(Views.AddressesLinkedToMultipleBuildingUnits.Table)));
+            migrationBuilder.Sql(DropView(nameof(Views.AddressesLinkedToMultipleParcels.Table)));
+            migrationBuilder.Sql(DropView(nameof(Views.AddressesWithoutPostalCode.Table)));
 
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcels)));
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcelOrBuildingUnit)));
+            migrationBuilder.Sql(DropView(nameof(Views.CurrentAddressWithoutLinkedParcels.Table)));
+            migrationBuilder.Sql(DropView(nameof(Views.CurrentAddressWithoutLinkedParcelOrBuildingUnit.Table)));
 
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_ParcelsLinkedToMultipleAddresses)));
+            migrationBuilder.Sql(DropView(nameof(Views.ParcelsLinkedToMultipleAddresses.Table)));
 
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_ActiveStreetnameWithoutLinkedRoadSegments)));
+            migrationBuilder.Sql(DropView(nameof(Views.CurrentStreetnameWithoutLinkedRoadSegments.Table)));
 
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_BuildingUnitAddressRelations)));
-            migrationBuilder.Sql(DropView(nameof(ViewQueries.VIEW_ParcelAddressRelations)));
+            migrationBuilder.Sql(DropView(nameof(Views.BuildingUnitAddressRelations.Table)));
+            migrationBuilder.Sql(DropView(nameof(Views.ParcelAddressRelations.Table)));
         }
     }
 }

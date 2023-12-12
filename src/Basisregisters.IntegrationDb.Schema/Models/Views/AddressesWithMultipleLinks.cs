@@ -12,7 +12,7 @@
         public int LinkedBuildingUnitCount { get; set; }
         public int LinkedParcelCount { get; set; }
         public int NisCode { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 
         public AddressesWithMultipleLinks() { }
     }
@@ -33,7 +33,7 @@
                                 ""LinkedParcelCount"",
                                 ""NisCode"",
                                 ""CURRENT_TIMESTAMP AS ""Timestamp""
-                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_AddressesWithMultipleLinks)}"" ");
+                            FROM  {Views.AddressesWithMultipleLinks.Table} ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.NisCode);

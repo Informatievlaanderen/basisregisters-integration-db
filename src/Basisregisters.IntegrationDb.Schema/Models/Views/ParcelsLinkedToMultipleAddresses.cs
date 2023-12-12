@@ -9,7 +9,7 @@
         public string CaPaKey { get; set; }
         public int NisCode { get; set; }
         public int LinkedAddressCount { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 
         public ParcelsLinkedToMultipleAddresses() { }
     }
@@ -25,8 +25,9 @@
                             SELECT
                                 ""CaPaKey"",
                                 ""NisCode"",
-                                ""LinkedAddressCount""
-                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelsLinkedToMultipleAddresses)}"" ");
+                                ""LinkedAddressCount"",
+                                ""Timestamp""
+                            FROM  {Views.ParcelsLinkedToMultipleAddresses.Table} ");
         }
     }
 }

@@ -10,6 +10,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
     using Schema;
+    using Schema.Models.Views;
     using Serilog;
     using Serilog.Debugging;
 

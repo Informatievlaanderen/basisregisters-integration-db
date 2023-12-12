@@ -4,27 +4,27 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class ActiveAddressWithoutLinkedParcelOrBuildingUnits
+    public class CurrentAddressWithoutLinkedParcelOrBuildingUnits
     {
         public int AddressPersistentLocalId { get; set; }
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
 
-        public ActiveAddressWithoutLinkedParcelOrBuildingUnits() { }
+        public CurrentAddressWithoutLinkedParcelOrBuildingUnits() { }
     }
 
-    public sealed class ActiveAddressWithoutLinkedParcelOrBuildingUnitsConfiguration : IEntityTypeConfiguration<ActiveAddressWithoutLinkedParcelOrBuildingUnits>
+    public sealed class ActiveAddressWithoutLinkedParcelOrBuildingUnitsConfiguration : IEntityTypeConfiguration<CurrentAddressWithoutLinkedParcelOrBuildingUnits>
     {
-        public void Configure(EntityTypeBuilder<ActiveAddressWithoutLinkedParcelOrBuildingUnits> builder)
+        public void Configure(EntityTypeBuilder<CurrentAddressWithoutLinkedParcelOrBuildingUnits> builder)
         {
             builder
-                .ToView(nameof(ActiveAddressWithoutLinkedParcelOrBuildingUnits), IntegrationContext.Schema)
+                .ToView(nameof(CurrentAddressWithoutLinkedParcelOrBuildingUnits), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"SELECT
                                 ""AddressPersistentLocalId"",
                                 ""NisCode"",
                                 ""Timestamp""
-                                FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ActiveAddressWithoutLinkedParcelOrBuildingUnit)}"" ");
+                                FROM  {Views.CurrentAddressWithoutLinkedParcelOrBuildingUnit.Table} ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.NisCode);
