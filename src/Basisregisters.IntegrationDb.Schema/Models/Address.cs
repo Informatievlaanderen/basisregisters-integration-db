@@ -49,6 +49,8 @@
             builder.Property(x => x.Geometry)
                 .HasComputedColumnSql(IntegrationContext.GeomFromGmlComputedQuery, stored: true);
 
+            builder.Property(x => x.PostalCode).HasMaxLength(4);
+
             builder.HasIndex(x => x.PersistentLocalId);
             builder.HasIndex(x => x.StreetNamePersistentLocalId);
             builder.HasIndex(x => x.PostalCode);

@@ -33,6 +33,8 @@
                 .ToTable("PostInfo", IntegrationContext.Schema)
                 .HasKey(x => x.PostalCode);
 
+            builder.Property(x => x.PostalCode).HasMaxLength(4);
+
             builder.HasIndex(x => x.PostalCode);
             builder.HasIndex(x => x.NisCode);
             builder.HasIndex(x => x.Status);

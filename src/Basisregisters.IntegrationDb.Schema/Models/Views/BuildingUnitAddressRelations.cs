@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
 {
+    using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -7,6 +8,7 @@
     {
         public int BuildingUnitPersistentLocalId { get; set; }
         public string AddressPersistentLocalId { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 
         public BuildingUnitAddressRelations() { }
     }
@@ -21,8 +23,9 @@
                 .ToSqlQuery(@$"
                             SELECT
                                 ""BuildingUnitPersistentLocalId"",
-                                ""AddressPersistentLocalId""
-                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_BuildingUnitAddressRelations)}"" ");
+                                ""AddressPersistentLocalId"",
+                                 ""Timestamp""
+                            FROM  {Views.BuildingUnitAddressRelations.Table} ");
 
             builder.HasIndex(x => x.BuildingUnitPersistentLocalId);
             builder.HasIndex(x => x.AddressPersistentLocalId);

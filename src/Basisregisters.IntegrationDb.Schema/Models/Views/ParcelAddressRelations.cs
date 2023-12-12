@@ -8,7 +8,7 @@
     {
         public string CaPaKey { get; set; }
         public int? AddressPersistentLocalId { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 
         public ParcelAddressRelations() { }
     }
@@ -23,8 +23,9 @@
                 .ToSqlQuery(@$"
                             SELECT
                                 ""CaPaKey"",
-                                ""AddressPersistentLocalId""
-                            FROM ""{IntegrationContext.Schema}"".""{nameof(ViewQueries.VIEW_ParcelAddressRelations)}"" ");
+                                ""AddressPersistentLocalId"",
+                                ""Timestamp""
+                            FROM  {Views.ParcelAddressRelations.Table} ");
 
             builder.HasIndex(x => x.CaPaKey);
             builder.HasIndex(x => x.AddressPersistentLocalId);

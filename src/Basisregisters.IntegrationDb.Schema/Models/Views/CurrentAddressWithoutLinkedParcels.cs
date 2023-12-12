@@ -5,27 +5,27 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using NetTopologySuite.Geometries;
 
-    public class ActiveAddressWithoutLinkedParcels
+    public class CurrentAddressWithoutLinkedParcels
     {
         public int AddressPersistentLocalId { get; set; }
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
 
-        public ActiveAddressWithoutLinkedParcels() { }
+        public CurrentAddressWithoutLinkedParcels() { }
     }
 
-    public sealed class ActiveHouseNumberWithoutLinkedParcelConfiguration : IEntityTypeConfiguration<ActiveAddressWithoutLinkedParcels>
+    public sealed class CurrentAddressWithoutLinkedParcelConfiguration : IEntityTypeConfiguration<CurrentAddressWithoutLinkedParcels>
     {
-        public void Configure(EntityTypeBuilder<ActiveAddressWithoutLinkedParcels> builder)
+        public void Configure(EntityTypeBuilder<CurrentAddressWithoutLinkedParcels> builder)
         {
             builder
-                .ToView(nameof(ActiveAddressWithoutLinkedParcels), IntegrationContext.Schema)
+                .ToView(nameof(CurrentAddressWithoutLinkedParcels), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"SELECT
                                 ""AddressPersistentLocalId""
                                 ,""NisCode""
                                 ,""Timestamp""
-                            FROM ""{IntegrationContext.Schema}"".""{ViewQueries.VIEW_ActiveAddressWithoutLinkedParcels}"" ");
+                            FROM  {Views.CurrentAddressWithoutLinkedParcels.Table} ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
             builder.HasIndex(x => x.NisCode);
