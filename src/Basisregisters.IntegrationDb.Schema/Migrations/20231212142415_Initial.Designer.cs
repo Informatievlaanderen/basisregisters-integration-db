@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
     [DbContext(typeof(IntegrationContext))]
-    [Migration("20231208144335_add_geometry_to_municipality")]
-    partial class add_geometry_to_municipality
+    [Migration("20231212142415_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,8 +59,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<string>("Namespace")
                         .HasColumnType("text");
 
-                    b.Property<string>("NisCode")
-                        .HasColumnType("text");
+                    b.Property<int?>("NisCode")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PositionMethod")
                         .HasColumnType("text");
@@ -69,7 +69,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("text");
+                        .HasMaxLength(4)
+                        .HasColumnType("character varying(4)");
 
                     b.Property<string>("PuriId")
                         .HasColumnType("text");
@@ -381,7 +382,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
             modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.PostInfo", b =>
                 {
                     b.Property<string>("PostalCode")
-                        .HasColumnType("text");
+                        .HasMaxLength(4)
+                        .HasColumnType("character varying(4)");
 
                     b.Property<long?>("IdempotenceKey")
                         .HasColumnType("bigint");
@@ -638,12 +640,13 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.ToTable("StreetNames", "Integration");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ActiveAddressWithoutLinkedParcelOrBuildingUnits", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.BuildingUnitAddressRelations", b =>
                 {
-                    b.Property<int>("AddressPersistentLocalId")
-                        .HasColumnType("integer");
+                    b.Property<string>("AddressPersistentLocalId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("NisCode")
+                    b.Property<int>("BuildingUnitPersistentLocalId")
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("Timestamp")
@@ -651,54 +654,35 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
 
                     b.HasIndex("AddressPersistentLocalId");
 
-                    b.HasIndex("NisCode");
+                    b.HasIndex("BuildingUnitPersistentLocalId");
 
-                    b.ToView("ActiveAddressWithoutLinkedParcelOrBuildingUnits", "Integration");
+                    b.ToView("BuildingUnitAddressRelations", "Integration");
 
-                    b.ToSqlQuery("SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                                FROM \"Integration\".\"VIEW_ActiveAddressWithoutLinkedParcelOrBuildingUnit\" ");
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"BuildingUnitPersistentLocalId\",\r\n                                \"AddressPersistentLocalId\",\r\n                                 \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_BuildingUnitAddressRelations\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ActiveAddressWithoutLinkedParcels", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ParcelAddressRelations", b =>
                 {
-                    b.Property<int>("AddressPersistentLocalId")
+                    b.Property<int?>("AddressPersistentLocalId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("NisCode")
-                        .HasColumnType("integer");
+                    b.Property<string>("CaPaKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasIndex("AddressPersistentLocalId");
 
-                    b.HasIndex("NisCode");
+                    b.HasIndex("CaPaKey");
 
-                    b.ToView("ActiveAddressWithoutLinkedParcels", "Integration");
+                    b.ToView("ParcelAddressRelations", "Integration");
 
-                    b.ToSqlQuery("SELECT\r\n                                \"AddressPersistentLocalId\"\r\n                                ,\"NisCode\"\r\n                                ,\"Timestamp\"\r\n                            FROM \"Integration\".\"\r\n        CREATE MATERIALIZED VIEW IF NOT EXISTS \"Integration\".\"VIEW_ActiveAddressWithoutLinkedParcels\" AS\r\n        SELECT\r\n            a.\"PersistentLocalId\" AS \"AddressPersistentLocalId\",\r\n            a.\"NisCode\"::int,\r\n            CURRENT_TIMESTAMP AS \"Timestamp\"\r\n\r\n        FROM \"Integration\".\"Addresses\" AS a\r\n        WHERE EXISTS (\r\n            SELECT 1\r\n            FROM \"Integration\".\"Addresses\" AS address\r\n            LEFT JOIN \"Integration\".\"VIEW_ParcelAddressRelations\" AS parcelRelations\r\n                ON address.\"PersistentLocalId\" = parcelRelations.\"AddressPersistentLocalId\"\r\n            WHERE address.\"PersistentLocalId\" = a.\"PersistentLocalId\"\r\n                AND parcelRelations.\"AddressPersistentLocalId\" IS NULL\r\n                AND address.\"Status\" ILIKE 'inGebruik'\r\n                AND address.\"IsRemoved\" = false\r\n        )\r\n        ORDER BY a.\"PersistentLocalId\"\r\n        \" ");
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"CaPaKey\",\r\n                                \"AddressPersistentLocalId\",\r\n                                \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_ParcelAddressRelations\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ActiveStreetnameWithoutLinkedRoadSegments", b =>
-                {
-                    b.Property<int>("NisCode")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StreetNamePersistentLocalId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasIndex("NisCode");
-
-                    b.HasIndex("StreetNamePersistentLocalId");
-
-                    b.ToView("ActiveStreetnameWithoutLinkedRoadSegments", "Integration");
-
-                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"StreetNamePersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                            FROM \"Integration\".\"VIEW_ActiveStreetnameWithoutLinkedRoadSegments\" ");
-                });
-
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.AddressesLinkedToMultipleBuildingUnits", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.AddressesLinkedToMultipleBuildingUnits", b =>
                 {
                     b.Property<int>("AddressPersistentLocalId")
                         .HasColumnType("integer");
@@ -709,23 +693,17 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<int>("NisCode")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasIndex("AddressPersistentLocalId");
-
-                    b.HasIndex("Status");
 
                     b.ToView("AddressesLinkedToMultipleBuildingUnits", "Integration");
 
                     b.ToSqlQuery("\r\n                            SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"LinkedBuildingUnitCount\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                            FROM \"Integration\".\"VIEW_AddressesLinkedToMultipleBuildingUnits\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.AddressesWithMultipleLinks", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.AddressesWithMultipleLinks", b =>
                 {
                     b.Property<int>("AddressPersistentLocalId")
                         .HasColumnType("integer");
@@ -746,7 +724,7 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasIndex("AddressPersistentLocalId");
@@ -755,10 +733,10 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
 
                     b.ToView("AddressesWithMultipleLinks", "Integration");
 
-                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"Status\",\r\n                                \"IsRemoved\",\r\n                                \"LinkedBuildingUnitCount\",\r\n                                \"LinkedParcelCount\",\r\n                                \"NisCode\",\r\n                                \"CURRENT_TIMESTAMP AS \"Timestamp\"\r\n                            FROM \"Integration\".\"VIEW_AddressesWithMultipleLinks\" ");
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"Status\",\r\n                                \"IsRemoved\",\r\n                                \"LinkedBuildingUnitCount\",\r\n                                \"LinkedParcelCount\",\r\n                                \"NisCode\",\r\n                                CURRENT_TIMESTAMP AS \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_AddressesWithMultipleLinks\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.AddressesWithoutPostalCode", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.AddressesWithoutPostalCode", b =>
                 {
                     b.Property<int>("AddressPersistentLocalId")
                         .HasColumnType("integer");
@@ -766,56 +744,95 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<int>("NisCode")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasIndex("AddressPersistentLocalId");
 
                     b.ToView("AddressesWithoutPostalCode", "Integration");
 
-                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                            FROM \"Integration\".\"VIEW_AddressesWithoutPostalCode\" ");
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_AddressesWithoutPostalCode\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.BuildingUnitAddressRelations", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.CurrentAddressesOutsideMunicipalityBounds", b =>
                 {
-                    b.Property<string>("AddressPersistentLocalId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("BuildingUnitPersistentLocalId")
+                    b.Property<int>("AddressPersistentLocalId")
                         .HasColumnType("integer");
 
-                    b.HasIndex("AddressPersistentLocalId");
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("BuildingUnitPersistentLocalId");
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.ToView("BuildingUnitAddressRelations", "Integration");
+                    b.HasIndex("NisCode");
 
-                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"BuildingUnitPersistentLocalId\",\r\n                                \"AddressPersistentLocalId\"\r\n                            FROM \"Integration\".\"VIEW_BuildingUnitAddressRelations\" ");
+                    b.ToView("CurrentAddressesOutsideMunicipalityBounds", "Integration");
+
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_CurrentAddressesOutsideMunicipalityBounds\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ParcelAddressRelations", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.CurrentAddressWithoutLinkedParcelOrBuildingUnits", b =>
                 {
-                    b.Property<int?>("AddressPersistentLocalId")
+                    b.Property<int>("AddressPersistentLocalId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("CaPaKey")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasIndex("AddressPersistentLocalId");
 
-                    b.HasIndex("CaPaKey");
+                    b.HasIndex("NisCode");
 
-                    b.ToView("ParcelAddressRelations", "Integration");
+                    b.ToView("CurrentAddressWithoutLinkedParcelOrBuildingUnits", "Integration");
 
-                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"CaPaKey\",\r\n                                \"AddressPersistentLocalId\"\r\n                            FROM \"Integration\".\"VIEW_ParcelAddressRelations\" ");
+                    b.ToSqlQuery("SELECT\r\n                                \"AddressPersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                                FROM  \"Integration\".\"VIEW_CurrentAddressWithoutLinkedParcelOrBuildingUnit\" ");
                 });
 
-            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.ParcelsLinkedToMultipleAddresses", b =>
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.CurrentAddressWithoutLinkedParcels", b =>
+                {
+                    b.Property<int>("AddressPersistentLocalId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasIndex("AddressPersistentLocalId");
+
+                    b.HasIndex("NisCode");
+
+                    b.ToView("CurrentAddressWithoutLinkedParcels", "Integration");
+
+                    b.ToSqlQuery("SELECT\r\n                                \"AddressPersistentLocalId\"\r\n                                ,\"NisCode\"\r\n                                ,\"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_CurrentAddressWithoutLinkedParcels\" ");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.CurrentStreetNameWithoutLinkedRoadSegments", b =>
+                {
+                    b.Property<int>("NisCode")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StreetNamePersistentLocalId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasIndex("NisCode");
+
+                    b.HasIndex("StreetNamePersistentLocalId");
+
+                    b.ToView("CurrentStreetNameWithoutLinkedRoadSegments", "Integration");
+
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"StreetNamePersistentLocalId\",\r\n                                \"NisCode\",\r\n                                \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_CurrentStreetnameWithoutLinkedRoadSegments\" ");
+                });
+
+            modelBuilder.Entity("Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases.ParcelsLinkedToMultipleAddresses", b =>
                 {
                     b.Property<string>("CaPaKey")
                         .IsRequired()
@@ -827,12 +844,12 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     b.Property<int>("NisCode")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.ToView("ParcelsLinkedToMultipleAddresses", "Integration");
 
-                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"CaPaKey\",\r\n                                \"NisCode\",\r\n                                \"LinkedAddressCount\"\r\n                            FROM \"Integration\".\"VIEW_ParcelsLinkedToMultipleAddresses\" ");
+                    b.ToSqlQuery("\r\n                            SELECT\r\n                                \"CaPaKey\",\r\n                                \"NisCode\",\r\n                                \"LinkedAddressCount\",\r\n                                \"Timestamp\"\r\n                            FROM  \"Integration\".\"VIEW_ParcelsLinkedToMultipleAddresses\" ");
                 });
 #pragma warning restore 612, 618
         }

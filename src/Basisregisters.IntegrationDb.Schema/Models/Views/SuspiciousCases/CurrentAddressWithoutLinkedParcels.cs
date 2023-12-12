@@ -1,9 +1,8 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
+﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases
 {
     using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using NetTopologySuite.Geometries;
 
     public class CurrentAddressWithoutLinkedParcels
     {

@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
+﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases
 {
     using System;
     using Microsoft.EntityFrameworkCore;
@@ -32,7 +32,7 @@
                                 ""LinkedBuildingUnitCount"",
                                 ""LinkedParcelCount"",
                                 ""NisCode"",
-                                ""CURRENT_TIMESTAMP AS ""Timestamp""
+                                CURRENT_TIMESTAMP AS ""Timestamp""
                             FROM  {Views.AddressesWithMultipleLinks.Table} ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
