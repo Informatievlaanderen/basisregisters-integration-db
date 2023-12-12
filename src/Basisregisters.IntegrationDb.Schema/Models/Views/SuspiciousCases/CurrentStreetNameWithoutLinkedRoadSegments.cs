@@ -1,32 +1,32 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
+﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases
 {
     using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class CurrentStreetnameWithoutLinkedRoadSegments
+    public class CurrentStreetNameWithoutLinkedRoadSegments
     {
         public int StreetNamePersistentLocalId { get; set; }
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
 
 
-        public CurrentStreetnameWithoutLinkedRoadSegments() { }
+        public CurrentStreetNameWithoutLinkedRoadSegments() { }
     }
 
-    public sealed class CurrentStreetnameWithoutLinkedRoadSegmentsConfiguration : IEntityTypeConfiguration<CurrentStreetnameWithoutLinkedRoadSegments>
+    public sealed class CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration : IEntityTypeConfiguration<CurrentStreetNameWithoutLinkedRoadSegments>
     {
-        public void Configure(EntityTypeBuilder<CurrentStreetnameWithoutLinkedRoadSegments> builder)
+        public void Configure(EntityTypeBuilder<CurrentStreetNameWithoutLinkedRoadSegments> builder)
         {
             builder
-                .ToView(nameof(CurrentStreetnameWithoutLinkedRoadSegments), IntegrationContext.Schema)
+                .ToView(nameof(CurrentStreetNameWithoutLinkedRoadSegments), IntegrationContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
                                 ""StreetNamePersistentLocalId"",
                                 ""NisCode"",
                                 ""Timestamp""
-                            FROM  {Views.CurrentStreetnameWithoutLinkedRoadSegments.Table} ");
+                            FROM  {Views.CurrentStreetNameWithoutLinkedRoadSegments.Table} ");
 
             builder.HasIndex(x => x.StreetNamePersistentLocalId);
             builder.HasIndex(x => x.NisCode);

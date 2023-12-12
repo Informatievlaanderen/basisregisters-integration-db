@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Configuration;
     using Models;
     using Models.Views;
+    using Models.Views.SuspiciousCases;
 
     public class IntegrationContext : DbContext
     {
@@ -25,11 +26,19 @@
         public DbSet<PostInfo> PostInfo { get; set; }
         public DbSet<RoadSegment> RoadSegments { get; set; }
 
-
-
-        public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
         public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
-        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnits> ActiveAddressWithoutParcelOrBuildingUnitRelations { get; set; }
+        public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
+
+        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnits> CurrentAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
+        public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnits> ProposedAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
+        public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits { get; set; }
+        public DbSet<AddressesWithMultipleLinks> AddressesWithMultipleLinks { get; set; }
+        public DbSet<AddressesWithoutPostalCode> AddressesWithoutPostalCode { get; set; }
+        public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds { get; set; }
+
+        public DbSet<CurrentAddressWithoutLinkedParcels> CurrentAddressWithoutLinkedParcels { get; set; }
+        public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNameWithoutLinkedRoadSegments { get; set; }
+        public DbSet<ParcelsLinkedToMultipleAddresses> ParcelsLinkedToMultipleAddresses { get; set; }
 
         public IntegrationContext() { }
 

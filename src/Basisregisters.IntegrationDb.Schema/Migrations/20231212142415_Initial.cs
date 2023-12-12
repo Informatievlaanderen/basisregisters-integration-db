@@ -6,7 +6,7 @@ using NetTopologySuite.Geometries;
 
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,8 +19,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 columns: table => new
                 {
                     PersistentLocalId = table.Column<int>(type: "integer", nullable: false),
-                    NisCode = table.Column<string>(type: "text", nullable: true),
-                    PostalCode = table.Column<string>(type: "text", nullable: true),
+                    NisCode = table.Column<int>(type: "integer", nullable: true),
+                    PostalCode = table.Column<string>(type: "character varying(4)", maxLength: 4, nullable: true),
                     StreetNamePersistentLocalId = table.Column<int>(type: "integer", nullable: true),
                     Status = table.Column<string>(type: "text", nullable: true),
                     HouseNumber = table.Column<string>(type: "text", nullable: true),
@@ -35,7 +35,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,7 +57,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,7 +83,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,11 +114,25 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Municipalities", x => x.NisCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MunicipalityGeometries",
+                schema: "Integration",
+                columns: table => new
+                {
+                    NisCode = table.Column<int>(type: "integer", nullable: false),
+                    Geometry = table.Column<Geometry>(type: "geometry", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MunicipalityGeometries", x => x.NisCode);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,7 +147,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,7 +160,7 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 schema: "Integration",
                 columns: table => new
                 {
-                    PostalCode = table.Column<string>(type: "text", nullable: false),
+                    PostalCode = table.Column<string>(type: "character varying(4)", maxLength: 4, nullable: false),
                     NisCode = table.Column<int>(type: "integer", nullable: true),
                     Status = table.Column<string>(type: "text", nullable: true),
                     PostalNameDutch = table.Column<string>(type: "text", nullable: true),
@@ -152,11 +170,59 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PostInfo", x => x.PostalCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoadSegments",
+                schema: "Integration",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Version = table.Column<int>(type: "integer", nullable: true),
+                    AccessRestrictionDutchName = table.Column<string>(type: "text", nullable: true),
+                    AccessRestrictionId = table.Column<int>(type: "integer", nullable: true),
+                    BeginRoadNodeId = table.Column<string>(type: "text", nullable: true),
+                    CategoryDutchName = table.Column<string>(type: "text", nullable: true),
+                    CategoryId = table.Column<string>(type: "text", nullable: true),
+                    EndRoadNodeId = table.Column<int>(type: "integer", nullable: true),
+                    GeometryAsHex = table.Column<Geometry>(type: "geometry", nullable: true, computedColumnSql: "ST_AsHEXEWKB(ST_GeomFromText(\"GeometryAsWkt\"))", stored: true),
+                    GeometryAsWkt = table.Column<string>(type: "text", nullable: true),
+                    GeometrySrid = table.Column<int>(type: "integer", nullable: true),
+                    GeometryVersion = table.Column<int>(type: "integer", nullable: true),
+                    LeftSideMunicipalityId = table.Column<string>(type: "text", nullable: true),
+                    LeftSideMunicipalityNisCode = table.Column<string>(type: "text", nullable: true),
+                    LeftSideStreetName = table.Column<string>(type: "text", nullable: true),
+                    LeftSideStreetNameId = table.Column<int>(type: "integer", nullable: true),
+                    MaintainerId = table.Column<string>(type: "text", nullable: true),
+                    MaintainerName = table.Column<string>(type: "text", nullable: true),
+                    MethodDutchName = table.Column<string>(type: "text", nullable: true),
+                    MethodId = table.Column<int>(type: "integer", nullable: true),
+                    MorphologyDutchName = table.Column<string>(type: "text", nullable: true),
+                    MorphologyId = table.Column<int>(type: "integer", nullable: true),
+                    RecordingDate = table.Column<string>(type: "text", nullable: true),
+                    RightSideMunicipalityId = table.Column<string>(type: "text", nullable: true),
+                    RightSideMunicipalityNisCode = table.Column<string>(type: "text", nullable: true),
+                    RightSideStreetName = table.Column<string>(type: "text", nullable: true),
+                    RightSideStreetNameId = table.Column<int>(type: "integer", nullable: true),
+                    RoadSegmentVersion = table.Column<int>(type: "integer", nullable: true),
+                    StatusDutchName = table.Column<string>(type: "text", nullable: true),
+                    StatusId = table.Column<int>(type: "integer", nullable: true),
+                    StreetNameCachePosition = table.Column<int>(type: "integer", nullable: true),
+                    TransactionId = table.Column<int>(type: "integer", nullable: true),
+                    Timestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    Organization = table.Column<string>(type: "text", nullable: true),
+                    LastChangedTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    Removed = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoadSegments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,7 +245,8 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                     PuriId = table.Column<string>(type: "text", nullable: true),
                     Namespace = table.Column<string>(type: "text", nullable: true),
                     VersionString = table.Column<string>(type: "text", nullable: true),
-                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    VersionTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    IdempotenceKey = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -358,6 +425,19 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 column: "VersionTimestamp");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MunicipalityGeometries_Geometry",
+                schema: "Integration",
+                table: "MunicipalityGeometries",
+                column: "Geometry")
+                .Annotation("Npgsql:IndexMethod", "GIST");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MunicipalityGeometries_NisCode",
+                schema: "Integration",
+                table: "MunicipalityGeometries",
+                column: "NisCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Parcels_CaPaKey",
                 schema: "Integration",
                 table: "Parcels",
@@ -428,6 +508,25 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 schema: "Integration",
                 table: "PostInfo",
                 column: "VersionTimestamp");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoadSegments_GeometryAsHex",
+                schema: "Integration",
+                table: "RoadSegments",
+                column: "GeometryAsHex")
+                .Annotation("Npgsql:IndexMethod", "GIST");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoadSegments_MorphologyId",
+                schema: "Integration",
+                table: "RoadSegments",
+                column: "MorphologyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoadSegments_StreetNameCachePosition",
+                schema: "Integration",
+                table: "RoadSegments",
+                column: "StreetNameCachePosition");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StreetNames_IsRemoved",
@@ -503,11 +602,19 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
                 schema: "Integration");
 
             migrationBuilder.DropTable(
+                name: "MunicipalityGeometries",
+                schema: "Integration");
+
+            migrationBuilder.DropTable(
                 name: "Parcels",
                 schema: "Integration");
 
             migrationBuilder.DropTable(
                 name: "PostInfo",
+                schema: "Integration");
+
+            migrationBuilder.DropTable(
+                name: "RoadSegments",
                 schema: "Integration");
 
             migrationBuilder.DropTable(

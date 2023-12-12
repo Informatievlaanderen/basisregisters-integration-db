@@ -1,9 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.Municipality.GeometryImporter
 {
-    using System;
     using System.Linq;
     using System.Net.Http;
-    using System.Threading;
     using System.Threading.Tasks;
     using System.Xml.Linq;
     using NetTopologySuite.IO.GML2;
@@ -38,7 +36,7 @@
 
             foreach (var nisCode in _integrationContext.Municipalities.Select(x => x.NisCode))
             {
-                var response = await httpClient.GetAsync(WFS_GetMunicipalityGeometry +  nisCode);
+                var response = await httpClient.GetAsync(WFS_GetMunicipalityGeometry + nisCode);
 
                 var stream = await response.Content.ReadAsStreamAsync();
 

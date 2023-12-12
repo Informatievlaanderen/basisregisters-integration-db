@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views
+﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases
 {
     using System;
     using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,6 @@
         public int LinkedBuildingUnitCount { get; set; }
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
-        public string Status { get; set; }
 
         public AddressesLinkedToMultipleBuildingUnits() { }
     }
@@ -31,7 +30,6 @@
                             FROM {Views.AddressesLinkedToMultipleBuildingUnits.Table} ");
 
             builder.HasIndex(x => x.AddressPersistentLocalId);
-            builder.HasIndex(x => x.Status);
         }
     }
 }
