@@ -19,14 +19,14 @@
         /// </summary>
         [DataMember(Name = "Categorie", Order = 2)]
         [JsonProperty(Required = Required.DisallowNull)]
-        public Category Category { get; set; }
+        public Categorie Category { get; set; }
 
         /// <summary>
         /// Ernst van het verdacht geval: Foutief, Verdacht en Verbeterbaar.
         /// </summary>
         [DataMember(Name = "Ernst", Order = 3)]
         [JsonProperty(Required = Required.DisallowNull)]
-        public Severity Severity { get; set; }
+        public Ernst Severity { get; set; }
 
         /// <summary>
         /// Naam van het verdacht geval. Dit is uitbreidbaar in de toekomst met nieuwe verdachte gevallen.
@@ -42,7 +42,7 @@
         [JsonProperty(Required = Required.DisallowNull)]
         public Uri Detail { get; set; }
 
-        public SuspiciousCasesListResponseItem(string type, Category category, Severity severity, int count, Uri detail)
+        public SuspiciousCasesListResponseItem(string type, Categorie category, Ernst severity, int count, Uri detail)
         {
             Type = type;
             Category = category;

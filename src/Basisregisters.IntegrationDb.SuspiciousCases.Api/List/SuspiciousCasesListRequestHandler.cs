@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Converters;
     using Infrastructure;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
@@ -34,8 +35,8 @@
 
                     return new SuspiciousCasesListResponseItem(
                         suspiciousCase.Description,
-                        suspiciousCase.Category,
-                        suspiciousCase.Severity,
+                        suspiciousCase.Category.Map(),
+                        suspiciousCase.Severity.Map(),
                         x.Count,
                         new Uri(string.Format(_responseOptions.SuspiciousCasesTypeUrl, (int)x.Type)));
                 }).ToList());
