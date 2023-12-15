@@ -13,7 +13,7 @@
                 Category.Parcel => Categorie.Perceel,
                 Category.RoadSegment => Categorie.Wegsegment,
                 Category.Building => Categorie.Gebouw,
-                Category.Buildingunit => Categorie.Gebouweenheid,
+                Category.BuildingUnit => Categorie.Gebouweenheid,
                 Category.StreetName => Categorie.Straatnaam,
                 _ => throw new ArgumentOutOfRangeException(nameof(category), category, null)
             };

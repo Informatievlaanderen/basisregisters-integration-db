@@ -11,7 +11,7 @@
             {
                 Severity.Incorrect => Ernst.Foutief,
                 Severity.Suspicious => Ernst.Verdacht,
-                Severity.Improveable => Ernst.Verbeterbaar,
+                Severity.Improvable => Ernst.Verbeterbaar,
                 _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
             };
         }
