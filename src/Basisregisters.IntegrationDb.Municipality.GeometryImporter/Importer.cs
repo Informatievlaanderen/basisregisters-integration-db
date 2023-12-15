@@ -32,6 +32,8 @@
 
         public async Task ExecuteAsync()
         {
+            var k = _integrationContext.SuspiciousCaseListItems.Take(5).ToList();
+
             using var httpClient = new HttpClient();
 
             foreach (var nisCode in _integrationContext.Municipalities.Select(x => x.NisCode))

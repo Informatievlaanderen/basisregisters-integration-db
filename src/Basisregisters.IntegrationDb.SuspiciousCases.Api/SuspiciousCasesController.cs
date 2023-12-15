@@ -65,7 +65,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                 filtering.Filter.NisCode = nisCode;
             }
 
-            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
+            if (string.IsNullOrWhiteSpace(filtering.Filter?.NisCode))
             {
                 throw new ValidationException(new[]
                 {

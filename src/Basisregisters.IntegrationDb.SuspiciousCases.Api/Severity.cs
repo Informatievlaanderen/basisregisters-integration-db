@@ -11,18 +11,21 @@
         /// <summary>
         /// Foutief.
         /// </summary>
+        [DataMember(Name = "foutief")]
         [EnumMember]
         Incorrect = 1,
 
         /// <summary>
         /// Verdacht.
         /// </summary>
+        [DataMember(Name = "verdacht")]
         [EnumMember]
         Suspicious = 2,
 
         /// <summary>
         /// Verbeterbaar.
         /// </summary>
+        [DataMember(Name = "verbeterbaar")]
         [EnumMember]
         Improveable = 3
     }

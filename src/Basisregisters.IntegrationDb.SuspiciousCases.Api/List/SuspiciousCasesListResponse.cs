@@ -10,7 +10,7 @@
         /// <summary>
         /// Collectie van verdachte gevallen.
         /// </summary>
-        [DataMember(Name = "Gebouwen", Order = 1)]
+        [DataMember(Name = "resultaat", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
         public List<SuspiciousCasesListResponseItem> VerdachteGevallen { get; set; }
 

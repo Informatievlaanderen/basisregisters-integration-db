@@ -31,7 +31,7 @@
         /// <summary>
         /// Naam van het verdacht geval. Dit is uitbreidbaar in de toekomst met nieuwe verdachte gevallen.
         /// </summary>
-        [DataMember(Name = "Naam", Order = 4)]
+        [DataMember(Name = "Aantal", Order = 4)]
         [JsonProperty(Required = Required.DisallowNull)]
         public int Count { get; set; }
 

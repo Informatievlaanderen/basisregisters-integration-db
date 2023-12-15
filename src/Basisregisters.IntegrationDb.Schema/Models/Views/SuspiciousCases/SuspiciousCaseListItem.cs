@@ -25,7 +25,7 @@
                                 ""NisCode""
                                 ,""Count""
                                 ,""Type""
-                            FROM {ViewName};");
+                            FROM {ViewName}");
         }
 
         public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(SuspiciousCaseListItemConfiguration)}""";
