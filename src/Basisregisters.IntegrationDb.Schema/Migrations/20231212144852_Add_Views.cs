@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+
 using Basisregisters.IntegrationDb.Schema.Models.Views;
+using Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases;
 #nullable disable
 
 namespace Basisregisters.IntegrationDb.Schema.Migrations
@@ -10,19 +12,17 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
     {
        protected override void Up(MigrationBuilder migrationBuilder)
        {
-           migrationBuilder.Sql(Views.BuildingUnitAddressRelations.Create);
-           migrationBuilder.Sql(Views.ParcelAddressRelations.Create);
+           migrationBuilder.Sql(BuildingUnitAddressRelationConfiguration.Create);
+           migrationBuilder.Sql(ParcelAddressRelationConfiguration.Create);
 
            // 1. Adressen ‘ingebruik’ zonder koppeling aan perceel of gebouweenheid
-           migrationBuilder.Sql(Views.CurrentAddressWithoutLinkedParcelOrBuildingUnit.Create);
+           migrationBuilder.Sql(CurrentAddressWithoutLinkedParcelOrBuildingUnitsConfiguration.Create);
            // 2. Adressen ‘voorgesteld’ zonder koppeling aan perceel of gebouweenheid
-           migrationBuilder.Sql(Views.ProposedAddressWithoutLinkedParcelOrBuildingUnit.Create);
-           // 3. Huisnummers zonder postcode
-           //migrationBuilder.Sql(Views.AddressesWithoutPostalCode.Create);
+           migrationBuilder.Sql(ProposedAddressWithoutLinkedParcelOrBuildingUnitsConfiguration.Create);
            // 4. Adressen die buiten de grenzen van de gemeente vallen
-           migrationBuilder.Sql(Views.CurrentAddressesOutsideMunicipalityBounds.Create);
+           migrationBuilder.Sql(CurrentAddressesOutsideMunicipalityBoundsConfiguration.Create);
            // 5. Straatnamen "in gebruik" zonder koppeling met wegverbinding TODO
-           migrationBuilder.Sql(Views.CurrentStreetNameWithoutLinkedRoadSegments.Create);
+           migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
 
            // 6. Straatnamen langer dan 2 jaar “voorgesteld”
            // 7. Adressen bestaat langer dan 2 jaar en heeft nog de status “voorgesteld”
@@ -36,13 +36,10 @@ namespace Basisregisters.IntegrationDb.Schema.Migrations
            // 15. Actueel Gebouweenheid gekoppeld aan meerdere actieve adressen
 
            // 16. Actieve adres gekoppeld aan meerdere actuele gebouweenheden
-           migrationBuilder.Sql(Views.AddressesLinkedToMultipleBuildingUnits.Create);
+           migrationBuilder.Sql(AddressesLinkedToMultipleBuildingUnitsConfiguration.Create);
 
-           // TODO: review
-           // migrationBuilder.Sql(Views.AddressesLinkedToMultipleParcels.Create);
-           // migrationBuilder.Sql(Views.AddressesWithMultipleLinks.Create);
-           // migrationBuilder.Sql(Views.ParcelsLinkedToMultipleAddresses.Create);
-           // migrationBuilder.Sql(Views.CurrentAddressWithoutLinkedParcels.Create);
+           // Suspicious cases List items
+           migrationBuilder.Sql(SuspiciousCaseListItemConfiguration.Create);
        }
 
        protected override void Down(MigrationBuilder migrationBuilder)

@@ -11,7 +11,8 @@
         public int NisCode { get; set; }
         public DateTimeOffset Timestamp { get; set; }
 
-        public AddressesLinkedToMultipleBuildingUnits() { }
+        public AddressesLinkedToMultipleBuildingUnits()
+        { }
     }
 
     public sealed class AddressesLinkedToMultipleBuildingUnitsConfiguration : IEntityTypeConfiguration<AddressesLinkedToMultipleBuildingUnits>
@@ -27,9 +28,30 @@
                                 ""LinkedBuildingUnitCount"",
                                 ""NisCode"",
                                 ""Timestamp""
-                            FROM {Views.AddressesLinkedToMultipleBuildingUnits.Table} ");
-
-            builder.HasIndex(x => x.AddressPersistentLocalId);
+                            FROM {ViewName} ");
         }
+
+
+        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(AddressesLinkedToMultipleBuildingUnits)}""";
+
+        public const string Create = $@"
+            CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS
+            SELECT
+                a.""PersistentLocalId"" AS ""AddressPersistentLocalId"",
+                COUNT(*) AS ""LinkedBuildingUnitCount"",
+                a.""NisCode"",
+                CURRENT_TIMESTAMP AS ""Timestamp""
+
+            FROM {BuildingUnitAddressRelationConfiguration.ViewName} relation
+            JOIN ""Integration"".""Addresses"" a ON a.""PersistentLocalId"" = relation.""AddressPersistentLocalId""
+            WHERE
+                a.""IsRemoved"" = false
+            GROUP BY
+                a.""PersistentLocalId""
+            HAVING
+                COUNT(*) > 1;
+
+            CREATE INDEX ""IX_{nameof(AddressesLinkedToMultipleBuildingUnits)}_AddressPersistentLocalId"" ON {ViewName} USING btree (""{nameof(AddressesLinkedToMultipleBuildingUnits.AddressPersistentLocalId)}"");
+        ";
     }
 }

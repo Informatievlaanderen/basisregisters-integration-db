@@ -11,7 +11,8 @@
         public DateTimeOffset Timestamp { get; set; }
 
 
-        public CurrentStreetNameWithoutLinkedRoadSegments() { }
+        public CurrentStreetNameWithoutLinkedRoadSegments()
+        { }
     }
 
     public sealed class CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration : IEntityTypeConfiguration<CurrentStreetNameWithoutLinkedRoadSegments>
@@ -26,10 +27,29 @@
                                 ""StreetNamePersistentLocalId"",
                                 ""NisCode"",
                                 ""Timestamp""
-                            FROM  {Views.CurrentStreetNameWithoutLinkedRoadSegments.Table} ");
-
-            builder.HasIndex(x => x.StreetNamePersistentLocalId);
-            builder.HasIndex(x => x.NisCode);
+                            FROM  {ViewName} ");
         }
+
+        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(CurrentStreetNameWithoutLinkedRoadSegments)}""";
+
+        public const string Create = $@"
+            CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS
+            SELECT
+                streetName.""PersistentLocalId"" AS ""StreetNamePersistentLocalId"",
+                streetName.""NisCode"",
+                CURRENT_TIMESTAMP AS ""Timestamp""
+            FROM ""Integration"".""StreetNames"" AS streetName
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM ""Integration"".""RoadSegments"" roadsegment
+                WHERE roadsegment.""LeftSideStreetNameId"" = streetname.""PersistentLocalId""
+                AND roadsegment.""RightSideStreetNameId"" = streetname.""PersistentLocalId""
+            )
+            AND streetName.""Status"" ILIKE 'ingebruik'
+            AND streetName.""IsRemoved"" = false;
+
+            CREATE INDEX ""IX_{nameof(CurrentStreetNameWithoutLinkedRoadSegments)}_StreetNamePersistentLocalId"" ON {ViewName} USING btree (""{nameof(CurrentStreetNameWithoutLinkedRoadSegments.StreetNamePersistentLocalId)}"");
+            CREATE INDEX ""IX_{nameof(CurrentStreetNameWithoutLinkedRoadSegments)}_NisCode"" ON {ViewName} USING btree (""{nameof(CurrentStreetNameWithoutLinkedRoadSegments.NisCode)}"");
+            ";
     }
 }
