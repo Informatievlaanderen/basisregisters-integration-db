@@ -26,21 +26,19 @@
         public DbSet<PostInfo> PostInfo { get; set; }
         public DbSet<RoadSegment> RoadSegments { get; set; }
 
+        public DbSet<SuspiciousCaseListItem> SuspiciousCaseListItems { get; set; }
+
         public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
         public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
 
-        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnits> CurrentAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
-        public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnits> ProposedAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
+        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
+        public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
         public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits { get; set; }
-        public DbSet<AddressesWithMultipleLinks> AddressesWithMultipleLinks { get; set; }
-        public DbSet<AddressesWithoutPostalCode> AddressesWithoutPostalCode { get; set; }
         public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds { get; set; }
-
-        public DbSet<CurrentAddressWithoutLinkedParcels> CurrentAddressWithoutLinkedParcels { get; set; }
         public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNameWithoutLinkedRoadSegments { get; set; }
-        public DbSet<ParcelsLinkedToMultipleAddresses> ParcelsLinkedToMultipleAddresses { get; set; }
 
-        public IntegrationContext() { }
+        public IntegrationContext()
+        { }
 
         public IntegrationContext(DbContextOptions<IntegrationContext> options)
             : base(options) { }
@@ -61,6 +59,8 @@
     {
         public IntegrationContext CreateDbContext(string[] args)
         {
+            var migrationConnectionStringName = "IntegrationDbAdmin";
+
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
@@ -71,11 +71,9 @@
 
             var builder = new DbContextOptionsBuilder<IntegrationContext>();
 
-            var connectionStringName = "IntegrationDbAdmin";
-
             var connectionString = configuration
-                                    .GetConnectionString(connectionStringName)
-                                    ?? throw new InvalidOperationException($"Could not find a connection string with name '{connectionStringName}'");
+                                    .GetConnectionString(migrationConnectionStringName)
+                                    ?? throw new InvalidOperationException($"Could not find a connection string with name '{migrationConnectionStringName}'");
 
             builder
                 .UseNpgsql(connectionString, npgSqlOptions =>

@@ -25,10 +25,26 @@
                                 ""BuildingUnitPersistentLocalId"",
                                 ""AddressPersistentLocalId"",
                                  ""Timestamp""
-                            FROM  {Views.BuildingUnitAddressRelations.Table} ");
-
-            builder.HasIndex(x => x.BuildingUnitPersistentLocalId);
-            builder.HasIndex(x => x.AddressPersistentLocalId);
+                            FROM  {ViewName} ");
         }
+
+        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(BuildingUnitAddressRelations)}""";
+
+        public const string Create = $@"
+            CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS
+            SELECT
+                bu.""PersistentLocalId"" AS ""BuildingUnitPersistentLocalId"",
+                unnested_address_id AS ""AddressPersistentLocalId"",
+                CURRENT_TIMESTAMP AS ""Timestamp""
+            FROM
+                ""Integration"".""BuildingUnits"" bu
+            WHERE
+                bu.""IsRemoved"" = false
+            CROSS JOIN
+                unnest(string_to_array(bu.""Addresses"", ', ')::int[]) AS unnested_address_id;
+
+            CREATE INDEX ""IX_Address_PersistentLocalId"" ON ""Integration"".""{ViewName}""(""{nameof(BuildingUnitAddressRelations.AddressPersistentLocalId)}"")
+            CREATE INDEX ""IX_BuildingUnit_PersistentLocalId"" ON ""Integration"".""{ViewName}""(""{nameof(BuildingUnitAddressRelations.BuildingUnitPersistentLocalId)}"")
+            ";
     }
 }
