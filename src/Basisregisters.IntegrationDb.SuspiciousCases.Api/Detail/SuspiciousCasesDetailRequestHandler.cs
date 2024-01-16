@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure;
+    using Infrastructure;
     using MediatR;
     using Microsoft.Extensions.Options;
 

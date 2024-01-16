@@ -28,17 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A5E1149A-0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Consumer.Address", "src\Basisregisters.IntegrationDb.Consumer.Address\Basisregisters.IntegrationDb.Consumer.Address.csproj", "{8ABB1D7A-BFB0-4B5A-BF62-A7C40DAA6B52}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Consumer", "src\Basisregisters.IntegrationDb.Consumer\Basisregisters.IntegrationDb.Consumer.csproj", "{B82F6A0D-2DB9-44C6-A516-5BD6C1037460}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Consumer.Municipality", "src\Basisregisters.IntegrationDb.Consumer.Municipality\Basisregisters.IntegrationDb.Consumer.Municipality.csproj", "{25CBC3D1-0365-4F56-9BEF-AC23823272ED}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Consumer.BuildingUnit", "src\Basisregisters.IntegrationDb.Consumer.BuildingUnit\Basisregisters.IntegrationDb.Consumer.BuildingUnit.csproj", "{D3170071-1C14-4B17-99A2-96F718097AA1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Municipality.GeometryImporter", "src\Basisregisters.IntegrationDb.Municipality.GeometryImporter\Basisregisters.IntegrationDb.Municipality.GeometryImporter.csproj", "{9FA9925D-3292-43AA-A607-51B365008A35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,26 +90,6 @@ Global
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}.Release|x64.Build.0 = Release|Any CPU
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}.Release|x86.ActiveCfg = Release|Any CPU
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}.Release|x86.Build.0 = Release|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Debug|x64.Build.0 = Debug|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Debug|x86.Build.0 = Debug|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Release|x64.ActiveCfg = Release|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Release|x64.Build.0 = Release|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Release|x86.ActiveCfg = Release|Any CPU
-		{9FA9925D-3292-43AA-A607-51B365008A35}.Release|x86.Build.0 = Release|Any CPU
-		{B82F6A0D-2DB9-44C6-A516-5BD6C1037460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B82F6A0D-2DB9-44C6-A516-5BD6C1037460}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8ABB1D7A-BFB0-4B5A-BF62-A7C40DAA6B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8ABB1D7A-BFB0-4B5A-BF62-A7C40DAA6B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3170071-1C14-4B17-99A2-96F718097AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3170071-1C14-4B17-99A2-96F718097AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25CBC3D1-0365-4F56-9BEF-AC23823272ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25CBC3D1-0365-4F56-9BEF-AC23823272ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,11 +99,6 @@ Global
 		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC} = {A5E1149A-0437-4CD0-93A2-6E7E059C74BE}
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9} = {A5E1149A-0437-4CD0-93A2-6E7E059C74BE}
 		{B6540121-7CE0-4E3C-B247-9E9E966EA8BC} = {C2F8FF63-7A48-4179-A720-86206C42F496}
-		{B82F6A0D-2DB9-44C6-A516-5BD6C1037460} = {C2F8FF63-7A48-4179-A720-86206C42F496}
-		{8ABB1D7A-BFB0-4B5A-BF62-A7C40DAA6B52} = {C2F8FF63-7A48-4179-A720-86206C42F496}
-		{D3170071-1C14-4B17-99A2-96F718097AA1} = {C2F8FF63-7A48-4179-A720-86206C42F496}
-		{25CBC3D1-0365-4F56-9BEF-AC23823272ED} = {C2F8FF63-7A48-4179-A720-86206C42F496}
-		{9FA9925D-3292-43AA-A607-51B365008A35} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2EB87445-E263-4E1E-89CC-3839170028E5}
