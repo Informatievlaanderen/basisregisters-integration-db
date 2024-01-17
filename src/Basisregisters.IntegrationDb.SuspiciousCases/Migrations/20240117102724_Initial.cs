@@ -4,12 +4,14 @@
 
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
+    using SuspiciousCases.Views;
+
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(Views.SuspiciousCases.StreetNamesLongerThanTwoYearsProposedConfiguration.Create);
-            migrationBuilder.Sql(Views.SuspiciousCases.SuspiciousCaseListItemConfiguration.Create);
+            migrationBuilder.Sql(StreetNamesLongerThanTwoYearsProposedConfiguration.Create);
+            migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

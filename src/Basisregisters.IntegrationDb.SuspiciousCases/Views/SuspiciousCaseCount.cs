@@ -1,21 +1,21 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Views.SuspiciousCases
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class SuspiciousCaseListItem
+    public class SuspiciousCaseCount
     {
         public string NisCode { get; set; }
         public int Count { get; set; }
         public SuspiciousCasesType Type { get; set; }
 
-        public SuspiciousCaseListItem()
+        public SuspiciousCaseCount()
         { }
     }
 
-    public sealed class SuspiciousCaseListItemConfiguration : IEntityTypeConfiguration<SuspiciousCaseListItem>
+    public sealed class SuspiciousCaseCountConfiguration : IEntityTypeConfiguration<SuspiciousCaseCount>
     {
-        public void Configure(EntityTypeBuilder<SuspiciousCaseListItem> builder)
+        public void Configure(EntityTypeBuilder<SuspiciousCaseCount> builder)
         {
             builder
                 .ToView(ViewName, Schema)
@@ -35,7 +35,7 @@
         }
 
         public const string Schema = SuspiciousCasesContext.SchemaSuspiciousCases;
-        public const string ViewName = "view_suspicious_cases_list_item";
+        public const string ViewName = "view_suspicious_cases_counts";
 
         public static readonly string Create =
             @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema}.{ViewName} AS

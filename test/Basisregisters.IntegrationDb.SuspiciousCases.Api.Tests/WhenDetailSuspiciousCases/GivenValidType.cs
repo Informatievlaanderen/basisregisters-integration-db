@@ -13,18 +13,21 @@
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Primitives;
     using Moq;
-    using NisCodeService.HardCoded;
+    using NisCodeService.Abstractions;
     using Schema;
     using Xunit;
 
-    public class GivenInterneBijwerkerWithWhiteListedOvoCode
+    public class GivenValidType
     {
         private readonly Mock<IMediator> _mediator = new();
-
         private readonly IActionResult _response;
 
-        public GivenInterneBijwerkerWithWhiteListedOvoCode()
+
+        public GivenValidType()
         {
+            const string ovoCode = "OVO003105";
+            const string expectedNisCode = "11202";
+
             Mock<IActionContextAccessor> actionContextAccessor = new();
             actionContextAccessor
                 .Setup(x => x.ActionContext)
@@ -34,16 +37,21 @@
                     {
                         User = new ClaimsPrincipal(new[]
                         {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO002949") })
+                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, ovoCode) })
                         }),
                     }
                 });
 
+            Mock<INisCodeService> nisCodeService = new();
+            nisCodeService
+                .Setup(x => x.Get(ovoCode, CancellationToken.None))
+                .ReturnsAsync(expectedNisCode);
+
             var suspiciousCasesController = new SuspiciousCasesController(
                 _mediator.Object,
                 actionContextAccessor.Object,
-                new OvoCodeWhiteList(new List<string> { "OVO002949" }),
-                new HardCodedNisCodeService())
+                new OvoCodeWhiteList(new List<string>()),
+                nisCodeService.Object)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -64,12 +72,11 @@
         }
 
         [Fact]
-        public void ThenNisCodeFromHeadersIsUsed()
+        public void ThenMediatorIsCalled()
         {
             _mediator.Verify(x => x.Send(
                 It.Is<SuspiciousCasesDetailRequest>(y =>
-                    y.FilteringHeader.Filter.NisCode == "11001"
-                    && y.Type == SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed),
+                    y.Type == SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed),
                 It.IsAny<CancellationToken>()));
         }
     }

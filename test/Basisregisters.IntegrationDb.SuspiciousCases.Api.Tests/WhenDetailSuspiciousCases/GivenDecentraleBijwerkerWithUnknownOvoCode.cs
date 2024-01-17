@@ -13,6 +13,7 @@
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.Abstractions;
+    using Schema;
     using Xunit;
 
     public class GivenDecentraleBijwerkerWithUnknownOvoCode
@@ -55,7 +56,7 @@
                 }
             };
 
-            _response = suspiciousCasesController.Detail("type", CancellationToken.None).Result;
+            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None).Result;
         }
 
         [Fact]

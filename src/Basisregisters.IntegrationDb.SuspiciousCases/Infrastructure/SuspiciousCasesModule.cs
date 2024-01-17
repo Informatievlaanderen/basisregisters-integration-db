@@ -1,11 +1,11 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Infrastructure
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Infrastructure
 {
     using System;
+    using Autofac;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Autofac;
-    using Microsoft.EntityFrameworkCore;
 
     public class SuspiciousCasesModule : Module
     {

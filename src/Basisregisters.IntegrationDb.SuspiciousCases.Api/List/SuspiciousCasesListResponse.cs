@@ -12,11 +12,11 @@
         /// </summary>
         [DataMember(Name = "resultaat", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
-        public List<SuspiciousCasesListResponseItem> VerdachteGevallen { get; set; }
+        public List<SuspiciousCasesListResponseItem> Results { get; set; }
 
-        public SuspiciousCasesListResponse(List<SuspiciousCasesListResponseItem> verdachteGevallen)
+        public SuspiciousCasesListResponse(List<SuspiciousCasesListResponseItem> results)
         {
-            VerdachteGevallen = verdachteGevallen;
+            Results = results;
         }
     }
 }

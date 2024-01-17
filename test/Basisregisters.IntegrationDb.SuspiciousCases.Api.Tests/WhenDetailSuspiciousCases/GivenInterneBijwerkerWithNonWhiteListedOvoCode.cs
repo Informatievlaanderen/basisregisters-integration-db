@@ -13,6 +13,7 @@
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.HardCoded;
+    using Schema;
     using Xunit;
 
     public class GivenInterneBijwerkerWithNonWhiteListedOvoCode
@@ -50,7 +51,7 @@
                 }
             };
 
-            _response = suspiciousCasesController.Detail(string.Empty, CancellationToken.None).Result;
+            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None).Result;
         }
 
         [Fact]

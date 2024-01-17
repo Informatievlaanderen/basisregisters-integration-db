@@ -1,20 +1,24 @@
-﻿namespace Basisregisters.IntegrationDb.Schema
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
-    using Views.SuspiciousCases;
+    using Views;
 
     public class SuspiciousCasesContext : DbContext
     {
         public const string SchemaSuspiciousCases = "integration_suspicious_cases";
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
 
-        public DbSet<SuspiciousCaseListItem> SuspiciousCaseListItems { get; set; }
+        public DbSet<SuspiciousCaseCount> SuspiciousCaseCounts => Set<SuspiciousCaseCount>();
 
-
+        public DbSet<StreetNamesLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNamesLongerThanTwoYearsProposed>();
 
         // public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
         // public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
@@ -24,6 +28,57 @@
         // public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits { get; set; }
         // public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds { get; set; }
         // public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNameWithoutLinkedRoadSegments { get; set; }
+
+        public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
+            SuspiciousCasesType type,
+            string nisCode,
+            int offset,
+            int limit,
+            CancellationToken ct)
+        {
+            switch (type)
+            {
+                case SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits:
+                    break;
+                case SuspiciousCasesType.ProposedAddressWithoutLinkedParcelsOrBuildingUnits:
+                    break;
+                case SuspiciousCasesType.AddressesOutsideOfMunicipalityBoundaries:
+                    break;
+                case SuspiciousCasesType.CurrentStreetNamesWithoutRoadSegment:
+                    break;
+                case SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed:
+                    return await StreetNamesLongerThanTwoYearsProposed
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.StreetNamePersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.AddressesLongerThanTwoYearsProposed:
+                    break;
+                case SuspiciousCasesType.RoadSegmentsLongerThanTwoYearsProposed:
+                    break;
+                case SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned:
+                    break;
+                case SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned:
+                    break;
+                case SuspiciousCasesType.StreetNameWithOnlyOneRoadSegmentToOnlyOneSide:
+                    break;
+                case SuspiciousCasesType.AddressesAppointedByAdministratorOutsideLinkedBuilding:
+                    break;
+                case SuspiciousCasesType.AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit:
+                    break;
+                case SuspiciousCasesType.BuildingUnitsWithoutAddress:
+                    break;
+                case SuspiciousCasesType.BuildingUnitsLinkedToMultipleAddresses:
+                    break;
+                case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
 
         public SuspiciousCasesContext()
         { }

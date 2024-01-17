@@ -11,6 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
+    using SuspiciousCases;
+
     [DbContext(typeof(SuspiciousCasesContext))]
     [Migration("20240117102724_Initial")]
     partial class Initial

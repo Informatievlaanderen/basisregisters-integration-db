@@ -10,6 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Basisregisters.IntegrationDb.Schema.Migrations
 {
+    using SuspiciousCases;
+
     [DbContext(typeof(SuspiciousCasesContext))]
     partial class SuspiciousCasesContextModelSnapshot : ModelSnapshot
     {

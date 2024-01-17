@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using NisCodeService.HardCoded.Extensions;
-    using Schema.Infrastructure;
+    using SuspiciousCases.Infrastructure;
 
     public class ApiModule : Module
     {

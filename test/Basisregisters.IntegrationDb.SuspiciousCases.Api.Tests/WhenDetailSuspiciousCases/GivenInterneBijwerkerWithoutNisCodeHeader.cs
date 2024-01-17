@@ -15,6 +15,7 @@
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.HardCoded;
+    using Schema;
     using Xunit;
 
     public class GivenInterneBijwerkerWithoutNisCodeHeader
@@ -54,9 +55,10 @@
         }
 
         [Fact]
-        public void ThenOkResponse()
+        public void ThenBadRequestResponse()
         {
-            var act = () => _suspiciousCasesController.Detail("type", CancellationToken.None);
+            var act = () =>
+                _suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None);
             act
                 .Should()
                 .ThrowAsync<ValidationException>()

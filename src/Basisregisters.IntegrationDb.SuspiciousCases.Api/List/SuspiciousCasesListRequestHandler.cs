@@ -24,7 +24,7 @@
 
         public async Task<SuspiciousCasesListResponse> Handle(SuspiciousCasesListRequest listRequest, CancellationToken cancellationToken)
         {
-            var suspiciousCases = await _context.SuspiciousCaseListItems
+            var suspiciousCases = await _context.SuspiciousCaseCounts
                 .Where(x => x.NisCode == listRequest.FilteringHeader.Filter.NisCode)
                 .ToListAsync(cancellationToken: cancellationToken);
 

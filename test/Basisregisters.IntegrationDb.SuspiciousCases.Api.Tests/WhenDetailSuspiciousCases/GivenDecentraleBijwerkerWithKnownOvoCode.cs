@@ -14,6 +14,7 @@
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.Abstractions;
+    using Schema;
     using Xunit;
 
     public class GivenDecentraleBijwerkerWithKnownOvoCode
@@ -60,7 +61,7 @@
                 }
             };
 
-            _response = suspiciousCasesController.Detail("type", CancellationToken.None).Result;
+            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None).Result;
         }
 
         [Fact]
@@ -75,7 +76,7 @@
             _mediator.Verify(x => x.Send(
                 It.Is<SuspiciousCasesDetailRequest>(y =>
                     y.FilteringHeader.Filter.NisCode == ExpectedNisCode &&
-                    y.Type == "type"),
+                    y.Type == SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed),
                 It.IsAny<CancellationToken>()));
         }
     }
