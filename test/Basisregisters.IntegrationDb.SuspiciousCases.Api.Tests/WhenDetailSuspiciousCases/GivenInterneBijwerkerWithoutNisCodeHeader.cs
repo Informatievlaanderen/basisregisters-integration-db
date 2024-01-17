@@ -15,7 +15,6 @@
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.HardCoded;
-    using Schema;
     using Xunit;
 
     public class GivenInterneBijwerkerWithoutNisCodeHeader

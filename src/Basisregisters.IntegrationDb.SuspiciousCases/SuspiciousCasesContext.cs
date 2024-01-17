@@ -102,7 +102,7 @@
     {
         public SuspiciousCasesContext CreateDbContext(string[] args)
         {
-            var migrationConnectionStringName = "IntegrationDbAdmin";
+            var migrationConnectionStringName = "IntegrationAdmin";
 
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

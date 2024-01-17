@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace Basisregisters.IntegrationDb.Schema.Migrations
+namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 {
-    using SuspiciousCases.Views;
+    using Views;
 
     public partial class Initial : Migration
     {

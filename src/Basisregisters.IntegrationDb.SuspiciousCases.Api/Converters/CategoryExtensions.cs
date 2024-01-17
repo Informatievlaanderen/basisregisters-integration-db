@@ -2,7 +2,6 @@
 {
     using System;
     using List;
-    using Schema;
 
     public static class CategoryExtensions
     {

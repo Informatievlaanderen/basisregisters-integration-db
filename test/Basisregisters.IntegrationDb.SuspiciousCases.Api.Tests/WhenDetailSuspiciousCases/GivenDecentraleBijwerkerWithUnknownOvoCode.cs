@@ -13,7 +13,6 @@
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.Abstractions;
-    using Schema;
     using Xunit;
 
     public class GivenDecentraleBijwerkerWithUnknownOvoCode

@@ -18,7 +18,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using NisCodeService.Abstractions;
-    using Schema;
 
     [ApiVersion("2.0")]
     [AdvertiseApiVersions("2.0")]

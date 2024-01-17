@@ -5,7 +5,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using Microsoft.Extensions.Logging;
     using Npgsql;
     using Polly;
-    using Schema;
 
     public class MigrationsLogger { }
 

@@ -5,7 +5,6 @@
     using System.Runtime.Serialization;
     using Infrastructure;
     using Newtonsoft.Json;
-    using Schema;
     using Views;
 
     [DataContract(Name = "VerdachtGevalCollectie", Namespace = "")]

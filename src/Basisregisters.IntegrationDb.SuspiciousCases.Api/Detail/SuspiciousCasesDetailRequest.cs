@@ -3,7 +3,6 @@
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
     using MediatR;
-    using Schema;
 
     public sealed record SuspiciousCasesDetailRequest(
         FilteringHeader<SuspiciousCasesDetailFilter> FilteringHeader,

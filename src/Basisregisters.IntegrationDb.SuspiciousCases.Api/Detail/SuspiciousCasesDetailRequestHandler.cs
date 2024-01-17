@@ -8,7 +8,6 @@
     using Infrastructure;
     using MediatR;
     using Microsoft.Extensions.Options;
-    using Schema;
 
     public sealed class SuspiciousCasesDetailRequestHandler : IRequestHandler<SuspiciousCasesDetailRequest, SuspiciousCasesDetailResponse>
     {

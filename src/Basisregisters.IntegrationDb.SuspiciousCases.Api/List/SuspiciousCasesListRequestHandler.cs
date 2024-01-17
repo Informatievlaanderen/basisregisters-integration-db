@@ -9,7 +9,6 @@
     using MediatR;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
-    using Schema;
 
     public sealed class SuspiciousCasesListRequestHandler : IRequestHandler<SuspiciousCasesListRequest, SuspiciousCasesListResponse>
     {
