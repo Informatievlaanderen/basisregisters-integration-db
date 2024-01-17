@@ -1,4 +1,4 @@
-AspNetCore.HealthChecks.SqlServer
+AspNetCore.HealthChecks.NpgSql
 
 Autofac
 

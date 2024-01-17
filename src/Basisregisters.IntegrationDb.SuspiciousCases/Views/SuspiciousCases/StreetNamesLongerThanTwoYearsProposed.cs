@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Models.Views.SuspiciousCases
+﻿namespace Basisregisters.IntegrationDb.Schema.Views.SuspiciousCases
 {
     using System;
     using Microsoft.EntityFrameworkCore;
@@ -34,7 +34,6 @@
                 .HasColumnName("nis_code");
             builder.Property(x => x.Timestamp)
                 .HasColumnName("timestamp");
-
         }
 
         public const string Schema = SuspiciousCasesContext.SchemaSuspiciousCases;

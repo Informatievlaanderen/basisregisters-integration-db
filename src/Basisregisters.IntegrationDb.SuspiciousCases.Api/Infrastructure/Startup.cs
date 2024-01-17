@@ -5,8 +5,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using System.Reflection;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Be.Vlaanderen.Basisregisters.Api;
+    using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Microsoft;
     using Configuration;
     using IdentityModel.AspNetCore.OAuth2Introspection;
@@ -14,16 +14,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Abstractions;
     using Microsoft.OpenApi.Models;
     using Modules;
-    using Schema;
 
     /// <summary>Represents the startup process for the application.</summary>
     public class Startup
@@ -100,10 +97,10 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                     .GetChildren();
 
                                 foreach (var connectionString in connectionStrings)
-                                    health.AddSqlServer(
+                                    health.AddNpgSql(
                                         connectionString.Value,
-                                        name: $"sqlserver-{connectionString.Key.ToLowerInvariant()}",
-                                        tags: new[] { DatabaseTag, "sql", "sqlserver" });
+                                        name: $"npgsql-{connectionString.Key.ToLowerInvariant()}",
+                                        tags: new[] {DatabaseTag, "sql", "npgsql"});
                             },
                             Authorization = options => { options.AddAcmIdmAuthorization(); }
                         }
@@ -112,22 +109,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                 .EnableJsonErrorActionFilterOption())
                 .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"))
                 .AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // Used to retrieve the authenticated user claims.
-
-            var connectionString = _configuration.GetConnectionString("IntegrationDb")
-                                   ?? throw new InvalidOperationException(
-                                       $"Could not find a connection string with name 'IntegrationDb'");
-
-            services
-                .AddDbContext<SuspiciousCasesContext>((_, options) =>
-                {
-                    options.UseLoggerFactory(new NullLoggerFactory());
-                    options.UseNpgsql(connectionString, sqlServerOptions =>
-                    {
-                        sqlServerOptions.EnableRetryOnFailure();
-                        sqlServerOptions.MigrationsHistoryTable(SuspiciousCasesContext.MigrationsTableName, SuspiciousCasesContext.Schema);
-                        sqlServerOptions.UseNetTopologySuite();
-                    });
-                });
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new ApiModule(_configuration, services, _loggerFactory));
@@ -201,11 +182,11 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                     }
                 });
 
-            // MigrationsHelper.Run(
-            //     _configuration.GetConnectionString("SuspiciousCasesAdmin"),
-            //     serviceProvider.GetService<ILoggerFactory>());
+            MigrationsHelper.Run(
+                _configuration.GetConnectionString("Integration"),
+                serviceProvider.GetService<ILoggerFactory>());
 
-            //StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag, loggerFactory).GetAwaiter().GetResult();
+            StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag, loggerFactory).GetAwaiter().GetResult();
         }
 
         private static string GetApiLeadingText(ApiVersionDescription description)

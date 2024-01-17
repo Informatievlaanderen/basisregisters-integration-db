@@ -1,7 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
 {
     using System.Collections.Generic;
-    using Schema.Models;
+    using Schema;
 
     public class SuspiciousCase
     {

@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Models
+﻿namespace Basisregisters.IntegrationDb.Schema
 {
     public enum SuspiciousCasesType
     {

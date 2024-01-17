@@ -5,11 +5,10 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
-    using Models.Views.SuspiciousCases;
+    using Views.SuspiciousCases;
 
     public class SuspiciousCasesContext : DbContext
     {
-        public const string Schema = "integration";
         public const string SchemaSuspiciousCases = "integration_suspicious_cases";
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
 
@@ -38,10 +37,10 @@
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SuspiciousCasesContext).Assembly);
         }
 
-        public void RefreshView(string viewName)
-        {
-            Database.ExecuteSqlRaw(@$"REFRESH MATERIALIZED VIEW ""{Schema}"".""{viewName}"";");
-        }
+        // public void RefreshView(string viewName)
+        // {
+        //     Database.ExecuteSqlRaw(@$"REFRESH MATERIALIZED VIEW ""{Schema}"".""{viewName}"";");
+        // }
     }
 
     public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<SuspiciousCasesContext>
@@ -70,7 +69,7 @@
                     npgSqlOptions.EnableRetryOnFailure();
                     npgSqlOptions.MigrationsHistoryTable(
                         SuspiciousCasesContext.MigrationsTableName,
-                        SuspiciousCasesContext.Schema);
+                        SuspiciousCasesContext.SchemaSuspiciousCases);
                     npgSqlOptions.UseNetTopologySuite();
                     npgSqlOptions.CommandTimeout(260);
                 });
