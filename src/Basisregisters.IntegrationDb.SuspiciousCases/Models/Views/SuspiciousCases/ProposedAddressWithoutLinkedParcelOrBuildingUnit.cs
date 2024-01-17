@@ -20,7 +20,7 @@
         public void Configure(EntityTypeBuilder<ProposedAddressWithoutLinkedParcelOrBuildingUnit> builder)
         {
             builder
-                .ToView(nameof(ProposedAddressWithoutLinkedParcelOrBuildingUnit), IntegrationContext.Schema)
+                .ToView(nameof(ProposedAddressWithoutLinkedParcelOrBuildingUnit), SuspiciousCasesContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"SELECT
                                 ""AddressPersistentLocalId"",
@@ -29,7 +29,7 @@
                                 FROM  {ViewName} ");
         }
 
-        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(ProposedAddressWithoutLinkedParcelOrBuildingUnit)}""";
+        public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(ProposedAddressWithoutLinkedParcelOrBuildingUnit)}""";
 
         public const string Create = $@"
             CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS

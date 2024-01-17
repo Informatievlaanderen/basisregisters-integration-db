@@ -19,7 +19,7 @@
         public void Configure(EntityTypeBuilder<BuildingUnitLinkedToMultipleAddresses> builder)
         {
             builder
-                .ToView(nameof(BuildingUnitLinkedToMultipleAddresses), IntegrationContext.Schema)
+                .ToView(nameof(BuildingUnitLinkedToMultipleAddresses), SuspiciousCasesContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"SELECT
                                 ""BuildingUnitPersistentLocalId"",
@@ -28,7 +28,7 @@
                                 FROM  {ViewName}");
         }
 
-        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(BuildingUnitLinkedToMultipleAddresses)}""";
+        public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(BuildingUnitLinkedToMultipleAddresses)}""";
 
         public const string Create = $@"
             SELECT

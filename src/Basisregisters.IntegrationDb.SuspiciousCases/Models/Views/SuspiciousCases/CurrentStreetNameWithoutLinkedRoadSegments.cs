@@ -20,7 +20,7 @@
         public void Configure(EntityTypeBuilder<CurrentStreetNameWithoutLinkedRoadSegments> builder)
         {
             builder
-                .ToView(nameof(CurrentStreetNameWithoutLinkedRoadSegments), IntegrationContext.Schema)
+                .ToView(nameof(CurrentStreetNameWithoutLinkedRoadSegments), SuspiciousCasesContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
@@ -30,7 +30,7 @@
                             FROM  {ViewName} ");
         }
 
-        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(CurrentStreetNameWithoutLinkedRoadSegments)}""";
+        public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(CurrentStreetNameWithoutLinkedRoadSegments)}""";
 
         public const string Create = $@"
             CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS

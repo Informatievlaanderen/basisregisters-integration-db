@@ -5,36 +5,37 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
-    using Models;
-    using Models.Views;
     using Models.Views.SuspiciousCases;
 
-    public class IntegrationContext : DbContext
+    public class SuspiciousCasesContext : DbContext
     {
-        public const string Schema = "Integration";
+        public const string Schema = "integration";
+        public const string SchemaSuspiciousCases = "integration_suspicious_cases";
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
 
         public DbSet<SuspiciousCaseListItem> SuspiciousCaseListItems { get; set; }
 
-        public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
-        public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
 
-        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
-        public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
-        public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits { get; set; }
-        public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds { get; set; }
-        public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNameWithoutLinkedRoadSegments { get; set; }
 
-        public IntegrationContext()
+        // public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
+        // public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
+        //
+        // public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
+        // public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressWithoutLinkedParcelOrBuildingUnits { get; set; }
+        // public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits { get; set; }
+        // public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds { get; set; }
+        // public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNameWithoutLinkedRoadSegments { get; set; }
+
+        public SuspiciousCasesContext()
         { }
 
-        public IntegrationContext(DbContextOptions<IntegrationContext> options)
+        public SuspiciousCasesContext(DbContextOptions<SuspiciousCasesContext> options)
             : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(IntegrationContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SuspiciousCasesContext).Assembly);
         }
 
         public void RefreshView(string viewName)
@@ -43,9 +44,9 @@
         }
     }
 
-    public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<IntegrationContext>
+    public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<SuspiciousCasesContext>
     {
-        public IntegrationContext CreateDbContext(string[] args)
+        public SuspiciousCasesContext CreateDbContext(string[] args)
         {
             var migrationConnectionStringName = "IntegrationDbAdmin";
 
@@ -57,7 +58,7 @@
                 .AddEnvironmentVariables()
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<IntegrationContext>();
+            var builder = new DbContextOptionsBuilder<SuspiciousCasesContext>();
 
             var connectionString = configuration
                                     .GetConnectionString(migrationConnectionStringName)
@@ -68,13 +69,13 @@
                 {
                     npgSqlOptions.EnableRetryOnFailure();
                     npgSqlOptions.MigrationsHistoryTable(
-                        IntegrationContext.MigrationsTableName,
-                        IntegrationContext.Schema);
+                        SuspiciousCasesContext.MigrationsTableName,
+                        SuspiciousCasesContext.Schema);
                     npgSqlOptions.UseNetTopologySuite();
                     npgSqlOptions.CommandTimeout(260);
                 });
 
-            return new IntegrationContext(builder.Options);
+            return new SuspiciousCasesContext(builder.Options);
         }
     }
 }

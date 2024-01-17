@@ -19,7 +19,7 @@
         public void Configure(EntityTypeBuilder<SuspiciousCaseListItem> builder)
         {
             builder
-                .ToView(nameof(SuspiciousCaseListItem), IntegrationContext.Schema)
+                .ToView(nameof(SuspiciousCaseListItem), SuspiciousCasesContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"select
                                 ""NisCode""
@@ -28,7 +28,7 @@
                             FROM {ViewName}");
         }
 
-        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(SuspiciousCaseListItemConfiguration)}""";
+        public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(SuspiciousCaseListItemConfiguration)}""";
 
         public static readonly string Create =
             @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS

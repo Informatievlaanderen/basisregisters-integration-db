@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.MigrationHelper", "src\EF.MigrationsHelper\EF.MigrationHelper.csproj", "{1005EBD8-0E8D-4D8F-8780-70F8B281550C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Schema", "src\Basisregisters.IntegrationDb.Schema\Basisregisters.IntegrationDb.Schema.csproj", "{B6540121-7CE0-4E3C-B247-9E9E966EA8BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases", "src\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj", "{B6540121-7CE0-4E3C-B247-9E9E966EA8BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api\Basisregisters.IntegrationDb.SuspiciousCases.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
 EndProject

@@ -18,7 +18,7 @@
         public void Configure(EntityTypeBuilder<BuildingUnitAddressRelations> builder)
         {
             builder
-                .ToView(nameof(BuildingUnitAddressRelations), IntegrationContext.Schema)
+                .ToView(nameof(BuildingUnitAddressRelations), SuspiciousCasesContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
@@ -28,7 +28,7 @@
                             FROM  {ViewName} ");
         }
 
-        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(BuildingUnitAddressRelations)}""";
+        public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(BuildingUnitAddressRelations)}""";
 
         public const string Create = $@"
             CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS

@@ -19,7 +19,7 @@
         public void Configure(EntityTypeBuilder<CurrentAddressesOutsideMunicipalityBounds> builder)
         {
             builder
-                .ToView(nameof(CurrentAddressesOutsideMunicipalityBounds), IntegrationContext.Schema)
+                .ToView(nameof(CurrentAddressesOutsideMunicipalityBounds), SuspiciousCasesContext.Schema)
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
@@ -30,7 +30,7 @@
         }
 
 
-        public const string ViewName = @$"""{IntegrationContext.Schema}"".""VIEW_{nameof(CurrentAddressesOutsideMunicipalityBounds)}""";
+        public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(CurrentAddressesOutsideMunicipalityBounds)}""";
 
         public const string Create = $@"
             CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS

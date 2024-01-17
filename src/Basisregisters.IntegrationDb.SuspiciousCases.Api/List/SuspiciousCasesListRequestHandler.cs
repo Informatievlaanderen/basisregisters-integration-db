@@ -13,10 +13,10 @@
 
     public sealed class SuspiciousCasesListRequestHandler : IRequestHandler<SuspiciousCasesListRequest, SuspiciousCasesListResponse>
     {
-        private readonly IntegrationContext _context;
+        private readonly SuspiciousCasesContext _context;
         private readonly ResponseOptions _responseOptions;
 
-        public SuspiciousCasesListRequestHandler(IntegrationContext context, IOptions<ResponseOptions> responseOptions)
+        public SuspiciousCasesListRequestHandler(SuspiciousCasesContext context, IOptions<ResponseOptions> responseOptions)
         {
             _context = context;
             _responseOptions = responseOptions.Value;

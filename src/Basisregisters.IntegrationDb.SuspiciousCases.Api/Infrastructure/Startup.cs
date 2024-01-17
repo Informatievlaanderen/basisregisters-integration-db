@@ -118,13 +118,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                        $"Could not find a connection string with name 'IntegrationDb'");
 
             services
-                .AddDbContext<IntegrationContext>((_, options) =>
+                .AddDbContext<SuspiciousCasesContext>((_, options) =>
                 {
                     options.UseLoggerFactory(new NullLoggerFactory());
                     options.UseNpgsql(connectionString, sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
-                        sqlServerOptions.MigrationsHistoryTable(IntegrationContext.MigrationsTableName, IntegrationContext.Schema);
+                        sqlServerOptions.MigrationsHistoryTable(SuspiciousCasesContext.MigrationsTableName, SuspiciousCasesContext.Schema);
                         sqlServerOptions.UseNetTopologySuite();
                     });
                 });
