@@ -7,8 +7,6 @@ nuget Microsoft.Build 17.3.2
 nuget Microsoft.Build.Framework 17.3.2
 nuget Microsoft.Build.Tasks.Core 17.3.2
 nuget Microsoft.Build.Utilities.Core 17.3.2
-nuget Microsoft.NET.StringTools 17.3.2
-nuget FSharp.Core 6.0
 
 nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.6 //"
 
@@ -25,7 +23,7 @@ let product = "Basisregisters Vlaanderen"
 let copyright = "Copyright (c) Vlaamse overheid"
 let company = "Vlaamse overheid"
 
-let dockerRepository = "address-registry"
+let dockerRepository = "integration-db"
 let assemblyVersionNumber = (sprintf "2.%s")
 let nugetVersionNumber = (sprintf "%s")
 
@@ -43,85 +41,24 @@ supportedRuntimeIdentifiers <- [ "msil"; "linux-x64" ]
 
 // Solution -----------------------------------------------------------------------
 
-Target.create "Restore_Solution" (fun _ -> restore "AddressRegistry")
+Target.create "Restore_Solution" (fun _ -> restore "Basisregisters.IntegrationDb")
 
 Target.create "Build_Solution" (fun _ ->
   setVersions "SolutionInfo.cs"
-  buildSolution "AddressRegistry"
-)
+  buildSolution "Basisregisters.IntegrationDb")
 
 Target.create "Test_Solution" (fun _ ->
     [
-        "test" @@ "AddressRegistry.Tests"
-        "test" @@ "AddressRegistry.Api.Legacy.Tests"
+        "test" @@ "Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests"
     ] |> List.iter testWithDotNet
 )
 
 Target.create "Publish_Solution" (fun _ ->
   [
-    "AddressRegistry.Projector"
-    "AddressRegistry.Api.Legacy"
-    "AddressRegistry.Api.Oslo"
-    "AddressRegistry.Api.Extract"
-    "AddressRegistry.Api.CrabImport"
-    "AddressRegistry.Api.BackOffice"
-    "AddressRegistry.Api.BackOffice.Abstractions"
-    "AddressRegistry.Api.BackOffice.Handlers.Lambda"
-    "AddressRegistry.Consumer"
-    "AddressRegistry.Consumer.Read.Municipality"
-    "AddressRegistry.Consumer.Read.StreetName"
-    "AddressRegistry.Migrator.Address"
-    "AddressRegistry.Producer"
-    "AddressRegistry.Producer.Snapshot.Oslo"
-    "AddressRegistry.Projections.BackOffice"
-    "AddressRegistry.Projections.Legacy"
-    "AddressRegistry.Projections.Extract"
-    "AddressRegistry.Projections.LastChangedList"
-    "AddressRegistry.Projections.Syndication"
-    "AddressRegistry.Projections.Wfs"
-    "AddressRegistry.Projections.Wms"
-    "AddressRegistry.Snapshot.Verifier"
-  ] |> List.iter publishSource
+    "Basisregisters.IntegrationDb.SuspiciousCases.Api"
+  ] |> List.iter publishSource)
 
-  let dist = (buildDir @@ "AddressRegistry.CacheWarmer" @@ "linux")
-  let source = "src" @@ "AddressRegistry.CacheWarmer"
-
-  Directory.ensure dist
-  Shell.copyFile dist (source @@ "Dockerfile")
- )
-
-Target.create "Pack_Solution" (fun _ ->
-  [
-    "AddressRegistry.Api.Legacy"
-    "AddressRegistry.Api.Oslo"
-    "AddressRegistry.Api.Extract"
-    "AddressRegistry.Api.CrabImport"
-    "AddressRegistry.Api.BackOffice"
-    "AddressRegistry.Api.BackOffice.Abstractions"
-  ] |> List.iter pack)
-
-Target.create "Containerize_Projector" (fun _ -> containerize "AddressRegistry.Projector" "projector")
-Target.create "Containerize_ApiLegacy" (fun _ -> containerize "AddressRegistry.Api.Legacy" "api-legacy")
-Target.create "Containerize_ApiOslo" (fun _ -> containerize "AddressRegistry.Api.Oslo" "api-oslo")
-Target.create "Containerize_ApiExtract" (fun _ -> containerize "AddressRegistry.Api.Extract" "api-extract")
-Target.create "Containerize_ApiBackOffice" (fun _ -> containerize "AddressRegistry.Api.BackOffice" "api-backoffice")
-Target.create "Containerize_ApiCrabImport" (fun _ -> containerize "AddressRegistry.Api.CrabImport" "api-crab-import")
-Target.create "Containerize_Consumer" (fun _ -> containerize "AddressRegistry.Consumer" "consumer")
-Target.create "Containerize_ConsumerMunicipality" (fun _ -> containerize "AddressRegistry.Consumer.Read.Municipality" "consumer-read-municipality")
-Target.create "Containerize_ConsumerStreetName" (fun _ -> containerize "AddressRegistry.Consumer.Read.StreetName" "consumer-read-streetname")
-Target.create "Containerize_Migrator_Address" (fun _ -> containerize "AddressRegistry.Migrator.Address" "migrator-address")
-Target.create "Containerize_Producer" (fun _ -> containerize "AddressRegistry.Producer" "producer")
-Target.create "Containerize_Producer_Snapshot_Oslo" (fun _ -> containerize "AddressRegistry.Producer.Snapshot.Oslo" "producer-snapshot-oslo")
-Target.create "Containerize_ProjectionsSyndication" (fun _ -> containerize "AddressRegistry.Projections.Syndication" "projections-syndication")
-Target.create "Containerize_ProjectionsBackOffice" (fun _ -> containerize "AddressRegistry.Projections.BackOffice" "projections-backoffice")
-Target.create "Containerize_SnapshotVerifier" (fun _ -> containerize "AddressRegistry.Snapshot.Verifier" "snapshot-verifier")
-Target.create "Containerize_CacheWarmer" (fun _ ->
-  let dist = (buildDir @@ "AddressRegistry.CacheWarmer" @@ "linux")
-  let source = "src" @@ "AddressRegistry.CacheWarmer"
-
-  Directory.ensure dist
-  Shell.copyFile dist (source @@ "Dockerfile")
-  containerize "AddressRegistry.CacheWarmer" "cache-warmer")
+Target.create "Containerize_ApiSuspiciousCases" (fun _ -> containerize "Basisregisters.IntegrationDb.SuspiciousCases.Api" "api-suspicious-cases")
 
 Target.create "SetAssemblyVersions" (fun _ -> setVersions "SolutionInfo.cs")
 // --------------------------------------------------------------------------------
@@ -148,25 +85,9 @@ Target.create "Containerize" ignore
   ==> "Publish"
 
 "Publish"
-  ==> "Pack_Solution"
   ==> "Pack"
 
 "Pack"
-  //==> "Containerize_Projector"
-  //==> "Containerize_ApiLegacy"
-  //==> "Containerize_ApiOslo"
-  //==> "Containerize_ApiExtract"
-  //==> "Containerize_ApiBackOffice"
-  //==> "Containerize_ApiCrabImport"
-  //==> "Containerize_Consumer"
-  //==> "Containerize_ConsumerMunicipality"
-  //==> "Containerize_ConsumerStreetName"
-  //==> "Containerize_Migrator_Address"
-  //==> "Containerize_Producer"
-  //==> "Containerize_Producer_Snapshot_Oslo"
-  //==> "Containerize_ProjectionsSyndication"
-  //==> "Containerize_ProjectionsBackOffice"
-  //==> "Containerize_CacheWarmer"
   ==> "Containerize"
 // Possibly add more projects to containerize here
 
