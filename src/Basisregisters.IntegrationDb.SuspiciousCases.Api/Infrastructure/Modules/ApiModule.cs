@@ -12,6 +12,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using NisCodeService.HardCoded.Extensions;
+    using SuspiciousCases.Infrastructure;
 
     public class ApiModule : Module
     {
@@ -38,7 +39,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
                 .AsSelf();
 
             builder
-                .RegisterModule(new MediatRModule());
+                .RegisterModule(new MediatRModule())
+                .RegisterModule(new SuspiciousCasesModule(_configuration, _services, _loggerFactory));
 
             _services.AddAcmIdmAuthorizationHandlers();
 

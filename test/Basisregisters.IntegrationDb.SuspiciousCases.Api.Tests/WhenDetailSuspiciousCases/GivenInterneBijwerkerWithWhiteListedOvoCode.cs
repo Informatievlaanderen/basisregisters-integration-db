@@ -53,7 +53,7 @@
                 }
             };
 
-            _response = suspiciousCasesController.Detail("type", CancellationToken.None).Result;
+            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None).Result;
         }
 
         [Fact]
@@ -66,8 +66,9 @@
         public void ThenNisCodeFromHeadersIsUsed()
         {
             _mediator.Verify(x => x.Send(
-                It.Is<SuspiciousCasesDetailRequest>(
-                    y => y.FilteringHeader.Filter.NisCode == "11001" && y.Type == "type"),
+                It.Is<SuspiciousCasesDetailRequest>(y =>
+                    y.FilteringHeader.Filter.NisCode == "11001"
+                    && y.Type == SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed),
                 It.IsAny<CancellationToken>()));
         }
     }

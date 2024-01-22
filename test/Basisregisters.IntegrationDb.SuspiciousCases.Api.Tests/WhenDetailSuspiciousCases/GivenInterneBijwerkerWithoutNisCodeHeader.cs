@@ -54,9 +54,10 @@
         }
 
         [Fact]
-        public void ThenOkResponse()
+        public void ThenBadRequestResponse()
         {
-            var act = () => _suspiciousCasesController.Detail("type", CancellationToken.None);
+            var act = () =>
+                _suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None);
             act
                 .Should()
                 .ThrowAsync<ValidationException>()
