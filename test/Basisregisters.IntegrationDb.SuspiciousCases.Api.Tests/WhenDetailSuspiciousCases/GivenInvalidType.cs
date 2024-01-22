@@ -1,11 +1,13 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspiciousCases
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
+    using FluentValidation;
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -15,12 +17,17 @@
     using NisCodeService.Abstractions;
     using Xunit;
 
-    public class GivenDecentraleBijwerkerWithUnknownOvoCode
+    public class GivenInvalidType
     {
-        private readonly IActionResult _response;
+        private readonly Mock<IMediator> _mediator = new();
 
-        public GivenDecentraleBijwerkerWithUnknownOvoCode()
+        private readonly SuspiciousCasesController _suspiciousCasesController;
+
+        public GivenInvalidType()
         {
+            const string ovoCode = "OVO003105";
+            const string expectedNisCode = "11202";
+
             Mock<IActionContextAccessor> actionContextAccessor = new();
             actionContextAccessor
                 .Setup(x => x.ActionContext)
@@ -30,18 +37,18 @@
                     {
                         User = new ClaimsPrincipal(new[]
                         {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO003105") })
+                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, ovoCode) })
                         }),
                     }
                 });
 
             Mock<INisCodeService> nisCodeService = new();
             nisCodeService
-                .Setup(x => x.Get("OVO003105", CancellationToken.None))
-                .ReturnsAsync(string.Empty);
+                .Setup(x => x.Get(ovoCode, CancellationToken.None))
+                .ReturnsAsync(expectedNisCode);
 
-            var suspiciousCasesController = new SuspiciousCasesController(
-                new Mock<IMediator>().Object,
+            _suspiciousCasesController = new SuspiciousCasesController(
+                _mediator.Object,
                 actionContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 nisCodeService.Object)
@@ -54,14 +61,21 @@
                     }
                 }
             };
-
-            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None).Result;
         }
 
         [Fact]
-        public void ThenOkResponse()
+        public void ThenBadRequestResponse()
         {
-            _response.Should().BeOfType<ForbidResult>();
+            var act = () => _suspiciousCasesController.Detail(int.MaxValue, CancellationToken.None);
+
+            act
+                .Should()
+                .ThrowAsync<ValidationException>()
+                .Result
+                .Where(x =>
+                    x.Errors.Any(e =>
+                        e.ErrorCode == "OngeldigType"
+                        && e.ErrorMessage == "Ongeldig verdacht geval type."));
         }
     }
 }

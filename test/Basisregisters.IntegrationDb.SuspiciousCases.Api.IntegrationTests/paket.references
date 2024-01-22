@@ -8,7 +8,7 @@ Microsoft.Data.SqlClient
 
 Be.Vlaanderen.Basisregisters.DockerUtilities
 
-AspNetCore.HealthChecks.SqlServer
+AspNetCore.HealthChecks.NpgSql
 
 Be.Vlaanderen.Basisregisters.Auth.AcmIdm
 Be.Vlaanderen.Basisregisters.Api

@@ -9,5 +9,6 @@
         public string ParcelDetailUrl { get; set; }
         public string RoadSegmentDetailUrl { get; set; }
         public string SuspiciousCasesTypeUrl { get; set; }
+        public string SuspiciousCasesTypeNextUrl { get; set; }
     }
 }

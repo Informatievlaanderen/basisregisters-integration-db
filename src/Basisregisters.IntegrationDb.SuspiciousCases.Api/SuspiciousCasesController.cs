@@ -1,9 +1,11 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
+    using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Detail;
@@ -84,7 +86,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         [HttpGet("{type}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> Detail(
-            [FromRoute] string type,
+            [FromRoute] int type,
             CancellationToken cancellationToken)
         {
             var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
@@ -119,7 +121,22 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                 });
             }
 
-            var response = await _mediator.Send(new SuspiciousCasesDetailRequest(filtering, type), cancellationToken);
+            if (!Enum.IsDefined(typeof(SuspiciousCasesType), type))
+            {
+                throw new ValidationException(new[]
+                {
+                    new ValidationFailure("Type", "Ongeldig verdacht geval type.")
+                    {
+                        ErrorCode = "OngeldigType"
+                    }
+                });
+            }
+
+            var pagination = Request.ExtractPaginationRequest();
+
+            var response = await _mediator.Send(
+                new SuspiciousCasesDetailRequest(filtering, (SuspiciousCasesType)type, pagination),
+                cancellationToken);
 
             return Ok(response);
         }

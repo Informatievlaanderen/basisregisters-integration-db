@@ -2,9 +2,9 @@ STRATEGY: MIN
 RESTRICTION: == net6.0
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    AspNetCore.HealthChecks.SqlServer (6.0.2)
-      Microsoft.Data.SqlClient (>= 3.0.1)
-      Microsoft.Extensions.Diagnostics.HealthChecks (>= 6.0)
+    AspNetCore.HealthChecks.NpgSql (6.0.2)
+      Microsoft.Extensions.Diagnostics.HealthChecks (>= 6.0.2)
+      Npgsql (>= 6.0)
     Autofac (6.3)
       System.Diagnostics.DiagnosticSource (>= 4.7.1)
     Autofac.Extensions.DependencyInjection (7.2)
@@ -489,6 +489,8 @@ NUGET
     Microsoft.EntityFrameworkCore.Design (6.0)
       Humanizer.Core (>= 2.8.26)
       Microsoft.EntityFrameworkCore.Relational (>= 6.0)
+    Microsoft.EntityFrameworkCore.InMemory (6.0.3)
+      Microsoft.EntityFrameworkCore (>= 6.0.3)
     Microsoft.EntityFrameworkCore.Relational (6.0.22)
       Microsoft.EntityFrameworkCore (>= 6.0.22)
       Microsoft.Extensions.Configuration.Abstractions (>= 6.0)
