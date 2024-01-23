@@ -1,3 +1,31 @@
+Be.Vlaanderen.Basisregisters.Aws.DistributedMutex
+Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac
+
+Destructurama.JsonNet
+
+IdentityModel
+
+Microsoft.Extensions.Configuration
+Microsoft.Extensions.Configuration.CommandLine
+Microsoft.Extensions.Configuration.FileExtensions
+Microsoft.Extensions.Configuration.EnvironmentVariables
+Microsoft.Extensions.Configuration.Json
+Microsoft.Extensions.DependencyInjection
+Microsoft.Extensions.Hosting
+nuget Microsoft.Extensions.Http
+
+Newtonsoft.Json
+
+NodaTime
+
+Serilog
+Serilog.Settings.Configuration
+Serilog.Extensions.Logging
+Serilog.Sinks.Console
+Serilog.Sinks.File
+Serilog.Enrichers.Thread
+Serilog.Enrichers.Environment
+Serilog.Formatting.Compact
 
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles
