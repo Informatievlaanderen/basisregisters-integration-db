@@ -34,7 +34,7 @@
         public const string ViewName = "view_streetname_longer_than_two_years_proposed";
 
         public const string Create = $@"
-            CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema}.{ViewName} AS
+            CREATE VIEW {Schema}.{ViewName} AS
 	        SELECT
 		        CAST(streetname.persistent_local_id as varchar) AS persistent_local_id,
 		        streetname.persistent_local_id AS streetname_persistent_local_id,
@@ -45,9 +45,6 @@
 	        WHERE streetname.status = 0
 	        AND streetname.is_removed = false
 	        AND streetname.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years';
-
-            CREATE INDEX ix_{ViewName}_streetname_persistent_local_id ON {Schema}.{ViewName} USING btree (streetname_persistent_local_id);
-            CREATE INDEX ix_{ViewName}_nis_code ON {Schema}.{ViewName} USING btree (nis_code);
             ";
     }
 }
