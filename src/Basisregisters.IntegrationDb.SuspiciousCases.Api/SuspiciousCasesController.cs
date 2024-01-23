@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
     [ApiVersion("2.0")]
     [AdvertiseApiVersions("2.0")]
     [ApiRoute("verdachte-gevallen")]
-    [ApiExplorerSettings(GroupName = "SuspiciousCases")]
+    [ApiExplorerSettings(GroupName = "verdachtegevallen")]
     public class SuspiciousCasesController : ApiController
     {
         private readonly IMediator _mediator;
@@ -45,6 +45,12 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             _nisCodeService = nisCodeService;
         }
 
+        /// <summary>
+        /// Vraag verdachte gevallen types op en hun aantallen.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">Lijst met verdachte gevallen.</response>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -91,6 +97,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             return Ok(response);
         }
 
+        /// <summary>
+        /// Vraag verdachte gevallen op van een specifiek type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">Lijst met de concrete verdachte gevallen van het bevraagde type.</response>
+        /// <returns></returns>
         [HttpGet("{type}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
