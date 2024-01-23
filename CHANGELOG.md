@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.0.0...v1.1.0) (2024-01-23)
+
+
+### Bug Fixes
+
+* add swagger docs ([5b2cff2](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5b2cff2bedc0a2381d317c4c01d7af597d769512))
+
+
+### Features
+
+* add gtmf integration skeleton ([3f9f247](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/3f9f247b43fdeef936e55d10f2b55da6a094485e))
+
 # 1.0.0 (2024-01-22)
 
 
