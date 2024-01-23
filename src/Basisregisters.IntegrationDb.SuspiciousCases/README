@@ -1,0 +1,20 @@
+# Setting up database
+
+- AWS Team will create a database `integration`
+
+## Setup postgis
+
+- Log in with the SA credentials provided by AWS Team
+- Start a query window within the `integration` database
+- Run `CREATE EXTENSION postgis;` to enable PostGIS
+- Check installation by running `SELECT postgis_version();`
+
+## Setup admin user
+
+- Log in with the SA credentials provided by AWS Team
+- Create a user `basisregisters` (or something alike) by running `CREATE USER basisregisters WITH PASSWORD 'your_password';`
+- Grant all privileges to the user by running `GRANT ALL PRIVILEGES ON DATABASE integration TO basisregisters;`
+
+## Setup read user(s)
+
+- Log in with the `basisregisters` (or something alike) credentials.
