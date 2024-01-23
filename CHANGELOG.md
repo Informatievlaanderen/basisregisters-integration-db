@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.1.0...v1.1.1) (2024-01-23)
+
+
+### Bug Fixes
+
+* add code comment docs per endpoint ([dcc1eee](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/dcc1eeef5d3d7b8f55078c6d15a5b65ce126cb5f))
+
 # [1.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.0.0...v1.1.0) (2024-01-23)
 
 
