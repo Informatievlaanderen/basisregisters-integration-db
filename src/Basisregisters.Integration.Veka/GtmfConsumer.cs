@@ -25,6 +25,7 @@
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var lastPosition = await _projectionState.GetLastPosition(stoppingToken);
+            lastPosition = lastPosition == 0 ? 1 : lastPosition;
 
             var events = await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition);
 

@@ -3,7 +3,10 @@ strategy: min
 source https://api.nuget.org/v3/index.json
 
 // Kafka
-nuget Confluent.Kafka 2.3.0
+nuget Confluent.Kafka 2.3.0 3.7.301
+
+// AWS
+nuget AWSSDK.DynamoDBv2
 
 // Misc
 nuget Autofac 6.3.0
