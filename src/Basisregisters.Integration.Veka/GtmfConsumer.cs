@@ -1,6 +1,7 @@
 ﻿namespace Basisregisters.Integration.Veka
 {
     using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Gtmf;
@@ -34,27 +35,33 @@
             try
             {
                 var lastPosition = await _projectionState.GetLastPosition(stoppingToken);
-                lastPosition = lastPosition == 0 ? 1 : lastPosition;
+                lastPosition = lastPosition == 0 ? 1 : lastPosition; // TODO: verify if last position is included
 
-                var events = await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition);
+                var events = (await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition)).ToList();
                 var emailsSent = 0;
-                foreach (var meldingEvent in events)
+                while (events.Any())
                 {
-                    if (!meldingEvent.Type.Equals("MeldingAfgerondEvent", StringComparison.InvariantCultureIgnoreCase))
+                    foreach (var meldingEvent in events)
                     {
-                        continue;
+                        if (!meldingEvent.Type.Equals("MeldingAfgerondEvent", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        var melding = await _gtmfApiProxy.GetMelding(meldingEvent.MeldingId);
+
+                        if (!melding.IsIngediendDoorVeka)
+                        {
+                            continue;
+                        }
+
+                        await _emailSender.SendEmailFor(melding);
+                        emailsSent++;
+                        await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
+                        lastPosition = meldingEvent.Position;
                     }
 
-                    var melding = await _gtmfApiProxy.GetMelding(meldingEvent.MeldingId);
-
-                    if (!melding.IsIngediendDoorVeka)
-                    {
-                        continue;
-                    }
-
-                    await _emailSender.SendEmailFor(melding);
-                    emailsSent++;
-                    await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
+                    events = (await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition)).ToList();
                 }
 
                 await _notificationService.PublishToTopicAsync(new NotificationMessage(
