@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.1.1...v1.1.2) (2024-01-24)
+
+
+### Bug Fixes
+
+* try new paket template for api ([d3f3e0e](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d3f3e0e7dc9c90f4d962c1c40a365457d75b0002))
+
 ## [1.1.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.1.0...v1.1.1) (2024-01-23)
 
 
