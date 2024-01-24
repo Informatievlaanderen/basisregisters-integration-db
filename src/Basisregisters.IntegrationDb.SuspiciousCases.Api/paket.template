@@ -16,10 +16,6 @@ description Integration Db Suspicious Cases Api
 
 dependencies
   framework: net6.0
-    MediatR >= LOCKEDVERSION
-    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
-    Be.Vlaanderen.Basisregisters.Auth.AcmIdm >= LOCKEDVERSION
-    Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded >= LOCKEDVERSION
 
 files
   Basisregisters.IntegrationDb.SuspiciousCases.Api.dll => lib\net6.0
