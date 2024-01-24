@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.1.2...v1.2.0) (2024-01-24)
+
+
+### Features
+
+* add abstractions ([631dc42](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/631dc42bbeafcffdbfa34d41afd44afe2987ecf7))
+
 ## [1.1.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.1.1...v1.1.2) (2024-01-24)
 
 
