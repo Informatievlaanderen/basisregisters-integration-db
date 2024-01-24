@@ -323,9 +323,11 @@ jobs:
         shell: bash
         run: |
           echo $IMAGE:$SEMVER
+          docker tag $BUILD_DOCKER_REGISTRY_TST/integration-db/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY/integration-db/$IMAGE:$SEMVER
           docker push $BUILD_DOCKER_REGISTRY/integration-db/$IMAGE:$SEMVER
         env:
-          BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_DEVOPS }}
+          BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
+          BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_DEVOPS_DOCKER_REGISTRY }}
           IMAGE: ${{ matrix.image }}
           SEMVER: ${{ needs.release.outputs.version }}
           WORKSPACE: ${{ github.workspace }}
