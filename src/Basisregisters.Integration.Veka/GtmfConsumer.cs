@@ -5,47 +5,75 @@
     using System.Threading.Tasks;
     using Gtmf;
     using Microsoft.Extensions.Hosting;
+    using Notifications;
 
     public class GtmfConsumer : BackgroundService
     {
         private readonly IProjectionState _projectionState;
         private readonly IGtmfApiProxy _gtmfApiProxy;
         private readonly IEmailSender _emailSender;
+        private readonly INotificationService _notificationService;
+        private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
         public GtmfConsumer(
             IProjectionState projectionState,
             IGtmfApiProxy gtmfApiProxy,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            INotificationService notificationService,
+            IHostApplicationLifetime hostApplicationLifetime)
         {
             _projectionState = projectionState;
             _gtmfApiProxy = gtmfApiProxy;
             _emailSender = emailSender;
+            _notificationService = notificationService;
+            _hostApplicationLifetime = hostApplicationLifetime;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var lastPosition = await _projectionState.GetLastPosition(stoppingToken);
-            lastPosition = lastPosition == 0 ? 1 : lastPosition;
-
-            var events = await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition);
-
-            foreach (var meldingEvent in events)
+            try
             {
-                if (!meldingEvent.Type.Equals("MeldingAfgerondEvent", StringComparison.InvariantCultureIgnoreCase))
+                var lastPosition = await _projectionState.GetLastPosition(stoppingToken);
+                lastPosition = lastPosition == 0 ? 1 : lastPosition;
+
+                var events = await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition);
+                var emailsSent = 0;
+                foreach (var meldingEvent in events)
                 {
-                    continue;
+                    if (!meldingEvent.Type.Equals("MeldingAfgerondEvent", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    var melding = await _gtmfApiProxy.GetMelding(meldingEvent.MeldingId);
+
+                    if (!melding.IsIngediendDoorVeka)
+                    {
+                        continue;
+                    }
+
+                    await _emailSender.SendEmailFor(melding);
+                    emailsSent++;
+                    await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
                 }
 
-                var melding = await _gtmfApiProxy.GetMelding(meldingEvent.MeldingId);
-
-                if (!melding.IsIngediendDoorVeka)
-                {
-                    continue;
-                }
-
-                await _emailSender.SendEmailFor(melding);
-
-                await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
+                await _notificationService.PublishToTopicAsync(new NotificationMessage(
+                    nameof(GtmfConsumer),
+                    $"Success: with last position {lastPosition} and amount of emails sent {emailsSent}",
+                    "Veka gtmf email",
+                    NotificationSeverity.Good));
+            }
+            catch (Exception e)
+            {
+                await _notificationService.PublishToTopicAsync(new NotificationMessage(
+                    nameof(GtmfConsumer),
+                    $"Failed: {e}",
+                    "Veka gtmf email",
+                    NotificationSeverity.Danger));
+            }
+            finally
+            {
+                _hostApplicationLifetime.StopApplication();
             }
         }
     }

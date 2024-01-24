@@ -4,6 +4,7 @@
     using System.IO;
     using System.Threading.Tasks;
     using Amazon.DynamoDBv2;
+    using Amazon.SimpleNotificationService;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
@@ -15,6 +16,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Notifications;
     using Serilog;
     using Serilog.Debugging;
     using Serilog.Extensions.Logging;
@@ -85,6 +87,14 @@
                     services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
                     services.AddSingleton<IGtmfApiProxy, GtmfApiProxy>();
                     services.AddSingleton<IEmailSender, EmailSender>();
+
+                    services.AddAWSService<IAmazonSimpleNotificationService>();
+                    services.AddScoped<INotificationService>(provider =>
+                    {
+                        var snsService = provider.GetRequiredService<IAmazonSimpleNotificationService>();
+                        var topicArn = hostContext.Configuration["TopicArn"];
+                        return new NotificationService(snsService, topicArn);
+                    });
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
