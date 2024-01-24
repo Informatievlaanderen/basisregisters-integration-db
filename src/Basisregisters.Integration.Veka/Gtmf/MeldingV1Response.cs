@@ -25,9 +25,9 @@
             return GetMeldingsObject().Body.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Beschrijving))?.Beschrijving ?? string.Empty;
         }
 
-        public Instant GetIndieningsdatum()
+        public string GetIndieningsdatum()
         {
-            return InstantPattern.General.Parse(MeldingsObjecten.First().Toestand.DatumVaststelling).Value;
+            return MeldingsObjecten.First().Toestand.DatumVaststelling;
         }
 
         public string GetStatus()

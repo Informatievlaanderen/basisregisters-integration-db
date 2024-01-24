@@ -18,6 +18,8 @@ NUGET
       Microsoft.Extensions.Configuration.Abstractions (>= 2.0)
       Microsoft.Extensions.DependencyInjection.Abstractions (>= 2.0)
       Microsoft.Extensions.Logging.Abstractions (>= 2.0)
+    AWSSDK.SimpleEmail (3.7.300.39)
+      AWSSDK.Core (>= 3.7.301.9 < 4.0)
     AWSSDK.SimpleNotificationService (3.7.300.39)
       AWSSDK.Core (>= 3.7.301.9 < 4.0)
     Azure.Core (1.6)
