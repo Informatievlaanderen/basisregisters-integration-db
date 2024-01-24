@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.List
 {
+    using Abstractions.List;
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using MediatR;
 

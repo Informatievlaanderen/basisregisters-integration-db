@@ -3,6 +3,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using System;
     using System.Linq;
     using System.Reflection;
+    using Abstractions;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;

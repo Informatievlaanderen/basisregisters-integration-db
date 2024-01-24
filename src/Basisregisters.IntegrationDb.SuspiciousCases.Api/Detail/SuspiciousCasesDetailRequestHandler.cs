@@ -4,8 +4,9 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Detail;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
-    using Infrastructure;
     using MediatR;
     using Microsoft.Extensions.Options;
 
