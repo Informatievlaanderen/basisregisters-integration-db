@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions
 {
     using System.Collections.Generic;
 

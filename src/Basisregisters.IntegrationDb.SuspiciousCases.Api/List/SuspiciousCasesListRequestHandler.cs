@@ -4,8 +4,9 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Converters;
-    using Infrastructure;
+    using Abstractions;
+    using Abstractions.Converters;
+    using Abstractions.List;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;

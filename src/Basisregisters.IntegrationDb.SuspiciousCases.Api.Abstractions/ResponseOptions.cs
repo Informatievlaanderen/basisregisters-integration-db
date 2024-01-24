@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions
 {
     public class ResponseOptions
     {
