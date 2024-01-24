@@ -2,6 +2,8 @@ Be.Vlaanderen.Basisregisters.Aws.DistributedMutex
 Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac
 
 AWSSDK.DynamoDBv2
+AWSSDK.Extensions.NETCore.Setup
+AWSSDK.SimpleNotificationService
 
 Destructurama.JsonNet
 
