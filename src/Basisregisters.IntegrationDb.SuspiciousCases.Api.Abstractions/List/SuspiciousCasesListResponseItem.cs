@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.List
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.List
 {
     using System;
     using System.Runtime.Serialization;

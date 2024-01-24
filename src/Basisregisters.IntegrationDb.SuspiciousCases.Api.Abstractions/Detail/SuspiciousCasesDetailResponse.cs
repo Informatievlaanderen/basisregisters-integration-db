@@ -1,11 +1,12 @@
-﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Detail
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.Detail
 {
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using Infrastructure;
+    using Basisregisters.IntegrationDb.SuspiciousCases.Views;
+    using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
-    using Views;
+    using Swashbuckle.AspNetCore.Filters;
 
     [DataContract(Name = "VerdachtGevalCollectie", Namespace = "")]
     public sealed class SuspiciousCasesDetailResponse
@@ -67,6 +68,31 @@
                 _ => throw new ArgumentOutOfRangeException()
             };
             Description = suspiciousCase.Description;
+        }
+    }
+
+    public class SuspiciousCasesDetailResponseExample : IExamplesProvider<SuspiciousCasesDetailResponse>
+    {
+        private readonly IOptions<ResponseOptions> _responseOptions;
+
+        public SuspiciousCasesDetailResponseExample(IOptions<ResponseOptions> responseOptions)
+        {
+            _responseOptions = responseOptions;
+        }
+
+        public SuspiciousCasesDetailResponse GetExamples()
+        {
+            return new SuspiciousCasesDetailResponse(
+                new List<SuspiciousCasesDetailResponseItem>
+                {
+                    new SuspiciousCasesDetailResponseItem(
+                        new Uri(string.Format(_responseOptions.Value.AddressDetailUrl, "1")),
+                        "Verdacht geval 1"),
+                    new SuspiciousCasesDetailResponseItem(
+                        new Uri(string.Format(_responseOptions.Value.AddressDetailUrl, "2")),
+                        "Verdacht geval 2")
+                },
+                new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeNextUrl, SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits, 10, 2)));
         }
     }
 }
