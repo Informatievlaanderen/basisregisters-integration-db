@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.2.0...v1.2.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* push images ([b5a419c](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/b5a419c7fec44bda8b37b3ae078e8571f5709162))
+
 # [1.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.1.2...v1.2.0) (2024-01-24)
 
 
