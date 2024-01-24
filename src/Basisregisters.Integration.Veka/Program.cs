@@ -4,6 +4,7 @@
     using System.IO;
     using System.Threading.Tasks;
     using Amazon.DynamoDBv2;
+    using Amazon.SimpleEmail;
     using Amazon.SimpleNotificationService;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
@@ -82,10 +83,13 @@
                     }
                     else
                     {
+                        services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
                         services.AddSingleton<IProjectionState, DynamoDbProjectionState>();
                     }
-                    services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
+
                     services.AddSingleton<IGtmfApiProxy, GtmfApiProxy>();
+
+                    services.AddAWSService<IAmazonSimpleEmailService>();
                     services.AddSingleton<IEmailSender, EmailSender>();
 
                     services.AddAWSService<IAmazonSimpleNotificationService>();

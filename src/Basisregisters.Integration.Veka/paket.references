@@ -4,6 +4,7 @@ Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac
 AWSSDK.DynamoDBv2
 AWSSDK.Extensions.NETCore.Setup
 AWSSDK.SimpleNotificationService
+AWSSDK.SimpleEmail
 
 Destructurama.JsonNet
 

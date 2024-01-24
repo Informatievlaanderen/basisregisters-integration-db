@@ -35,7 +35,7 @@
             try
             {
                 var lastPosition = await _projectionState.GetLastPosition(stoppingToken);
-                lastPosition = lastPosition == 0 ? 1 : lastPosition; // TODO: verify if last position is included
+                lastPosition = lastPosition == 0 ? 1 : lastPosition;
 
                 var events = (await _gtmfApiProxy.GetMeldingEventsFrom(lastPosition)).ToList();
                 var emailsSent = 0;
@@ -57,6 +57,7 @@
 
                         await _emailSender.SendEmailFor(melding);
                         emailsSent++;
+
                         await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
                         lastPosition = meldingEvent.Position;
                     }

@@ -12,10 +12,11 @@
         public string Behandelaar { get; }
         public string Status { get; }
         public string ToelichtingBehandelaar { get; }
+        public string DatumVaststelling { get; }
 
         public static Melding NietVekaMelding(string id)
             => new Melding(
-                Guid.Parse(id), false, null, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+                Guid.Parse(id), false, null, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
 
         public static Melding VekaMelding(
             string id,
@@ -24,7 +25,8 @@
             string beschrijving,
             string behandelaar,
             string status,
-            string toelichtingBehandelaar)
+            string toelichtingBehandelaar,
+            string datumVaststelling)
             => new Melding(
                 Guid.Parse(id),
                 true,
@@ -33,17 +35,18 @@
                 beschrijving,
                 behandelaar,
                 status,
-                toelichtingBehandelaar);
+                toelichtingBehandelaar,
+                datumVaststelling);
 
-        private Melding(
-            Guid id,
+        private Melding(Guid id,
             bool isIngediendDoorVeka,
             string? referentieMelder,
             string referentie,
             string beschrijving,
             string behandelaar,
             string status,
-            string toelichtingBehandelaar)
+            string toelichtingBehandelaar,
+            string datumVaststelling)
         {
             Id = id;
             IsIngediendDoorVeka = isIngediendDoorVeka;
@@ -53,6 +56,7 @@
             Behandelaar = behandelaar;
             Status = status;
             ToelichtingBehandelaar = toelichtingBehandelaar;
+            DatumVaststelling = datumVaststelling;
         }
     }
 }

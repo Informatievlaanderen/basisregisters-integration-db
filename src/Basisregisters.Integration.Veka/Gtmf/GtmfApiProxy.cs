@@ -82,7 +82,8 @@
                 v1Melding.GetBeschrijving(),
                 behandelaar!.Naam,
                 v1Melding.GetStatus(),
-                v1Melding.GetToelichtingBehandelaar());
+                v1Melding.GetToelichtingBehandelaar(),
+                v1Melding.GetIndieningsdatum());
         }
 
         private async Task<MeldingV1Response?> GetMeldingV1(string id, HttpClient httpClient)
