@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using Amazon.DynamoDBv2;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
@@ -69,10 +70,19 @@
                     services.Configure<VekaOptions>(hostContext.Configuration.GetSection("Veka"));
                     services.Configure<EmailOptions>(hostContext.Configuration.GetSection("Email"));
                     services.Configure<GtmfApiOptions>(hostContext.Configuration.GetSection("GtmfApi"));
+                    services.Configure<DistributedLockOptions>(hostContext.Configuration.GetSection("DistributedLock"));
 
                     services.AddHttpClient();
 
-                    services.AddSingleton<IProjectionState, FakeProjectionState>();
+                    if (hostContext.Configuration.GetValue<string>("DOTNET_ENVIRONMENT") == "Development")
+                    {
+                        services.AddSingleton<IProjectionState, FakeProjectionState>();
+                    }
+                    else
+                    {
+                        services.AddSingleton<IProjectionState, DynamoDbProjectionState>();
+                    }
+                    services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
                     services.AddSingleton<IGtmfApiProxy, GtmfApiProxy>();
                     services.AddSingleton<IEmailSender, EmailSender>();
                 })
@@ -103,11 +113,6 @@
                 await DistributedLock<Program>.RunAsync(
                     async () =>
                     {
-                        // await MigrationsHelper.RunAsync(
-                        //     configuration.GetConnectionString("ConsumerParcelAdmin"),
-                        //     loggerFactory,
-                        //     CancellationToken.None);
-
                         await host.RunAsync().ConfigureAwait(false);
                     },
                     DistributedLockOptions.LoadFromConfiguration(configuration),
