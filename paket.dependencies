@@ -6,7 +6,9 @@ source https://api.nuget.org/v3/index.json
 nuget Confluent.Kafka 2.3.0 3.7.301
 
 // AWS
-nuget AWSSDK.DynamoDBv2
+nuget AWSSDK.DynamoDBv2 3.7.301
+nuget AWSSDK.Extensions.NETCore.Setup 3.7.300
+nuget AWSSDK.SimpleNotificationService 3.7.300.39
 
 // Misc
 nuget Autofac 6.3.0
