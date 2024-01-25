@@ -81,10 +81,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                     return Forbid();
                 }
 
-                filtering.Filter.NisCode = nisCode;
+                filtering = new FilteringHeader<SuspiciousCasesListFilter>(new SuspiciousCasesListFilter
+                {
+                    NisCode = nisCode
+                });
             }
 
-            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
+            if (filtering.Filter is null || string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
                 throw new ValidationException(new[]
                 {
@@ -137,10 +140,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                     return Forbid();
                 }
 
-                filtering.Filter.NisCode = nisCode;
+                filtering = new FilteringHeader<SuspiciousCasesDetailFilter>(new SuspiciousCasesDetailFilter
+                {
+                    NisCode = nisCode
+                });
             }
 
-            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
+            if (filtering.Filter is null || string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
                 throw new ValidationException(new[]
                 {
