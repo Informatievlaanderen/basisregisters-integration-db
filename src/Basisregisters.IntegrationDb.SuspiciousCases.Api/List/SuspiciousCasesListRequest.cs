@@ -5,9 +5,4 @@
     using MediatR;
 
     public sealed record SuspiciousCasesListRequest(FilteringHeader<SuspiciousCasesListFilter> FilteringHeader): IRequest<SuspiciousCasesListResponse>;
-
-    public class SuspiciousCasesListFilter
-    {
-        public string? NisCode { get; set; }
-    }
 }

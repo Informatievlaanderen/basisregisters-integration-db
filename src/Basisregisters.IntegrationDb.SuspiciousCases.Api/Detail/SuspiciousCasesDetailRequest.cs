@@ -9,9 +9,4 @@
         FilteringHeader<SuspiciousCasesDetailFilter> FilteringHeader,
         SuspiciousCasesType Type,
         IPaginationRequest Pagination) : IRequest<SuspiciousCasesDetailResponse>;
-
-    public class SuspiciousCasesDetailFilter
-    {
-        public string? NisCode { get; set; }
-    }
 }
