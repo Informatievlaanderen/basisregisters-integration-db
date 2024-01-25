@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.2.1...v1.2.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* move supsicious cases filters to abstractions ([dd5644d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/dd5644dd0ef6b7fb206a97d78545822f716462f5))
+
 ## [1.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.2.0...v1.2.1) (2024-01-24)
 
 
