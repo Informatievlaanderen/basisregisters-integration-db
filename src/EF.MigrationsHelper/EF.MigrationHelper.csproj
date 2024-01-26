@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj" />
+    <ProjectReference Include="..\Basisregisters.IntegrationDb.NationalRegistry\Basisregisters.IntegrationDb.NationalRegistry.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\.paket\Paket.Restore.targets" />

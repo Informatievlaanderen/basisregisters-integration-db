@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\packages\Be.Vlaanderen.Basisregisters.Build.Pipeline\Content\Be.Vlaanderen.Basisregisters.Build.Pipeline.Settings.Test.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Basisregisters.IntegrationDb.NationalRegistry\Basisregisters.IntegrationDb.NationalRegistry.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\examples" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
