@@ -1,4 +1,5 @@
 Autofac
+Dapper
 FlatFiles
 
 Npgsql.EntityFrameworkCore.PostgreSQL

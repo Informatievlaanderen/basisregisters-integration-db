@@ -1,17 +1,38 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
+    using System.Text.RegularExpressions;
     using FlatFiles;
     using FlatFiles.TypeMapping;
 
     public sealed class FlatFileRecord
     {
+        private string _index;
         public string NisCode { get; set; }
         public string PostalCode { get; set; }
         public string StreetCode { get; set; }
         public string HouseNumber { get; set; }
-        public string Index { get; set; }
+
+        public string Index
+        {
+            get => _index;
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var formatted = value.TrimStart('0').Trim();
+                    _index = int.TryParse(formatted, out _)
+                        ? formatted.PadLeft(4, '0')
+                        : formatted.PadRight(4, '0');
+                }
+                else
+                    _index = value;
+            }
+        }
+
         public string StreetName { get; set; }
         public int RegisteredCount { get; set; }
+
+        public bool HasIndex => !string.IsNullOrEmpty(Index) && Index != "0000";
 
         public int RecordNumber { get; set; }
 

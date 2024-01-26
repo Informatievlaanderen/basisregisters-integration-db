@@ -13,6 +13,7 @@ nuget AWSSDK.SimpleEmail 3.7.300.39
 
 // Misc
 nuget Autofac 6.3.0
+nuget Dapper 2.1.28
 nuget Destructurama.JsonNet 2.0.0
 nuget NodaTime 3.0.10
 nuget MessagePack 2.5.129
@@ -77,6 +78,7 @@ nuget Microsoft.NETCore.Platforms 6.0.6
 nuget Be.Vlaanderen.Basisregisters.DockerUtilities 1.0.1
 nuget Microsoft.AspNetCore.Mvc.Testing 6.0.11
 nuget Microsoft.AspNetCore.TestHost 6.0.11
+nuget AutoFixture 4.18.1
 nuget FluentAssertions 6.5.1
 nuget xunit.runner.visualstudio 2.4.3
 nuget xunit.categories 2.0.6
