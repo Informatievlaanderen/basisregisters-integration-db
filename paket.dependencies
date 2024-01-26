@@ -15,6 +15,9 @@ nuget GeoJSON.NET 1.2.19
 nuget MediatR 12.0.1
 nuget MediatR.Contracts 2.0.1
 
+// NationalRegistry specific
+nuget FlatFiles 5.0.4
+
 // MISSING ASSEMBLY REFERENCES
 nuget Microsoft.IdentityModel.Tokens 6.25.1
 nuget Microsoft.IdentityModel.Protocols 6.25.1

@@ -1,0 +1,13 @@
+Autofac
+FlatFiles
+
+Npgsql.EntityFrameworkCore.PostgreSQL
+
+Microsoft.EntityFrameworkCore.InMemory
+Microsoft.Extensions.Configuration
+Microsoft.Extensions.Configuration.EnvironmentVariables
+Microsoft.Extensions.Configuration.FileExtensions
+Microsoft.Extensions.Configuration.Json
+
+SourceLink.Embed.AllSourceFiles
+SourceLink.Copy.PdbFiles
