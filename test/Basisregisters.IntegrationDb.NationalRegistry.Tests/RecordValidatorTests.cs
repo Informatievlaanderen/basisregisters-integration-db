@@ -141,7 +141,7 @@
             return this;
         }
 
-        public FlatFileRecordBuilder WithIndex(string index)
+        public FlatFileRecordBuilder WithIndex(NationalRegistryIndex index)
         {
             _record.Index = index;
             return this;
@@ -175,7 +175,7 @@
                     .With(x => x.PostalCode, () => GenerateDigitNumberString(4))
                     .With(x => x.StreetCode, () => GenerateDigitNumberString(4))
                     .With(x => x.HouseNumber, () => GenerateDigitNumberString(2))
-                    .With(x => x.Index, "A" + GenerateDigitNumberString(3))
+                    .With(x => x.Index, () => new NationalRegistryIndex("A" + GenerateDigitNumberString(3)))
                     .With(x => x.StreetName, fixture.Create<string>())
                     .With(x => x.RegisteredCount, fixture.Create<int>())
             );
