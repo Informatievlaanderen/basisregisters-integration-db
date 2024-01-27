@@ -17,6 +17,7 @@
         {
             var record = new NationalRegistryIndex(index);
             record.Value.Should().Be(expected);
+            record.SourceValue.Should().Be(index);
         }
 
         [Theory]
@@ -28,6 +29,7 @@
         {
             var record = new NationalRegistryIndex(index);
             record.Value.Should().Be(expected);
+            record.SourceValue.Should().Be(index);
         }
 
         [Fact]
@@ -35,6 +37,7 @@
         {
             var record = new NationalRegistryIndex(string.Empty);
             record.HasIndex.Should().BeFalse();
+            record.SourceValue.Should().BeNullOrEmpty();
             record.Value.Should().BeNullOrEmpty();
             record.Left.Should().BeNullOrEmpty();
             record.Right.Should().BeNullOrEmpty();
@@ -47,6 +50,7 @@
         {
             var record = new NationalRegistryIndex("0000");
             record.HasIndex.Should().BeFalse();
+            record.SourceValue.Should().Be("0000");
             record.Value.Should().BeNullOrEmpty();
             record.Left.Should().BeNullOrEmpty();
             record.Right.Should().BeNullOrEmpty();
@@ -59,6 +63,7 @@
         {
             var record = new NationalRegistryIndex("0001");
             record.HasIndex.Should().BeTrue();
+            record.SourceValue.Should().Be("0001");
         }
 
         [Theory]
@@ -66,6 +71,7 @@
         public void IndexHasNoPartsJustGivenValue(string index, string expected)
         {
             var record = new NationalRegistryIndex(index);
+            record.SourceValue.Should().Be(index);
             record.Value.Should().Be(expected);
             record.Left.Should().BeNullOrEmpty();
             record.Right.Should().BeNullOrEmpty();
@@ -79,6 +85,7 @@
         public void IndexIsOnePart(string index, string expected)
         {
             var record = new NationalRegistryIndex(index);
+            record.SourceValue.Should().Be(index);
             record.Value.Should().Be(expected);
             record.Left.Should().Be(expected);
             record.Right.Should().BeNullOrEmpty();
@@ -100,6 +107,7 @@
             string expectedRight)
         {
             var record = new NationalRegistryIndex(index);
+            record.SourceValue.Should().Be(index);
             record.Value.Should().Be(expectedValue);
             record.Left.Should().Be(expectedLeft);
             record.Right.Should().Be(expectedRight);
@@ -124,6 +132,7 @@
             string expectedRightPartOne)
         {
             var record = new NationalRegistryIndex(index);
+            record.SourceValue.Should().Be(index);
             record.Value.Should().Be(expectedValue);
             record.Left.Should().Be(expectedLeft);
             record.Right.Should().Be(expectedRight);
@@ -145,6 +154,7 @@
             string expectedRightPartTwo)
         {
             var record = new NationalRegistryIndex(index);
+            record.SourceValue.Should().Be(index);
             record.Value.Should().Be(expectedValue);
             record.Left.Should().Be(expectedLeft);
             record.Right.Should().Be(expectedRight);

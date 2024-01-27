@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
+    using System.Diagnostics;
     using System.Text.RegularExpressions;
     using FlatFiles;
     using FlatFiles.TypeMapping;
@@ -58,8 +59,11 @@
         }
     }
 
+    [DebuggerDisplay("{Value}; Source={SourceValue}")]
     public sealed class NationalRegistryIndex
     {
+        public string? SourceValue { get; }
+
         public string? Value { get; }
 
         public string? Left { get; }
@@ -71,6 +75,7 @@
 
         public NationalRegistryIndex(string? value)
         {
+            SourceValue = value;
             if (string.IsNullOrEmpty(value) || value == "0000")
             {
                 Value = null;
