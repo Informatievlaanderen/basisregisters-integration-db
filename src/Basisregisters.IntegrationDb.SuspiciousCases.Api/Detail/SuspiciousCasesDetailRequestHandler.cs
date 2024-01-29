@@ -7,6 +7,7 @@
     using Abstractions;
     using Abstractions.Detail;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
+    using Be.Vlaanderen.Basisregisters.Utilities;
     using MediatR;
     using Microsoft.Extensions.Options;
 
@@ -41,9 +42,8 @@
                     suspiciousCases.Count > paginationRequest.Limit
                         ? new Uri(string.Format(
                             _responseOptions.SuspiciousCasesTypeNextUrl,
-                            (int)detailRequest.Type,
                             paginationRequest.Offset + paginationRequest.Limit,
-                            paginationRequest.Limit))
+                            paginationRequest.Limit).Replace("{type}", ((int)detailRequest.Type).ToString()))
                         : null);
         }
     }
