@@ -92,7 +92,9 @@
                         new Uri(string.Format(_responseOptions.Value.AddressDetailUrl, "2")),
                         "Verdacht geval 2")
                 },
-                new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeNextUrl, SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits, 10, 2)));
+                new Uri(
+                    string.Format(_responseOptions.Value.SuspiciousCasesTypeNextUrl, 10, 2)
+                        .Replace("{type}", ((int)SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits).ToString())));
         }
     }
 }
