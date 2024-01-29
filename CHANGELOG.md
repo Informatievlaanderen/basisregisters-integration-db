@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.0...v1.3.1) (2024-01-29)
+
+
+### Bug Fixes
+
+* refine logging ([0cec930](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/0cec9309187407686974a3963dcfb53d465c33a1))
+
 # [1.3.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.2.2...v1.3.0) (2024-01-29)
 
 
