@@ -1,3 +1,20 @@
+# [1.3.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.2.2...v1.3.0) (2024-01-29)
+
+
+### Bug Fixes
+
+* null ref filter sus piciouscases ([04fcd64](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/04fcd6406b4a15b2a9a1ac62160c9f4a92d0a700))
+
+
+### Features
+
+* add dynamo ([da045de](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/da045dea600c047dc617adea88f1a6794704c35a))
+* add email sender ([6925780](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6925780dd053334141b77f2f4a98d98925d7bb7c))
+* add gtmf integration VEKA ([e8a2b36](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e8a2b36228447ce74bdc24ea506c35e85282ff95))
+* add nationalregistry skeleton ([9122e02](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9122e02165be6296681d380332af5e1e0dc6b17c))
+* add notification service ([fa46c5a](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/fa46c5a393da7c29fe05b826f2af359b104d55e8))
+* loop events ([08d5f65](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/08d5f65901ed2d08392c2c3630c9bd644feaef7e))
+
 ## [1.2.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.2.1...v1.2.2) (2024-01-25)
 
 
