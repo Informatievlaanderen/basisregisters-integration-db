@@ -38,8 +38,6 @@
             AppDomain.CurrentDomain.UnhandledException += (_, eventArgs) =>
                 Log.Fatal((Exception)eventArgs.ExceptionObject, "Encountered a fatal exception, exiting program.");
 
-            Log.Information("Starting Integration.Veka");
-
             var host = new HostBuilder()
                 .ConfigureAppConfiguration((_, builder) =>
                 {
@@ -119,8 +117,9 @@
                 .Build();
 
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
-            var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
             var configuration = host.Services.GetRequiredService<IConfiguration>();
+
+            logger.LogInformation("Starting Integration.Veka");
 
             try
             {

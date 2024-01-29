@@ -78,6 +78,8 @@
                     $"Failed: {e}",
                     "Veka gtmf email",
                     NotificationSeverity.Danger));
+
+                throw;
             }
             finally
             {
