@@ -93,8 +93,11 @@
                         "Verdacht geval 2")
                 },
                 new Uri(
-                    string.Format(_responseOptions.Value.SuspiciousCasesTypeNextUrl, 10, 2)
-                        .Replace("{type}", ((int)SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits).ToString())));
+                    string.Format(
+                        _responseOptions.Value.SuspiciousCasesTypeNextUrl
+                            .Replace("{type}", ((int)SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits).ToString()),
+                        10,
+                        2)));
         }
     }
 }
