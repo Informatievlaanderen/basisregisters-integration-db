@@ -12,7 +12,7 @@
     public sealed class SuspiciousCasesListResponse
     {
         /// <summary>
-        /// Collectie van verdachte gevallen.
+        /// De verzameling van verdachte gevallen.
         /// </summary>
         [DataMember(Name = "resultaat", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
