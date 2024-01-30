@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.1...v1.3.2) (2024-01-30)
+
+
+### Bug Fixes
+
+* documentation examples ([13a02df](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/13a02df4c6ae7407f12f16ec2634b1d42125c1eb))
+
 ## [1.3.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.0...v1.3.1) (2024-01-29)
 
 
