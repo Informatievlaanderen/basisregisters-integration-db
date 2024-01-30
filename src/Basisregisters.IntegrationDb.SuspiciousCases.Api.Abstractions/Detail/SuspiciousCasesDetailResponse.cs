@@ -12,7 +12,7 @@
     public sealed class SuspiciousCasesDetailResponse
     {
         /// <summary>
-        /// Collectie van verdachte gevallen.
+        /// De verzameling van verdachte gevallen.
         /// </summary>
         [DataMember(Name = "resultaat", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]
@@ -43,7 +43,7 @@
         public Uri Detail { get; set; }
 
         /// <summary>
-        /// De beschrijving van het verdachte geval.
+        /// De beschrijving van het verdacht geval.
         /// </summary>
         [DataMember(Name = "Beschrijving", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
