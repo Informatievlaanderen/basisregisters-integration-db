@@ -62,6 +62,9 @@
     [DebuggerDisplay("{Value}; Source={SourceValue}")]
     public sealed class NationalRegistryIndex
     {
+        private static readonly Regex BeginAlfaNumericRegex = new Regex("^[0-9]+|^[a-zA-Z]+", RegexOptions.Compiled);
+        private static readonly Regex IsNumericRegex = new Regex("^[0-9]+$", RegexOptions.Compiled);
+        private static readonly Regex BeginCharRegex = new Regex("^[a-zA-Z]+");
         public string? SourceValue { get; }
 
         public string? Value { get; }
@@ -87,53 +90,44 @@
             else
             {
                 var formatted = value.TrimStart('0').Trim();
-                var numeric = new Regex("^[0-9]+$");
-                Value = numeric.IsMatch(formatted[0].ToString())
+                Value = IsNumericRegex.IsMatch(formatted[0].ToString())
                     ? formatted.PadLeft(4, '0')
                     : formatted.PadRight(4, '0');
 
-                var beginAlfaNumeric = new Regex("^[0-9]+|^[a-zA-Z]+");
-                if (beginAlfaNumeric.IsMatch(Value))
-                    Left = beginAlfaNumeric.Match(Value).Value;
-
-                if (beginAlfaNumeric.IsMatch(Value))
-                    Right = Value.Substring(beginAlfaNumeric.Match(Value).Value.Length);
-
-                if (!string.IsNullOrEmpty(Right) && Right.Length > 0 && !beginAlfaNumeric.IsMatch(Right))
-                    Right = Right.Substring(1);
+                Left = GetLeft(Value);
+                Right = GetRight(Value);
 
                 if (!string.IsNullOrEmpty(Right))
                 {
-                    var beginChar = new Regex("^[a-zA-Z]+");
-                    var tempP1 = string.Empty;
-                    var tempP2 = string.Empty;
+                    var tempP1 = GetLeft(Right);
+                    var tempP2 = GetRight(Right);
 
-                    if (beginAlfaNumeric.IsMatch(Right))
-                        tempP1 = beginAlfaNumeric.Match(Right).Value;
-
-                    if (beginAlfaNumeric.IsMatch(Right))
-                        tempP2 = Right.Substring(beginAlfaNumeric.Match(Right).Value.Length);
-
-                    if (!string.IsNullOrEmpty(tempP2) && tempP2.Length > 0 && !beginAlfaNumeric.IsMatch(tempP2))
-                        tempP2 = tempP2.Substring(1);
-
-                    if (numeric.IsMatch(Value[0].ToString()) &&
+                    if (IsNumericRegex.IsMatch(Value[0].ToString()) &&
                         (string.IsNullOrEmpty(tempP1) ||
-                         (numeric.IsMatch(tempP1) && string.IsNullOrEmpty(tempP2)) ||
-                         (beginChar.IsMatch(tempP1) && numeric.IsMatch(tempP2)) ||
-                         (beginChar.IsMatch(tempP1) && string.IsNullOrEmpty(tempP2))))
+                         (IsNumericRegex.IsMatch(tempP1) && string.IsNullOrEmpty(tempP2)) ||
+                         (BeginCharRegex.IsMatch(tempP1) && IsNumericRegex.IsMatch(tempP2)) ||
+                         (BeginCharRegex.IsMatch(tempP1) && string.IsNullOrEmpty(tempP2))))
                     {
-                        if (beginAlfaNumeric.IsMatch(Right))
-                            RightPartOne = beginAlfaNumeric.Match(Right).Value;
-
-                        if (beginAlfaNumeric.IsMatch(Right))
-                            RightPartTwo = Right.Substring(beginAlfaNumeric.Match(Right).Value.Length);
-
-                        if (!string.IsNullOrEmpty(RightPartTwo) && RightPartTwo.Length > 0 && !beginAlfaNumeric.IsMatch(RightPartTwo))
-                            RightPartTwo = RightPartTwo.Substring(1);
+                        RightPartOne = tempP1;
+                        RightPartTwo = tempP2;
                     }
                 }
             }
+        }
+
+        private static string? GetLeft(string input) =>
+            BeginAlfaNumericRegex.IsMatch(input) ? BeginAlfaNumericRegex.Match(input).Value : null;
+
+        private static string? GetRight(string input)
+        {
+            string? result = null;
+            if (BeginAlfaNumericRegex.IsMatch(input))
+                result = input.Substring(BeginAlfaNumericRegex.Match(input).Value.Length);
+
+            if (!string.IsNullOrEmpty(result) && result.Length > 0 && !BeginAlfaNumericRegex.IsMatch(result))
+                result = result.Substring(1);
+
+            return result;
         }
 
         public static implicit operator string?(NationalRegistryIndex index)

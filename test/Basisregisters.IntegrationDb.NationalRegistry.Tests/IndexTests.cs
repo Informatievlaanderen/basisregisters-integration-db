@@ -21,6 +21,8 @@
         }
 
         [Theory]
+        [InlineData("0A", "A000")]
+        [InlineData("00AB", "AB00")]
         [InlineData("A", "A000")]
         [InlineData("AB", "AB00")]
         [InlineData("A000", "A000")]
