@@ -33,6 +33,8 @@
                 paginationRequest.Limit + 1,
                 cancellationToken)).ToList();
 
+            var nextUrl = _responseOptions.SuspiciousCasesTypeNextUrl.Replace("{type}", ((int)detailRequest.Type).ToString());
+
             return new SuspiciousCasesDetailResponse(
                     suspiciousCases
                         .Select(x =>
@@ -41,9 +43,9 @@
                         .ToList(),
                     suspiciousCases.Count > paginationRequest.Limit
                         ? new Uri(string.Format(
-                            _responseOptions.SuspiciousCasesTypeNextUrl,
+                            nextUrl,
                             paginationRequest.Offset + paginationRequest.Limit,
-                            paginationRequest.Limit).Replace("{type}", ((int)detailRequest.Type).ToString()))
+                            paginationRequest.Limit))
                         : null);
         }
     }
