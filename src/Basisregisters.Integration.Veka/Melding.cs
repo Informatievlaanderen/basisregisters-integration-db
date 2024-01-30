@@ -12,7 +12,7 @@
         public string Behandelaar { get; }
         public string Status { get; }
         public string ToelichtingBehandelaar { get; }
-        public string DatumVaststelling { get; }
+        public DateTime DatumVaststelling { get; }
 
         public static Melding NietVekaMelding(string id)
             => new Melding(
@@ -56,7 +56,7 @@
             Behandelaar = behandelaar;
             Status = status;
             ToelichtingBehandelaar = toelichtingBehandelaar;
-            DatumVaststelling = datumVaststelling;
+            DatumVaststelling = DateTime.Parse(datumVaststelling);
         }
     }
 }
