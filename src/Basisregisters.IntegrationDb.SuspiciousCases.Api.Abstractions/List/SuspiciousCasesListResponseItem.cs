@@ -8,7 +8,7 @@
     public sealed class SuspiciousCasesListResponseItem
     {
         /// <summary>
-        /// Type van het verdacht geval. Dit is uitbreidbaar in de toekomst met nieuwe verdachte gevallen.
+        /// Het type van het verdacht geval. Dit is uitbreidbaar in de toekomst met nieuwe verdachte gevallen.
         /// </summary>
         [DataMember(Name = "Type", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
@@ -29,7 +29,7 @@
         public Ernst Severity { get; set; }
 
         /// <summary>
-        /// Naam van het verdacht geval. Dit is uitbreidbaar in de toekomst met nieuwe verdachte gevallen.
+        /// Het totaal aantal van het verdacht geval.
         /// </summary>
         [DataMember(Name = "Aantal", Order = 4)]
         [JsonProperty(Required = Required.DisallowNull)]
