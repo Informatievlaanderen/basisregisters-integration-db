@@ -381,56 +381,7 @@ jobs:
   #         BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
   #         IMAGE: ${{ matrix.image }}
   #         SEMVER: ${{ needs.release.outputs.version }}
-  #         WORKSPACE: ${{ github.workspace }}
-
-  push_images_to_production:
-    if: needs.release.outputs.version != 'none'
-    needs: [ release ]
-    name: Push images to Production
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image: ['integration-veka']
-    steps:
-      - name: Configure AWS credentials (Production)
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_NEWPRD }}
-          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_NEWPRD }}
-          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
-
-      - name: Login to Amazon ECR (Production)
-        uses: aws-actions/amazon-ecr-login@v1.5.3
-
-      # Download artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        continue-on-error: false
-        with:
-          name: ${{ matrix.image }}-${{ needs.release.outputs.version }}
-          path: ~/
-
-      # Load artifact
-      - name: Load artifact
-        shell: bash
-        run: |
-          echo $IMAGE-image.tar
-          docker image load -i ~/$IMAGE-image.tar
-        env:
-          IMAGE: ${{ matrix.image }}
-
-      - name: Push artifacts to ECR Production
-        shell: bash
-        run: |
-          echo $IMAGE:$SEMVER
-          docker tag $BUILD_DOCKER_REGISTRY_TST/integration-db/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY_NEWPRD/integration-db/$IMAGE:$SEMVER
-          docker push $BUILD_DOCKER_REGISTRY_NEWPRD/integration-db/$IMAGE:$SEMVER
-        env:
-          BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
-          BUILD_DOCKER_REGISTRY_NEWPRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_NEWPRD }}
-          IMAGE: ${{ matrix.image }}
-          SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}
+  #         WORKSPACE: ${{ github.workspace }} 
 
   deploy_to_test_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
