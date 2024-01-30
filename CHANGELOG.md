@@ -1,3 +1,13 @@
+## [1.3.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.4...v1.3.5) (2024-01-30)
+
+
+### Bug Fixes
+
+* docs listitem collection ([9360b37](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9360b3716478a6c878ed60d4a93284355474095d))
+* indieningsdatum should only show date ([bfb8e4b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/bfb8e4b0b56d067cd47dd69518f9261dd03892ff))
+* **suspicious:** docs detail ([ace966e](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ace966e8bf7684d0ea4697252ed44e92478ac106))
+* **suspicious:** docs listresponseitem ([2bfd777](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/2bfd7771c8599df176d1d377bf349e89ba100bbd))
+
 ## [1.3.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.3...v1.3.4) (2024-01-30)
 
 
