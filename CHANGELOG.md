@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.3...v1.3.4) (2024-01-30)
+
+
+### Bug Fixes
+
+* **bump:** ci add image to production ([e844123](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e844123292a265043c5c82e381d43d4cc0d91cef))
+
 ## [1.3.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.2...v1.3.3) (2024-01-30)
 
 
