@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.2...v1.3.3) (2024-01-30)
+
+
+### Bug Fixes
+
+* next url ([206a9b6](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/206a9b6a0dfe3e445ae96ea6842e149ac44c188f))
+
 ## [1.3.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.1...v1.3.2) (2024-01-30)
 
 
