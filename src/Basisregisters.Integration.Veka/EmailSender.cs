@@ -75,7 +75,7 @@
                     <table class=""reference"" cellpadding=""0"" cellspacing=""0"" border=""1px"">
                         <tr>
                             <td class=""overzichtcol1"">Indiendatum:</td>
-                            <td class=""overzichtcol2"">{melding.DatumVaststelling}</td>
+                            <td class=""overzichtcol2"">{melding.DatumVaststelling:dd-MM-yyyy}</td>
                         </tr>
                         <tr>
                             <td class=""overzichtcol1"">Melding Id:</td>
