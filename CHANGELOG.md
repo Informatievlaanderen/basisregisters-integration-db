@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.5...v1.3.6) (2024-01-31)
+
+
+### Bug Fixes
+
+* don't parse empty string to datetime ([e211cca](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e211ccaea2acbb0725687feea451c021e17eddbd))
+
 ## [1.3.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.4...v1.3.5) (2024-01-30)
 
 
