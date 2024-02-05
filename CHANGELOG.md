@@ -1,3 +1,10 @@
+## [1.3.7](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.6...v1.3.7) (2024-02-05)
+
+
+### Bug Fixes
+
+* set last event position ([ca1a74d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ca1a74daf8259c431bd53b20aae5fd2c5c48cdca))
+
 ## [1.3.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.5...v1.3.6) (2024-01-31)
 
 
