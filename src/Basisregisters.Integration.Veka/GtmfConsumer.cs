@@ -45,6 +45,8 @@
                     {
                         if (!meldingEvent.Type.Equals("MeldingAfgerondEvent", StringComparison.InvariantCultureIgnoreCase))
                         {
+                            await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
+                            lastPosition = meldingEvent.Position;
                             continue;
                         }
 
@@ -52,6 +54,8 @@
 
                         if (!melding.IsIngediendDoorVeka)
                         {
+                            await _projectionState.SetLastPosition(meldingEvent.Position, stoppingToken);
+                            lastPosition = meldingEvent.Position;
                             continue;
                         }
 
