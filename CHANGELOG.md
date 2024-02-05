@@ -1,3 +1,10 @@
+## [1.3.8](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.7...v1.3.8) (2024-02-05)
+
+
+### Bug Fixes
+
+* **bump:** ci new pipeline structure ([81495d3](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/81495d328a157af72a0561b1ab4e72d3f49eab2b))
+
 ## [1.3.7](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.6...v1.3.7) (2024-02-05)
 
 
