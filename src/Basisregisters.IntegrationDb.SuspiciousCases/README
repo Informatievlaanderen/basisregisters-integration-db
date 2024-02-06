@@ -17,4 +17,12 @@
 
 ## Setup read user(s)
 
-- Log in with the `basisregisters` (or something alike) credentials.
+- Log in with the SA credentials
+- Run `CREATE USER <username> WITH PASSWORD '<pw>';`
+- Give access to schema, run `GRANT USAGE ON SCHEMA <schema> TO <username>;`
+- Give read access to all tables (incl views), run `GRANT SELECT ON ALL TABLES IN SCHEMA <schema> TO <username>;`
+- Set default permissions for future objects, run
+```
+ALTER DEFAULT PRIVILEGES IN SCHEMA <schema>
+GRANT SELECT ON TABLES TO <username>;
+```
