@@ -1,3 +1,10 @@
+## [1.3.9](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.8...v1.3.9) (2024-02-07)
+
+
+### Bug Fixes
+
+* **bump:** use new deploy pipeline ([dd07546](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/dd07546cedf154622c88127d45be76645cf45d88))
+
 ## [1.3.8](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.7...v1.3.8) (2024-02-05)
 
 
