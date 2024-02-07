@@ -413,7 +413,7 @@ jobs:
     strategy:
       matrix:
         services: [
-          'integrationveka'
+          'integration-veka'
         ]
     steps:
     - name: Deploy tasks
