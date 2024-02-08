@@ -12,6 +12,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         {
             migrationBuilder.Sql(StreetNamesLongerThanTwoYearsProposedConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitWithoutAddressConfiguration.Create);
+            migrationBuilder.Sql(AddressesLinkedToMultipleBuildingUnitsConfiguration.Create);
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }
 

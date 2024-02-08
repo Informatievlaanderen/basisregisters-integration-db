@@ -32,6 +32,7 @@
 
         public const string ViewName = "view_active_building_unit_without_address";
 
+        // TODO: description
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
                 SELECT
