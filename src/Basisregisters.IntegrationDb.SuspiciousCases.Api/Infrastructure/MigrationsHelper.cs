@@ -5,6 +5,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using Microsoft.Extensions.Logging;
     using Npgsql;
     using Polly;
+    using SuspiciousCases.Infrastructure;
 
     public class MigrationsLogger { }
 
@@ -42,7 +43,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                     sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
-                        sqlServerOptions.MigrationsHistoryTable(SuspiciousCasesContext.MigrationsTableName, SuspiciousCasesContext.SchemaSuspiciousCases);
+                        sqlServerOptions.MigrationsHistoryTable(SuspiciousCasesContext.MigrationsTableName, Schema.SuspiciousCases);
                         sqlServerOptions.UseNetTopologySuite();
                     });
 

@@ -55,11 +55,11 @@
                 new SuspiciousCase(Category.Address, "Adressen met specificatie 'gebouweenheid ' en status 'inGebruik' zonder koppeling met gebouweenheid", Severity.Improvable)
             },
             {
-                SuspiciousCasesType.BuildingUnitsWithoutAddress,
+                SuspiciousCasesType.ActiveBuildingUnitsWithoutAddress,
                 new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden met status 'gepland' of 'gerealiseerd' die niet gekoppeld zijn aan een adres", Severity.Improvable)
             },
             {
-                SuspiciousCasesType.BuildingUnitsLinkedToMultipleAddresses,
+                SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses,
                 new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden met status 'gepland' of 'gerealiseerd' die gekoppeld zijn aan meerdere adressen", Severity.Improvable)
             },
             {
