@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views
 {
+    using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,13 +19,13 @@
         public void Configure(EntityTypeBuilder<SuspiciousCaseCount> builder)
         {
             builder
-                .ToView(ViewName, Schema)
+                .ToView(ViewName, Schema.SuspiciousCases)
                 .HasNoKey()
                 .ToSqlQuery(@$"select
                                 nis_code,
                                 count,
                                 type
-                            FROM {Schema}.{ViewName}");
+                            FROM {Schema.SuspiciousCases}");
 
             builder.Property(x => x.NisCode)
                 .HasColumnName("nis_code");
@@ -34,14 +35,13 @@
                 .HasColumnName("type");
         }
 
-        public const string Schema = SuspiciousCasesContext.SchemaSuspiciousCases;
         public const string ViewName = "view_suspicious_cases_counts";
 
         public static readonly string Create =
-            @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema}.{ViewName} AS
+            @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
                 {CreateScript(SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, StreetNamesLongerThanTwoYearsProposedConfiguration.ViewName)}
                 ;
-                CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema}.{ViewName} USING btree (nis_code);
+                CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema.SuspiciousCases}.{ViewName} USING btree (nis_code);
             ";
 
         private static string CreateScript(SuspiciousCasesType type, string viewName)
@@ -50,7 +50,7 @@
                     nis_code,
                     count(*) as count,
                     {(int)type} as type
-                    FROM {Schema}.{viewName}
+                    FROM {Schema.SuspiciousCases}.{viewName}
                     GROUP BY nis_code
                 ";
         }

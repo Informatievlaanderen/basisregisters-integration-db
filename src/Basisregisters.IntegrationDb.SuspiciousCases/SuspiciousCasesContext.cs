@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
@@ -13,7 +14,6 @@
 
     public class SuspiciousCasesContext : DbContext
     {
-        public const string SchemaSuspiciousCases = "integration_suspicious_cases";
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
 
         public DbSet<SuspiciousCaseCount> SuspiciousCaseCounts => Set<SuspiciousCaseCount>();
@@ -67,9 +67,9 @@
                     break;
                 case SuspiciousCasesType.AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit:
                     break;
-                case SuspiciousCasesType.BuildingUnitsWithoutAddress:
+                case SuspiciousCasesType.ActiveBuildingUnitsWithoutAddress:
                     break;
-                case SuspiciousCasesType.BuildingUnitsLinkedToMultipleAddresses:
+                case SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses:
                     break;
                 case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
                     break;
@@ -124,7 +124,7 @@
                     npgSqlOptions.EnableRetryOnFailure();
                     npgSqlOptions.MigrationsHistoryTable(
                         SuspiciousCasesContext.MigrationsTableName,
-                        SuspiciousCasesContext.SchemaSuspiciousCases);
+                        Schema.SuspiciousCases);
                     npgSqlOptions.UseNetTopologySuite();
                     npgSqlOptions.CommandTimeout(260);
                 });

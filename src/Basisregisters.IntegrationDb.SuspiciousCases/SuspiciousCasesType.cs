@@ -14,8 +14,8 @@
         StreetNameWithOnlyOneRoadSegmentToOnlyOneSide = 10,
         AddressesAppointedByAdministratorOutsideLinkedBuilding = 11,
         AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit = 12,
-        BuildingUnitsWithoutAddress = 13,
-        BuildingUnitsLinkedToMultipleAddresses = 14,
+        ActiveBuildingUnitsWithoutAddress = 13,
+        ActiveBuildingUnitsLinkedToMultipleAddresses = 14,
         AddressesLinkedToMultipleBuildingUnits = 15
     }
 }

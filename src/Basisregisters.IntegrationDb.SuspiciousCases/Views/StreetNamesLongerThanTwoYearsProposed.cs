@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views
 {
+    using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +15,7 @@
         public void Configure(EntityTypeBuilder<StreetNamesLongerThanTwoYearsProposed> builder)
         {
             builder
-                .ToView(ViewName, Schema)
+                .ToView(ViewName, Schema.SuspiciousCases)
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
@@ -22,7 +23,7 @@
                                 streetname_persistent_local_id,
                                 nis_code,
                                 description
-                            FROM  {Schema}.{ViewName}");
+                            FROM  {Schema.SuspiciousCases}.{ViewName}");
 
             builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");
             builder.Property(x => x.StreetNamePersistentLocalId).HasColumnName("streetname_persistent_local_id");
@@ -30,17 +31,15 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string Schema = SuspiciousCasesContext.SchemaSuspiciousCases;
         public const string ViewName = "view_streetname_longer_than_two_years_proposed";
 
         public const string Create = $@"
-            CREATE VIEW {Schema}.{ViewName} AS
+            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
 	        SELECT
 		        CAST(streetname.persistent_local_id as varchar) AS persistent_local_id,
 		        streetname.persistent_local_id AS streetname_persistent_local_id,
 		        streetname.nis_code AS nis_code,
-		        streetname.name_dutch AS description,
-		        CURRENT_TIMESTAMP AS timestamp
+		        streetname.name_dutch AS description
 	        FROM integration_streetname.streetname_latest_items AS streetname
 	        WHERE streetname.status = 0
 	        AND streetname.is_removed = false
