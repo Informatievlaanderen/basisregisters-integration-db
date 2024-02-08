@@ -29,7 +29,7 @@
                 "\tSchema: {Schema}" +
                 Environment.NewLine +
                 "\tTableName: {TableName}",
-                nameof(SuspiciousCasesContext), SuspiciousCasesContext.SchemaSuspiciousCases, SuspiciousCasesContext.MigrationsTableName);
+                nameof(SuspiciousCasesContext), Schema.SuspiciousCases, SuspiciousCasesContext.MigrationsTableName);
         }
 
         private static void RunOnNpgSqlServer(
@@ -40,7 +40,7 @@
                 .AddNpgsql<SuspiciousCasesContext>(connectionString, sqlServerOptions =>
                 {
                     sqlServerOptions.EnableRetryOnFailure();
-                    sqlServerOptions.MigrationsHistoryTable(SuspiciousCasesContext.MigrationsTableName, SuspiciousCasesContext.SchemaSuspiciousCases);
+                    sqlServerOptions.MigrationsHistoryTable(SuspiciousCasesContext.MigrationsTableName, Schema.SuspiciousCases);
                     sqlServerOptions.UseNetTopologySuite();
                 });
         }
