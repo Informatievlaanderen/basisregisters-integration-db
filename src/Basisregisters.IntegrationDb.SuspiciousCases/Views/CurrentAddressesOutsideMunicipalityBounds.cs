@@ -1,51 +1,54 @@
-﻿// namespace Basisregisters.IntegrationDb.Schema.Views.SuspiciousCases
-// {
-//     using System;
-//     using Microsoft.EntityFrameworkCore;
-//     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-//
-//     public class CurrentAddressesOutsideMunicipalityBounds
-//     {
-//         public int AddressPersistentLocalId { get; set; }
-//         public int NisCode { get; set; }
-//         public DateTimeOffset Timestamp { get; set; }
-//
-//         public CurrentAddressesOutsideMunicipalityBounds()
-//         { }
-//     }
-//
-//     public sealed class CurrentAddressesOutsideMunicipalityBoundsConfiguration : IEntityTypeConfiguration<CurrentAddressesOutsideMunicipalityBounds>
-//     {
-//         public void Configure(EntityTypeBuilder<CurrentAddressesOutsideMunicipalityBounds> builder)
-//         {
-//             builder
-//                 .ToView(nameof(CurrentAddressesOutsideMunicipalityBounds), SuspiciousCasesContext.Schema)
-//                 .HasNoKey()
-//                 .ToSqlQuery(@$"
-//                             SELECT
-//                                 ""AddressPersistentLocalId"",
-//                                 ""NisCode"",
-//                                 ""Timestamp""
-//                             FROM  {ViewName} ");
-//         }
-//
-//
-//         public const string ViewName = @$"""{SuspiciousCasesContext.Schema}"".""VIEW_{nameof(CurrentAddressesOutsideMunicipalityBounds)}""";
-//
-//         public const string Create = $@"
-//             CREATE MATERIALIZED VIEW IF NOT EXISTS {ViewName} AS
-//             SELECT
-//                 a.""PersistentLocalId"" AS ""AddressPersistentLocalId"",
-//                 mg.""NisCode"",
-//                 CURRENT_TIMESTAMP AS ""Timestamp""
-//             FROM ""Integration"".""MunicipalityGeometries"" mg
-//             JOIN ""Integration"".""Addresses"" a
-//                 ON a.""NisCode""::int = mg.""NisCode""
-//             WHERE ST_Within(a.""Geometry"", mg.""Geometry"") IS FALSE
-//             AND a.""Status"" = 'inGebruik'
-//             AND a.""IsRemoved"" = false;
-//
-//             CREATE INDEX ""IX_{nameof(CurrentAddressesOutsideMunicipalityBounds)}_NisCode"" ON {ViewName} USING btree (""{nameof(CurrentAddressesOutsideMunicipalityBounds.NisCode)}"");
-//             ";
-//     }
-// }
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views
+{
+    using Infrastructure;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    public class CurrentAddressesOutsideMunicipalityBounds : SuspiciousCase
+    {
+        public int AddressPersistentLocalId { get; set; }
+
+        public override Category Category => Category.Address;
+    }
+
+    public sealed class CurrentAddressesOutsideMunicipalityBoundsConfiguration : IEntityTypeConfiguration<CurrentAddressesOutsideMunicipalityBounds>
+    {
+        public void Configure(EntityTypeBuilder<CurrentAddressesOutsideMunicipalityBounds> builder)
+        {
+            builder
+                .ToView(ViewName, Schema.SuspiciousCases)
+                .HasNoKey()
+                .ToSqlQuery(@$"
+                            SELECT
+                                persistent_local_id,
+                                address_persistent_local_id,
+                                nis_code,
+                                description
+                            FROM {Schema.SuspiciousCases}.{ViewName}");
+
+            builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");
+            builder.Property(x => x.AddressPersistentLocalId).HasColumnName("address_persistent_local_id");
+            builder.Property(x => x.NisCode).HasColumnName("nis_code");
+            builder.Property(x => x.Description).HasColumnName("description");
+        }
+
+
+        public const string ViewName = "view_current_address_outside_municipality_bounds";
+
+        public const string Create = $@"
+            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
+            SELECT
+                CAST(a.persistent_local_id as varchar) AS persistent_local_id,
+                a.persistent_local_id as address_persistent_local_id,
+                s.nis_code,
+                {Schema.FullAddress}(s.name_dutch, a.house_number, a.box_number, a.postal_code, m.name_dutch) as description
+            FROM {SchemaLatestItems.Address} a
+            LEFT OUTER JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
+            LEFT OUTER JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
+            LEFT OUTER JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code
+            WHERE ST_Within(a.geometry, mg.geometry) IS FALSE
+            AND a.status = 2
+            AND a.removed = false;
+            ";
+    }
+}

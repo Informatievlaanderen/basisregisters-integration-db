@@ -31,7 +31,7 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string ViewName = "building_unit_linked_to_multiple_addresses";
+        public const string ViewName = "view_building_unit_linked_to_multiple_addresses";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
