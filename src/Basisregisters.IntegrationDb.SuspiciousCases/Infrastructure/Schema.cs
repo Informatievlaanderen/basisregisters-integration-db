@@ -15,5 +15,6 @@
     public static class Schema
     {
         public const string SuspiciousCases = "integration_suspicious_cases";
+        public const string FullAddress = "integration_suspicious_cases.get_full_address";
     }
 }

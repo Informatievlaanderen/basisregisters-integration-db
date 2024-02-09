@@ -7,6 +7,7 @@
     public sealed class StreetNamesLongerThanTwoYearsProposed : SuspiciousCase
     {
         public int StreetNamePersistentLocalId { get; set; }
+
         public override Category Category => Category.StreetName;
     }
 

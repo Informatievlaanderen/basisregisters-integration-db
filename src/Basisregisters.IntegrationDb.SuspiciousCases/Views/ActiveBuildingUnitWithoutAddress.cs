@@ -8,6 +8,7 @@
     public class ActiveBuildingUnitWithoutAddress : SuspiciousCase
     {
         public int BuildingUnitPersistentLocalId { get; set; }
+
         public override Category Category => Category.BuildingUnit;
     }
 
@@ -20,11 +21,13 @@
                 .HasNoKey()
                 .ToSqlQuery(@$"
                             SELECT
+                                persistent_local_id,
                                 building_unit_persistent_local_id,
                                 nis_code,
-                                description
-                            FROM  {Schema.SuspiciousCases}.{ViewName}");
+                                CONCAT('Gebouweenheid-',  building_unit_persistent_local_id) as description
+                            FROM {Schema.SuspiciousCases}.{ViewName}");
 
+            builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");
             builder.Property(x => x.BuildingUnitPersistentLocalId).HasColumnName("building_unit_persistent_local_id");
             builder.Property(x => x.NisCode).HasColumnName("nis_code");
             builder.Property(x => x.Description).HasColumnName("description");
@@ -32,10 +35,10 @@
 
         public const string ViewName = "view_active_building_unit_without_address";
 
-        // TODO: description
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
                 SELECT
+		            CAST(bu.building_unit_persistent_local_id as varchar) AS persistent_local_id,
                     bu.building_unit_persistent_local_id,
                     b.nis_code
                 FROM {SchemaLatestItems.BuildingUnit} AS bu
