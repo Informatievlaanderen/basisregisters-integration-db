@@ -4,12 +4,15 @@
 
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 {
+    using Functions;
     using Views;
 
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(GetFullAddress.Create);
+
             migrationBuilder.Sql(StreetNamesLongerThanTwoYearsProposedConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitWithoutAddressConfiguration.Create);
             migrationBuilder.Sql(AddressesLinkedToMultipleBuildingUnitsConfiguration.Create);

@@ -77,14 +77,14 @@
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses:
-                    return await ActiveBuildingUnitWithoutAddresses
+                   break;
+                case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
+                    return await AddressesLinkedToMultipleBuildingUnits
                         .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.BuildingUnitPersistentLocalId)
+                        .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
