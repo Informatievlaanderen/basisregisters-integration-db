@@ -21,6 +21,7 @@
         public DbSet<StreetNamesLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNamesLongerThanTwoYearsProposed>();
         public DbSet<ActiveBuildingUnitWithoutAddress> ActiveBuildingUnitWithoutAddresses => Set<ActiveBuildingUnitWithoutAddress>();
         public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<AddressesLinkedToMultipleBuildingUnits>();
+        public DbSet<ActiveBuildingUnitLinkedToMultipleAddresses> ActiveBuildingUnitLinkedToMultipleAddresses => Set<ActiveBuildingUnitLinkedToMultipleAddresses>();
 
         // public DbSet<BuildingUnitAddressRelations> BuildingUnitAddressRelations { get; set; }
         // public DbSet<ParcelAddressRelations> ParcelAddressRelations { get; set; }
@@ -77,7 +78,12 @@
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses:
-                   break;
+                    return await ActiveBuildingUnitLinkedToMultipleAddresses
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.BuildingUnitPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
                 case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
                     return await AddressesLinkedToMultipleBuildingUnits
                         .Where(x => x.NisCode == nisCode)
