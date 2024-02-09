@@ -10,6 +10,7 @@
         public const string Parcel = "integration_parcel.parcel_latest_items";
         public const string Postal = "integration_postal.postal_latest_items";
         public const string Municipality = "integration_municipality.municipality_latest_items";
+        public const string MunicipalityGeometries = "integration_municipality.municipality_geometries";
     }
 
     public static class Schema

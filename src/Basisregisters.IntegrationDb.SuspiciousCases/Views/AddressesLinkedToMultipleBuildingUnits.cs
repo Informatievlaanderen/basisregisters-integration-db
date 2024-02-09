@@ -32,7 +32,7 @@
         }
 
 
-        public const string ViewName = "addresses_linked_to_multiple_building_units";
+        public const string ViewName = "view_addresses_linked_to_multiple_building_units";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS

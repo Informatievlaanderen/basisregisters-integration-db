@@ -15,7 +15,7 @@
                 new SuspiciousCase(Category.Address, "Adressen 'voorgesteld' zonder koppeling aan perceel of gebouweenheid", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.AddressesOutsideOfMunicipalityBoundaries,
+                SuspiciousCasesType.CurrentAddressesOutsideOfMunicipalityBounds,
                 new SuspiciousCase(Category.Address, "Adressen die buiten de grenzen van de gemeente vallen", Severity.Incorrect)
             },
             {
