@@ -13,15 +13,18 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         {
             migrationBuilder.Sql(GetFullAddress.Create);
 
+            migrationBuilder.Sql(CurrentAddressWithoutLinkedParcelOrBuildingUnitsConfiguration.Create);
+            migrationBuilder.Sql(ProposedAddressWithoutLinkedParcelOrBuildingUnitsConfiguration.Create);
             migrationBuilder.Sql(StreetNamesLongerThanTwoYearsProposedConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitWithoutAddressConfiguration.Create);
             migrationBuilder.Sql(AddressesLinkedToMultipleBuildingUnitsConfiguration.Create);
+            migrationBuilder.Sql(CurrentAddressesOutsideMunicipalityBoundsConfiguration.Create);
+            migrationBuilder.Sql(ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.Create);
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }
