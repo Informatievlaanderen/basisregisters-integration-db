@@ -19,6 +19,7 @@
         public DbSet<SuspiciousCaseCount> SuspiciousCaseCounts => Set<SuspiciousCaseCount>();
 
         public DbSet<StreetNamesLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNamesLongerThanTwoYearsProposed>();
+        public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds => Set<CurrentAddressesOutsideMunicipalityBounds>();
         public DbSet<ActiveBuildingUnitWithoutAddress> ActiveBuildingUnitWithoutAddresses => Set<ActiveBuildingUnitWithoutAddress>();
         public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<AddressesLinkedToMultipleBuildingUnits>();
         public DbSet<ActiveBuildingUnitLinkedToMultipleAddresses> ActiveBuildingUnitLinkedToMultipleAddresses => Set<ActiveBuildingUnitLinkedToMultipleAddresses>();
@@ -45,8 +46,13 @@
                     break;
                 case SuspiciousCasesType.ProposedAddressWithoutLinkedParcelsOrBuildingUnits:
                     break;
-                case SuspiciousCasesType.AddressesOutsideOfMunicipalityBoundaries:
-                    break;
+                case SuspiciousCasesType.CurrentAddressesOutsideOfMunicipalityBounds:
+                    return await CurrentAddressesOutsideMunicipalityBounds
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
                 case SuspiciousCasesType.CurrentStreetNamesWithoutRoadSegment:
                     break;
                 case SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed:

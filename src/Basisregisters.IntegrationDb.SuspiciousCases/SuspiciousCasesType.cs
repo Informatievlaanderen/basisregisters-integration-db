@@ -4,7 +4,7 @@
     {
         CurrentAddressWithoutLinkedParcelsOrBuildingUnits = 1,
         ProposedAddressWithoutLinkedParcelsOrBuildingUnits = 2,
-        AddressesOutsideOfMunicipalityBoundaries = 3,
+        CurrentAddressesOutsideOfMunicipalityBounds = 3,
         CurrentStreetNamesWithoutRoadSegment = 4,
         StreetNamesLongerThanTwoYearsProposed = 5,
         AddressesLongerThanTwoYearsProposed = 6,
