@@ -51,7 +51,7 @@
                         ON address.persistent_local_id = ba.address_persistent_local_id
                     WHERE address.persistent_local_id = a.persistent_local_id
                         AND (pa.address_persistent_local_id IS NULL AND ba.address_persistent_local_id IS NULL)
-                        AND address.status = 1
+                        AND address.status = 2
                         AND address.removed = false
                         AND address.position_specification != 6)
             ";
