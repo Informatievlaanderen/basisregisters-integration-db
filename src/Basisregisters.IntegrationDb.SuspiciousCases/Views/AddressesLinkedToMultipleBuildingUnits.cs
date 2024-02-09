@@ -20,11 +20,13 @@
                 .ToSqlQuery(@$"
                             SELECT
                                 persistent_local_id,
+                                address_persistent_local_id,
                                 nis_code,
                                 description
-                            FROM  {Schema.SuspiciousCases}.{ViewName}");
+                            FROM {Schema.SuspiciousCases}.{ViewName}");
 
-            builder.Property(x => x.AddressPersistentLocalId).HasColumnName("persistent_local_id");
+            builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");
+            builder.Property(x => x.AddressPersistentLocalId).HasColumnName("address_persistent_local_id");
             builder.Property(x => x.NisCode).HasColumnName("nis_code");
             builder.Property(x => x.Description).HasColumnName("description");
         }
@@ -32,16 +34,19 @@
 
         public const string ViewName = "addresses_linked_to_multiple_building_units";
 
-        // TODO: description
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
-
             SELECT
+		        CAST(c.address_persistent_local_id as varchar) AS persistent_local_id,
                 c.address_persistent_local_id,
-                b.nis_code
+                b.nis_code,
+                {Schema.FullAddress}(s.name_dutch, a.house_number, a.box_number, a.postal_code, m.name_dutch) as description
             FROM {SchemaLatestItems.Building} b
             LEFT OUTER JOIN {SchemaLatestItems.BuildingUnit} bu ON bu.building_persistent_local_id = b.building_persistent_local_id
             LEFT OUTER JOIN {SchemaLatestItems.BuildingUnitAddresses} rel ON rel.building_unit_persistent_local_id = bu.building_unit_persistent_local_id
+            LEFT OUTER JOIN {SchemaLatestItems.Address} a ON rel.address_persistent_local_id = a.persistent_local_id
+            LEFT OUTER JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
+            LEFT OUTER JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
             JOIN (
             SELECT
                 rel.address_persistent_local_id,
