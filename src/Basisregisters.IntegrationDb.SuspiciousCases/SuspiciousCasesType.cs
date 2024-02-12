@@ -12,10 +12,9 @@
         BuildingLongerThanTwoYearsPlanned = 8,
         BuildingUnitLongerThanTwoYearsPlanned = 9,
         StreetNameWithOnlyOneRoadSegmentToOnlyOneSide = 10,
-        AddressesAppointedByAdministratorOutsideLinkedBuilding = 11,
-        AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit = 12,
-        ActiveBuildingUnitsWithoutAddress = 13,
-        ActiveBuildingUnitsLinkedToMultipleAddresses = 14,
-        AddressesLinkedToMultipleBuildingUnits = 15
+        AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit = 11,
+        ActiveBuildingUnitsWithoutAddress = 12,
+        ActiveBuildingUnitsLinkedToMultipleAddresses = 13,
+        AddressesLinkedToMultipleBuildingUnits = 14
     }
 }
