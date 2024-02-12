@@ -29,6 +29,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 
             // TODO: enable when roadsegment is avaialable
             //migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
+            //migrationBuilder.Sql(StreetNameWithOnlyOneRoadSegmentToOnlyOneSideConfiguration.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
