@@ -8,7 +8,7 @@
     {
         public int AddressPersistentLocalId { get; set; }
 
-        public override Category Category => Category.StreetName;
+        public override Category Category => Category.Address;
     }
 
     public sealed class AddressesLongerThanTwoYearsProposedConfiguration : IEntityTypeConfiguration<AddressesLongerThanTwoYearsProposed>
