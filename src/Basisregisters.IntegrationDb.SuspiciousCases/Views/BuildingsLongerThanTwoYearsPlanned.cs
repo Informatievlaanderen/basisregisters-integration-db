@@ -32,7 +32,7 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string ViewName = "view_building_longer_than_two_years_planned";
+        public const string ViewName = "view_buildings_longer_than_two_years_planned";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS

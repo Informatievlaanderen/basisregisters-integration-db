@@ -18,6 +18,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(StreetNamesLongerThanTwoYearsProposedConfiguration.Create);
             migrationBuilder.Sql(AddressesLongerThanTwoYearsProposedConfiguration.Create);
             migrationBuilder.Sql(BuildingsLongerThanTwoYearsPlannedConfiguration.Create);
+            migrationBuilder.Sql(BuildingUnitsLongerThanTwoYearsPlannedConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitWithoutAddressConfiguration.Create);
             migrationBuilder.Sql(AddressesLinkedToMultipleBuildingUnitsConfiguration.Create);
             migrationBuilder.Sql(CurrentAddressesOutsideMunicipalityBoundsConfiguration.Create);
