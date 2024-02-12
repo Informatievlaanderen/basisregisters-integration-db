@@ -21,6 +21,7 @@
         public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressWithoutLinkedParcelOrBuilding => Set<CurrentAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<StreetNamesLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNamesLongerThanTwoYearsProposed>();
+        public DbSet<AddressesLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressesLongerThanTwoYearsProposed>();
         public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds => Set<CurrentAddressesOutsideMunicipalityBounds>();
         public DbSet<ActiveBuildingUnitWithoutAddress> ActiveBuildingUnitWithoutAddresses => Set<ActiveBuildingUnitWithoutAddress>();
         public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<AddressesLinkedToMultipleBuildingUnits>();
@@ -75,7 +76,12 @@
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.AddressesLongerThanTwoYearsProposed:
-                    break;
+                    return await AddressesLongerThanTwoYearsProposed
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
                 case SuspiciousCasesType.RoadSegmentsLongerThanTwoYearsProposed:
                     break;
                 case SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned:
