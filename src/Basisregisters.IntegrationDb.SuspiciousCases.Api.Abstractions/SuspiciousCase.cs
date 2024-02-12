@@ -47,7 +47,7 @@
                 new SuspiciousCase(Category.RoadSegment, "Straatnaam waarbij enkel een wegverbindingen gekoppeld aan slechts 1 kant", Severity.Improvable)
             },
             {
-                SuspiciousCasesType.AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit,
+                SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit,
                 new SuspiciousCase(Category.Address, "Adressen met specificatie 'gebouweenheid ' en status 'inGebruik' zonder koppeling met gebouweenheid", Severity.Improvable)
             },
             {
