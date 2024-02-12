@@ -102,8 +102,6 @@
                         .ToListAsync(ct);
                 case SuspiciousCasesType.StreetNameWithOnlyOneRoadSegmentToOnlyOneSide:
                     break;
-                case SuspiciousCasesType.AddressesAppointedByAdministratorOutsideLinkedBuilding:
-                    break;
                 case SuspiciousCasesType.AddressesWithBuildingUnitSpecificationOutsideLinkedActiveBuildingUnit:
                     break;
                 case SuspiciousCasesType.ActiveBuildingUnitsWithoutAddress:
