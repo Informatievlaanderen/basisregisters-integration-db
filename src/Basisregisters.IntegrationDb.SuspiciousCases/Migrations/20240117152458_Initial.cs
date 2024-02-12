@@ -5,6 +5,7 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 {
     using Functions;
+    using Schema.Views.SuspiciousCases;
     using Views;
 
     public partial class Initial : Migration
@@ -25,6 +26,9 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(CurrentAddressesOutsideMunicipalityBoundsConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.Create);
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
+
+            // TODO: enable when roadsegment is avaialable
+            //migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
