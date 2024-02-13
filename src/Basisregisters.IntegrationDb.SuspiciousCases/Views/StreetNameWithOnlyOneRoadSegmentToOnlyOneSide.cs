@@ -36,7 +36,7 @@
 
         // TODO: review
         public const string Create = $@"
-            CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
+            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
                 CAST(s.persistent_local_id as varchar) AS persistent_local_id,
 		        s.persistent_local_id AS streetname_persistent_local_id,
@@ -52,7 +52,7 @@
                 OR ( rs.right_side_street_name_id = s.persistent_local_id AND rs.left_side_street_name_id <> s.persistent_local_id)
             )
             AND s.status = 1
-            AND s.is_removed = false;
-            ";
+            AND s.is_removed = false
+            ;";
     }
 }

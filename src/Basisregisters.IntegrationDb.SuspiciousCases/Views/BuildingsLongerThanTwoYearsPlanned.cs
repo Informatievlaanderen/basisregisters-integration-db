@@ -43,7 +43,7 @@
 	        FROM {SchemaLatestItems.Building} AS b
 	        WHERE b.status = 'Planned'
 	        AND b.is_removed = false
-	        AND b.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years';
-            ";
+	        AND b.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'
+            ;";
     }
 }

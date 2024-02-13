@@ -44,7 +44,7 @@
             LEFT OUTER JOIN {SchemaLatestItems.Building} b ON b.building_persistent_local_id = bu.building_persistent_local_id
 	        WHERE bu.status = 'Planned'
 	        AND bu.is_removed = false
-	        AND bu.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years';
-            ";
+	        AND bu.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'
+            ;";
     }
 }
