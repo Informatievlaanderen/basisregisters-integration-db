@@ -5,6 +5,7 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 {
     using Functions;
+    using Infrastructure;
     using Schema.Views.SuspiciousCases;
     using Views;
 
@@ -26,14 +27,24 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(CurrentAddressesOutsideMunicipalityBoundsConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.Create);
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
-
-            // TODO: enable when roadsegment is avaialable
-            //migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
-            //migrationBuilder.Sql(StreetNameWithOnlyOneRoadSegmentToOnlyOneSideConfiguration.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql($"DROP VIEW {SuspiciousCaseCountConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {CurrentAddressesOutsideMunicipalityBoundsConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnitConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {AddressesLinkedToMultipleBuildingUnitsConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitWithoutAddressConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {BuildingUnitsLongerThanTwoYearsPlannedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {BuildingsLongerThanTwoYearsPlannedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {AddressesLongerThanTwoYearsProposedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {StreetNamesLongerThanTwoYearsProposedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {ProposedAddressWithoutLinkedParcelOrBuildingUnitsConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {CurrentAddressWithoutLinkedParcelOrBuildingUnitsConfiguration.ViewName};");
+
+            migrationBuilder.Sql($"DROP FUNCTION {Schema.FullAddress};");
         }
     }
 }

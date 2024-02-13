@@ -60,6 +60,7 @@
             GROUP BY
                 rel.address_persistent_local_id
             HAVING
-                COUNT(*) > 1) c ON c.address_persistent_local_id = rel.address_persistent_local_id";
+                COUNT(*) > 1) c ON c.address_persistent_local_id = rel.address_persistent_local_id
+            ;";
     }
 }

@@ -40,9 +40,10 @@
         public static readonly string Create =
             @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
                 {CreateScript(SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, StreetNamesLongerThanTwoYearsProposedConfiguration.ViewName)}
-                ;
-                CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema.SuspiciousCases}.{ViewName} USING btree (nis_code);
-            ";
+                UNION
+                {CreateScript(SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses, ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName)};
+                CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema.SuspiciousCases}.{ViewName} USING btree (nis_code)
+            ;";
 
         private static string CreateScript(SuspiciousCasesType type, string viewName)
         {

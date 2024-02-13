@@ -53,6 +53,6 @@
             WHERE
                 bu.is_removed IS FALSE
                 AND bu.status IN ('Planned','Realized')
-            ";
+            ;";
     }
 }

@@ -46,7 +46,7 @@
             LEFT OUTER JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
 	        WHERE a.status = 1
 	        AND a.removed = false
-	        AND a.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years';
-            ";
+	        AND a.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'
+            ;";
     }
 }

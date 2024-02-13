@@ -48,7 +48,7 @@
             LEFT OUTER JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code
             WHERE ST_Within(a.geometry, mg.geometry) IS FALSE
             AND a.status = 2
-            AND a.removed = false;
-            ";
+            AND a.removed = false
+            ;";
     }
 }
