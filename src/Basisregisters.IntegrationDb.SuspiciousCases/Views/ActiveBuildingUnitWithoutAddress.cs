@@ -49,7 +49,7 @@
                 WHERE
                     bu.is_removed IS FALSE
                     AND rel.address_persistent_local_id IS NULL
-                ORDER BY bu.building_unit_persistent_local_id;
-            ";
+                ORDER BY bu.building_unit_persistent_local_id
+                ;";
     }
 }

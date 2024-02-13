@@ -55,6 +55,6 @@
                         AND address.status = 1
                         AND address.removed = false
                         AND address.position_specification != 6)
-            ";
+            ;";
     }
 }

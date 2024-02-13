@@ -52,6 +52,6 @@
             AND
                 a.position_method = 2
             AND rel.building_unit_persistent_local_id IS NULL
-            ";
+            ;";
     }
 }

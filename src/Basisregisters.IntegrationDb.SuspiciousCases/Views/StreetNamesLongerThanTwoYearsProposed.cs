@@ -44,7 +44,7 @@
 	        FROM integration_streetname.streetname_latest_items AS streetname
 	        WHERE streetname.status = 0
 	        AND streetname.is_removed = false
-	        AND streetname.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years';
-            ";
+	        AND streetname.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'
+            ;";
     }
 }
