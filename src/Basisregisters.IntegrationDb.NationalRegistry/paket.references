@@ -1,5 +1,6 @@
 Autofac
 Dapper
+Fastenshtein
 FlatFiles
 
 Npgsql.EntityFrameworkCore.PostgreSQL
@@ -12,3 +13,4 @@ Microsoft.Extensions.Configuration.Json
 
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles
+

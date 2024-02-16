@@ -10,10 +10,14 @@
     public class StreetNameMatcher
     {
         private readonly IEnumerable<StreetName> _streetNames;
+        private readonly int _maxLevenshteinDistanceInPercentage;
 
-        public StreetNameMatcher(IEnumerable<StreetName> streetNames)
+        public StreetNameMatcher(
+            IEnumerable<StreetName> streetNames,
+            int maxLevenshteinDistanceInPercentage = 5)
         {
             _streetNames = streetNames;
+            _maxLevenshteinDistanceInPercentage = maxLevenshteinDistanceInPercentage;
         }
 
         public int? MatchStreetName(string search)
@@ -26,6 +30,18 @@
 
             var searchByAbbreviation = ReplaceAbbreviation(search);
             streetNameMatch = Match(searchByAbbreviation);
+            if (streetNameMatch.HasValue)
+            {
+                return streetNameMatch;
+            }
+
+            streetNameMatch = MatchByLevenshteinDistance(search);
+            if (streetNameMatch.HasValue)
+            {
+                return streetNameMatch;
+            }
+
+            streetNameMatch = MatchByLevenshteinDistance(RemoveDiacritics(search));
             if (streetNameMatch.HasValue)
             {
                 return streetNameMatch;
@@ -58,6 +74,39 @@
                     string.Equals(x.NameGerman, searchWithoutDiacritics, StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(x.NameEnglish, searchWithoutDiacritics, StringComparison.InvariantCultureIgnoreCase))
                 ?.StreetNamePersistentLocalId;
+        }
+
+        private int? MatchByLevenshteinDistance(string search)
+        {
+            StreetName? streetNameWithLowestDistance = null;
+
+            var minDistance = 100.0;
+            foreach (var streetName in _streetNames)
+            {
+                var distanceDutch = !string.IsNullOrWhiteSpace(streetName.NameDutch)
+                    ? LevenshteinDistanceCalculator.CalculatePercentage(search, streetName.NameDutch)
+                    : 100;
+                var distanceFrench = !string.IsNullOrWhiteSpace(streetName.NameFrench)
+                    ? LevenshteinDistanceCalculator.CalculatePercentage(search, streetName.NameFrench)
+                    : 100;
+                var distanceGerman = !string.IsNullOrWhiteSpace(streetName.NameGerman)
+                    ? LevenshteinDistanceCalculator.CalculatePercentage(search, streetName.NameGerman)
+                    : 100;
+                var distanceEnglish = !string.IsNullOrWhiteSpace(streetName.NameEnglish)
+                    ? LevenshteinDistanceCalculator.CalculatePercentage(search, streetName.NameEnglish)
+                    : 100;
+
+                var distance = new[] { distanceDutch, distanceFrench, distanceGerman, distanceEnglish }.Min();
+                if (distance < minDistance)
+                {
+                    streetNameWithLowestDistance = streetName;
+                    minDistance = distance;
+                }
+            }
+
+            return minDistance <= _maxLevenshteinDistanceInPercentage
+                ? streetNameWithLowestDistance?.StreetNamePersistentLocalId
+                : null;
         }
 
         private string ReplaceAbbreviation(string search)

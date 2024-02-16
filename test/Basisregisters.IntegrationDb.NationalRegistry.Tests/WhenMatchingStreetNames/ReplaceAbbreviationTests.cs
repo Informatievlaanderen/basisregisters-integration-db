@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.WhenMatchingStreetNames
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -33,7 +33,7 @@
         [InlineData("stw", "steenweg")]
         [InlineData("burg.", "Burgemeester")]
         [InlineData("Burgemeester", "burg.")]
-        public void Contains(string search, string substring)
+        public void WithContainsAbbreviation_ThenMatchIsFound(string search, string substring)
         {
             var prefix = $"{_fixture.Create<string>()}";
             var suffix = $"{_fixture.Create<string>()}";
@@ -62,7 +62,7 @@
         [Theory]
         [InlineData("str", "straat")]
         [InlineData("str.", "straat")]
-        public void EndsWith(string search, string substring)
+        public void WithEndsWithAbbreviation_ThenMatchIsFound(string search, string substring)
         {
             var prefix = $"{_fixture.Create<string>()}";
 
@@ -91,7 +91,7 @@
         [InlineData("heilige", "h")]
         [InlineData("heilig", "h")]
         [InlineData("k.", "koning")]
-        public void StartsWith(string search, string substring)
+        public void WithStartsWithAbbreviation_ThenMatchIsFound(string search, string substring)
         {
             var suffix = $"{_fixture.Create<string>()}";
 

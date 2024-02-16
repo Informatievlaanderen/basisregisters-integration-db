@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.WhenMatchingStreetNames
 {
     using System.Collections.Generic;
     using System.Linq;
