@@ -43,12 +43,12 @@ where nis_code = @NisCode";
 
     public record StreetName(
         int StreetNamePersistentLocalId,
-        string NameDutch,
-        string NameFrench,
-        string NameGerman,
-        string NameEnglish,
-        string HomonymAdditionDutch,
-        string HomonymAdditionFrench,
-        string HomonymAdditionGerman,
-        string HomonymAdditionEnglish);
+        string? NameDutch,
+        string? NameFrench,
+        string? NameGerman,
+        string? NameEnglish,
+        string? HomonymAdditionDutch,
+        string? HomonymAdditionFrench,
+        string? HomonymAdditionGerman,
+        string? HomonymAdditionEnglish);
 }

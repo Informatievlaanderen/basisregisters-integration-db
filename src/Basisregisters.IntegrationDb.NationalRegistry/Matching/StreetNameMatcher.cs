@@ -18,7 +18,14 @@
 
         public int? MatchStreetName(string search)
         {
-            var streetNameMatch = IsExactMatch(search);
+            var streetNameMatch = Match(search);
+            if (streetNameMatch.HasValue)
+            {
+                return streetNameMatch;
+            }
+
+            var searchByAbbreviation = ReplaceAbbreviation(search);
+            streetNameMatch = Match(searchByAbbreviation);
             if (streetNameMatch.HasValue)
             {
                 return streetNameMatch;
@@ -29,7 +36,7 @@
             return null;
         }
 
-        private int? IsExactMatch(string search)
+        private int? Match(string search)
         {
             var match = _streetNames.FirstOrDefault(x =>
                     string.Equals(x.NameDutch, search, StringComparison.InvariantCultureIgnoreCase) ||
@@ -53,10 +60,71 @@
                 ?.StreetNamePersistentLocalId;
         }
 
-        private static string RemoveDiacritics(string input)
+        private string ReplaceAbbreviation(string search)
         {
-            var stringBuilder = new StringBuilder(input.Length);
-            var normalizedString = input.Normalize(NormalizationForm.FormD);
+            var replaced = search.ToLowerInvariant();
+
+            if (replaced.Contains("onze lieve vrouw"))
+                return replaced.Replace("onze lieve vrouw", "O.L. Vrouw");
+
+            if (replaced.Contains("o.l.v."))
+                return replaced.Replace("o.l.v.", "Onze Lieve Vrouw");
+
+            if (replaced.Contains("onze-lieve-"))
+                return replaced.Replace("onze-lieve-", "O.L. ");
+
+            if (replaced.Contains("sint"))
+                return replaced.Replace("sint", "st.");
+
+            if (replaced.Contains("st."))
+                return replaced.Replace("st.", "sint");
+
+            if (replaced.Contains("dr."))
+                return replaced.Replace("dr.", "dokter");
+
+            if (replaced.Contains("dokter"))
+                return replaced.Replace("dokter", "dr.");
+
+            if (replaced.Contains("stwg."))
+                return replaced.Replace("stwg.", "steenweg");
+
+            if (replaced.Contains("stwg"))
+                return replaced.Replace("stwg", "steenweg");
+
+            if (replaced.Contains("stw."))
+                return replaced.Replace("stw.", "steenweg");
+
+            if (replaced.Contains("stw"))
+                return replaced.Replace("stw", "steenweg");
+
+            if (replaced.Contains("burg."))
+                return replaced.Replace("burg.", "Burgemeester");
+
+            if (replaced.Contains("burgemeester"))
+                return replaced.Replace("burgemeester", "burg.");
+
+            if (replaced.EndsWith("str"))
+                return replaced.Replace("str", "straat");
+
+            if (replaced.EndsWith("str."))
+                return replaced.Replace("str.", "straat");
+
+            if (replaced.StartsWith("heilige"))
+                return replaced.Replace("heilige", "h");
+
+            if (replaced.StartsWith("heilig"))
+                return replaced.Replace("heilig", "h");
+
+            if (replaced.StartsWith("k."))
+                return replaced.Replace("k.", "koning");
+
+            return replaced;
+        }
+
+        private static string RemoveDiacritics(string search)
+        {
+            var stringBuilder = new StringBuilder(search.Length);
+            var normalizedString = search.Normalize(NormalizationForm.FormD);
 
             foreach (var character in normalizedString)
             {
