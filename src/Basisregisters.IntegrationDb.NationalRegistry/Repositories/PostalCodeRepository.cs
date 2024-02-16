@@ -1,6 +1,8 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Repositories
 {
     using System.Collections.Generic;
+    using Dapper;
+    using Npgsql;
 
     public interface IPostalCodeRepository
     {
@@ -18,12 +20,14 @@
 
         public IEnumerable<string> GetAllPostalCodes()
         {
-            using (new Npgsql.NpgsqlConnection(_connectionString))
-            {
-                //TODO: Implement integration db in postal repository
-            }
+            const string sql = @"select postal_code
+                           from integration_postal.postal_latest_items
+                           order by postal_code";
 
-            return new List<string>();
+            using var connection = new NpgsqlConnection(_connectionString);
+
+            var postalCodes = connection.Query<string>(sql);
+            return postalCodes;
         }
     }
 }
