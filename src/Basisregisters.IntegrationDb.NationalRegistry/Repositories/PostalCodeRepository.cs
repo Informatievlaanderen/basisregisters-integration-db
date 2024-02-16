@@ -27,6 +27,7 @@
             using var connection = new NpgsqlConnection(_connectionString);
 
             var postalCodes = connection.Query<string>(sql);
+
             return postalCodes;
         }
     }
