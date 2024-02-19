@@ -22,14 +22,29 @@
 
         public int? MatchStreetName(string search)
         {
-            var streetNameMatch = Match(search);
+            var streetNameMatch = ExactMatch(search);
+            if (streetNameMatch.HasValue)
+            {
+                return streetNameMatch;
+            }
+
+            var searchWithoutDiacritics = RemoveDiacritics(search);
+
+            streetNameMatch = ExactMatch(searchWithoutDiacritics);
             if (streetNameMatch.HasValue)
             {
                 return streetNameMatch;
             }
 
             var searchByAbbreviation = ReplaceAbbreviation(search);
-            streetNameMatch = Match(searchByAbbreviation);
+            streetNameMatch = ExactMatch(searchByAbbreviation);
+            if (streetNameMatch.HasValue)
+            {
+                return streetNameMatch;
+            }
+
+            var searchByAbbreviationWithoutDiacritics = RemoveDiacritics(ReplaceAbbreviation(search));
+            streetNameMatch = ExactMatch(searchByAbbreviationWithoutDiacritics);
             if (streetNameMatch.HasValue)
             {
                 return streetNameMatch;
@@ -41,7 +56,7 @@
                 return streetNameMatch;
             }
 
-            streetNameMatch = MatchByLevenshteinDistance(RemoveDiacritics(search));
+            streetNameMatch = MatchByLevenshteinDistance(searchWithoutDiacritics);
             if (streetNameMatch.HasValue)
             {
                 return streetNameMatch;
@@ -52,7 +67,7 @@
             return null;
         }
 
-        private int? Match(string search)
+        private int? ExactMatch(string search)
         {
             var match = _streetNames.FirstOrDefault(x =>
                     string.Equals(x.NameDutch, search, StringComparison.InvariantCultureIgnoreCase) ||
@@ -61,19 +76,7 @@
                     string.Equals(x.NameEnglish, search, StringComparison.InvariantCultureIgnoreCase))
                 ?.StreetNamePersistentLocalId;
 
-            if (match.HasValue)
-            {
-                return match;
-            }
-
-            var searchWithoutDiacritics = RemoveDiacritics(search);
-
-            return _streetNames.FirstOrDefault(x =>
-                    string.Equals(x.NameDutch, searchWithoutDiacritics, StringComparison.InvariantCultureIgnoreCase) ||
-                    string.Equals(x.NameFrench, searchWithoutDiacritics, StringComparison.InvariantCultureIgnoreCase) ||
-                    string.Equals(x.NameGerman, searchWithoutDiacritics, StringComparison.InvariantCultureIgnoreCase) ||
-                    string.Equals(x.NameEnglish, searchWithoutDiacritics, StringComparison.InvariantCultureIgnoreCase))
-                ?.StreetNamePersistentLocalId;
+            return match;
         }
 
         private int? MatchByLevenshteinDistance(string search)
