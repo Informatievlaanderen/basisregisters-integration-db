@@ -23,6 +23,9 @@
         [InlineData("kerkstraat", "kerkstraat")]
         [InlineData("Kerkstraat", "Kerkstraat")]
         [InlineData("DeStRaat", "dEsTraAt")]
+        [InlineData("kerkstraat", "kérkstraat")]
+        [InlineData("Kerkstraat", "Kérkstraat")]
+        [InlineData("DeStRaat", "désTraAt")]
         public void DutchStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -47,6 +50,9 @@
         [InlineData("kerkstraat", "kerkstraat")]
         [InlineData("Kerkstraat", "Kerkstraat")]
         [InlineData("DeStRaat", "dEsTraAt")]
+        [InlineData("kerkstraat", "kérkstraat")]
+        [InlineData("Kerkstraat", "Kérkstraat")]
+        [InlineData("DeStRaat", "désTraAt")]
         public void FrenchStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -71,6 +77,9 @@
         [InlineData("kerkstraat", "kerkstraat")]
         [InlineData("Kerkstraat", "Kerkstraat")]
         [InlineData("DeStRaat", "dEsTraAt")]
+        [InlineData("kerkstraat", "kérkstraat")]
+        [InlineData("Kerkstraat", "Kérkstraat")]
+        [InlineData("DeStRaat", "désTraAt")]
         public void GermanStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -95,6 +104,9 @@
         [InlineData("kerkstraat", "kerkstraat")]
         [InlineData("Kerkstraat", "Kerkstraat")]
         [InlineData("DeStRaat", "dEsTraAt")]
+        [InlineData("kerkstraat", "kérkstraat")]
+        [InlineData("Kerkstraat", "Kérkstraat")]
+        [InlineData("DeStRaat", "désTraAt")]
         public void EnglishStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
