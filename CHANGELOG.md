@@ -1,3 +1,10 @@
+## [1.3.10](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.9...v1.3.10) (2024-02-19)
+
+
+### Bug Fixes
+
+* bump to trigger build ([ebd5b9d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ebd5b9dfc129d087332fe5bd8641f5cc3b6b3c4d))
+
 ## [1.3.9](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.8...v1.3.9) (2024-02-07)
 
 
