@@ -62,6 +62,7 @@ Target.create "Containerize_ApiSuspiciousCases" (fun _ -> containerize "Basisreg
 Target.create "Containerize_IntegrationVeka" (fun _ -> containerize "Basisregisters.Integration.Veka" "integration-veka")
 
 Target.create "SetAssemblyVersions" (fun _ -> setVersions "SolutionInfo.cs")
+
 // --------------------------------------------------------------------------------
 
 Target.create "Build" ignore
