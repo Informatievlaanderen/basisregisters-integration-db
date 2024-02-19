@@ -288,7 +288,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image: [ 'integration-veka', 'api-suspicious-cases' ]
+        image: [ 'integration-veka', 'suspicious-cases-api' ]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
