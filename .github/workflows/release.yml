@@ -61,8 +61,8 @@ jobs:
     with:
       registry: integration-db
       build-target: Containerize_ApiSuspiciousCases
-      image-file: integration-api-suspicious-cases-image.tar
-      image-name: api-suspicious-cases
+      image-file: integration-suspicious-cases-api-image.tar
+      image-name: suspicious-cases-api
       test-project: Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests
       build-project: Basisregisters.IntegrationDb.SuspiciousCases.Api
       semver: ${{ needs.set-release-version.outputs.version }}
