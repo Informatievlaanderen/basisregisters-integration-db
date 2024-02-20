@@ -5,12 +5,23 @@ FlatFiles
 
 Npgsql.EntityFrameworkCore.PostgreSQL
 
+Destructurama.JsonNet
+
 Microsoft.EntityFrameworkCore.InMemory
 Microsoft.Extensions.Configuration
 Microsoft.Extensions.Configuration.EnvironmentVariables
 Microsoft.Extensions.Configuration.FileExtensions
 Microsoft.Extensions.Configuration.Json
+Microsoft.Extensions.Hosting
 
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles
 
+Serilog
+Serilog.Settings.Configuration
+Serilog.Extensions.Logging
+Serilog.Sinks.Console
+Serilog.Sinks.File
+Serilog.Enrichers.Thread
+Serilog.Enrichers.Environment
+Serilog.Formatting.Compact

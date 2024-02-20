@@ -5,6 +5,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using Repositories;
 
     public class StreetNameMatcher
@@ -14,16 +15,23 @@
 
         public StreetNameMatcher(
             IEnumerable<StreetName> streetNames,
-            int maxLevenshteinDistanceInPercentage = 5)
+            int maxLevenshteinDistanceInPercentage = 10)
         {
+            foreach (var streetName in streetNames)
+            {
+                streetName.NameDutch = RemoveDiacritics(streetName.NameDutch);
+                streetName.NameFrench = RemoveDiacritics(streetName.NameFrench);
+                streetName.NameGerman = RemoveDiacritics(streetName.NameGerman);
+                streetName.NameEnglish = RemoveDiacritics(streetName.NameEnglish);
+            }
             _streetNames = streetNames;
             _maxLevenshteinDistanceInPercentage = maxLevenshteinDistanceInPercentage;
         }
 
-        public int? MatchStreetName(string search)
+        public List<StreetName> MatchStreetName(string search)
         {
             var streetNameMatch = ExactMatch(search);
-            if (streetNameMatch.HasValue)
+            if (streetNameMatch.Any())
             {
                 return streetNameMatch;
             }
@@ -31,59 +39,75 @@
             var searchWithoutDiacritics = RemoveDiacritics(search);
 
             streetNameMatch = ExactMatch(searchWithoutDiacritics);
-            if (streetNameMatch.HasValue)
+            if (streetNameMatch.Any())
             {
                 return streetNameMatch;
             }
 
             var searchByAbbreviation = ReplaceAbbreviation(search);
             streetNameMatch = ExactMatch(searchByAbbreviation);
-            if (streetNameMatch.HasValue)
+            if (streetNameMatch.Any())
             {
                 return streetNameMatch;
             }
 
             var searchByAbbreviationWithoutDiacritics = RemoveDiacritics(ReplaceAbbreviation(search));
             streetNameMatch = ExactMatch(searchByAbbreviationWithoutDiacritics);
-            if (streetNameMatch.HasValue)
+            if (streetNameMatch.Any())
             {
                 return streetNameMatch;
             }
 
             streetNameMatch = MatchByLevenshteinDistance(search);
-            if (streetNameMatch.HasValue)
+            if (streetNameMatch.Any())
             {
                 return streetNameMatch;
             }
 
             streetNameMatch = MatchByLevenshteinDistance(searchWithoutDiacritics);
-            if (streetNameMatch.HasValue)
+            if (streetNameMatch.Any())
             {
                 return streetNameMatch;
             }
 
+            streetNameMatch = MatchByLevenshteinDistance(searchByAbbreviationWithoutDiacritics);
+            if (streetNameMatch.Any())
+            {
+                return streetNameMatch;
+            }
+
+            var replaced = Regex.Replace(search, @"\([^()]*\)", "").Trim();
+            streetNameMatch = ExactMatch(replaced);
+            if (streetNameMatch.Any())
+            {
+                return streetNameMatch;
+            }
+
+            streetNameMatch = MatchByLevenshteinDistance(replaced);
+            if (streetNameMatch.Any())
+            {
+                return streetNameMatch;
+            }
             // streetNameMatch = IsHomonymMatch(search);
 
-            return null;
+            return new List<StreetName>();
         }
 
-        private int? ExactMatch(string search)
+        private List<StreetName> ExactMatch(string search)
         {
-            var match = _streetNames.FirstOrDefault(x =>
-                    string.Equals(x.NameDutch, search, StringComparison.InvariantCultureIgnoreCase) ||
+            var matches = _streetNames.Where(x =>
+                string.Equals(x.NameDutch, search, StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(x.NameFrench, search, StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(x.NameGerman, search, StringComparison.InvariantCultureIgnoreCase) ||
-                    string.Equals(x.NameEnglish, search, StringComparison.InvariantCultureIgnoreCase))
-                ?.StreetNamePersistentLocalId;
+                    string.Equals(x.NameEnglish, search, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
-            return match;
+            return matches;
         }
 
-        private int? MatchByLevenshteinDistance(string search)
+        private List<StreetName> MatchByLevenshteinDistance(string search)
         {
-            StreetName? streetNameWithLowestDistance = null;
+            var matches = new List<(double distance, StreetName streetName)>();
 
-            var minDistance = 100.0;
             foreach (var streetName in _streetNames)
             {
                 var distanceDutch = !string.IsNullOrWhiteSpace(streetName.NameDutch)
@@ -100,16 +124,16 @@
                     : 100;
 
                 var distance = new[] { distanceDutch, distanceFrench, distanceGerman, distanceEnglish }.Min();
-                if (distance < minDistance)
+                if (distance <= _maxLevenshteinDistanceInPercentage)
                 {
-                    streetNameWithLowestDistance = streetName;
-                    minDistance = distance;
+                    matches.Add((distance, streetName));
                 }
             }
 
-            return minDistance <= _maxLevenshteinDistanceInPercentage
-                ? streetNameWithLowestDistance?.StreetNamePersistentLocalId
-                : null;
+            return matches
+                .OrderBy(x => x.distance)
+                .Select(x => x.streetName)
+                .ToList();
         }
 
         private string ReplaceAbbreviation(string search)
@@ -121,6 +145,9 @@
 
             if (replaced.Contains("o.l.v."))
                 return replaced.Replace("o.l.v.", "Onze Lieve Vrouw");
+
+            if (replaced.Contains("o.-l.-"))
+                return replaced.Replace("o.-l.-", "Onze-Lieve-");
 
             if (replaced.Contains("onze-lieve-"))
                 return replaced.Replace("onze-lieve-", "O.L. ");
@@ -173,8 +200,12 @@
             return replaced;
         }
 
-        private static string RemoveDiacritics(string search)
+        private static string RemoveDiacritics(string? search)
         {
+            if (string.IsNullOrEmpty(search))
+            {
+                return search;
+            }
             var stringBuilder = new StringBuilder(search.Length);
             var normalizedString = search.Normalize(NormalizationForm.FormD);
 

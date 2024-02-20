@@ -42,9 +42,9 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames, MaxLevenshteinDistanceInPercentage);
 
-            var persistentLocalId = matcher.MatchStreetName(search);
+            var matched = matcher.MatchStreetName(search).FirstOrDefault();
 
-            persistentLocalId.Should().Be(expectedStreetName.StreetNamePersistentLocalId);
+            matched.Should().BeEquivalentTo(expectedStreetName);
         }
 
         [Fact]
@@ -63,9 +63,33 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames, MaxLevenshteinDistanceInPercentage);
 
-            var persistentLocalId = matcher.MatchStreetName("Kerkenstraat");
+            var matched = matcher.MatchStreetName("Kerkenstraat").FirstOrDefault();
 
-            persistentLocalId.Should().BeNull();
+            matched.Should().BeNull();
+        }
+
+        [Theory]
+        [InlineData("DR. DECROLYSTRAAT","Doctor Decrolystraat")]
+        [InlineData("VAN STRIJDONCKLAAN","Van Strydoncklaan")]
+        [InlineData("ZUSTERS VAN O.-L.-VROUWSTRAAT","Zusters van Onze-Lieve-Vrouwstraat")]
+        public void Given(string search, string expected)
+        {
+            var expectedStreetName = new StreetName(
+                _fixture.Create<int>(),
+                expected,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+            var streetNames = _streetNames.Concat(new[] { expectedStreetName });
+            var matcher = new StreetNameMatcher(streetNames, MaxLevenshteinDistanceInPercentage);
+
+            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+
+            matched.Should().BeEquivalentTo(expectedStreetName);
         }
     }
 }

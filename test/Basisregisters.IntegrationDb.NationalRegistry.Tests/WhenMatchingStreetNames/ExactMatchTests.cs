@@ -41,9 +41,9 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var persistentLocalId = matcher.MatchStreetName(search);
+            var matched = matcher.MatchStreetName(search).FirstOrDefault();
 
-            persistentLocalId.Should().Be(expectedStreetName.StreetNamePersistentLocalId);
+            matched.Should().BeEquivalentTo(expectedStreetName);
         }
 
         [Theory]
@@ -68,9 +68,9 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var persistentLocalId = matcher.MatchStreetName(search);
+            var matched = matcher.MatchStreetName(search).FirstOrDefault();
 
-            persistentLocalId.Should().Be(expectedStreetName.StreetNamePersistentLocalId);
+            matched.Should().BeEquivalentTo(expectedStreetName);
         }
 
         [Theory]
@@ -95,9 +95,9 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var persistentLocalId = matcher.MatchStreetName(search);
+            var matched = matcher.MatchStreetName(search).FirstOrDefault();
 
-            persistentLocalId.Should().Be(expectedStreetName.StreetNamePersistentLocalId);
+            matched.Should().BeEquivalentTo(expectedStreetName);
         }
 
         [Theory]
@@ -122,9 +122,9 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var persistentLocalId = matcher.MatchStreetName(search);
+            var matched = matcher.MatchStreetName(search).FirstOrDefault();
 
-            persistentLocalId.Should().Be(expectedStreetName.StreetNamePersistentLocalId);
+            matched.Should().BeEquivalentTo(expectedStreetName);
         }
     }
 }

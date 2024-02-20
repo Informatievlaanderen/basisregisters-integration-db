@@ -31,7 +31,7 @@
     homonym_addition_german as HomonymAdditionGerman,
     homonym_addition_english as HomonymAdditionEnglish
 from integration_streetname.streetname_latest_items
-where nis_code = @NisCode";
+where nis_code = @NisCode and status in (0,1) and is_removed = false";
 
             using var connection = new NpgsqlConnection(_connectionString);
 
@@ -41,14 +41,28 @@ where nis_code = @NisCode";
         }
     }
 
-    public record StreetName(
-        int StreetNamePersistentLocalId,
-        string? NameDutch,
-        string? NameFrench,
-        string? NameGerman,
-        string? NameEnglish,
-        string? HomonymAdditionDutch,
-        string? HomonymAdditionFrench,
-        string? HomonymAdditionGerman,
-        string? HomonymAdditionEnglish);
+    public class StreetName
+    {
+        public StreetName(int streetNamePersistentLocalId, string? nameDutch, string? nameFrench, string? nameGerman, string? nameEnglish, string? homonymAdditionDutch, string? homonymAdditionFrench, string? homonymAdditionGerman, string? homonymAdditionEnglish)
+        {
+            StreetNamePersistentLocalId = streetNamePersistentLocalId;
+            NameDutch = nameDutch;
+            NameFrench = nameFrench;
+            NameGerman = nameGerman;
+            NameEnglish = nameEnglish;
+            HomonymAdditionDutch = homonymAdditionDutch;
+            HomonymAdditionFrench = homonymAdditionFrench;
+            HomonymAdditionGerman = homonymAdditionGerman;
+            HomonymAdditionEnglish = homonymAdditionEnglish;
+        }
+        public int StreetNamePersistentLocalId { get; set; }
+        public string? NameDutch { get; set; }
+        public string? NameFrench { get; set; }
+        public string? NameGerman { get; set; }
+        public string? NameEnglish { get; set; }
+        public string? HomonymAdditionDutch { get; set; }
+        public string? HomonymAdditionFrench { get; set; }
+        public string? HomonymAdditionGerman { get; set; }
+        public string? HomonymAdditionEnglish { get; set; }
+    }
 }
