@@ -79,7 +79,7 @@
         public NationalRegistryIndex(string? value)
         {
             SourceValue = value;
-            if (string.IsNullOrEmpty(value) || value == "0000")
+            if (string.IsNullOrEmpty(value) || value == "0000") //TODO: possible improvement if we consider 0000 as value and not clear values.
             {
                 Value = null;
                 Left = null;
@@ -90,7 +90,7 @@
             else
             {
                 var formatted = value.TrimStart('0').Trim();
-                Value = IsNumericRegex.IsMatch(formatted[0].ToString())
+                Value = formatted.Length > 0 && IsNumericRegex.IsMatch(formatted[0].ToString())
                     ? formatted.PadLeft(4, '0')
                     : formatted.PadRight(4, '0');
 

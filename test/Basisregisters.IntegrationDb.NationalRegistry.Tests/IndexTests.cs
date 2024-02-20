@@ -13,6 +13,9 @@
         [InlineData("1058", "1058")]
         [InlineData("1000", "1000")]
         [InlineData("01", "0001")]
+        [InlineData("0", "0000")]
+        [InlineData("00", "0000")]
+        [InlineData("000", "0000")]
         public void IndexIsLeftPaddedWithZeros(string index, string expected)
         {
             var record = new NationalRegistryIndex(index);
