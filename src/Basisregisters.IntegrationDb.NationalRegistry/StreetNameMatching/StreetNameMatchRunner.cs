@@ -1,25 +1,22 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using FlatFiles;
-    using Matching;
-    using Model;
     using Repositories;
 
-    public class MatchStreetNameRunner
+    public class StreetNameMatchRunner
     {
         private readonly StreetNameRepository _repo;
 
-        public MatchStreetNameRunner(string connectionString)
+        public StreetNameMatchRunner(string connectionString)
         {
             _repo = new StreetNameRepository(connectionString);
         }
 
-        public void Match(string path)
+        public void Match(List<NisCodeStreetNameRecord> streetNameRecords)
         {
-            var streetNamesByNisCode = ReadNisCodeStreetNameRecords(path)
+            var streetNamesByNisCode = streetNameRecords
                 .GroupBy(x => x.NisCode)
                 .ToDictionary(
                     x => x.Key,
@@ -37,14 +34,18 @@
                 unmatched.Add(nisCode, new List<string>());
                 foreach (var streetName in streetNames)
                 {
-                    var match = matcher.MatchStreetName(streetName);
+                    var match = matcher.MatchStreetName(nisCode, streetName);
                     if (match.Any())
                     {
                         matched[nisCode].Add(streetName);
                     }
                     else
                     {
-                        if (streetName == "INSCHRIJVING OP VERKLARING" || streetName.StartsWith("KB ")|| streetName.StartsWith("NONRESIDENT"))
+                        if (streetName == "INSCHRIJVING OP VERKLARING"
+                            || streetName.StartsWith("KB ")
+                            || streetName.StartsWith("NONRESIDENT")
+                            || streetName.StartsWith("INSCRIPTION SUR DECLARATION")
+                            || streetName.StartsWith("NIET-INWONER"))
                         {
                             continue;
                         }
@@ -53,28 +54,11 @@
                 }
             }
 
-            // File.WriteAllLines(@"C:\",
-            //     matched
-            //         .SelectMany(x => x.Value.Select(y => new { NisCode = x.Key, StreetName = y }))
-            //         .Select(x => $"{x.NisCode};{x.StreetName}")
-            //         .Distinct());
-            File.WriteAllLines(@"C:",
+            File.WriteAllLines(@"C:\DV\inwonersaantallen\unmatched.csv",
                 unmatched
                     .SelectMany(x => x.Value.Select(y => new { NisCode = x.Key, StreetName = y }))
                     .Select(x => $"{x.NisCode};{x.StreetName}")
                     .Distinct());
-        }
-
-        private static List<NisCodeStreetNameRecord> ReadNisCodeStreetNameRecords(string path)
-        {
-            using var reader = new StreamReader(path);
-            var options = new DelimitedOptions()
-            {
-                IsFirstRecordSchema = false,
-                Separator = ";"
-            };
-            var nisCodeStreetNameRecords = NisCodeStreetNameRecord.Mapper.Read(reader, options).ToList();
-            return nisCodeStreetNameRecords;
         }
     }
 }

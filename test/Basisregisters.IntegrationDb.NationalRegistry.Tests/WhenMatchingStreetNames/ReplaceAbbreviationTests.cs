@@ -4,8 +4,8 @@
     using System.Linq;
     using AutoFixture;
     using FluentAssertions;
-    using Matching;
     using Repositories;
+    using StreetNameMatching;
     using Xunit;
 
     public class AbbreviationMatchingTests
@@ -54,7 +54,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(searchWithAbbrevation).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), searchWithAbbrevation).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }
@@ -82,7 +82,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(searchWithAbbrevation).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), searchWithAbbrevation).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }
@@ -111,7 +111,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(searchWithAbbrevation).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), searchWithAbbrevation).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }

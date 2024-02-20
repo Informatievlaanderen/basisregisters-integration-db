@@ -4,8 +4,8 @@
     using System.Linq;
     using AutoFixture;
     using FluentAssertions;
-    using Matching;
     using Repositories;
+    using StreetNameMatching;
     using Xunit;
 
     public class ExactMatchingTests
@@ -26,6 +26,14 @@
         [InlineData("kerkstraat", "kérkstraat")]
         [InlineData("Kerkstraat", "Kérkstraat")]
         [InlineData("DeStRaat", "désTraAt")]
+        [InlineData("Josephina De Bakker-Breugelmansstraat", "J. DE BAKKER-BREUGELMANSSTRAAT")]
+        [InlineData("Alfons Van den Sandelaan", "ALF.VAN DEN SANDELAAN")]
+        [InlineData("Jan Baptist Rampelbergstraat", "J.B. RAMPELBERGSTRAAT")]
+        [InlineData("Lodewijk Engelbertus van Arenbergplein", "LODEWIJK ENG. VAN ARENBERGPLEIN")]
+        [InlineData("J. Van Boendaelelaan", "J.V. BOENDAELEL.RES. BOENDAELE")]
+        [InlineData("Bronplein", "BRONPLEIN RES.GERTRUDIS")]
+        [InlineData("Hannuitsesteenweg", "HANNUITSESTWG. RES. HEMELRIJCK")]
+        [InlineData("Steyts Koer", "STEYTS KOER(KOR)(NIEUWE STRAAT)")]
         public void DutchStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -41,7 +49,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), search).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }
@@ -68,7 +76,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), search).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }
@@ -95,7 +103,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), search).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }
@@ -122,7 +130,7 @@
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), search).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }

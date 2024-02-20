@@ -4,16 +4,14 @@
     using System.Linq;
     using AutoFixture;
     using FluentAssertions;
-    using Matching;
     using Repositories;
+    using StreetNameMatching;
     using Xunit;
 
     public class LevenshteinDistanceMatchingTests
     {
         private readonly Fixture _fixture;
         private readonly IEnumerable<StreetName> _streetNames;
-
-        private const int MaxLevenshteinDistanceInPercentage = 10;
 
         public LevenshteinDistanceMatchingTests()
         {
@@ -40,9 +38,9 @@
                 null,
                 null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
-            var matcher = new StreetNameMatcher(streetNames, MaxLevenshteinDistanceInPercentage);
+            var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), search).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }
@@ -61,9 +59,9 @@
                 null,
                 null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
-            var matcher = new StreetNameMatcher(streetNames, MaxLevenshteinDistanceInPercentage);
+            var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName("Kerkenstraat").FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), "Kerktorenstraat").FirstOrDefault();
 
             matched.Should().BeNull();
         }
@@ -85,9 +83,9 @@
                 null,
                 null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
-            var matcher = new StreetNameMatcher(streetNames, MaxLevenshteinDistanceInPercentage);
+            var matcher = new StreetNameMatcher(streetNames);
 
-            var matched = matcher.MatchStreetName(search).FirstOrDefault();
+            var matched = matcher.MatchStreetName(_fixture.Create<string>(), search).FirstOrDefault();
 
             matched.Should().BeEquivalentTo(expectedStreetName);
         }

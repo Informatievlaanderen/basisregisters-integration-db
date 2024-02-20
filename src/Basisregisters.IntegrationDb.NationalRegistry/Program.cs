@@ -3,22 +3,19 @@
 namespace Basisregisters.IntegrationDb.NationalRegistry
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Autofac;
     using Destructurama;
     using FlatFiles;
-    using FlatFiles.TypeMapping;
-    using Matching;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
-    using Model;
     using Serilog;
     using Serilog.Debugging;
-    using Serilog.Extensions.Logging;
+    using StreetNameMatching;
 
     public sealed class Program
     {
@@ -74,8 +71,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             {
                 var path = configuration["filePath"];
 
-                var matchStreetNameRunner = new MatchStreetNameRunner(configuration.GetConnectionString("Integration"));
-                matchStreetNameRunner.Match(path);
+                var streetNames = ReadNisCodeStreetNameRecords(path);
+
+                var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
+                matchStreetNameRunner.Match(streetNames);
             }
             catch (AggregateException aggregateException)
             {
@@ -98,18 +97,17 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 logger.LogInformation("Stopping...");
             }
         }
+
+        private static List<NisCodeStreetNameRecord> ReadNisCodeStreetNameRecords(string path)
+        {
+            using var reader = new StreamReader(path);
+            var options = new DelimitedOptions
+            {
+                IsFirstRecordSchema = false,
+                Separator = ";"
+            };
+            var nisCodeStreetNameRecords = NisCodeStreetNameRecord.Mapper.Read(reader, options).ToList();
+            return nisCodeStreetNameRecords;
+        }
     }
 }
-
-
-// Console.WriteLine("Hello, let's process national registry data!");
-//
-// using (TextReader textReader = new StringReader("11001263010100002    ADRIAAN SANDERSLEI              0000\n11001263010300036B001ANTWERPSESTEENWEG               0000"))
-// {
-//     var mapper = FlatFileRecord.Mapper;
-//     var records = mapper.Read(textReader).ToList();
-//
-//     Console.WriteLine(records.Count);
-// }
-//
-// Environment.Exit(0);

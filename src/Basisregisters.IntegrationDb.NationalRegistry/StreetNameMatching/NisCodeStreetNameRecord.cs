@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
 {
     using FlatFiles.TypeMapping;
 
