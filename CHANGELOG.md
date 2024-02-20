@@ -1,3 +1,10 @@
+## [1.3.13](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.12...v1.3.13) (2024-02-20)
+
+
+### Bug Fixes
+
+* build suspicious api image ([aea9dea](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/aea9dea1dd51536f91105c56e3a6df52523371e4))
+
 ## [1.3.12](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.11...v1.3.12) (2024-02-20)
 
 
