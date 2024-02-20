@@ -58,7 +58,7 @@ Target.create "Publish_Solution" (fun _ ->
     "Basisregisters.IntegrationDb.SuspiciousCases.Api"
   ] |> List.iter publishSource)
 
-Target.create "Containerize_ApiSuspiciousCases" (fun _ -> containerize "Basisregisters.IntegrationDb.SuspiciousCases.Api" "api-suspicious-cases")
+Target.create "Containerize_ApiSuspiciousCases" (fun _ -> containerize "Basisregisters.IntegrationDb.SuspiciousCases.Api" "suspicious-cases-api")
 Target.create "Containerize_IntegrationVeka" (fun _ -> containerize "Basisregisters.Integration.Veka" "integration-veka")
 
 Target.create "SetAssemblyVersions" (fun _ -> setVersions "SolutionInfo.cs")
