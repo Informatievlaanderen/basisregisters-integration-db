@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using Repositories;
 
     public class StreetNameMatchRunner
@@ -79,7 +78,7 @@
                 }
             }
 
-            File.WriteAllLines(@"C:\DV\inwonersaantallen\doubles.csv",
+            File.WriteAllLines(@"C:\Users\egonm\Documents\Digitaal Vlaanderen\inwonersaantallen\doubles2.csv",
                 result
                     .Select(x => $"{x.NisCode};{x.StreetName.NameDutch};{x.StreetName.HomonymAdditionDutch};{x.Searches.Aggregate((i,j) => $"{i},{j}")}")
                     .Distinct());

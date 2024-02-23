@@ -72,15 +72,15 @@
         }
 
         [Theory]
-        [InlineData("0(1)", "(1)0")]
-        public void IndexHasNoPartsJustGivenValue(string index, string expected)
+        [InlineData("0(1)", "0(1)")]
+        public void IndexHasBrackets(string index, string expected)
         {
             var record = new NationalRegistryIndex(index);
             record.SourceValue.Should().Be(index);
             record.Value.Should().Be(expected);
-            record.Left.Should().BeNullOrEmpty();
-            record.Right.Should().BeNullOrEmpty();
-            record.RightPartOne.Should().BeNullOrEmpty();
+            record.Left.Should().Be("0");
+            record.Right.Should().Be("1)");
+            record.RightPartOne.Should().Be("1");
             record.RightPartTwo.Should().BeNullOrEmpty();
         }
 
@@ -99,7 +99,8 @@
         }
 
         [Theory]
-        [InlineData("A00", "A000", "A", "000")]
+        [InlineData("A000", "A000", "A", "000")]
+        [InlineData("A01", "A000", "A", "000")]
         [InlineData("A001", "A001", "A", "001")]
         [InlineData("B002", "B002", "B", "002")]
         [InlineData("Ap.6", "Ap.6", "Ap", "6")]
@@ -129,6 +130,7 @@
         [InlineData("1ev", "01ev", "01", "ev", "ev")]
         [InlineData("1vrd", "1vrd", "1", "vrd", "vrd")]
         [InlineData("1stR", "1stR", "1", "stR", "stR")]
+        [InlineData("00.3", "00.3", "00", "3", "3")]
         public void IndexWithThreeParts(
             string index,
             string expectedValue,

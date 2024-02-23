@@ -64,7 +64,8 @@
     {
         private static readonly Regex BeginAlfaNumericRegex = new Regex("^[0-9]+|^[a-zA-Z]+", RegexOptions.Compiled);
         private static readonly Regex IsNumericRegex = new Regex("^[0-9]+$", RegexOptions.Compiled);
-        private static readonly Regex BeginCharRegex = new Regex("^[a-zA-Z]+");
+        private static readonly Regex HasNumeric = new Regex("[0-9]+", RegexOptions.Compiled);
+        private static readonly Regex BeginCharRegex = new Regex("^[a-zA-Z]+", RegexOptions.Compiled);
         public string? SourceValue { get; }
 
         public string? Value { get; }
@@ -90,7 +91,7 @@
             else
             {
                 var formatted = value.TrimStart('0').Trim();
-                Value = formatted.Length > 0 && IsNumericRegex.IsMatch(formatted[0].ToString())
+                Value = formatted.Length > 0 && HasNumeric.IsMatch(formatted)
                     ? formatted.PadLeft(4, '0')
                     : formatted.PadRight(4, '0');
 
