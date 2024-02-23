@@ -5,11 +5,11 @@
 
     public class TrimEndSanitizer : SanitizerBase
     {
-        private readonly string[] _patterns = new[]
+        private readonly (string pattern, string toTrim)[] _patterns =
         {
-            "RES.[a-zA-Z ]+",
-            "[a-zA-Z ]+CENTRUM",
-            @".*\(NIEUWE STRAAT\)$"
+            ("RES.[a-zA-Z ]+", "RES.[a-zA-Z ]+"),
+            ("[a-zA-Z ]+CENTRUM", "CENTRUM"),
+            (@".*\(NIEUWE STRAAT\)$", @"\(NIEUWE STRAAT\)")
         };
 
         public TrimEndSanitizer() : this(Array.Empty<SanitizerBase>())
@@ -24,7 +24,10 @@
 
             foreach (var pattern in _patterns)
             {
-                sanitized = Regex.Replace(sanitized, pattern, "").Trim();
+                if (Regex.IsMatch(sanitized, pattern.pattern))
+                {
+                    sanitized = Regex.Replace(sanitized, pattern.toTrim, "").Trim();
+                }
             }
 
             return sanitized;

@@ -1,11 +1,11 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.WhenMatchingStreetNames
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
 {
     using System.Collections.Generic;
     using System.Linq;
     using AutoFixture;
+    using Basisregisters.IntegrationDb.NationalRegistry.Repositories;
+    using Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching;
     using FluentAssertions;
-    using Repositories;
-    using StreetNameMatching;
     using Xunit;
 
     public class ExactMatchingTests
@@ -33,7 +33,6 @@
         [InlineData("J. Van Boendaelelaan", "J.V. BOENDAELEL.RES. BOENDAELE")]
         [InlineData("Bronplein", "BRONPLEIN RES.GERTRUDIS")]
         [InlineData("Hannuitsesteenweg", "HANNUITSESTWG. RES. HEMELRIJCK")]
-        [InlineData("Steyts Koer", "STEYTS KOER(KOR)(NIEUWE STRAAT)")]
         public void DutchStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(

@@ -1,11 +1,11 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.WhenMatchingStreetNames
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
 {
     using System.Collections.Generic;
     using System.Linq;
     using AutoFixture;
+    using Basisregisters.IntegrationDb.NationalRegistry.Repositories;
+    using Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching;
     using FluentAssertions;
-    using Repositories;
-    using StreetNameMatching;
     using Xunit;
 
     public class LevenshteinDistanceMatchingTests

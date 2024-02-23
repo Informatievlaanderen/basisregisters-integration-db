@@ -44,7 +44,7 @@
                 new UseRoundBracketsSuffixAsPrefixSanitizer(),
                 new ReplaceCharsSanitizer(),
                 new SpacingSanitizer(new SanitizerBase[] { new RemoveRoundBracketsSuffixSanitizer(), new AbbreviationSanitizer() }),
-                new TrimEndSanitizer(new SanitizerBase[] { new AbbreviationSanitizer(), new UseRoundBracketsSuffixAsPrefixSanitizer() }),
+                new TrimEndSanitizer(new SanitizerBase[] { new AbbreviationSanitizer() }),
             };
         }
 
