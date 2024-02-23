@@ -100,7 +100,6 @@
 
         [Theory]
         [InlineData("A000", "A000", "A", "000")]
-        [InlineData("A01", "A000", "A", "000")]
         [InlineData("A001", "A001", "A", "001")]
         [InlineData("B002", "B002", "B", "002")]
         [InlineData("Ap.6", "Ap.6", "Ap", "6")]
@@ -152,6 +151,8 @@
         [InlineData("1B01", "1B01", "1", "B01", "B", "01")]
         [InlineData("1V.1", "1V.1", "1", "V.1", "V", "1")]
         [InlineData("1B1", "01B1", "01", "B1", "B", "1")]
+        [InlineData("A01", "0A01", "0", "A01", "A", "01")]
+        [InlineData("A00", "0A00", "0", "A00", "A", "00")]
         public void IndexWithFourParts(
             string index,
             string expectedValue,
