@@ -55,6 +55,7 @@
         [InlineData("B010", "B", "10")]
         [InlineData("AB20", "AB", "20")]
         [InlineData("AB05", "AB", "5")]
+        // [InlineData("ABU2", "ABU", "2")] // Todo: review
         public void NonNumericFollowedByNumberGreaterThanZero(
             string? index,
             string houseNumberSuffix,
@@ -75,8 +76,14 @@
 
         [Theory]
         [InlineData("Ap.6", "6")]
+        // [InlineData("Ap6", "6")] Todo: review
+        [InlineData("App6", "6")]
+        [InlineData("Apt6", "6")]
         [InlineData("Vrd6", "Vrd6")]
         [InlineData("bus6", "6")]
+        [InlineData("bte6", "6")]
+        [InlineData("bt06", "6")]
+        [InlineData("bu06", "6")]
         public void SpecificPrefix(
             string? index,
             string boxNumber)
