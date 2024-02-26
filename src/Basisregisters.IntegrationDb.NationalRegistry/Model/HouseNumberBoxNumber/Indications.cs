@@ -5,7 +5,8 @@
         public static readonly string[] FloorNumber =
         {
             "et", "eta", "éta", "ver", "vdp", "vd", "vr", "vrd", "v", "etg", "ét",
-            "et", "ev", "eme", "ème", "ste", "de", "dev", "e", "é"
+            "et", "ev", "eme", "ème", "ste", "de", "dev", "e", "é",
+            "rcé", "rcar", "gv", "rch", "rdc", "hal", "rez", "rch", "gv", "gvl", "glv", "gel", "gl" // "gelijksvloers"
         };
 
         public static readonly string[] Apartment =

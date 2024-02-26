@@ -32,6 +32,7 @@
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
         {
             yield return new NoIndex(_record.HouseNumber, _record.Index);
+            yield return new BisIndication(_record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.HouseNumber, _record.Index);
             yield return new NonNumericBetweenNumbers(_record.HouseNumber, _record.Index);
             yield return new SeparatorBetweenNumbers(_record.HouseNumber, _record.Index);

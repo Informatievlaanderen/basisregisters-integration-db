@@ -31,11 +31,32 @@
         }
 
         [Theory]
+        [InlineData("bis1", "1")]
+        [InlineData("bisA", "A")]
+        [InlineData("Abis", "A")]
+        [InlineData("BISa", "a")]
+        [InlineData("terA", "A")]
+        public void BisIndication(string? index, string bisNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                HouseNumber = "123",
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            address.HouseNumberBoxNumbers.Should().BeOfType<BisIndication>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
+        }
+
+        [Theory]
         [InlineData("A000", "A")]
         [InlineData("B000", "B")]
         [InlineData("AB00", "AB")]
         [InlineData("AB", "AB")]
-        public void NonNumericFollowedByZeros(string? index, string houseNumberSuffix)
+        public void NonNumericFollowedByZeros(string? index, string bisNumber)
         {
             var record = new FlatFileRecord
             {
@@ -46,7 +67,7 @@
 
             address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericFollowedByZeros>();
             var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
-            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
         }
 
@@ -55,10 +76,13 @@
         [InlineData("B010", "B", "10")]
         [InlineData("AB20", "AB", "20")]
         [InlineData("AB05", "AB", "5")]
-        // [InlineData("ABU2", "ABU", "2")] // Todo: review
+        [InlineData("ABU2", "A", "2")]
+        [InlineData("Abu2", "A", "2")]
+        [InlineData("AbT2", "A", "2")]
+        [InlineData("Aap2", "A", "2")]
         public void NonNumericFollowedByNumberGreaterThanZero(
             string? index,
-            string houseNumberSuffix,
+            string bisNumber,
             string boxNumber)
         {
             var record = new FlatFileRecord
@@ -70,17 +94,23 @@
 
             address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericFollowedByNumberGreaterThanZero>();
             var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
-            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
         [InlineData("Ap.6", "6")]
-        // [InlineData("Ap6", "6")] Todo: review
         [InlineData("Ap06", "6")]
         [InlineData("App6", "6")]
         [InlineData("Apt6", "6")]
         [InlineData("Vrd6", "Vrd6")]
+        [InlineData("Vd06", "Vd06")]
+        [InlineData("Vd6L", "Vd6L")]
+        [InlineData("eme6", "eme6")]
+        [InlineData("dev6", "dev6")]
+        [InlineData("gvl6", "gvl6")]
+        [InlineData("glv6", "glv6")]
+        [InlineData("hal6", "hal6")]
         [InlineData("bus6", "6")]
         [InlineData("bte6", "6")]
         [InlineData("bt06", "6")]
@@ -151,7 +181,7 @@
         [InlineData("A00", "A", "0")]
         public void NonNumericBetweenNumbers(
             string? index,
-            string houseNumberSuffix,
+            string bisNumber,
             string boxNumber)
         {
             var record = new FlatFileRecord
@@ -163,7 +193,7 @@
 
             address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericBetweenNumbers>();
             var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
-            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
@@ -192,7 +222,7 @@
         [InlineData("2L", "_2", "L")]
         public void NumericFollowedByNonNumeric(
             string? index,
-            string houseNumberSuffix,
+            string bisNumber,
             string boxNumber)
         {
             var record = new FlatFileRecord
@@ -204,7 +234,7 @@
 
             address.HouseNumberBoxNumbers.Should().BeOfType<NumericFollowedByNonNumeric>();
             var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
-            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
