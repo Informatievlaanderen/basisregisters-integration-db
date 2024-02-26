@@ -67,9 +67,9 @@
 
         [Theory]
         [InlineData("Ap.6", "6")]
-        [InlineData("Vrd6", "6")]
+        [InlineData("Vrd6", "Vrd6")]
         [InlineData("bus6", "6")]
-        public void WithLeftIndexRefersToAppartment_ThenHouseNumberAndBoxNumber(
+        public void WithLeftIndexRefersToApartment_ThenHouseNumberAndBoxNumber(
             string? index,
             string boxNumber)
         {

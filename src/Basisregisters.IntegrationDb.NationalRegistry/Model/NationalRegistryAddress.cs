@@ -24,12 +24,12 @@
 
             if (_record.HasIndex)
             {
-                if (_record.Index.Left!.Equals("Ap", StringComparison.InvariantCultureIgnoreCase)
-                    || _record.Index.Left!.Equals("Vrd", StringComparison.InvariantCultureIgnoreCase)
-                    || _record.Index.Left!.Equals("bus", StringComparison.InvariantCultureIgnoreCase))
+                if (new HouseNumberWithNoBisNumberAndBoxNumber(_record.HouseNumber, _record.Index).Matches())
                 {
-                    HouseNumber = _record.HouseNumber;
-                    BoxNumber = _record.Index.Right!.TrimStart('0');
+                    var houseNumberWithBoxNumbers = new HouseNumberWithNoBisNumberAndBoxNumber(_record.HouseNumber, _record.Index);
+
+                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
+                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
                 else if (int.TryParse(_record.Index.Left!, out _)
                          && !IsNumeric(_record.Index.RightPartOne) && IsNumeric(_record.Index.RightPartTwo)
@@ -76,9 +76,9 @@
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
-                else if (new NonNumericHouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index).Matches())
+                else if (new HouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index).Matches())
                 {
-                    var houseNumberWithBoxNumbers = new NonNumericHouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index);
+                    var houseNumberWithBoxNumbers = new HouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index);
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
