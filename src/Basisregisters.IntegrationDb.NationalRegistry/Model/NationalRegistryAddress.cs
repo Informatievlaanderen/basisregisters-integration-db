@@ -24,9 +24,9 @@
 
             if (_record.HasIndex)
             {
-                if (new HouseNumberWithNoBisNumberAndBoxNumber(_record.HouseNumber, _record.Index).Matches())
+                if (new SpecificPrefix(_record.HouseNumber, _record.Index).Matches())
                 {
-                    var houseNumberWithBoxNumbers = new HouseNumberWithNoBisNumberAndBoxNumber(_record.HouseNumber, _record.Index);
+                    var houseNumberWithBoxNumbers = new SpecificPrefix(_record.HouseNumber, _record.Index);
 
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
@@ -70,15 +70,15 @@
                     HouseNumber = _record.HouseNumber;
                     BoxNumber = $"{left}";
                 }
-                else if (new HouseNumberWithBisNumberAndNoBoxNumber(_record.HouseNumber, _record.Index).Matches())
+                else if (new NonNumericFollowedByZeros(_record.HouseNumber, _record.Index).Matches())
                 {
-                    var houseNumberWithBoxNumbers = new HouseNumberWithBisNumberAndNoBoxNumber(_record.HouseNumber, _record.Index);
+                    var houseNumberWithBoxNumbers = new NonNumericFollowedByZeros(_record.HouseNumber, _record.Index);
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
-                else if (new HouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index).Matches())
+                else if (new NonNumericFollowedByNumberGreaterThanZero(_record.HouseNumber, _record.Index).Matches())
                 {
-                    var houseNumberWithBoxNumbers = new HouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index);
+                    var houseNumberWithBoxNumbers = new NonNumericFollowedByNumberGreaterThanZero(_record.HouseNumber, _record.Index);
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
