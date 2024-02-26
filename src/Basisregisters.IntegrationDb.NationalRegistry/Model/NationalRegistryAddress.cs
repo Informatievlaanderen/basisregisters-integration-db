@@ -38,11 +38,11 @@
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
-                else if (int.TryParse(_record.Index.Left!, out _)
-                         && IsNumeric(_record.Index.RightPartOne) && string.IsNullOrEmpty(_record.Index.RightPartTwo))
+                else if (new SeparatorBetweenNumbers(_record.HouseNumber, _record.Index).Matches())
                 {
-                    HouseNumber = _record.HouseNumber;
-                    BoxNumber = _record.Index.SourceValue;
+                    var houseNumberWithBoxNumbers = new SeparatorBetweenNumbers(_record.HouseNumber, _record.Index);
+                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
+                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
                 else if (int.TryParse(_record.Index.Left!, out var left) // Slide 35 + 36
                          && !string.IsNullOrEmpty(_record.Index.RightPartOne) && !IsNumeric(_record.Index.RightPartOne)
