@@ -34,6 +34,11 @@
         {
             return int.TryParse(input, out var number) && number > 0;
         }
+
+        protected bool IsNumeric(string? input)
+        {
+            return int.TryParse(input, out _);
+        }
     }
 
     public sealed record HouseNumberWithBoxNumber(string HouseNumber, string? BoxNumber)

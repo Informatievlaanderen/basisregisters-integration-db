@@ -90,12 +90,18 @@
             }
 
             // deel 1 aanduiding van verdiepnummer: deel1 + deel2 worden busnummer
-            return new[]
+            if (Index.Left!.Equals("Vrd", StringComparison.InvariantCultureIgnoreCase))
             {
-                new HouseNumberWithBoxNumber(
-                    SourceSourceHouseNumber,
-                    $"{Index!.Left}{Index.Right}")
-            };
+
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        SourceSourceHouseNumber,
+                        $"{Index!.Left}{Index.Right}")
+                };
+            }
+
+            throw new InvalidOperationException("Invalid use of matches");
         }
 
         public SpecificPrefix(string sourceHouseNumber, NationalRegistryIndex index)
@@ -155,14 +161,50 @@
     {
         public override bool Matches()
         {
-            throw new NotImplementedException();
+            if (int.TryParse(Index!.Left, out _)
+                && !IsNumeric(Index.RightPartOne) && IsNumeric(Index.RightPartTwo)
+                && Index.Right!.StartsWith("V.", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return true;
+            }
+
+            if (int.TryParse(Index.Left, out _)
+                && !IsNumeric(Index.RightPartOne) && int.TryParse(Index.RightPartTwo, out _))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override IEnumerable<HouseNumberWithBoxNumber> GetValues()
         {
-            // deel 3 aanduiding van bisnummer: aangeleverd huisnummer + deel3 wordt huisnummer, deel 4 wordt busnummer
             // deel 3 aanduiding van verdiepnummer: aangeleverd huisnummer wordt huisnummer, deel 1 + ‘.’ + deel 4 wordt busnummer
-            throw new NotImplementedException();
+            if (int.TryParse(Index!.Left, out _)
+                && !IsNumeric(Index.RightPartOne) && IsNumeric(Index.RightPartTwo)
+                && Index.Right!.StartsWith("V.", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        SourceSourceHouseNumber,
+                        $"{Index.Left}.{Index.RightPartTwo}")
+                };
+            }
+
+            // deel 3 aanduiding van bisnummer: aangeleverd huisnummer + deel3 wordt huisnummer, deel 4 wordt busnummer
+            if (int.TryParse(Index.Left, out _)
+                && !IsNumeric(Index.RightPartOne) && int.TryParse(Index.RightPartTwo, out var rightPartTwo))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        $"{SourceSourceHouseNumber}{Index.RightPartOne}",
+                        rightPartTwo.ToString())
+                };
+            }
+
+            throw new InvalidOperationException("Invalid use of matches");
         }
 
         public NonNumericBetweenNumbers(string sourceHouseNumber, NationalRegistryIndex index)
