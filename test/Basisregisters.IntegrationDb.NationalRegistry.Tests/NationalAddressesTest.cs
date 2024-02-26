@@ -121,5 +121,81 @@
             address.HouseNumber.Should().Be(record.HouseNumber);
             address.BoxNumber.Should().Be(index);
         }
+
+        [Theory]
+        [InlineData("1B01", "B", "1")]
+        [InlineData("1A01", "A", "1")]
+        [InlineData("A01", "A", "1")]
+        [InlineData("A00", "A", "0")]
+        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumericAndRightPartTwoIsNumeric_BisNumber_ThenHouseNumberAndBoxNumber(
+            string? index,
+            string houseNumberSuffix,
+            string boxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                HouseNumber = "123",
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            address.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            address.BoxNumber.Should().Be(boxNumber);
+        }
+
+        [Theory]
+        [InlineData("1V.2", "1.2")]
+        [InlineData("2V.1", "2.1")]
+        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumericAndRightPartTwoIsNumeric_FloorNumberWithDot_ThenHouseNumberAndBoxNumber(
+            string? index,
+            string boxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                HouseNumber = "123",
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            address.HouseNumber.Should().Be(record.HouseNumber);
+            address.BoxNumber.Should().Be(boxNumber);
+        }
+
+        [Theory]
+        [InlineData("001B", "_1", "B")]
+        [InlineData("2L", "_2", "L")]
+        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumeric_ThenHouseNumberAndBoxNumber(
+            string? index,
+            string houseNumberSuffix,
+            string boxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                HouseNumber = "123",
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            address.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            address.BoxNumber.Should().Be(boxNumber);
+        }
+
+        [Theory]
+        [InlineData("1ev", "1.0")]
+        [InlineData("1vrd", "1.0")]
+        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumeric_FloorNumberWithoutDot_ThenHouseNumberAndBoxNumber(
+            string? index,
+            string boxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                HouseNumber = "123",
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            address.HouseNumber.Should().Be(record.HouseNumber);
+            address.BoxNumber.Should().Be(boxNumber);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
     using System;
+    using System.Linq;
     using System.Text.RegularExpressions;
 
     public class NationalRegistryAddress
@@ -30,15 +31,43 @@
                     BoxNumber = _record.Index.Right!.TrimStart('0');
                 }
                 else if (int.TryParse(_record.Index.Left!, out _)
+                         && !IsNumeric(_record.Index.RightPartOne) && IsNumeric(_record.Index.RightPartTwo)
+                         && _record.Index.Right!.StartsWith("V.", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    HouseNumber = _record.HouseNumber;
+                    BoxNumber = $"{_record.Index.Left}.{_record.Index.RightPartTwo}";
+                }
+                else if (int.TryParse(_record.Index.Left!, out _)
+                         && !IsNumeric(_record.Index.RightPartOne) && int.TryParse(_record.Index.RightPartTwo, out var rightPartTwo))
+                {
+                    HouseNumber = _record.HouseNumber + _record.Index.RightPartOne;
+                    BoxNumber = $"{rightPartTwo}";
+                }
+                else if (int.TryParse(_record.Index.Left!, out _)
                          && IsNumeric(_record.Index.RightPartOne) && string.IsNullOrEmpty(_record.Index.RightPartTwo))
                 {
                     HouseNumber = _record.HouseNumber;
                     BoxNumber = _record.Index.SourceValue;
                 }
-                else if (int.TryParse(_record.Index.Left!, out _) && string.IsNullOrEmpty(_record.Index.Right))
+                else if (int.TryParse(_record.Index.Left!, out var left) // Slide 35 + 36
+                         && !string.IsNullOrEmpty(_record.Index.RightPartOne) && !IsNumeric(_record.Index.RightPartOne)
+                         && string.IsNullOrEmpty(_record.Index.RightPartTwo))
+                {
+                    if (new[] { "ev", "vrd" }.Any(x => x.Equals(_record.Index.RightPartOne, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        HouseNumber = _record.HouseNumber;
+                        BoxNumber = $"{left}.0";
+                    }
+                    else
+                    {
+                        HouseNumber = $"{_record.HouseNumber}_{left}";
+                        BoxNumber = _record.Index.RightPartOne;
+                    }
+                }
+                else if (int.TryParse(_record.Index.Left!, out left) && string.IsNullOrEmpty(_record.Index.Right))
                 {
                     HouseNumber = _record.HouseNumber;
-                    BoxNumber = _record.Index.Left.TrimStart('0');
+                    BoxNumber = $"{left}";
                 }
                 else if (ContainsOnlyLetters(_record.Index.Left!) && ContainsOnlyZeroes(_record.Index.Right!))
                 {
