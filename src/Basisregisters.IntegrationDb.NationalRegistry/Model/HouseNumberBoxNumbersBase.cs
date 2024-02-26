@@ -5,16 +5,16 @@
 
     public abstract class HouseNumberBoxNumbersBase
     {
-        protected readonly string PreCalculatedHouseNumber;
+        protected readonly string SourceSourceHouseNumber;
 
         public NationalRegistryIndex? Index { get; }
 
         public abstract bool Matches();
         public abstract IEnumerable<HouseNumberWithBoxNumber> GetValues();
 
-        protected HouseNumberBoxNumbersBase(string houseNumber, NationalRegistryIndex? index)
+        protected HouseNumberBoxNumbersBase(string sourceHouseNumber, NationalRegistryIndex? index)
         {
-            PreCalculatedHouseNumber = houseNumber;
+            SourceSourceHouseNumber = sourceHouseNumber;
             Index = index;
         }
 

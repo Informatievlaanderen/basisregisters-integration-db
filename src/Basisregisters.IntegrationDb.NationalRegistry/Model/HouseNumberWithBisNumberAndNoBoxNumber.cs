@@ -21,17 +21,18 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    $"{PreCalculatedHouseNumber}{Index!.Left}",
+                    $"{SourceSourceHouseNumber}{Index!.Left}",
                     null)
             };
         }
 
-        public HouseNumberWithBisNumberAndNoBoxNumber(string houseNumber, NationalRegistryIndex index)
-            : base(houseNumber, index)
+        public HouseNumberWithBisNumberAndNoBoxNumber(string sourceHouseNumber, NationalRegistryIndex index)
+            : base(sourceHouseNumber, index)
         { }
     }
 
     /// <summary>
+    /// Slide 30
     /// aangeleverde index waarvan
     ///     deel 1 niet-numeriek
     ///     en deel 2 numeriek en groter dan nul (0)
@@ -49,13 +50,13 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    $"{PreCalculatedHouseNumber}{Index!.Left}",
+                    $"{SourceSourceHouseNumber}{Index!.Left}",
                     Index.Right!.TrimStart('0'))
             };
         }
 
-        public NonNumericHouseNumberWithBisNumberAndNumericBoxNumber(string houseNumber, NationalRegistryIndex? index)
-            : base(houseNumber, index)
+        public NonNumericHouseNumberWithBisNumberAndNumericBoxNumber(string sourceHouseNumber, NationalRegistryIndex? index)
+            : base(sourceHouseNumber, index)
         { }
     }
 }
