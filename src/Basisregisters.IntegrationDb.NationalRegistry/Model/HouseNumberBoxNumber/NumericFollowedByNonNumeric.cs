@@ -9,7 +9,7 @@
     /// </summary>
     public sealed class NumericFollowedByNonNumeric : HouseNumberBoxNumbersBase
     {
-        public override bool Matches()
+        public override bool IsMatch()
         {
             return int.TryParse(Index.Left, out _)
                    && !string.IsNullOrEmpty(Index.RightPartOne) && !IsNumeric(Index.RightPartOne)

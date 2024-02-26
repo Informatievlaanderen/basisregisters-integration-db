@@ -11,7 +11,7 @@
     /// </summary>
     public sealed class NonNumericFollowedByNumberGreaterThanZero : HouseNumberBoxNumbersBase
     {
-        public override bool Matches()
+        public override bool IsMatch()
         {
             return ContainsOnlyLetters(Index.Left!) && IsGreaterThanZero(Index.Right!);
         }

@@ -9,7 +9,7 @@
 
         public NationalRegistryIndex Index { get; }
 
-        public abstract bool Matches();
+        public abstract bool IsMatch();
         public abstract IList<HouseNumberWithBoxNumber> GetValues();
 
         protected HouseNumberBoxNumbersBase(string sourceHouseNumber, NationalRegistryIndex index)

@@ -19,11 +19,11 @@
         {
             _record = record;
 
-            foreach (var type in GetHouseNumberBoxNumbers())
+            foreach (var houseNumberBoxNumbers in GetHouseNumberBoxNumbers())
             {
-                if (type.Matches())
+                if (houseNumberBoxNumbers.IsMatch())
                 {
-                    HouseNumberBoxNumbers = type;
+                    HouseNumberBoxNumbers = houseNumberBoxNumbers;
                     break;
                 }
             }

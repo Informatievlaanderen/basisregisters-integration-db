@@ -7,7 +7,7 @@
         public NoIndex(string sourceHouseNumber, NationalRegistryIndex index) : base(sourceHouseNumber, index)
         { }
 
-        public override bool Matches()
+        public override bool IsMatch()
         {
             return string.IsNullOrEmpty(Index) || Index == "0000";
         }

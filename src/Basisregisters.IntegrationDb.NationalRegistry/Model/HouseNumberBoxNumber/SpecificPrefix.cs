@@ -11,7 +11,7 @@
     public sealed class SpecificPrefix : HouseNumberBoxNumbersBase
     {
 
-        public override bool Matches()
+        public override bool IsMatch()
         {
             return Indications.Apartment.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase)
                    || Indications.FloorNumber.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase)

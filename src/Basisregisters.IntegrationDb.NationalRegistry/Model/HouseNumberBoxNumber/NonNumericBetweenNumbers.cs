@@ -10,7 +10,7 @@
     /// </summary>
     public sealed class NonNumericBetweenNumbers : HouseNumberBoxNumbersBase
     {
-        public override bool Matches()
+        public override bool IsMatch()
         {
             if (int.TryParse(Index.Left, out _)
                 && !IsNumeric(Index.RightPartOne) && IsNumeric(Index.RightPartTwo)

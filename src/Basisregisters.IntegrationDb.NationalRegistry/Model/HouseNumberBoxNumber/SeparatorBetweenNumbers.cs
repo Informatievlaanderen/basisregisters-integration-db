@@ -9,7 +9,7 @@
     /// </summary>
     public sealed class SeparatorBetweenNumbers : HouseNumberBoxNumbersBase
     {
-        public override bool Matches()
+        public override bool IsMatch()
         {
             return int.TryParse(Index.Left, out _)
                    && IsNumeric(Index.RightPartOne) && string.IsNullOrEmpty(Index.RightPartTwo);
