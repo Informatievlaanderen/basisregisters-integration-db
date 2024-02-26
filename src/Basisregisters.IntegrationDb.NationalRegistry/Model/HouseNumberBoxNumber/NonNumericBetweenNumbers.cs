@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Slide 34
@@ -13,7 +14,7 @@
         {
             if (int.TryParse(Index.Left, out _)
                 && !IsNumeric(Index.RightPartOne) && IsNumeric(Index.RightPartTwo)
-                && Index.Right!.StartsWith("V.", StringComparison.InvariantCultureIgnoreCase))
+                && Indications.FloorNumber.Contains(Index.RightPartOne, StringComparer.InvariantCultureIgnoreCase))
             {
                 return true;
             }

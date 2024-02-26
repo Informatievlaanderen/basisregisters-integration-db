@@ -11,11 +11,12 @@
     /// </summary>
     public sealed class NumericFollowedBySpecificSuffix : HouseNumberBoxNumbersBase
     {
+
         public override bool Matches()
         {
             return int.TryParse(Index.Left, out _)
                    && !string.IsNullOrEmpty(Index.RightPartOne) && !IsNumeric(Index.RightPartOne)
-                   && new[] { "ev", "vrd" }.Any(x => x.Equals(Index.RightPartOne, StringComparison.InvariantCultureIgnoreCase))
+                   && Indications.FloorNumber.Any(x => x.Equals(Index.RightPartOne, StringComparison.InvariantCultureIgnoreCase))
                    && string.IsNullOrEmpty(Index.RightPartTwo);
         }
 
