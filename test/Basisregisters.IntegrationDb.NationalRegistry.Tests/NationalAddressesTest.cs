@@ -1,7 +1,9 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 {
+    using System.Linq;
     using FluentAssertions;
     using Model;
+    using Model.HouseNumberBoxNumber;
     using Xunit;
 
     public class NationalAddressesTest
@@ -13,7 +15,7 @@
         [InlineData("0000")]
         [InlineData("")]
         [InlineData(null)]
-        public void WithNoIndex_ThenHouseNumber(string? index)
+        public void NoIndex(string? index)
         {
             var record = new FlatFileRecord
             {
@@ -22,8 +24,10 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber);
-            address.BoxNumber.Should().BeNull();
+            address.HouseNumberBoxNumbers.Should().BeOfType<NoIndex>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
         }
 
         [Theory]
@@ -31,7 +35,7 @@
         [InlineData("B000", "B")]
         [InlineData("AB00", "AB")]
         [InlineData("AB", "AB")]
-        public void WithIndexLeftIsLetterAndRightOnlyZeroes_ThenHouseNumberHasLetters(string? index, string houseNumberSuffix)
+        public void NonNumericFollowedByZeros(string? index, string houseNumberSuffix)
         {
             var record = new FlatFileRecord
             {
@@ -40,8 +44,10 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
-            address.BoxNumber.Should().BeNull();
+            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericFollowedByZeros>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
         }
 
         [Theory]
@@ -49,7 +55,7 @@
         [InlineData("B010", "B", "10")]
         [InlineData("AB20", "AB", "20")]
         [InlineData("AB05", "AB", "5")]
-        public void WithLeftIndexIsLetterAndRightIndexNumberHigherThanZero_ThenHouseNumberHasLettersAndBoxNumber(
+        public void NonNumericFollowedByNumberGreaterThanZero(
             string? index,
             string houseNumberSuffix,
             string boxNumber)
@@ -61,15 +67,17 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericFollowedByNumberGreaterThanZero>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
         [InlineData("Ap.6", "6")]
         [InlineData("Vrd6", "Vrd6")]
         [InlineData("bus6", "6")]
-        public void WithLeftIndexRefersToApartment_ThenHouseNumberAndBoxNumber(
+        public void SpecificPrefix(
             string? index,
             string boxNumber)
         {
@@ -80,15 +88,17 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<SpecificPrefix>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
         [InlineData("0003", "3")]
         [InlineData("03", "3")]
         [InlineData("3", "3")]
-        public void WithOnlyLeftIndexWhichIsNumeric_ThenHouseNumberAndBoxNumber(
+        public void NumbersOnly(
             string? index,
             string boxNumber)
         {
@@ -99,8 +109,10 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<NumbersOnly>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
@@ -108,7 +120,7 @@
         [InlineData("00.3")]
         [InlineData("01.3")]
         [InlineData("02.3")]
-        public void WithLeftIndexAndRightPartOneIsNumeric_ThenHouseNumberAndBoxNumber(
+        public void SeparatorBetweenNumbers(
             string? index)
         {
             var record = new FlatFileRecord
@@ -118,8 +130,10 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber);
-            address.BoxNumber.Should().Be(index);
+            address.HouseNumberBoxNumbers.Should().BeOfType<SeparatorBetweenNumbers>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(index);
         }
 
         [Theory]
@@ -127,7 +141,7 @@
         [InlineData("1A01", "A", "1")]
         [InlineData("A01", "A", "1")]
         [InlineData("A00", "A", "0")]
-        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumericAndRightPartTwoIsNumeric_BisNumber_ThenHouseNumberAndBoxNumber(
+        public void NonNumericBetweenNumbers(
             string? index,
             string houseNumberSuffix,
             string boxNumber)
@@ -139,14 +153,16 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericBetweenNumbers>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
         [InlineData("1V.2", "1.2")]
         [InlineData("2V.1", "2.1")]
-        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumericAndRightPartTwoIsNumeric_FloorNumberWithDot_ThenHouseNumberAndBoxNumber(
+        public void NonNumericBetweenNumbers_FloorNumberWithDot(
             string? index,
             string boxNumber)
         {
@@ -157,14 +173,16 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericBetweenNumbers>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
         [InlineData("001B", "_1", "B")]
         [InlineData("2L", "_2", "L")]
-        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumeric_ThenHouseNumberAndBoxNumber(
+        public void NumericFollowedByNonNumeric(
             string? index,
             string houseNumberSuffix,
             string boxNumber)
@@ -176,14 +194,16 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<NumericFollowedByNonNumeric>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + houseNumberSuffix);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
 
         [Theory]
         [InlineData("1ev", "1.0")]
         [InlineData("1vrd", "1.0")]
-        public void WithLeftIndexIsNumericAndRightPartOneIsNotNumeric_FloorNumberWithoutDot_ThenHouseNumberAndBoxNumber(
+        public void NumericFollowedBySpecificSuffix(
             string? index,
             string boxNumber)
         {
@@ -194,8 +214,10 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumber.Should().Be(record.HouseNumber);
-            address.BoxNumber.Should().Be(boxNumber);
+            address.HouseNumberBoxNumbers.Should().BeOfType<NumericFollowedBySpecificSuffix>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
     }
 }

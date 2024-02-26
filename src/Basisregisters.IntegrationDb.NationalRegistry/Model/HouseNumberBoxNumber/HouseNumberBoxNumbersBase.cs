@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumber
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -7,12 +7,12 @@
     {
         protected readonly string SourceSourceHouseNumber;
 
-        public NationalRegistryIndex? Index { get; }
+        public NationalRegistryIndex Index { get; }
 
         public abstract bool Matches();
-        public abstract IEnumerable<HouseNumberWithBoxNumber> GetValues();
+        public abstract IList<HouseNumberWithBoxNumber> GetValues();
 
-        protected HouseNumberBoxNumbersBase(string sourceHouseNumber, NationalRegistryIndex? index)
+        protected HouseNumberBoxNumbersBase(string sourceHouseNumber, NationalRegistryIndex index)
         {
             SourceSourceHouseNumber = sourceHouseNumber;
             Index = index;

@@ -1,9 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
-    using System;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-
+    using System.Collections.Generic;
+    using HouseNumberBoxNumber;
 
     public class NationalRegistryAddress
     {
@@ -12,8 +10,7 @@
         public string NisCode => _record.NisCode;
         public string PostalCode => _record.PostalCode;
         public string StreetCode => _record.StreetCode;
-        public string HouseNumber { get; }
-        public string? BoxNumber { get; }
+        public HouseNumberBoxNumbersBase HouseNumberBoxNumbers { get; }
 
         public string StreetName => _record.StreetName;
         public int RegisteredCount => _record.RegisteredCount;
@@ -22,85 +19,27 @@
         {
             _record = record;
 
-            if (_record.HasIndex)
+            var types = new List<HouseNumberBoxNumbersBase>
             {
-                if (new SpecificPrefix(_record.HouseNumber, _record.Index).Matches())
-                {
-                    var houseNumberWithBoxNumbers = new SpecificPrefix(_record.HouseNumber, _record.Index);
+                new NoIndex(_record.HouseNumber, _record.Index),
+                new SpecificPrefix(_record.HouseNumber, _record.Index),
+                new NonNumericBetweenNumbers(_record.HouseNumber, _record.Index),
+                new SeparatorBetweenNumbers(_record.HouseNumber, _record.Index),
+                new NumericFollowedBySpecificSuffix(_record.HouseNumber, _record.Index),
+                new NumericFollowedByNonNumeric(_record.HouseNumber, _record.Index),
+                new NumbersOnly(_record.HouseNumber, _record.Index),
+                new NonNumericFollowedByZeros(_record.HouseNumber, _record.Index),
+                new NonNumericFollowedByNumberGreaterThanZero(_record.HouseNumber, _record.Index)
+            };
 
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
-                }
-                else if (new NonNumericBetweenNumbers(_record.HouseNumber, _record.Index).Matches())
+            foreach (var type in types)
+            {
+                if (type.Matches())
                 {
-                    var houseNumberWithBoxNumbers = new NonNumericBetweenNumbers(_record.HouseNumber, _record.Index);
-
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
-                }
-                else if (new SeparatorBetweenNumbers(_record.HouseNumber, _record.Index).Matches())
-                {
-                    var houseNumberWithBoxNumbers = new SeparatorBetweenNumbers(_record.HouseNumber, _record.Index);
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
-                }
-                else if (new NumericFollowedBySpecificSuffix(_record.HouseNumber, _record.Index).Matches())
-                {
-                    var houseNumberWithBoxNumbers = new NumericFollowedBySpecificSuffix(_record.HouseNumber, _record.Index);
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
-                }
-                else if (new NumericFollowedByNonNumeric(_record.HouseNumber, _record.Index).Matches())
-                {
-                    var houseNumberWithBoxNumbers = new NumericFollowedByNonNumeric(_record.HouseNumber, _record.Index);
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
-                }
-                else if (int.TryParse(_record.Index.Left!, out var left) && string.IsNullOrEmpty(_record.Index.Right))
-                {
-                    HouseNumber = _record.HouseNumber;
-                    BoxNumber = $"{left}";
-                }
-                else if (new NonNumericFollowedByZeros(_record.HouseNumber, _record.Index).Matches())
-                {
-                    var houseNumberWithBoxNumbers = new NonNumericFollowedByZeros(_record.HouseNumber, _record.Index);
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
-                }
-                else if (new NonNumericFollowedByNumberGreaterThanZero(_record.HouseNumber, _record.Index).Matches())
-                {
-                    var houseNumberWithBoxNumbers = new NonNumericFollowedByNumberGreaterThanZero(_record.HouseNumber, _record.Index);
-                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
-                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
+                    HouseNumberBoxNumbers = type;
+                    break;
                 }
             }
-            else
-            {
-                HouseNumber = _record.HouseNumber;
-                BoxNumber = null;
-            }
-        }
-
-        private bool IsNumeric(string? input)
-        {
-            return int.TryParse(input, out _);
-        }
-
-        private bool IsGreaterThanZero(string input)
-        {
-            return int.TryParse(input, out var number) && number > 0;
-        }
-
-        private static bool ContainsOnlyLetters(string input)
-        {
-            Regex regex = new Regex("^[a-zA-Z]+$");
-            return regex.IsMatch(input);
-        }
-
-        private static bool ContainsOnlyZeroes(string input)
-        {
-            Regex regex = new Regex("^(0{1,3})$");
-            return regex.IsMatch(input);
         }
     }
 }
