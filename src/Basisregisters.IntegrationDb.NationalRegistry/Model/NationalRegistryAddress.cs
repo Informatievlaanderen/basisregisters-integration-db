@@ -44,22 +44,19 @@
                     HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
                     BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
-                else if (int.TryParse(_record.Index.Left!, out var left) // Slide 35 + 36
-                         && !string.IsNullOrEmpty(_record.Index.RightPartOne) && !IsNumeric(_record.Index.RightPartOne)
-                         && string.IsNullOrEmpty(_record.Index.RightPartTwo))
+                else if (new NumericFollowedBySpecificSuffix(_record.HouseNumber, _record.Index).Matches())
                 {
-                    if (new[] { "ev", "vrd" }.Any(x => x.Equals(_record.Index.RightPartOne, StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        HouseNumber = _record.HouseNumber;
-                        BoxNumber = $"{left}.0";
-                    }
-                    else
-                    {
-                        HouseNumber = $"{_record.HouseNumber}_{left}";
-                        BoxNumber = _record.Index.RightPartOne;
-                    }
+                    var houseNumberWithBoxNumbers = new NumericFollowedBySpecificSuffix(_record.HouseNumber, _record.Index);
+                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
+                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
-                else if (int.TryParse(_record.Index.Left!, out left) && string.IsNullOrEmpty(_record.Index.Right))
+                else if (new NumericFollowedByNonNumeric(_record.HouseNumber, _record.Index).Matches())
+                {
+                    var houseNumberWithBoxNumbers = new NumericFollowedByNonNumeric(_record.HouseNumber, _record.Index);
+                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
+                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
+                }
+                else if (int.TryParse(_record.Index.Left!, out var left) && string.IsNullOrEmpty(_record.Index.Right))
                 {
                     HouseNumber = _record.HouseNumber;
                     BoxNumber = $"{left}";

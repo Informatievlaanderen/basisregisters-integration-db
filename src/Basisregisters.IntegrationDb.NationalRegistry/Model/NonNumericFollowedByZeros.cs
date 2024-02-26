@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Slide 29
@@ -227,12 +228,19 @@
     {
         public override bool Matches()
         {
-            throw new NotImplementedException();
+            return int.TryParse(Index!.Left, out _)
+                   && !string.IsNullOrEmpty(Index.RightPartOne) && !IsNumeric(Index.RightPartOne)
+                   && string.IsNullOrEmpty(Index.RightPartTwo);
         }
 
         public override IEnumerable<HouseNumberWithBoxNumber> GetValues()
         {
-            throw new NotImplementedException();
+            return new[]
+            {
+                new HouseNumberWithBoxNumber(
+                    $"{SourceSourceHouseNumber}_{int.Parse(Index!.Left!)}",
+                    Index.RightPartOne)
+            };
         }
 
         public NumericFollowedByNonNumeric(string sourceHouseNumber, NationalRegistryIndex index)
@@ -249,12 +257,21 @@
     {
         public override bool Matches()
         {
-            throw new NotImplementedException();
+            return int.TryParse(Index!.Left, out _)
+                   && !string.IsNullOrEmpty(Index.RightPartOne) && !IsNumeric(Index.RightPartOne)
+                   && new[] { "ev", "vrd" }.Any(x => x.Equals(Index.RightPartOne, StringComparison.InvariantCultureIgnoreCase))
+                   && string.IsNullOrEmpty(Index.RightPartTwo);
         }
 
         public override IEnumerable<HouseNumberWithBoxNumber> GetValues()
         {
-            throw new NotImplementedException();
+            return new[]
+            {
+                new HouseNumberWithBoxNumber(
+                    SourceSourceHouseNumber,
+                    $"{int.Parse(Index!.Left!)}.0"
+                )
+            };
         }
 
         public NumericFollowedBySpecificSuffix(string sourceHouseNumber, NationalRegistryIndex index)
