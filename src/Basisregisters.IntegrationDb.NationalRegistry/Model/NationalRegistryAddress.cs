@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
+
     public class NationalRegistryAddress
     {
         private readonly FlatFileRecord _record;
@@ -69,15 +70,17 @@
                     HouseNumber = _record.HouseNumber;
                     BoxNumber = $"{left}";
                 }
-                else if (ContainsOnlyLetters(_record.Index.Left!) && ContainsOnlyZeroes(_record.Index.Right!))
+                else if (new HouseNumberWithBisNumberAndNoBoxNumber(_record.HouseNumber, _record.Index).Matches())
                 {
-                    HouseNumber = _record.HouseNumber + _record.Index.Left;
-                    BoxNumber = null;
+                    var houseNumberWithBoxNumbers = new HouseNumberWithBisNumberAndNoBoxNumber(_record.HouseNumber, _record.Index);
+                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
+                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
-                else if (ContainsOnlyLetters(_record.Index.Left!) && IsGreaterThanZero(_record.Index.Right!))
+                else if (new NonNumericHouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index).Matches())
                 {
-                    HouseNumber = _record.HouseNumber + _record.Index.Left;
-                    BoxNumber = _record.Index.Right!.TrimStart('0');
+                    var houseNumberWithBoxNumbers = new NonNumericHouseNumberWithBisNumberAndNumericBoxNumber(_record.HouseNumber, _record.Index);
+                    HouseNumber = houseNumberWithBoxNumbers.GetValues().First().HouseNumber;
+                    BoxNumber = houseNumberWithBoxNumbers.GetValues().First().BoxNumber;
                 }
             }
             else
