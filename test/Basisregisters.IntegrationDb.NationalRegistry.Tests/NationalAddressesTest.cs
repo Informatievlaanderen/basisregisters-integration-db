@@ -77,6 +77,7 @@
         [Theory]
         [InlineData("Ap.6", "6")]
         // [InlineData("Ap6", "6")] Todo: review
+        [InlineData("Ap06", "6")]
         [InlineData("App6", "6")]
         [InlineData("Apt6", "6")]
         [InlineData("Vrd6", "Vrd6")]
