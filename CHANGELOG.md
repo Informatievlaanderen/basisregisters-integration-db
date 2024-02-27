@@ -1,3 +1,28 @@
+# [1.4.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.13...v1.4.0) (2024-02-27)
+
+
+### Bug Fixes
+
+* change materialized views to views ([15b1b2e](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/15b1b2e34f7aae5c2a67ebca0b03e727fa3522a7))
+* remove suspicious case ([e7fbd7a](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e7fbd7ac4ca08a4b6e04e351771f1e99b4ca76c8))
+
+
+### Features
+
+* add descriptions and fullname ([92a4c46](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/92a4c469dd2f962e489746e98cdc0a22bd24d816))
+* add ProposedAddressWithoutLinkedParcelOrBuildingUnits view ([69a5d87](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/69a5d8769c11c5b9a39d146f3832757b79593d1b))
+* add view ActiveBuildingUnitLinkedToMultipleAddresses ([e32761c](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e32761ca26d57ce27c6c8f690efee40dea4a0760))
+* add view ActiveBuildingUnitWithoutAddress ([82abb79](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/82abb7959ab938cfc582d65837dae9cd9e1cf811))
+* add view AddressesLinkedToMultipleBuildingUnits ([a2c2af3](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a2c2af39f7a4d96f6a4c09dad1fac288bd57eca1))
+* add view AddressesLongerThanTwoYearsProposed ([1daca8e](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/1daca8e6055349aedca739ce0ddc86572c43895c))
+* add view BuildingsLongerThanTwoYearsPlanned ([6e58ed8](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6e58ed81e7e912fe10484ed2d2f35699157e4c97))
+* add view BuildingUnitsLongerThanTwoYearsPlanned ([ed39e41](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ed39e414fa2401564acffc5ac54a06710f9a89e4))
+* add view CurrentAddressesOutsideOfMunicipalityBounds ([f974492](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/f974492daf4c9598d6112fa70502a4e74d7827a0))
+* add view CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit ([e2c0e32](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e2c0e3289337dc34c27ed0e56e8fec9c9d72645d))
+* add view CurrentAddressWithoutLinkedParcelOrBuildingUnit ([0b5253c](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/0b5253c154b4ff6a8b1237dd0dfde28ef356752e))
+* add view CurrentStreetNameWithoutLinkedRoadSegments ([e93bac7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e93bac7b3b43180994087a1ea099906a66f5ded6))
+* add view StreetNameWithOnlyOneRoadSegmentToOnlyOneSide ([6a933ab](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6a933abcf1ff6199e9558f3e473da75fc8df1d21))
+
 ## [1.3.13](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.3.12...v1.3.13) (2024-02-20)
 
 
