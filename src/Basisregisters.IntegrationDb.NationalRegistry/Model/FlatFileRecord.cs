@@ -57,6 +57,11 @@
                 return mapper;
             }
         }
+
+        public string ToSafeString()
+        {
+            return $"{NisCode}{PostalCode}{StreetCode}{HouseNumber}{Index.SourceValue ?? "    "}{StreetName}";
+        }
     }
 
     [DebuggerDisplay("{Value}; Source={SourceValue}")]

@@ -3,6 +3,7 @@
 namespace Basisregisters.IntegrationDb.NationalRegistry
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -77,24 +78,28 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
                 var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
 
-                var invalidRecords = new List<FlatFileRecord>();
-                var validRecords = new List<FlatFileRecord>();
+                var invalidRecords = new ConcurrentBag<(FlatFileRecord, FlatFileRecordErrorType)>();
+                var validRecords = new ConcurrentBag<FlatFileRecord>();
 
-                foreach (var record in flatFileRecords)
+                Parallel.ForEach(flatFileRecords, record =>
                 {
                     var error = validator.Validate(record);
                     if (error.HasValue)
                     {
-                        invalidRecords.Add(record);
+                        invalidRecords.Add(new(record, error.Value));
                     }
                     else
                     {
                         validRecords.Add(record);
                     }
-                }
+                });
+
+                WriteInvalids(invalidRecords, configuration["invalidRecordsPath"]);
 
                 var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
                 var (matchedStreetNames, unmatchedStreetNames) = matchStreetNameRunner.Match(validRecords);
+
+                WriteUnmatched(unmatchedStreetNames, configuration["unmatchedRecordsPath"]);
 
                 // var path = configuration["filePath"];
                 //
@@ -102,6 +107,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 //
                 // var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
                 // matchStreetNameRunner.Match(streetNames);
+                Console.WriteLine("DONE");
             }
             catch (AggregateException aggregateException)
             {
@@ -123,6 +129,16 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             {
                 logger.LogInformation("Stopping...");
             }
+        }
+
+        private static void WriteUnmatched(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
+        {
+            File.WriteAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
+        }
+
+        private static void WriteInvalids(IEnumerable<(FlatFileRecord Record, FlatFileRecordErrorType Error)> invalidRecords, string path)
+        {
+            File.WriteAllLines(path, invalidRecords.Select(x => $"{x.Record.ToSafeString()};{x.Error.ToString()}"));
         }
 
         private static List<FlatFileRecord> ReadFlatFileRecordsRecords(string path)

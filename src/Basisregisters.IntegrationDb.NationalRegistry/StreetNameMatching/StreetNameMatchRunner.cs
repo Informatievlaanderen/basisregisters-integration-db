@@ -1,9 +1,10 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
 {
-    using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
+    using Extensions;
     using Model;
     using Repositories;
 
@@ -16,7 +17,7 @@
             _repo = new StreetNameRepository(connectionString);
         }
 
-        public (List<FlatFileRecordWithStreetNames> Matched, List<FlatFileRecord> Unmatched) Match(List<FlatFileRecord> flatFileRecords)
+        public (IEnumerable<FlatFileRecordWithStreetNames> Matched, IEnumerable<FlatFileRecord> Unmatched) Match(IEnumerable<FlatFileRecord> flatFileRecords)
         {
             var streetNamesByNisCode = flatFileRecords
                 .GroupBy(x => x.NisCode)
@@ -24,35 +25,39 @@
                     x => x.Key,
                     x => x.Select(y => y).ToList());
 
-            var matched = new List<FlatFileRecordWithStreetNames>();
-            var unmatched = new List<FlatFileRecord>();
+            var matched = new ConcurrentBag<FlatFileRecordWithStreetNames>();
+            var unmatched = new ConcurrentBag<FlatFileRecord>();
 
-            foreach (var (nisCode, records) in streetNamesByNisCode)
+            Parallel.ForEach(streetNamesByNisCode, kvp =>
             {
+                var nisCode = kvp.Key;
+                var records = kvp.Value;
+
+                var recordsByStreetName = records.GroupBy(x => x.StreetName);
                 var dbStreetNames = _repo.GetStreetNamesByNisCode(nisCode);
 
                 var matcher = new StreetNameMatcher(dbStreetNames);
-                foreach (var streetNameRecord in records)
+                foreach (var streetNameRecord in recordsByStreetName)
                 {
-                    var dbMatches = matcher.MatchStreetName(nisCode, streetNameRecord.StreetName).ToList();
+                    var dbMatches = matcher.MatchStreetName(nisCode, streetNameRecord.Key).ToList();
                     if (dbMatches.Any())
                     {
-                        matched.Add(new FlatFileRecordWithStreetNames(streetNameRecord, dbMatches));
+                        matched.AddRange(streetNameRecord.Select(flatFileRecord => new FlatFileRecordWithStreetNames(flatFileRecord, dbMatches)));
                     }
                     else
                     {
-                        if (streetNameRecord.StreetName == "INSCHRIJVING OP VERKLARING"
-                            || streetNameRecord.StreetName.StartsWith("KB ")
-                            || streetNameRecord.StreetName.StartsWith("NONRESIDENT")
-                            || streetNameRecord.StreetName.StartsWith("INSCRIPTION SUR DECLARATION")
-                            || streetNameRecord.StreetName.StartsWith("NIET-INWONER"))
+                        if (streetNameRecord.Key == "INSCHRIJVING OP VERKLARING"
+                            || streetNameRecord.Key.StartsWith("KB ")
+                            || streetNameRecord.Key.StartsWith("NONRESIDENT")
+                            || streetNameRecord.Key.StartsWith("INSCRIPTION SUR DECLARATION")
+                            || streetNameRecord.Key.StartsWith("NIET-INWONER"))
                         {
                             continue;
                         }
-                        unmatched.Add(streetNameRecord);
+                        unmatched.AddRange(streetNameRecord);
                     }
                 }
-            }
+            });
 
             return (matched, unmatched);
 
