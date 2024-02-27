@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.1...v1.4.2) (2024-02-27)
+
+
+### Bug Fixes
+
+* **ci:** correct cd suspicious cases api ([4cbe6a1](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/4cbe6a1c9cf99c41f09c052001589fdd466e0ac9))
+
 ## [1.4.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.0...v1.4.1) (2024-02-27)
 
 
