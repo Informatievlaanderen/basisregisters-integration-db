@@ -1,8 +1,10 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Model;
     using Repositories;
 
     public class StreetNameMatchRunner
@@ -14,80 +16,80 @@
             _repo = new StreetNameRepository(connectionString);
         }
 
-        public void Match(List<NisCodeStreetNameRecord> streetNameRecords)
+        public (List<FlatFileRecordWithStreetNames> Matched, List<FlatFileRecord> Unmatched) Match(List<FlatFileRecord> flatFileRecords)
         {
-            var streetNamesByNisCode = streetNameRecords
+            var streetNamesByNisCode = flatFileRecords
                 .GroupBy(x => x.NisCode)
                 .ToDictionary(
                     x => x.Key,
-                    x => x.Select(y => y.StreetName).ToList());
+                    x => x.Select(y => y).ToList());
 
-            var matched = new Dictionary<string, List<StreetNameMatches>>();
-            var unmatched = new Dictionary<string, List<string>>();
+            var matched = new List<FlatFileRecordWithStreetNames>();
+            var unmatched = new List<FlatFileRecord>();
 
-            foreach (var (nisCode, streetNames) in streetNamesByNisCode)
+            foreach (var (nisCode, records) in streetNamesByNisCode)
             {
                 var dbStreetNames = _repo.GetStreetNamesByNisCode(nisCode);
 
                 var matcher = new StreetNameMatcher(dbStreetNames);
-                matched.Add(nisCode, new List<StreetNameMatches>());
-                unmatched.Add(nisCode, new List<string>());
-                foreach (var streetName in streetNames)
+                foreach (var streetNameRecord in records)
                 {
-                    var match = matcher.MatchStreetName(nisCode, streetName).ToList();
-                    if (match.Any())
+                    var dbMatches = matcher.MatchStreetName(nisCode, streetNameRecord.StreetName).ToList();
+                    if (dbMatches.Any())
                     {
-                        matched[nisCode].Add(new StreetNameMatches(nisCode, streetName, match));
+                        matched.Add(new FlatFileRecordWithStreetNames(streetNameRecord, dbMatches));
                     }
                     else
                     {
-                        if (streetName == "INSCHRIJVING OP VERKLARING"
-                            || streetName.StartsWith("KB ")
-                            || streetName.StartsWith("NONRESIDENT")
-                            || streetName.StartsWith("INSCRIPTION SUR DECLARATION")
-                            || streetName.StartsWith("NIET-INWONER"))
+                        if (streetNameRecord.StreetName == "INSCHRIJVING OP VERKLARING"
+                            || streetNameRecord.StreetName.StartsWith("KB ")
+                            || streetNameRecord.StreetName.StartsWith("NONRESIDENT")
+                            || streetNameRecord.StreetName.StartsWith("INSCRIPTION SUR DECLARATION")
+                            || streetNameRecord.StreetName.StartsWith("NIET-INWONER"))
                         {
                             continue;
                         }
-                        unmatched[nisCode].Add(streetName);
+                        unmatched.Add(streetNameRecord);
                     }
                 }
             }
 
-            // var matchesWithDifferentNaming = new List<StreetNameMatches>();
-            var result = new List<(string NisCode, StreetName StreetName, List<string> Searches)>();
-            foreach (var nisCode in matched)
-            {
-                // Probleem 1: heeft een zoekresultaat meerdere matches met andere schrijfwijze
-                // foreach (var match in nisCode.Value.Where(x => x.HasDifferentNaming))
-                // {
-                //     matchesWithDifferentNaming.Add(match);
-                // }
+            return (matched, unmatched);
 
-                // Probleem 2: is een database straatnaam gematched met meerdere zoek straatnamen waarbij het niet gaat over een homoniemtoevoeging     .ToList();
-                foreach (var streetName in nisCode.Value.SelectMany(x => x.Matched).Distinct())
-                {
-                    var occurances = nisCode.Value
-                        .Where(x => x.Matched.Contains(streetName))
-                        .ToList();
-
-                    if (occurances.Count > 1)
-                    {
-                        result.Add((nisCode.Key, streetName, occurances.Select(x => x.Search).ToList()));
-                    }
-                }
-            }
-
-            File.WriteAllLines(@"C:\Users\egonm\Documents\Digitaal Vlaanderen\inwonersaantallen\doubles2.csv",
-                result
-                    .Select(x => $"{x.NisCode};{x.StreetName.NameDutch};{x.StreetName.HomonymAdditionDutch};{x.Searches.Aggregate((i,j) => $"{i},{j}")}")
-                    .Distinct());
-
-            // File.WriteAllLines(@"C:\DV\inwonersaantallen\unmatched.csv",
-            //     unmatched
-            //         .SelectMany(x => x.Value.Select(y => new { NisCode = x.Key, StreetName = y }))
-            //         .Select(x => $"{x.NisCode};{x.StreetName}")
+            // // var matchesWithDifferentNaming = new List<StreetNameMatches>();
+            // var result = new List<(string NisCode, StreetName StreetName, List<string> Searches)>();
+            // foreach (var nisCode in matched)
+            // {
+            //     // Probleem 1: heeft een zoekresultaat meerdere matches met andere schrijfwijze
+            //     // foreach (var match in nisCode.Value.Where(x => x.HasDifferentNaming))
+            //     // {
+            //     //     matchesWithDifferentNaming.Add(match);
+            //     // }
+            //
+            //     // Probleem 2: is een database straatnaam gematched met meerdere zoek straatnamen waarbij het niet gaat over een homoniemtoevoeging     .ToList();
+            //     foreach (var streetName in nisCode.Value.SelectMany(x => x.Matched).Distinct())
+            //     {
+            //         var occurances = nisCode.Value
+            //             .Where(x => x.Matched.Contains(streetName))
+            //             .ToList();
+            //
+            //         if (occurances.Count > 1)
+            //         {
+            //             result.Add((nisCode.Key, streetName, occurances.Select(x => x.Search).ToList()));
+            //         }
+            //     }
+            // }
+            //
+            // File.WriteAllLines(@"C:\Users\egonm\Documents\Digitaal Vlaanderen\inwonersaantallen\doubles2.csv",
+            //     result
+            //         .Select(x => $"{x.NisCode};{x.StreetName.NameDutch};{x.StreetName.HomonymAdditionDutch};{x.Searches.Aggregate((i,j) => $"{i},{j}")}")
             //         .Distinct());
+            //
+            // // File.WriteAllLines(@"C:\DV\inwonersaantallen\unmatched.csv",
+            // //     unmatched
+            // //         .SelectMany(x => x.Value.Select(y => new { NisCode = x.Key, StreetName = y }))
+            // //         .Select(x => $"{x.NisCode};{x.StreetName}")
+            // //         .Distinct());
         }
     }
 

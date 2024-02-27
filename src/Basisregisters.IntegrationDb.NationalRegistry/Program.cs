@@ -13,6 +13,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Model;
+    using Repositories;
     using Serilog;
     using Serilog.Debugging;
     using StreetNameMatching;
@@ -71,10 +73,35 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             {
                 var path = configuration["filePath"];
 
-                var streetNames = ReadNisCodeStreetNameRecords(path);
+                var flatFileRecords = ReadFlatFileRecordsRecords(path);
+
+                var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
+
+                var invalidRecords = new List<FlatFileRecord>();
+                var validRecords = new List<FlatFileRecord>();
+
+                foreach (var record in flatFileRecords)
+                {
+                    var error = validator.Validate(record);
+                    if (error.HasValue)
+                    {
+                        invalidRecords.Add(record);
+                    }
+                    else
+                    {
+                        validRecords.Add(record);
+                    }
+                }
 
                 var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
-                matchStreetNameRunner.Match(streetNames);
+                var (matchedStreetNames, unmatchedStreetNames) = matchStreetNameRunner.Match(validRecords);
+
+                // var path = configuration["filePath"];
+                //
+                // var streetNames = ReadNisCodeStreetNameRecords(path);
+                //
+                // var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
+                // matchStreetNameRunner.Match(streetNames);
             }
             catch (AggregateException aggregateException)
             {
@@ -96,6 +123,15 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             {
                 logger.LogInformation("Stopping...");
             }
+        }
+
+        private static List<FlatFileRecord> ReadFlatFileRecordsRecords(string path)
+        {
+            using TextReader textReader = File.OpenText(path);
+            var mapper = FlatFileRecord.Mapper;
+            var records = mapper.Read(textReader).ToList();
+
+            return records;
         }
 
         private static List<NisCodeStreetNameRecord> ReadNisCodeStreetNameRecords(string path)
