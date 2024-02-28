@@ -25,7 +25,7 @@
                                 nis_code,
                                 count,
                                 type
-                            FROM {Schema.SuspiciousCases}");
+                            FROM {Schema.SuspiciousCases}.{ViewName}");
 
             builder.Property(x => x.NisCode)
                 .HasColumnName("nis_code");
