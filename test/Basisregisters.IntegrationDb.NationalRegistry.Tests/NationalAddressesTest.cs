@@ -133,6 +133,31 @@
         }
 
         [Theory]
+        [InlineData("bus6", "6")]
+        [InlineData("bte6", "6")]
+        [InlineData("bt06", "6")]
+        [InlineData("bu06", "6")]
+        public void SpecificPrefix_BoxNumberIndication_ReturnsTwoHouseNumberBoxNumberValues(
+            string? index,
+            string boxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                HouseNumber = "123",
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            address.HouseNumberBoxNumbers.Should().BeOfType<SpecificPrefix>();
+            var houseNumberWithBoxNumbers = address.HouseNumberBoxNumbers.GetValues();
+            houseNumberWithBoxNumbers.Should().HaveCount(2);
+            houseNumberWithBoxNumbers.First().HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumbers.First().BoxNumber.Should().Be(boxNumber);
+            houseNumberWithBoxNumbers.Last().HouseNumber.Should().Be(record.HouseNumber);
+            houseNumberWithBoxNumbers.Last().BoxNumber.Should().Be(index);
+        }
+
+        [Theory]
         [InlineData("0003", "3")]
         [InlineData("03", "3")]
         [InlineData("3", "3")]

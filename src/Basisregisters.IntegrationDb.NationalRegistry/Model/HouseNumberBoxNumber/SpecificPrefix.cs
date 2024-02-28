@@ -21,15 +21,27 @@
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
             // deel 1 aanduiding van appartementnummer: deel 2 wordt busnummer
-            // deel 1 aanduiding van busnummer: deel 2 wordt busnummer
-            if (Indications.Apartment.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase)
-                || Indications.BoxNumber.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase))
+            if (Indications.Apartment.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
                         Index.Right!.TrimStart('0'))
+                };
+            }
+
+            // deel 1 aanduiding van busnummer: deel 2 wordt busnummer
+            if (Indications.BoxNumber.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        SourceSourceHouseNumber,
+                        Index.Right!.TrimStart('0')),
+                    new HouseNumberWithBoxNumber(
+                        SourceSourceHouseNumber,
+                        Index.SourceValue)
                 };
             }
 

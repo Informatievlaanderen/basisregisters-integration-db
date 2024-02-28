@@ -14,7 +14,7 @@
 
         protected HouseNumberBoxNumbersBase(string sourceHouseNumber, NationalRegistryIndex index)
         {
-            SourceSourceHouseNumber = sourceHouseNumber;
+            SourceSourceHouseNumber = sourceHouseNumber.TrimStart('0');
             Index = index;
         }
 

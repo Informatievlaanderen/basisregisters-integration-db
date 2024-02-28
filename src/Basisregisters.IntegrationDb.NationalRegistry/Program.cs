@@ -110,6 +110,22 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                     matchAddressRunner.Match(matchedStreetNames.ToList());
 
                 WriteUnmatched(unmatchedAddresses.Select(x => x.Record), configuration["unmatchedRecordsPath"]);
+                WriteMatched(matchedAddresses.Select(x => x.FlatFileRecordWithStreetNames.Record), configuration["matchedRecordsPath"]);
+
+                // var unmatchedWithoutHouseNumberMatch = new List<FlatFileRecord>();
+                // foreach (var unmatch in unmatchedAddresses)
+                // {
+                //     if (!matchedAddresses.Any(x =>
+                //             x.FlatFileRecordWithStreetNames.Record.NisCode == unmatch.Record.NisCode
+                //             && x.FlatFileRecordWithStreetNames.Record.PostalCode == unmatch.Record.PostalCode
+                //             && x.FlatFileRecordWithStreetNames.Record.StreetName == unmatch.Record.StreetName
+                //             && x.FlatFileRecordWithStreetNames.Record.HouseNumber == unmatch.Record.HouseNumber))
+                //     {
+                //         unmatchedWithoutHouseNumberMatch.Add(unmatch.Record);
+                //     }
+                // }
+                //
+                // WriteUnmatched(unmatchedWithoutHouseNumberMatch, configuration["unmatchedWithoutHouseNumberMatchRecordsPath"]);
 
                 // var path = configuration["filePath"];
                 //
@@ -142,6 +158,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
         }
 
         private static void WriteUnmatched(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
+        {
+            File.AppendAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
+        }
+
+        private static void WriteMatched(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
         {
             File.AppendAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
         }
