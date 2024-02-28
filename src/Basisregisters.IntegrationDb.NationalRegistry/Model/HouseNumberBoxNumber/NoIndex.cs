@@ -9,7 +9,7 @@
 
         public override bool IsMatch()
         {
-            return string.IsNullOrEmpty(Index) || Index == "0000";
+            return string.IsNullOrEmpty(Index) || Index == "0000" || string.IsNullOrEmpty(Index.Left);
         }
 
         public override IList<HouseNumberWithBoxNumber> GetValues()

@@ -10,7 +10,7 @@
         public string NisCode => _record.NisCode;
         public string PostalCode => _record.PostalCode;
         public string StreetCode => _record.StreetCode;
-        public HouseNumberBoxNumbersBase HouseNumberBoxNumbers { get; }
+        public HouseNumberBoxNumbersBase? HouseNumberBoxNumbers { get; }
 
         public string StreetName => _record.StreetName;
         public int RegisteredCount => _record.RegisteredCount;

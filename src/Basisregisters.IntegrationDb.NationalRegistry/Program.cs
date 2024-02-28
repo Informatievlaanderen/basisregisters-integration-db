@@ -8,6 +8,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using AddressMatching;
     using Destructurama;
     using FlatFiles;
     using Microsoft.Extensions.Configuration;
@@ -95,11 +96,20 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 });
 
                 WriteInvalids(invalidRecords, configuration["invalidRecordsPath"]);
+                Console.WriteLine("Postal validation DONE");
 
                 var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
-                var (matchedStreetNames, unmatchedStreetNames) = matchStreetNameRunner.Match(validRecords);
+                var (matchedStreetNames, unmatchedStreetNames) =
+                    matchStreetNameRunner.Match(validRecords);
 
                 WriteUnmatched(unmatchedStreetNames, configuration["unmatchedRecordsPath"]);
+                Console.WriteLine("Matching StreetName DONE");
+
+                var matchAddressRunner = new AddressMatchRunner(configuration.GetConnectionString("Integration"));
+                var  (matchedAddresses, unmatchedAddresses) =
+                    matchAddressRunner.Match(matchedStreetNames.ToList());
+
+                WriteUnmatched(unmatchedAddresses.Select(x => x.Record), configuration["unmatchedRecordsPath"]);
 
                 // var path = configuration["filePath"];
                 //
@@ -133,7 +143,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
         private static void WriteUnmatched(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
         {
-            File.WriteAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
+            File.AppendAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
         }
 
         private static void WriteInvalids(IEnumerable<(FlatFileRecord Record, FlatFileRecordErrorType Error)> invalidRecords, string path)
