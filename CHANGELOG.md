@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.3...v1.4.4) (2024-02-28)
+
+
+### Bug Fixes
+
+* count view ([dc5fcfe](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/dc5fcfe7c8c32913b3b01cf6c82f8c6583809a0b))
+
 ## [1.4.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.2...v1.4.3) (2024-02-27)
 
 
