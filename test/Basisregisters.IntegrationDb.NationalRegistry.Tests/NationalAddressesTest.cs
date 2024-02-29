@@ -3,7 +3,7 @@
     using System.Linq;
     using FluentAssertions;
     using Model;
-    using Model.HouseNumberBoxNumber;
+    using Model.HouseNumberBoxNumberImplementations;
     using Xunit;
 
     public class NationalAddressesTest

@@ -10,7 +10,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
     using System.Threading.Tasks;
     using AddressMatching;
     using Destructurama;
-    using FlatFiles;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -73,12 +72,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
             try
             {
-                var path = configuration["filePath"];
-
-                var flatFileRecords = ReadFlatFileRecordsRecords(path);
+                var sourceFilePath = configuration["sourceFilePath"];
+                var flatFileRecords = ReadFlatFileRecordsRecords(sourceFilePath);
 
                 var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
-
                 var invalidRecords = new ConcurrentBag<(FlatFileRecord, FlatFileRecordErrorType)>();
                 var validRecords = new ConcurrentBag<FlatFileRecord>();
 
@@ -95,45 +92,28 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                     }
                 });
 
-                WriteInvalids(invalidRecords, configuration["invalidRecordsPath"]);
-                Console.WriteLine("Postal validation DONE");
+                WriteInvalidRecords(invalidRecords, configuration["invalidRecordsPath"]);
+                Console.WriteLine("Record validation DONE");
 
-                var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
+                var streetNameMatchRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
                 var (matchedStreetNames, unmatchedStreetNames) =
-                    matchStreetNameRunner.Match(validRecords);
+                    streetNameMatchRunner.Match(validRecords);
 
-                WriteUnmatched(unmatchedStreetNames, configuration["unmatchedRecordsPath"]);
-                Console.WriteLine("Matching StreetName DONE");
+                WriteUnmatchedRecords(unmatchedStreetNames, configuration["unmatchedRecordsPath"]);
+                Console.WriteLine("Street name matching DONE");
+                Console.WriteLine($"Unmatched street names: {unmatchedStreetNames.Count()}");
 
-                var matchAddressRunner = new AddressMatchRunner(configuration.GetConnectionString("Integration"));
-                var  (matchedAddresses, unmatchedAddresses) =
-                    matchAddressRunner.Match(matchedStreetNames.ToList());
+                var addressMatchRunner = new AddressMatchRunner(configuration.GetConnectionString("Integration"));
+                var addressMatchResult = addressMatchRunner.Match(matchedStreetNames.ToList());
 
-                WriteUnmatched(unmatchedAddresses.Select(x => x.Record), configuration["unmatchedRecordsPath"]);
-                WriteMatched(matchedAddresses.Select(x => x.FlatFileRecordWithStreetNames.Record), configuration["matchedRecordsPath"]);
+                WriteMatchedRecords(addressMatchResult.MatchedRecords, configuration["matchedRecordsPath"]);
+                WriteUnmatchedRecords(addressMatchResult.UnmatchedRecords.Select(x => x.Record), configuration["unmatchedRecordsPath"]);
+                WriteRecordsWithMultipleAddresses(addressMatchResult.RecordsMatchedWithMultipleAddresses, configuration["recordsMatchedWithMultipleAddressesPath"]);
+                WriteAddressesWithMultipleRecords(addressMatchResult.AddressesMatchedWithMultipleRecords, configuration["addressesMatchedWithMultipleRecordsPath"]);
 
-                // var unmatchedWithoutHouseNumberMatch = new List<FlatFileRecord>();
-                // foreach (var unmatch in unmatchedAddresses)
-                // {
-                //     if (!matchedAddresses.Any(x =>
-                //             x.FlatFileRecordWithStreetNames.Record.NisCode == unmatch.Record.NisCode
-                //             && x.FlatFileRecordWithStreetNames.Record.PostalCode == unmatch.Record.PostalCode
-                //             && x.FlatFileRecordWithStreetNames.Record.StreetName == unmatch.Record.StreetName
-                //             && x.FlatFileRecordWithStreetNames.Record.HouseNumber == unmatch.Record.HouseNumber))
-                //     {
-                //         unmatchedWithoutHouseNumberMatch.Add(unmatch.Record);
-                //     }
-                // }
-                //
-                // WriteUnmatched(unmatchedWithoutHouseNumberMatch, configuration["unmatchedWithoutHouseNumberMatchRecordsPath"]);
-
-                // var path = configuration["filePath"];
-                //
-                // var streetNames = ReadNisCodeStreetNameRecords(path);
-                //
-                // var matchStreetNameRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
-                // matchStreetNameRunner.Match(streetNames);
-                Console.WriteLine("DONE");
+                Console.WriteLine("Address matching DONE");
+                Console.WriteLine($"Matched addresses (includes addresses with multiple records and records with multiple addresses): {addressMatchResult.MatchedRecords.Count()}");
+                Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count()}");
             }
             catch (AggregateException aggregateException)
             {
@@ -157,40 +137,62 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             }
         }
 
-        private static void WriteUnmatched(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
-        {
-            File.AppendAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
-        }
-
-        private static void WriteMatched(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
-        {
-            File.AppendAllLines(path, unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
-        }
-
-        private static void WriteInvalids(IEnumerable<(FlatFileRecord Record, FlatFileRecordErrorType Error)> invalidRecords, string path)
+        private static void WriteInvalidRecords(IEnumerable<(FlatFileRecord Record, FlatFileRecordErrorType Error)> invalidRecords, string path)
         {
             File.WriteAllLines(path, invalidRecords.Select(x => $"{x.Record.ToSafeString()};{x.Error.ToString()}"));
         }
 
-        private static List<FlatFileRecord> ReadFlatFileRecordsRecords(string path)
+        private static void WriteMatchedRecords(IEnumerable<FlatFileRecordWithAddress> matchedRecords, string path)
+        {
+            File.AppendAllLines(
+                path,
+                matchedRecords.Select(x => $"{x.FlatFileRecordWithStreetNames.Record.ToSafeString()};{x.HouseNumberBoxNumberType}"));
+        }
+
+        private static void WriteUnmatchedRecords(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
+        {
+            File.AppendAllLines(
+                path,
+                unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
+        }
+
+        private static void WriteRecordsWithMultipleAddresses(IDictionary<FlatFileRecordWithStreetNames, List<Address>> records, string path)
+        {
+            try
+            {
+                File.AppendAllLines(
+                    path,
+                    records.Select(x =>
+                        $"{x.Key.Record.ToSafeString()};{x.Value.Select(y => y.AddressPersistentLocalId.ToString()).Aggregate((i, j) => $"{i};{j}")}"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static void WriteAddressesWithMultipleRecords(IDictionary<Address, List<FlatFileRecordWithStreetNames>> addresses, string path)
+        {
+            try
+            {
+                File.AppendAllLines(
+                    path,
+                    addresses.Select(x =>
+                        $"{x.Key.AddressPersistentLocalId};{x.Value.Select(y => y.Record.ToSafeString()).Aggregate((i, j) => $"{i};{j}")}"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private static IEnumerable<FlatFileRecord> ReadFlatFileRecordsRecords(string path)
         {
             using TextReader textReader = File.OpenText(path);
             var mapper = FlatFileRecord.Mapper;
             var records = mapper.Read(textReader).ToList();
 
             return records;
-        }
-
-        private static List<NisCodeStreetNameRecord> ReadNisCodeStreetNameRecords(string path)
-        {
-            using var reader = new StreamReader(path);
-            var options = new DelimitedOptions
-            {
-                IsFirstRecordSchema = false,
-                Separator = ";"
-            };
-            var nisCodeStreetNameRecords = NisCodeStreetNameRecord.Mapper.Read(reader, options).ToList();
-            return nisCodeStreetNameRecords;
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
+    using System;
     using System.Collections.Generic;
-    using HouseNumberBoxNumber;
+    using HouseNumberBoxNumberImplementations;
 
     public class NationalRegistryAddress
     {
@@ -11,6 +12,7 @@
         public string PostalCode => _record.PostalCode;
         public string StreetCode => _record.StreetCode;
         public HouseNumberBoxNumbersBase? HouseNumberBoxNumbers { get; }
+        public Type? HouseNumberBoxNumbersType => HouseNumberBoxNumbers?.GetType();
 
         public string StreetName => _record.StreetName;
         public int RegisteredCount => _record.RegisteredCount;

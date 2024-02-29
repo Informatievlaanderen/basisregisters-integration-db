@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumber
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
