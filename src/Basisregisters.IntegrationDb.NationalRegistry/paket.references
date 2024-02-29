@@ -3,7 +3,10 @@ Dapper
 Fastenshtein
 FlatFiles
 
+Be.Vlaanderen.Basisregisters.GrAr.Extracts
+
 Npgsql.EntityFrameworkCore.PostgreSQL
+Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite
 
 Destructurama.JsonNet
 

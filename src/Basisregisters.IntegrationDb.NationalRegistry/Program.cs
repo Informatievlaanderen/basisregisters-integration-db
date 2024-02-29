@@ -5,16 +5,24 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
+    using System.IO.Compression;
     using System.Linq;
+    using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using AddressMatching;
+    using Be.Vlaanderen.Basisregisters.Api.Extract;
+    using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
+    using Be.Vlaanderen.Basisregisters.Shaperon;
     using Destructurama;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Model;
+    using Model.Extract;
     using Repositories;
     using Serilog;
     using Serilog.Debugging;
@@ -65,6 +73,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 .UseConsoleLifetime()
                 .Build();
 
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
             var configuration = host.Services.GetRequiredService<IConfiguration>();
 
@@ -72,8 +82,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
             try
             {
-                var sourceFilePath = configuration["sourceFilePath"];
-                var flatFileRecords = ReadFlatFileRecordsRecords(sourceFilePath);
+                var directory = configuration["Directory"];
+                var sourceFileName = configuration["SourceFileName"];
+
+                var flatFileRecords = ReadFlatFileRecordsRecords(directory + sourceFileName);
 
                 var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
                 var invalidRecords = new ConcurrentBag<(FlatFileRecord, FlatFileRecordErrorType)>();
@@ -114,6 +126,19 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 Console.WriteLine("Address matching DONE");
                 Console.WriteLine($"Matched addresses (includes addresses with multiple records and records with multiple addresses): {addressMatchResult.MatchedRecords.Count()}");
                 Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count()}");
+
+
+                // TODO: filter double records
+                var dbfFile = await CreateResultFile(addressMatchResult.MatchedRecords, CancellationToken.None);
+                var fileStream = File.Create(configuration["dbfFilePath"]);
+                dbfFile.WriteTo(fileStream, CancellationToken.None);
+
+                var files = CreateShapeFiles(addressMatchResult.MatchedRecords.ToList());
+                foreach (var extractFile in files)
+                {
+                    fileStream = File.Create($"{configuration["shapeFilePath"]}{extractFile.Name}");
+                    extractFile.WriteTo(fileStream, CancellationToken.None);
+                }
             }
             catch (AggregateException aggregateException)
             {
@@ -135,6 +160,85 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             {
                 logger.LogInformation("Stopping...");
             }
+        }
+
+        private static IEnumerable<ExtractFile> CreateShapeFiles(List<FlatFileRecordWithAddress> matchedRecords)
+        {
+            var content = matchedRecords
+                .Select(x => new PointShapeContent(new Point(x.Address.Position.X, x.Address.Position.Y))
+                    .ToBytes())
+                .ToList();
+
+            var boundingBox = new BoundingBox3D(
+                matchedRecords.Min(x => x.Address.Position.X),
+                matchedRecords.Min(x => x.Address.Position.Y),
+                matchedRecords.Max(x => x.Address.Position.X),
+                matchedRecords.Max(x => x.Address.Position.Y),
+                0,
+                0,
+                double.NegativeInfinity,
+                double.PositiveInfinity);
+
+            yield return ExtractBuilder.CreateShapeFile<PointShapeContent>(
+                "CLI",
+                ShapeType.Point,
+                content.Select(x => x),
+                ShapeContent.Read,
+                content.Select(x => x.Length),
+                boundingBox);
+
+            yield return ExtractBuilder.CreateShapeIndexFile(
+                "CLI",
+                ShapeType.Point,
+                content.Select(x => x.Length),
+                () => content.Count,
+                boundingBox);
+
+            yield return ExtractBuilder.CreateProjectedCoordinateSystemFile(
+                "CLI",
+                ProjectedCoordinateSystem.Belge_Lambert_1972);
+        }
+
+        private static async Task<ExtractFile> CreateResultFile(IEnumerable<FlatFileRecordWithAddress> matchedRecords, CancellationToken ct)
+        {
+            byte[] TransformRecord(FlatFileRecordWithAddress flatFileRecordWithAddress)
+            {
+                var streetName = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.StreetNames
+                    .Single(x => x.StreetNamePersistentLocalId == flatFileRecordWithAddress.Address.StreetNamePersistentLocalId);
+
+                var item = new AddressMatchDatabaseRecord
+                {
+                    ID = { Value = $"https://data.vlaanderen.be/id/adres/{flatFileRecordWithAddress.Address.AddressPersistentLocalId}" },
+                    StraatnaamID = { Value = $"https://data.vlaanderen.be/id/straatnaam/{flatFileRecordWithAddress.Address.StreetNamePersistentLocalId}" },
+                    StraatNM = { Value = streetName.NameDutch },
+                    HuisNR = { Value = flatFileRecordWithAddress.Address.HouseNumber },
+                    BusNR = { Value = flatFileRecordWithAddress.Address.BoxNumber },
+                    NisGemCode = { Value = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.Record.NisCode },
+                    GemNM = { Value = streetName.MunicipalityName },
+                    PKanCode = { Value = flatFileRecordWithAddress.Address.PostalCode },
+                    Herkomst = { Value = flatFileRecordWithAddress.Address.Specification },
+                    Methode = { Value = flatFileRecordWithAddress.Address.Method },
+                    Inwoners = { Value = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.Record.RegisteredCount },
+                    HuisnrStat = { Value = flatFileRecordWithAddress.Address.Status },
+                };
+
+                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
+            }
+
+            return ExtractBuilder.CreateDbfFile<FlatFileRecordWithAddress, AddressMatchDatabaseRecord>(
+                "CLI",
+                new AddressMatchDbaseSchema(),
+                matchedRecords,
+                matchedRecords.Count,
+                TransformRecord);
+        }
+
+        private static async Task CreateZipFile(ExtractFile file)
+        {
+            using var archiveStream = new MemoryStream();
+            using var archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, leaveOpen: true);
+            await using var entryStream = archive.CreateEntry($"xxx.dbf").Open();
+            file.WriteTo(entryStream, CancellationToken.None);
         }
 
         private static void WriteInvalidRecords(IEnumerable<(FlatFileRecord Record, FlatFileRecordErrorType Error)> invalidRecords, string path)

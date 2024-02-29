@@ -44,6 +44,7 @@
                 null,
                 null,
                 null,
+                null,
                 null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
@@ -66,6 +67,7 @@
                 _fixture.Create<int>(),
                 null,
                 streetName,
+                null,
                 null,
                 null,
                 null,
@@ -98,6 +100,7 @@
                 null,
                 null,
                 null,
+                null,
                 null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
@@ -122,6 +125,7 @@
                 null,
                 null,
                 streetName,
+                null,
                 null,
                 null,
                 null,

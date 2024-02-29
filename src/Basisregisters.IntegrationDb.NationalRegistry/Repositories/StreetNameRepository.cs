@@ -21,17 +21,19 @@
         public IEnumerable<StreetName> GetStreetNamesByNisCode(string nisCode)
         {
             const string sql = @"select
-    persistent_local_id as StreetNamePersistentLocalId,
-    name_dutch as NameDutch,
-    name_french as NameFrench,
-    name_german as NameGerman,
-    name_english as NameEnglish,
-    homonym_addition_dutch as HomonymAdditionDutch,
-    homonym_addition_french as HomonymAdditionFrench,
-    homonym_addition_german as HomonymAdditionGerman,
-    homonym_addition_english as HomonymAdditionEnglish
-from integration_streetname.streetname_latest_items
-where nis_code = @NisCode and status in (0,1) and is_removed = false";
+            s.persistent_local_id as StreetNamePersistentLocalId,
+            s.name_dutch as NameDutch,
+	        s.name_french as NameFrench,
+	        s.name_german as NameGerman,
+	        s.name_english as NameEnglish,
+	        s.homonym_addition_dutch as HomonymAdditionDutch,
+	        s.homonym_addition_french as HomonymAdditionFrench,
+	        s.homonym_addition_german as HomonymAdditionGerman,
+	        s.homonym_addition_english as HomonymAdditionEnglish,
+	        m.name_dutch as MunicipalityName
+            from integration_streetname.streetname_latest_items s
+            LEFT JOIN integration_municipality.municipality_latest_items m on s.nis_code = m.nis_code
+            where s.nis_code = @NisCode and s.status in (0,1) and s.is_removed = false";
 
             using var connection = new NpgsqlConnection(_connectionString);
 
@@ -43,7 +45,17 @@ where nis_code = @NisCode and status in (0,1) and is_removed = false";
 
     public class StreetName
     {
-        public StreetName(int streetNamePersistentLocalId, string? nameDutch, string? nameFrench, string? nameGerman, string? nameEnglish, string? homonymAdditionDutch, string? homonymAdditionFrench, string? homonymAdditionGerman, string? homonymAdditionEnglish)
+        public StreetName(
+            int streetNamePersistentLocalId,
+            string? nameDutch,
+            string? nameFrench,
+            string? nameGerman,
+            string? nameEnglish,
+            string? homonymAdditionDutch,
+            string? homonymAdditionFrench,
+            string? homonymAdditionGerman,
+            string? homonymAdditionEnglish,
+            string municipalityName)
         {
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
             NameDutch = nameDutch;
@@ -54,6 +66,7 @@ where nis_code = @NisCode and status in (0,1) and is_removed = false";
             HomonymAdditionFrench = homonymAdditionFrench;
             HomonymAdditionGerman = homonymAdditionGerman;
             HomonymAdditionEnglish = homonymAdditionEnglish;
+            MunicipalityName = municipalityName;
         }
         public int StreetNamePersistentLocalId { get; set; }
         public string? NameDutch { get; set; }
@@ -64,5 +77,6 @@ where nis_code = @NisCode and status in (0,1) and is_removed = false";
         public string? HomonymAdditionFrench { get; set; }
         public string? HomonymAdditionGerman { get; set; }
         public string? HomonymAdditionEnglish { get; set; }
+        public string MunicipalityName { get; set; }
     }
 }
