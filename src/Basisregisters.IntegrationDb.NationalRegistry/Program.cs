@@ -85,7 +85,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 var directory = configuration["Directory"];
                 var sourceFileName = configuration["SourceFileName"];
 
-                var flatFileRecords = ReadFlatFileRecordsRecords(directory + sourceFileName);
+                var flatFileRecords = ReadFlatFileRecordsRecords(Path.Combine(directory, sourceFileName));
 
                 var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
                 var invalidRecords = new ConcurrentBag<(FlatFileRecord, FlatFileRecordErrorType)>();
@@ -104,41 +104,37 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                     }
                 });
 
-                WriteInvalidRecords(invalidRecords, configuration["invalidRecordsPath"]);
+                FilesOutput.WriteInvalidRecords(invalidRecords, directory);
+
                 Console.WriteLine("Record validation DONE");
 
                 var streetNameMatchRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
                 var (matchedStreetNames, unmatchedStreetNames) =
                     streetNameMatchRunner.Match(validRecords);
 
-                WriteUnmatchedRecords(unmatchedStreetNames, configuration["unmatchedRecordsPath"]);
+                FilesOutput.WriteUnmatchedRecords(unmatchedStreetNames, directory);
                 Console.WriteLine("Street name matching DONE");
                 Console.WriteLine($"Unmatched street names: {unmatchedStreetNames.Count()}");
 
                 var addressMatchRunner = new AddressMatchRunner(configuration.GetConnectionString("Integration"));
                 var addressMatchResult = addressMatchRunner.Match(matchedStreetNames.ToList());
 
-                WriteMatchedRecords(addressMatchResult.MatchedRecords, configuration["matchedRecordsPath"]);
-                WriteUnmatchedRecords(addressMatchResult.UnmatchedRecords.Select(x => x.Record), configuration["unmatchedRecordsPath"]);
-                WriteRecordsWithMultipleAddresses(addressMatchResult.RecordsMatchedWithMultipleAddresses, configuration["recordsMatchedWithMultipleAddressesPath"]);
-                WriteAddressesWithMultipleRecords(addressMatchResult.AddressesMatchedWithMultipleRecords, configuration["addressesMatchedWithMultipleRecordsPath"]);
+                FilesOutput.WriteMatchedRecords(addressMatchResult.MatchedRecords, directory);
+
+                FilesOutput.WriteUnmatchedRecords(addressMatchResult.UnmatchedRecords.Select(x => x.Record), directory);
+
+                FilesOutput.WriteRecordsWithMultipleAddresses(addressMatchResult.RecordsMatchedWithMultipleAddresses, directory);
+                FilesOutput.WriteAddressesWithMultipleRecords(addressMatchResult.AddressesMatchedWithMultipleRecords, directory);
 
                 Console.WriteLine("Address matching DONE");
                 Console.WriteLine($"Matched addresses (includes addresses with multiple records and records with multiple addresses): {addressMatchResult.MatchedRecords.Count()}");
                 Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count()}");
 
-
                 // TODO: filter double records
-                var dbfFile = await CreateResultFile(addressMatchResult.MatchedRecords, CancellationToken.None);
-                var fileStream = File.Create(configuration["dbfFilePath"]);
-                dbfFile.WriteTo(fileStream, CancellationToken.None);
+                await FilesOutput.WriteDbfFile(addressMatchResult.MatchedRecords, directory);
+                FilesOutput.WriteShapeFile(addressMatchResult.MatchedRecords, directory);
 
-                var files = CreateShapeFiles(addressMatchResult.MatchedRecords.ToList());
-                foreach (var extractFile in files)
-                {
-                    fileStream = File.Create($"{configuration["shapeFilePath"]}{extractFile.Name}");
-                    extractFile.WriteTo(fileStream, CancellationToken.None);
-                }
+
             }
             catch (AggregateException aggregateException)
             {
@@ -162,132 +158,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             }
         }
 
-        private static IEnumerable<ExtractFile> CreateShapeFiles(List<FlatFileRecordWithAddress> matchedRecords)
-        {
-            var content = matchedRecords
-                .Select(x => new PointShapeContent(new Point(x.Address.Position.X, x.Address.Position.Y))
-                    .ToBytes())
-                .ToList();
-
-            var boundingBox = new BoundingBox3D(
-                matchedRecords.Min(x => x.Address.Position.X),
-                matchedRecords.Min(x => x.Address.Position.Y),
-                matchedRecords.Max(x => x.Address.Position.X),
-                matchedRecords.Max(x => x.Address.Position.Y),
-                0,
-                0,
-                double.NegativeInfinity,
-                double.PositiveInfinity);
-
-            yield return ExtractBuilder.CreateShapeFile<PointShapeContent>(
-                "CLI",
-                ShapeType.Point,
-                content.Select(x => x),
-                ShapeContent.Read,
-                content.Select(x => x.Length),
-                boundingBox);
-
-            yield return ExtractBuilder.CreateShapeIndexFile(
-                "CLI",
-                ShapeType.Point,
-                content.Select(x => x.Length),
-                () => content.Count,
-                boundingBox);
-
-            yield return ExtractBuilder.CreateProjectedCoordinateSystemFile(
-                "CLI",
-                ProjectedCoordinateSystem.Belge_Lambert_1972);
-        }
-
-        private static async Task<ExtractFile> CreateResultFile(IEnumerable<FlatFileRecordWithAddress> matchedRecords, CancellationToken ct)
-        {
-            byte[] TransformRecord(FlatFileRecordWithAddress flatFileRecordWithAddress)
-            {
-                var streetName = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.StreetNames
-                    .Single(x => x.StreetNamePersistentLocalId == flatFileRecordWithAddress.Address.StreetNamePersistentLocalId);
-
-                var item = new AddressMatchDatabaseRecord
-                {
-                    ID = { Value = $"https://data.vlaanderen.be/id/adres/{flatFileRecordWithAddress.Address.AddressPersistentLocalId}" },
-                    StraatnaamID = { Value = $"https://data.vlaanderen.be/id/straatnaam/{flatFileRecordWithAddress.Address.StreetNamePersistentLocalId}" },
-                    StraatNM = { Value = streetName.NameDutch },
-                    HuisNR = { Value = flatFileRecordWithAddress.Address.HouseNumber },
-                    BusNR = { Value = flatFileRecordWithAddress.Address.BoxNumber },
-                    NisGemCode = { Value = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.Record.NisCode },
-                    GemNM = { Value = streetName.MunicipalityName },
-                    PKanCode = { Value = flatFileRecordWithAddress.Address.PostalCode },
-                    Herkomst = { Value = flatFileRecordWithAddress.Address.Specification },
-                    Methode = { Value = flatFileRecordWithAddress.Address.Method },
-                    Inwoners = { Value = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.Record.RegisteredCount },
-                    HuisnrStat = { Value = flatFileRecordWithAddress.Address.Status },
-                };
-
-                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
-            }
-
-            return ExtractBuilder.CreateDbfFile<FlatFileRecordWithAddress, AddressMatchDatabaseRecord>(
-                "CLI",
-                new AddressMatchDbaseSchema(),
-                matchedRecords,
-                matchedRecords.Count,
-                TransformRecord);
-        }
-
         private static async Task CreateZipFile(ExtractFile file)
         {
             using var archiveStream = new MemoryStream();
             using var archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, leaveOpen: true);
             await using var entryStream = archive.CreateEntry($"xxx.dbf").Open();
             file.WriteTo(entryStream, CancellationToken.None);
-        }
-
-        private static void WriteInvalidRecords(IEnumerable<(FlatFileRecord Record, FlatFileRecordErrorType Error)> invalidRecords, string path)
-        {
-            File.WriteAllLines(path, invalidRecords.Select(x => $"{x.Record.ToSafeString()};{x.Error.ToString()}"));
-        }
-
-        private static void WriteMatchedRecords(IEnumerable<FlatFileRecordWithAddress> matchedRecords, string path)
-        {
-            File.AppendAllLines(
-                path,
-                matchedRecords.Select(x => $"{x.FlatFileRecordWithStreetNames.Record.ToSafeString()};{x.HouseNumberBoxNumberType}"));
-        }
-
-        private static void WriteUnmatchedRecords(IEnumerable<FlatFileRecord> unmatchedRecords, string path)
-        {
-            File.AppendAllLines(
-                path,
-                unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
-        }
-
-        private static void WriteRecordsWithMultipleAddresses(IDictionary<FlatFileRecordWithStreetNames, List<Address>> records, string path)
-        {
-            try
-            {
-                File.AppendAllLines(
-                    path,
-                    records.Select(x =>
-                        $"{x.Key.Record.ToSafeString()};{x.Value.Select(y => y.AddressPersistentLocalId.ToString()).Aggregate((i, j) => $"{i};{j}")}"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        private static void WriteAddressesWithMultipleRecords(IDictionary<Address, List<FlatFileRecordWithStreetNames>> addresses, string path)
-        {
-            try
-            {
-                File.AppendAllLines(
-                    path,
-                    addresses.Select(x =>
-                        $"{x.Key.AddressPersistentLocalId};{x.Value.Select(y => y.Record.ToSafeString()).Aggregate((i, j) => $"{i};{j}")}"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
         }
 
         private static IEnumerable<FlatFileRecord> ReadFlatFileRecordsRecords(string path)
