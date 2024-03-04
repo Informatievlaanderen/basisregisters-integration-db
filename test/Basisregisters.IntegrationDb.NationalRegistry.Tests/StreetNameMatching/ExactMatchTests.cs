@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoFixture;
-    using Basisregisters.IntegrationDb.NationalRegistry.Repositories;
-    using Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching;
     using FluentAssertions;
+    using NationalRegistry.StreetNameMatching;
+    using Repositories;
     using Xunit;
 
     public class ExactMatchingTests
@@ -45,7 +45,8 @@
                 null,
                 null,
                 null,
-                null);
+                string.Empty,
+                string.Empty);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -73,7 +74,8 @@
                 null,
                 null,
                 null,
-                null);
+                string.Empty,
+                string.Empty);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -101,7 +103,8 @@
                 null,
                 null,
                 null,
-                null);
+                string.Empty,
+                string.Empty);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -129,7 +132,8 @@
                 null,
                 null,
                 null,
-                null);
+                string.Empty,
+                string.Empty);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 

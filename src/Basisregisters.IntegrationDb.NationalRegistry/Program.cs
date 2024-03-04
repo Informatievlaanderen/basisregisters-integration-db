@@ -5,24 +5,17 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.IO;
-    using System.IO.Compression;
     using System.Linq;
     using System.Text;
-    using System.Threading;
     using System.Threading.Tasks;
     using AddressMatching;
-    using Be.Vlaanderen.Basisregisters.Api.Extract;
-    using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
-    using Be.Vlaanderen.Basisregisters.Shaperon;
     using Destructurama;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Model;
-    using Model.Extract;
     using Repositories;
     using Serilog;
     using Serilog.Debugging;
@@ -108,30 +101,41 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
                 Console.WriteLine("Record validation DONE");
 
-                var streetNameMatchRunner = new StreetNameMatchRunner(configuration.GetConnectionString("Integration"));
+                var streetNameRepository = new StreetNameRepository(configuration.GetConnectionString("Integration"));
+                var addressRepository = new AddressRepository(configuration.GetConnectionString("Integration"));
+
+                var streetNameMatchRunner = new StreetNameMatchRunner(streetNameRepository);
                 var (matchedStreetNames, unmatchedStreetNames) =
                     streetNameMatchRunner.Match(validRecords);
 
                 FilesOutput.WriteUnmatchedRecords(unmatchedStreetNames, directory);
                 Console.WriteLine("Street name matching DONE");
-                Console.WriteLine($"Unmatched street names: {unmatchedStreetNames.Count()}");
+                Console.WriteLine($"Unmatched street names: {unmatchedStreetNames.Count}");
 
-                var addressMatchRunner = new AddressMatchRunner(configuration.GetConnectionString("Integration"));
+                var addressMatchRunner = new AddressMatchRunner(addressRepository, streetNameRepository);
                 var addressMatchResult = addressMatchRunner.Match(matchedStreetNames.ToList());
 
-                FilesOutput.WriteMatchedRecords(addressMatchResult.MatchedRecords, directory);
-
-                FilesOutput.WriteUnmatchedRecords(addressMatchResult.UnmatchedRecords.Select(x => x.Record), directory);
-
-                FilesOutput.WriteRecordsWithMultipleAddresses(addressMatchResult.RecordsMatchedWithMultipleAddresses, directory);
-                FilesOutput.WriteAddressesWithMultipleRecords(addressMatchResult.AddressesMatchedWithMultipleRecords, directory);
+                FilesOutput.WriteMatchedRecords(
+                    addressMatchResult.AddressesWithRegisteredCount,
+                    directory);
+                FilesOutput.WriteUnmatchedRecords(
+                    addressMatchResult.UnmatchedRecords.Select(x => x.Record),
+                    directory);
+                FilesOutput.WriteRecordsWithMultipleAddresses(
+                    addressMatchResult.RecordsMatchedWithMultipleAddresses,
+                    directory);
+                FilesOutput.WriteAddressesWithMultipleRecords(
+                    addressMatchResult.AddressesMatchedWithMultipleRecords,
+                    directory);
 
                 Console.WriteLine("Address matching DONE");
-                Console.WriteLine($"Matched addresses: {addressMatchResult.MatchedRecords.Count()}");
-                Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count()}");
+                Console.WriteLine($"Matched addresses: {addressMatchResult.AddressesWithRegisteredCount.Count(x => x.FlatFileRecord is not null)}");
+                Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count}");
+                Console.WriteLine($"Record with multiple matched addresses: {addressMatchResult.RecordsMatchedWithMultipleAddresses.Count}");
+                Console.WriteLine($"Addresses matched to multiple records: {addressMatchResult.AddressesWithRegisteredCount.Count}");
 
-                await FilesOutput.WriteDbfFile(addressMatchResult.MatchedRecords, directory);
-                FilesOutput.WriteShapeFile(addressMatchResult.MatchedRecords, directory);
+                FilesOutput.WriteDbfFile(addressMatchResult.AddressesWithRegisteredCount, directory);
+                FilesOutput.WriteShapeFile(addressMatchResult.AddressesWithRegisteredCount, directory);
             }
             catch (AggregateException aggregateException)
             {
@@ -153,14 +157,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
             {
                 logger.LogInformation("Stopping...");
             }
-        }
-
-        private static async Task CreateZipFile(ExtractFile file)
-        {
-            using var archiveStream = new MemoryStream();
-            using var archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, leaveOpen: true);
-            await using var entryStream = archive.CreateEntry($"xxx.dbf").Open();
-            file.WriteTo(entryStream, CancellationToken.None);
         }
 
         private static IEnumerable<FlatFileRecord> ReadFlatFileRecordsRecords(string path)

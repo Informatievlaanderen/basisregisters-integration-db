@@ -5,7 +5,6 @@
     using System.IO;
     using System.Linq;
     using System.Threading;
-    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Api.Extract;
     using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
     using Be.Vlaanderen.Basisregisters.Shaperon;
@@ -33,11 +32,13 @@
                 unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
         }
 
-        public static void WriteMatchedRecords(IEnumerable<AddressWithFlatFileRecord> matchedRecords, string directory)
+        public static void WriteMatchedRecords(IEnumerable<AddressWithRegisteredCount> addressesWithRegisteredCount, string directory)
         {
             File.AppendAllLines(
                 Path.Combine(directory, MatchedRecordsFileName),
-                matchedRecords.Select(x => $"{x.FlatFileRecord.Record.ToSafeString()};{x.HouseNumberBoxNumberType}"));
+                addressesWithRegisteredCount
+                    .Where(x => x.FlatFileRecord is not null)
+                    .Select(x => $"{x.FlatFileRecord!.ToSafeString()};{x.HouseNumberBoxNumberType}"));
         }
 
         public static void WriteRecordsWithMultipleAddresses(IDictionary<FlatFileRecordWithStreetNames, List<Address>> records, string directory)
@@ -70,16 +71,16 @@
             }
         }
 
-        public static async Task WriteDbfFile(IEnumerable<AddressWithFlatFileRecord> matchedRecords, string directory)
+        public static void WriteDbfFile(IList<AddressWithRegisteredCount> addressesWithRegisteredCount, string directory)
         {
-            var dbfFile = await CreateResultFile(matchedRecords, CancellationToken.None);
-            await using var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
+            var dbfFile = CreateResultFile(addressesWithRegisteredCount);
+            using var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
             dbfFile.WriteTo(fileStream, CancellationToken.None);
         }
 
-        public static void WriteShapeFile(IEnumerable<AddressWithFlatFileRecord> matchedRecords, string directory)
+        public static void WriteShapeFile(IList<AddressWithRegisteredCount> addressesWithRegisteredCount, string directory)
         {
-            var files = CreateShapeFiles(matchedRecords.ToList());
+            var files = CreateShapeFiles(addressesWithRegisteredCount);
             foreach (var extractFile in files)
             {
                 using var fileStream = File.Create(Path.Combine(directory, extractFile.Name));
@@ -87,11 +88,11 @@
             }
         }
 
-        private static IEnumerable<ExtractFile> CreateShapeFiles(List<AddressWithFlatFileRecord> matchedRecords)
+        private static IEnumerable<ExtractFile> CreateShapeFiles(IList<AddressWithRegisteredCount> matchedRecords)
         {
             var content = matchedRecords
-                .Select(x => new PointShapeContent(new Point(x.Address.Position.X, x.Address.Position.Y))
-                    .ToBytes())
+                .Select(x =>
+                    new PointShapeContent(new Point(x.Address.Position.X, x.Address.Position.Y)).ToBytes())
                 .ToList();
 
             var boundingBox = new BoundingBox3D(
@@ -124,37 +125,35 @@
                 ProjectedCoordinateSystem.Belge_Lambert_1972);
         }
 
-        private static async Task<ExtractFile> CreateResultFile(IEnumerable<AddressWithFlatFileRecord> matchedRecords, CancellationToken ct)
+        private static ExtractFile CreateResultFile(
+            IList<AddressWithRegisteredCount> addressesWithRegisteredCount)
         {
-            byte[] TransformRecord(AddressWithFlatFileRecord flatFileRecordWithAddress)
+            byte[] TransformRecord(AddressWithRegisteredCount addressWithRegisteredCount)
             {
-                var streetName = flatFileRecordWithAddress.FlatFileRecord.StreetNames
-                    .Single(x => x.StreetNamePersistentLocalId == flatFileRecordWithAddress.Address.StreetNamePersistentLocalId);
-
                 var item = new AddressMatchDatabaseRecord
                 {
-                    ID = { Value = $"https://data.vlaanderen.be/id/adres/{flatFileRecordWithAddress.Address.AddressPersistentLocalId}" },
-                    StraatnaamID = { Value = $"https://data.vlaanderen.be/id/straatnaam/{flatFileRecordWithAddress.Address.StreetNamePersistentLocalId}" },
-                    StraatNM = { Value = streetName.NameDutch },
-                    HuisNR = { Value = flatFileRecordWithAddress.Address.HouseNumber },
-                    BusNR = { Value = flatFileRecordWithAddress.Address.BoxNumber },
-                    NisGemCode = { Value = flatFileRecordWithAddress.FlatFileRecord.Record.NisCode },
-                    GemNM = { Value = streetName.MunicipalityName },
-                    PKanCode = { Value = flatFileRecordWithAddress.Address.PostalCode },
-                    Herkomst = { Value = flatFileRecordWithAddress.Address.Specification },
-                    Methode = { Value = flatFileRecordWithAddress.Address.Method },
-                    Inwoners = { Value = flatFileRecordWithAddress.FlatFileRecord.Record.RegisteredCount },
-                    HuisnrStat = { Value = flatFileRecordWithAddress.Address.Status },
+                    ID = { Value = $"https://data.vlaanderen.be/id/adres/{addressWithRegisteredCount.Address.AddressPersistentLocalId}" },
+                    StraatnaamID = { Value = $"https://data.vlaanderen.be/id/straatnaam/{addressWithRegisteredCount.Address.StreetNamePersistentLocalId}" },
+                    StraatNM = { Value = addressWithRegisteredCount.StreetName.NameDutch! },
+                    HuisNR = { Value = addressWithRegisteredCount.Address.HouseNumber },
+                    BusNR = { Value = addressWithRegisteredCount.Address.BoxNumber },
+                    NisGemCode = { Value = addressWithRegisteredCount.FlatFileRecord!.NisCode },
+                    GemNM = { Value = addressWithRegisteredCount.StreetName.MunicipalityName },
+                    PKanCode = { Value = addressWithRegisteredCount.Address.PostalCode },
+                    Herkomst = { Value = addressWithRegisteredCount.Address.Specification },
+                    Methode = { Value = addressWithRegisteredCount.Address.Method },
+                    Inwoners = { Value = addressWithRegisteredCount.FlatFileRecord.RegisteredCount },
+                    HuisnrStat = { Value = addressWithRegisteredCount.Address.Status },
                 };
 
                 return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
             }
 
-            return ExtractBuilder.CreateDbfFile<AddressWithFlatFileRecord, AddressMatchDatabaseRecord>(
+            return ExtractBuilder.CreateDbfFile<AddressWithRegisteredCount, AddressMatchDatabaseRecord>(
                 "CLI",
                 new AddressMatchDbaseSchema(),
-                matchedRecords,
-                matchedRecords.Count,
+                addressesWithRegisteredCount,
+                () => addressesWithRegisteredCount.Count,
                 TransformRecord);
         }
     }

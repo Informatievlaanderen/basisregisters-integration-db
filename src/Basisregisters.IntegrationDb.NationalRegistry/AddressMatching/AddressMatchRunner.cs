@@ -1,22 +1,25 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.AddressMatching
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using Extensions;
     using Model;
     using Repositories;
 
     public class AddressMatchRunner
     {
-        private readonly AddressRepository _repo;
+        private readonly IAddressRepository _addressRepository;
+        private readonly IList<StreetName> _streetNames;
 
         public AddressMatchRunner(
-            string connectionString)
+            IAddressRepository addressRepository,
+            IStreetNameRepository streetNameRepository)
         {
-            _repo = new AddressRepository(connectionString);
+            _addressRepository = addressRepository;
+            _streetNames = streetNameRepository.GetStreetNames();
         }
 
         public AddressMatchResult Match(IList<FlatFileRecordWithStreetNames> flatFileRecords)
@@ -29,9 +32,8 @@
                 .GroupBy(x => new { x.Record.NisCode, x.Record.PostalCode, x.Record.StreetName, x.Record.HouseNumber })
                 .ToList();
 
-            var allAddresses = _repo.GetAll();
-
-            var addressesPerStreetName =allAddresses
+            var allAddresses = _addressRepository.GetAll();
+            var addressesPerStreetName = allAddresses
                 .GroupBy(x => x.StreetNamePersistentLocalId)
                 .ToDictionary(
                     x => x.Key,
@@ -110,67 +112,118 @@
             return addresses;
         }
 
-        private static IEnumerable<AddressWithRegisteredCount> GetMatchedRecords(
+        private IList<AddressWithRegisteredCount> GetMatchedRecords(
             Dictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord,
             IDictionary<Address, List<FlatFileRecordWithStreetNames>> addressesMatchedWithMultipleRecords,
             List<Address> allAddresses)
         {
-            var matches = matchesPerRecord
-                .Where(x => x.Value.Count == 1 && !addressesMatchedWithMultipleRecords.ContainsKey(x.Value.Single().Address))
+            var singleMatches = matchesPerRecord
+                .Where(x =>
+                    x.Value.Count == 1
+                    && !addressesMatchedWithMultipleRecords.ContainsKey(x.Value.Single().Address));
+
+            var reversed = new Dictionary<int, (
+                FlatFileRecord Record,
+                Address Address,
+                string HouseNumberBoxNumberType)>();
+
+            var boxNumberMatchesByHouseNumber = new Dictionary<int, List<(
+                FlatFileRecord Record,
+                Address Address,
+                string HouseNumberBoxNumberType)>>();
+
+            foreach (var (record, match) in singleMatches)
+            {
+                var address = match.Single();
+
+                reversed.Add(
+                    address.Address.AddressPersistentLocalId,
+                    (record.Record, address.Address, address.HouseNumberBoxNumberType));
+
+                if (address.Address.IsBoxNumber)
+                {
+                    if (boxNumberMatchesByHouseNumber.ContainsKey(address.Address.ParentPersistentLocalId!.Value))
+                    {
+                        boxNumberMatchesByHouseNumber[address.Address.ParentPersistentLocalId.Value].Add(
+                            (record.Record, address.Address, address.HouseNumberBoxNumberType));
+                    }
+                    else
+                    {
+                        boxNumberMatchesByHouseNumber.Add(
+                            address.Address.ParentPersistentLocalId.Value,
+                            new List<(FlatFileRecord Record, Address Address, string HouseNumberBoxNumberType)>
+                            {
+                                (record.Record, address.Address, address.HouseNumberBoxNumberType)
+                            }
+                        );
+                    }
+                }
+            }
+
+            var results = new ConcurrentBag<AddressWithRegisteredCount>();
+
+            var addressesPerStreetName = allAddresses
+                .GroupBy(x => x.StreetNamePersistentLocalId)
                 .ToList();
 
-            var results = new List<AddressWithRegisteredCount>();
-
-            foreach (var address in allAddresses)
-            {
-                var match = matches.FirstOrDefault(x => x.Value.Single().Address == address);
-                if (match.HasValue())
+            Parallel.ForEach(
+                addressesPerStreetName,
+                new ParallelOptions { MaxDegreeOfParallelism = 50 },
+                addresses =>
                 {
-                    results.Add(new AddressWithRegisteredCount(
-                        match.Key.Record,
-                        address,
-                        match.Key.StreetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId),
-                        match.Value.Single().HouseNumberBoxNumberType,
-                        match.Key.Record.RegisteredCount ));
-
-                    continue;
-                }
-
-                if(address.IsHouseNumber)
-                {
-                    var matchedBoxNumber = matches.FirstOrDefault(x => x.Value.Single().Address.ParentPersistentLocalId == address.AddressPersistentLocalId);
-                    if (matchedBoxNumber.HasValue())
+                    foreach (var address in addresses)
                     {
+                        var streetName = _streetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId);
+
+                        if (reversed.TryGetValue(address.AddressPersistentLocalId, out var match))
+                        {
+                            results.Add(new AddressWithRegisteredCount(
+                                match.Record,
+                                address,
+                                streetName,
+                                match.HouseNumberBoxNumberType,
+                                match.Record.RegisteredCount));
+                            continue;
+                        }
+
+                        if (address.IsHouseNumber
+                            && boxNumberMatchesByHouseNumber.TryGetValue(address.AddressPersistentLocalId, out var boxNumbers)
+                            && boxNumbers.Any(x => x.Address.ParentPersistentLocalId == address.AddressPersistentLocalId))
+                        {
+                            results.Add(new AddressWithRegisteredCount(
+                                null,
+                                address,
+                                streetName,
+                                string.Empty,
+                                null));
+                            continue;
+                        }
+
+                        if (address.IsBoxNumber
+                            && reversed.ContainsKey(address.ParentPersistentLocalId!.Value))
+                        {
+                            results.Add(new AddressWithRegisteredCount(
+                                null,
+                                address,
+                                streetName,
+                                string.Empty,
+                                null));
+                            continue;
+                        }
+
                         results.Add(new AddressWithRegisteredCount(
                             null,
                             address,
-                            matchedBoxNumber.Key.StreetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId),
+                            streetName,
                             string.Empty,
-                            null));
+                            0));
                     }
+                });
 
-                    continue;
-                }
-
-                var matchedHouseNumber = matches.FirstOrDefault(x => x.Value.Single().Address.AddressPersistentLocalId == address.ParentPersistentLocalId);
-                if (matchedHouseNumber.HasValue())
-                {
-                    results.Add(new AddressWithRegisteredCount(
-                        null,
-                        address,
-                        matchedHouseNumber.Key.StreetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId),
-                        string.Empty,
-                        null));
-
-                    continue;
-                }
-
-            }
-
-            return results;
+            return results.ToList();
         }
 
-        private static IEnumerable<FlatFileRecordWithStreetNames> GetUnmatchedRecords(
+        private static IList<FlatFileRecordWithStreetNames> GetUnmatchedRecords(
             Dictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
         {
             return matchesPerRecord

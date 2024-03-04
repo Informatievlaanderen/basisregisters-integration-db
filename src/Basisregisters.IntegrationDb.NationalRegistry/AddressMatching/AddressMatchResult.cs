@@ -6,19 +6,19 @@
 
     public class AddressMatchResult
     {
-        public IEnumerable<AddressWithFlatFileRecord> MatchedRecords { get; }
-        public IEnumerable<FlatFileRecordWithStreetNames> UnmatchedRecords { get; }
+        public IList<AddressWithRegisteredCount> AddressesWithRegisteredCount { get; }
 
+        public IList<FlatFileRecordWithStreetNames> UnmatchedRecords { get; }
         public IDictionary<FlatFileRecordWithStreetNames, List<Address>> RecordsMatchedWithMultipleAddresses { get; }
         public IDictionary<Address, List<FlatFileRecordWithStreetNames>> AddressesMatchedWithMultipleRecords { get; }
 
         public AddressMatchResult(
-            IEnumerable<AddressWithFlatFileRecord> matchedRecords,
-            IEnumerable<FlatFileRecordWithStreetNames> unmatchedRecords,
+            IList<AddressWithRegisteredCount> addressesWithRegisteredCount,
+            IList<FlatFileRecordWithStreetNames> unmatchedRecords,
             IDictionary<FlatFileRecordWithStreetNames, List<Address>> recordsMatchedWithMultipleAddresses,
             IDictionary<Address, List<FlatFileRecordWithStreetNames>> addressesMatchedWithMultipleRecords)
         {
-            MatchedRecords = matchedRecords;
+            AddressesWithRegisteredCount = addressesWithRegisteredCount;
             UnmatchedRecords = unmatchedRecords;
             RecordsMatchedWithMultipleAddresses = recordsMatchedWithMultipleAddresses;
             AddressesMatchedWithMultipleRecords = addressesMatchedWithMultipleRecords;

@@ -6,9 +6,9 @@
     public class FlatFileRecordWithStreetNames
     {
         public FlatFileRecord Record { get; }
-        public List<StreetName> StreetNames { get; }
+        public IList<StreetName> StreetNames { get; }
 
-        public FlatFileRecordWithStreetNames(FlatFileRecord flatFileRecord, List<StreetName> streetNames)
+        public FlatFileRecordWithStreetNames(FlatFileRecord flatFileRecord, IList<StreetName> streetNames)
         {
             Record = flatFileRecord;
             StreetNames = streetNames;
