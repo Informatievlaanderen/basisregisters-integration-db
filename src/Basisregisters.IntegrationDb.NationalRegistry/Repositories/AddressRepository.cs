@@ -80,7 +80,8 @@
         public int AddressPersistentLocalId { get; set; }
         public int StreetNamePersistentLocalId { get; set; }
         public int? ParentPersistentLocalId { get; set; }
-        public bool IsBoxNumber => !ParentPersistentLocalId.HasValue;
+        public bool IsHouseNumber => !IsBoxNumber;
+        public bool IsBoxNumber => ParentPersistentLocalId.HasValue;
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
         public string? BoxNumber { get; set; }

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using Extensions;
     using Model;
     using Repositories;
 
@@ -115,35 +116,55 @@
             List<Address> allAddresses)
         {
             var matches = matchesPerRecord
-                .Where(x => x.Value.Count == 1 && addressesMatchedWithMultipleRecords.ContainsKey(x.Value.Single().Address))
-                .Select(x => new AddressWithFlatFileRecord
-                {
-                    Address = x.Value.First().Address,
-                    FlatFileRecord = x.Key.Record,
-                    HouseNumberBoxNumberType = x.Value.First().HouseNumberBoxNumberType
-                })
+                .Where(x => x.Value.Count == 1 && !addressesMatchedWithMultipleRecords.ContainsKey(x.Value.Single().Address))
                 .ToList();
 
             var results = new List<AddressWithRegisteredCount>();
 
             foreach (var address in allAddresses)
             {
-                var match = matches.FirstOrDefault(x => x.Address == address);
-                if (match)
+                var match = matches.FirstOrDefault(x => x.Value.Single().Address == address);
+                if (match.HasValue())
                 {
-                    results.Add(new AddressWithRegisteredCount()
-                    {
-                        Address = address,
-                        HouseNumberBoxNumberType = ?,
+                    results.Add(new AddressWithRegisteredCount(
+                        match.Key.Record,
+                        address,
+                        match.Key.StreetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId),
+                        match.Value.Single().HouseNumberBoxNumberType,
+                        match.Key.Record.RegisteredCount ));
 
-                    });
+                    continue;
                 }
 
-                results.Add(new AddressWithRegisteredCount
+                if(address.IsHouseNumber)
                 {
-                    Address = address,
-                    FlatFileRecord = null
-                });
+                    var matchedBoxNumber = matches.FirstOrDefault(x => x.Value.Single().Address.ParentPersistentLocalId == address.AddressPersistentLocalId);
+                    if (matchedBoxNumber.HasValue())
+                    {
+                        results.Add(new AddressWithRegisteredCount(
+                            null,
+                            address,
+                            matchedBoxNumber.Key.StreetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId),
+                            string.Empty,
+                            null));
+                    }
+
+                    continue;
+                }
+
+                var matchedHouseNumber = matches.FirstOrDefault(x => x.Value.Single().Address.AddressPersistentLocalId == address.ParentPersistentLocalId);
+                if (matchedHouseNumber.HasValue())
+                {
+                    results.Add(new AddressWithRegisteredCount(
+                        null,
+                        address,
+                        matchedHouseNumber.Key.StreetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId),
+                        string.Empty,
+                        null));
+
+                    continue;
+                }
+
             }
 
             return results;
