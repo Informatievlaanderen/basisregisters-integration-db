@@ -55,7 +55,7 @@
         [InlineData("A000", "A")]
         [InlineData("B000", "B")]
         [InlineData("AB00", "AB")]
-        [InlineData("AB", "AB")]
+        [InlineData("AB  ", "AB")]
         public void NonNumericFollowedByZeros(string? index, string bisNumber)
         {
             var record = new FlatFileRecord
@@ -225,6 +225,7 @@
         [Theory]
         [InlineData("1V.2", "1.2")]
         [InlineData("2V.1", "2.1")]
+        [InlineData("2VR1", "2.1")]
         public void NonNumericBetweenNumbers_FloorNumberWithDot(
             string? index,
             string boxNumber)

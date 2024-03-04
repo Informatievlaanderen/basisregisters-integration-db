@@ -33,7 +33,7 @@
             // deel 3 aanduiding van verdiepnummer: aangeleverd huisnummer wordt huisnummer, deel 1 + ‘.’ + deel 4 wordt busnummer
             if (int.TryParse(Index.Left, out _)
                 && !IsNumeric(Index.RightPartOne) && IsNumeric(Index.RightPartTwo)
-                && Index.Right!.StartsWith("V.", StringComparison.InvariantCultureIgnoreCase))
+                && Indications.FloorNumber.Contains(Index.RightPartOne, StringComparer.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
