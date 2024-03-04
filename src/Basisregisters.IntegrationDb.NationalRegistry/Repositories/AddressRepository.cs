@@ -25,6 +25,7 @@
             const string sql = @"select
             a.persistent_local_id as AddressPersistentLocalId
             , a.street_name_persistent_local_id as StreetNamePersistentLocalId
+            , a.parent_persistent_local_id as ParentPersistentLocalId
             , a.house_number as HouseNumber
             , a.box_number as BoxNumber
             , a.postal_code as PostalCode
@@ -34,8 +35,7 @@
             , a.geometry as Position
             from integration_address.address_latest_items as a
             JOIN integration_streetname.streetname_latest_items as s on a.street_name_persistent_local_id = s.persistent_local_id
-            where s.nis_code = '23027'
-            and a.removed = false and (a.oslo_status = 'InGebruik' or a.oslo_status = 'Voorgesteld')
+            WHERE a.removed = false and (a.oslo_status = 'InGebruik' or a.oslo_status = 'Voorgesteld')
             ;";
 
             using var connection = new NpgsqlConnection(_connectionString);
@@ -53,6 +53,7 @@
         public Address(
             int addressPersistentLocalId,
             int streetNamePersistentLocalId,
+            int? parentPersistentLocalId,
             string houseNumber,
             string? boxNumber,
             string postalCode,
@@ -63,6 +64,7 @@
         {
             AddressPersistentLocalId = addressPersistentLocalId;
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
+            ParentPersistentLocalId = parentPersistentLocalId;
             HouseNumber = houseNumber;
             BoxNumber = boxNumber;
             PostalCode = postalCode;
@@ -77,6 +79,8 @@
 
         public int AddressPersistentLocalId { get; set; }
         public int StreetNamePersistentLocalId { get; set; }
+        public int? ParentPersistentLocalId { get; set; }
+        public bool IsBoxNumber => !ParentPersistentLocalId.HasValue;
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
         public string? BoxNumber { get; set; }

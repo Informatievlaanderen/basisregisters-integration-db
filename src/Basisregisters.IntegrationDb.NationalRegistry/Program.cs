@@ -127,14 +127,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 FilesOutput.WriteAddressesWithMultipleRecords(addressMatchResult.AddressesMatchedWithMultipleRecords, directory);
 
                 Console.WriteLine("Address matching DONE");
-                Console.WriteLine($"Matched addresses (includes addresses with multiple records and records with multiple addresses): {addressMatchResult.MatchedRecords.Count()}");
+                Console.WriteLine($"Matched addresses: {addressMatchResult.MatchedRecords.Count()}");
                 Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count()}");
 
-                // TODO: filter double records
                 await FilesOutput.WriteDbfFile(addressMatchResult.MatchedRecords, directory);
                 FilesOutput.WriteShapeFile(addressMatchResult.MatchedRecords, directory);
-
-
             }
             catch (AggregateException aggregateException)
             {

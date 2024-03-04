@@ -28,7 +28,9 @@
                 .GroupBy(x => new { x.Record.NisCode, x.Record.PostalCode, x.Record.StreetName, x.Record.HouseNumber })
                 .ToList();
 
-            var addressesPerStreetName = _repo.GetAll()
+            var allAddresses = _repo.GetAll();
+
+            var addressesPerStreetName =allAddresses
                 .GroupBy(x => x.StreetNamePersistentLocalId)
                 .ToDictionary(
                     x => x.Key,
@@ -70,10 +72,11 @@
                     }
                 });
 
-            var matchedRecords = GetMatchedRecords(matchesPerRecord);
-            var unmatchedRecords = GetUnmatchedRecords(matchesPerRecord);
-            var recordsMatchedWithMultipleAddresses = GetRecordsMatchedWithMultipleAddresses(matchesPerRecord);
             var addressesMatchedWithMultipleRecords = GetAddressesMatchedWithMultipleRecords(matchesPerRecord);
+            var recordsMatchedWithMultipleAddresses = GetRecordsMatchedWithMultipleAddresses(matchesPerRecord);
+
+            var matchedRecords = GetMatchedRecords(matchesPerRecord, addressesMatchedWithMultipleRecords, allAddresses);
+            var unmatchedRecords = GetUnmatchedRecords(matchesPerRecord);
 
             return new AddressMatchResult(
                 matchedRecords,
@@ -106,18 +109,44 @@
             return addresses;
         }
 
-        private static IEnumerable<FlatFileRecordWithAddress> GetMatchedRecords(
-            Dictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+        private static IEnumerable<AddressWithRegisteredCount> GetMatchedRecords(
+            Dictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord,
+            IDictionary<Address, List<FlatFileRecordWithStreetNames>> addressesMatchedWithMultipleRecords,
+            List<Address> allAddresses)
         {
-            return matchesPerRecord
-                .Where(x => x.Value.Any())
-                .Select(x => new FlatFileRecordWithAddress
+            var matches = matchesPerRecord
+                .Where(x => x.Value.Count == 1 && addressesMatchedWithMultipleRecords.ContainsKey(x.Value.Single().Address))
+                .Select(x => new AddressWithFlatFileRecord
                 {
                     Address = x.Value.First().Address,
-                    FlatFileRecordWithStreetNames = x.Key,
+                    FlatFileRecord = x.Key.Record,
                     HouseNumberBoxNumberType = x.Value.First().HouseNumberBoxNumberType
                 })
                 .ToList();
+
+            var results = new List<AddressWithRegisteredCount>();
+
+            foreach (var address in allAddresses)
+            {
+                var match = matches.FirstOrDefault(x => x.Address == address);
+                if (match)
+                {
+                    results.Add(new AddressWithRegisteredCount()
+                    {
+                        Address = address,
+                        HouseNumberBoxNumberType = ?,
+
+                    });
+                }
+
+                results.Add(new AddressWithRegisteredCount
+                {
+                    Address = address,
+                    FlatFileRecord = null
+                });
+            }
+
+            return results;
         }
 
         private static IEnumerable<FlatFileRecordWithStreetNames> GetUnmatchedRecords(

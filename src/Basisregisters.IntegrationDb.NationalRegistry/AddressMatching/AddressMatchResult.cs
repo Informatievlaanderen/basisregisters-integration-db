@@ -6,14 +6,14 @@
 
     public class AddressMatchResult
     {
-        public IEnumerable<FlatFileRecordWithAddress> MatchedRecords { get; }
+        public IEnumerable<AddressWithFlatFileRecord> MatchedRecords { get; }
         public IEnumerable<FlatFileRecordWithStreetNames> UnmatchedRecords { get; }
 
         public IDictionary<FlatFileRecordWithStreetNames, List<Address>> RecordsMatchedWithMultipleAddresses { get; }
         public IDictionary<Address, List<FlatFileRecordWithStreetNames>> AddressesMatchedWithMultipleRecords { get; }
 
         public AddressMatchResult(
-            IEnumerable<FlatFileRecordWithAddress> matchedRecords,
+            IEnumerable<AddressWithFlatFileRecord> matchedRecords,
             IEnumerable<FlatFileRecordWithStreetNames> unmatchedRecords,
             IDictionary<FlatFileRecordWithStreetNames, List<Address>> recordsMatchedWithMultipleAddresses,
             IDictionary<Address, List<FlatFileRecordWithStreetNames>> addressesMatchedWithMultipleRecords)

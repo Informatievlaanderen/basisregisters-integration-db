@@ -33,11 +33,11 @@
                 unmatchedRecords.Select(x => $"{x.ToSafeString()}"));
         }
 
-        public static void WriteMatchedRecords(IEnumerable<FlatFileRecordWithAddress> matchedRecords, string directory)
+        public static void WriteMatchedRecords(IEnumerable<AddressWithFlatFileRecord> matchedRecords, string directory)
         {
             File.AppendAllLines(
                 Path.Combine(directory, MatchedRecordsFileName),
-                matchedRecords.Select(x => $"{x.FlatFileRecordWithStreetNames.Record.ToSafeString()};{x.HouseNumberBoxNumberType}"));
+                matchedRecords.Select(x => $"{x.FlatFileRecord.Record.ToSafeString()};{x.HouseNumberBoxNumberType}"));
         }
 
         public static void WriteRecordsWithMultipleAddresses(IDictionary<FlatFileRecordWithStreetNames, List<Address>> records, string directory)
@@ -70,24 +70,24 @@
             }
         }
 
-        public static async Task WriteDbfFile(IEnumerable<FlatFileRecordWithAddress> matchedRecords, string directory)
+        public static async Task WriteDbfFile(IEnumerable<AddressWithFlatFileRecord> matchedRecords, string directory)
         {
             var dbfFile = await CreateResultFile(matchedRecords, CancellationToken.None);
-            var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
+            await using var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
             dbfFile.WriteTo(fileStream, CancellationToken.None);
         }
 
-        public static void WriteShapeFile(IEnumerable<FlatFileRecordWithAddress> matchedRecords, string directory)
+        public static void WriteShapeFile(IEnumerable<AddressWithFlatFileRecord> matchedRecords, string directory)
         {
             var files = CreateShapeFiles(matchedRecords.ToList());
             foreach (var extractFile in files)
             {
-                var fileStream = File.Create(Path.Combine(directory, extractFile.Name));
+                using var fileStream = File.Create(Path.Combine(directory, extractFile.Name));
                 extractFile.WriteTo(fileStream, CancellationToken.None);
             }
         }
 
-        private static IEnumerable<ExtractFile> CreateShapeFiles(List<FlatFileRecordWithAddress> matchedRecords)
+        private static IEnumerable<ExtractFile> CreateShapeFiles(List<AddressWithFlatFileRecord> matchedRecords)
         {
             var content = matchedRecords
                 .Select(x => new PointShapeContent(new Point(x.Address.Position.X, x.Address.Position.Y))
@@ -124,11 +124,11 @@
                 ProjectedCoordinateSystem.Belge_Lambert_1972);
         }
 
-        private static async Task<ExtractFile> CreateResultFile(IEnumerable<FlatFileRecordWithAddress> matchedRecords, CancellationToken ct)
+        private static async Task<ExtractFile> CreateResultFile(IEnumerable<AddressWithFlatFileRecord> matchedRecords, CancellationToken ct)
         {
-            byte[] TransformRecord(FlatFileRecordWithAddress flatFileRecordWithAddress)
+            byte[] TransformRecord(AddressWithFlatFileRecord flatFileRecordWithAddress)
             {
-                var streetName = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.StreetNames
+                var streetName = flatFileRecordWithAddress.FlatFileRecord.StreetNames
                     .Single(x => x.StreetNamePersistentLocalId == flatFileRecordWithAddress.Address.StreetNamePersistentLocalId);
 
                 var item = new AddressMatchDatabaseRecord
@@ -138,19 +138,19 @@
                     StraatNM = { Value = streetName.NameDutch },
                     HuisNR = { Value = flatFileRecordWithAddress.Address.HouseNumber },
                     BusNR = { Value = flatFileRecordWithAddress.Address.BoxNumber },
-                    NisGemCode = { Value = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.Record.NisCode },
+                    NisGemCode = { Value = flatFileRecordWithAddress.FlatFileRecord.Record.NisCode },
                     GemNM = { Value = streetName.MunicipalityName },
                     PKanCode = { Value = flatFileRecordWithAddress.Address.PostalCode },
                     Herkomst = { Value = flatFileRecordWithAddress.Address.Specification },
                     Methode = { Value = flatFileRecordWithAddress.Address.Method },
-                    Inwoners = { Value = flatFileRecordWithAddress.FlatFileRecordWithStreetNames.Record.RegisteredCount },
+                    Inwoners = { Value = flatFileRecordWithAddress.FlatFileRecord.Record.RegisteredCount },
                     HuisnrStat = { Value = flatFileRecordWithAddress.Address.Status },
                 };
 
                 return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
             }
 
-            return ExtractBuilder.CreateDbfFile<FlatFileRecordWithAddress, AddressMatchDatabaseRecord>(
+            return ExtractBuilder.CreateDbfFile<AddressWithFlatFileRecord, AddressMatchDatabaseRecord>(
                 "CLI",
                 new AddressMatchDbaseSchema(),
                 matchedRecords,

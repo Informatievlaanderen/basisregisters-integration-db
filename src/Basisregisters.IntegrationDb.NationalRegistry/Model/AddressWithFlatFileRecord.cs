@@ -2,9 +2,9 @@
 {
     using Repositories;
 
-    public class FlatFileRecordWithAddress
+    public class AddressWithFlatFileRecord
     {
-        public FlatFileRecordWithStreetNames FlatFileRecordWithStreetNames { get; set; }
+        public FlatFileRecord? FlatFileRecord { get; set; }
         public Address Address { get; set; }
         public string HouseNumberBoxNumberType { get; set; }
     }
