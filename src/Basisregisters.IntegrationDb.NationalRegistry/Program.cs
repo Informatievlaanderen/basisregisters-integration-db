@@ -110,7 +110,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
                 FilesOutput.WriteUnmatchedRecords(unmatchedStreetNames, directory);
                 Console.WriteLine("Street name matching DONE");
-                Console.WriteLine($"Unmatched street names: {unmatchedStreetNames.Count}");
+                Console.WriteLine($"Unmatched records to street names: {unmatchedStreetNames.Count}");
 
                 var addressMatchRunner = new AddressMatchRunner(addressRepository, streetNameRepository);
                 var addressMatchResult = addressMatchRunner.Match(matchedStreetNames.ToList());
@@ -129,10 +129,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                     directory);
 
                 Console.WriteLine("Address matching DONE");
-                Console.WriteLine($"Matched addresses: {addressMatchResult.AddressesWithRegisteredCount.Count(x => x.FlatFileRecord is not null)}");
-                Console.WriteLine($"Unmatched addresses: {addressMatchResult.UnmatchedRecords.Count}");
+                Console.WriteLine($"Matched records: {addressMatchResult.AddressesWithRegisteredCount.Count(x => x.FlatFileRecord is not null)}");
+                Console.WriteLine($"Unmatched records: {addressMatchResult.UnmatchedRecords.Count}");
                 Console.WriteLine($"Record with multiple matched addresses: {addressMatchResult.RecordsMatchedWithMultipleAddresses.Count}");
-                Console.WriteLine($"Addresses matched to multiple records: {addressMatchResult.AddressesWithRegisteredCount.Count}");
+                Console.WriteLine($"Addresses matched to multiple records: {addressMatchResult.AddressesMatchedWithMultipleRecords.Count}");
 
                 FilesOutput.WriteDbfFile(addressMatchResult.AddressesWithRegisteredCount, directory);
                 FilesOutput.WriteShapeFile(addressMatchResult.AddressesWithRegisteredCount, directory);
