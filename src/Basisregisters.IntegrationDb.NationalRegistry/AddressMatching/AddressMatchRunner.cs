@@ -26,7 +26,7 @@
         {
             var matchesPerRecord = flatFileRecords.ToDictionary(
                 x => x,
-                _ => new List<(Address Address, string HouseNumberBoxNumberType)>());
+                _ => new ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>());
 
             var recordsPerHouseNumber = flatFileRecords
                 .GroupBy(x => new { x.Record.NisCode, x.Record.PostalCode, x.Record.StreetName, x.Record.HouseNumber })
@@ -113,7 +113,7 @@
         }
 
         private IList<AddressWithRegisteredCount> GetMatchedRecords(
-            Dictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord,
+            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord,
             IDictionary<Address, List<FlatFileRecordWithStreetNames>> addressesMatchedWithMultipleRecords,
             List<Address> allAddresses)
         {
@@ -224,7 +224,7 @@
         }
 
         private static IList<FlatFileRecordWithStreetNames> GetUnmatchedRecords(
-            Dictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
         {
             return matchesPerRecord
                 .Where(x => !x.Value.Any())
@@ -233,7 +233,7 @@
         }
 
         private static IDictionary<FlatFileRecordWithStreetNames, List<Address>> GetRecordsMatchedWithMultipleAddresses(
-            IDictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+            IDictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
         {
             return matchesPerRecord
                 .Where(x => x.Value.Count > 1)
@@ -243,7 +243,7 @@
         }
 
         private static IDictionary<Address, List<FlatFileRecordWithStreetNames>> GetAddressesMatchedWithMultipleRecords(
-            IDictionary<FlatFileRecordWithStreetNames, List<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+            IDictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
         {
             var matchesPerRecordReversed = new Dictionary<Address, List<FlatFileRecordWithStreetNames>>();
             foreach (var kvp in matchesPerRecord)
