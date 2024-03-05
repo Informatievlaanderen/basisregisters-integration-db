@@ -137,12 +137,12 @@
                     StraatNM = { Value = addressWithRegisteredCount.StreetName.NameDutch! },
                     HuisNR = { Value = addressWithRegisteredCount.Address.HouseNumber },
                     BusNR = { Value = addressWithRegisteredCount.Address.BoxNumber },
-                    NisGemCode = { Value = addressWithRegisteredCount.FlatFileRecord!.NisCode },
+                    NisGemCode = { Value = addressWithRegisteredCount.StreetName.NisCode },
                     GemNM = { Value = addressWithRegisteredCount.StreetName.MunicipalityName },
                     PKanCode = { Value = addressWithRegisteredCount.Address.PostalCode },
                     Herkomst = { Value = addressWithRegisteredCount.Address.Specification },
                     Methode = { Value = addressWithRegisteredCount.Address.Method },
-                    Inwoners = { Value = addressWithRegisteredCount.FlatFileRecord.RegisteredCount },
+                    Inwoners = { Value = addressWithRegisteredCount.FlatFileRecord?.RegisteredCount ?? 0 },
                     HuisnrStat = { Value = addressWithRegisteredCount.Address.Status },
                 };
 
