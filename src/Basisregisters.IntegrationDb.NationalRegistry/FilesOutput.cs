@@ -142,7 +142,7 @@
                     PKanCode = { Value = addressWithRegisteredCount.Address.PostalCode },
                     Herkomst = { Value = addressWithRegisteredCount.Address.Specification },
                     Methode = { Value = addressWithRegisteredCount.Address.Method },
-                    Inwoners = { Value = addressWithRegisteredCount.FlatFileRecord?.RegisteredCount ?? 0 },
+                    Inwoners = { Value = addressWithRegisteredCount.RegisteredCount ?? -99 },
                     HuisnrStat = { Value = addressWithRegisteredCount.Address.Status },
                 };
 
