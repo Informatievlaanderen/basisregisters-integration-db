@@ -134,8 +134,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 Console.WriteLine($"Record with multiple matched addresses: {addressMatchResult.RecordsMatchedWithMultipleAddresses.Count}");
                 Console.WriteLine($"Addresses matched to multiple records: {addressMatchResult.AddressesMatchedWithMultipleRecords.Count}");
 
-                FilesOutput.WriteDbfFile(addressMatchResult.AddressesWithRegisteredCount, directory);
-                FilesOutput.WriteShapeFile(addressMatchResult.AddressesWithRegisteredCount, directory);
+                var result = addressMatchResult.AddressesWithRegisteredCount
+                    .OrderBy(x => x.Address.AddressPersistentLocalId)
+                    .ToList();
+                FilesOutput.WriteDbfFile(result, directory);
+                FilesOutput.WriteShapeFile(result, directory);
             }
             catch (AggregateException aggregateException)
             {
