@@ -92,14 +92,28 @@
         {
             var content = matchedRecords
                 .Select(x =>
-                    new PointShapeContent(new Point(x.Address.Position.X, x.Address.Position.Y)).ToBytes())
+                {
+                    var point = x.Address.Position as NetTopologySuite.Geometries.Point;
+                    if (point is null)
+                    {
+                        throw new InvalidCastException($"Could cast position of address {x.Address.AddressPersistentLocalId}");
+                    }
+
+                    var pointShapeContent = new PointShapeContent(new Point(point.X, point.Y));
+                    return new
+                    {
+                        Point = point,
+                        Content = pointShapeContent.ToBytes(),
+                        ContentLength = pointShapeContent.ContentLength.ToInt32()
+                    };
+                })
                 .ToList();
 
             var boundingBox = new BoundingBox3D(
-                matchedRecords.Min(x => x.Address.Position.X),
-                matchedRecords.Min(x => x.Address.Position.Y),
-                matchedRecords.Max(x => x.Address.Position.X),
-                matchedRecords.Max(x => x.Address.Position.Y),
+                content.Min(x => x.Point.X),
+                content.Min(x => x.Point.Y),
+                content.Max(x => x.Point.X),
+                content.Max(x => x.Point.Y),
                 0,
                 0,
                 double.NegativeInfinity,
@@ -108,15 +122,15 @@
             yield return ExtractBuilder.CreateShapeFile<PointShapeContent>(
                 "CLI",
                 ShapeType.Point,
-                content.Select(x => x),
+                content.Select(x => x.Content),
                 ShapeContent.Read,
-                content.Select(x => x.Length),
+                content.Select(x => x.ContentLength),
                 boundingBox);
 
             yield return ExtractBuilder.CreateShapeIndexFile(
                 "CLI",
                 ShapeType.Point,
-                content.Select(x => x.Length),
+                content.Select(x => x.ContentLength),
                 () => content.Count,
                 boundingBox);
 

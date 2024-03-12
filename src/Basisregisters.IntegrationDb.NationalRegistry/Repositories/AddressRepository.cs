@@ -88,6 +88,6 @@
         public string Status { get; set; }
         public string Method { get; set; }
         public string Specification { get; set; }
-        public Point Position { get; set; }
+        public Geometry Position { get; set; }
     }
 }
