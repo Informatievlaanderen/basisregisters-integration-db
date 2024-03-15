@@ -1,25 +1,25 @@
-framework: net6.0
-strategy: min
+framework: net8.0
+// strategy: min
 source https://api.nuget.org/v3/index.json
 
 // Kafka
 nuget Confluent.Kafka 2.3.0 3.7.301
 
 // AWS
-nuget AWSSDK.DynamoDBv2 3.7.301
+nuget AWSSDK.DynamoDBv2 3.7.301.21
 nuget AWSSDK.Extensions.NETCore.Setup 3.7.300
-nuget AWSSDK.SimpleNotificationService 3.7.300.39
-nuget AWSSDK.SimpleEmail 3.7.300.39
+nuget AWSSDK.SimpleNotificationService 3.7.301.5
+nuget AWSSDK.SimpleEmail 3.7.300.57
 
 // Misc
-nuget Autofac 6.3.0
-nuget Dapper 2.1.28
-nuget Destructurama.JsonNet 2.0.0
-nuget NodaTime 3.0.10
-nuget MessagePack 2.5.129
+nuget Autofac 8.0.0
+nuget Dapper 2.1.35
+nuget Destructurama.JsonNet 3.0.0
+nuget NodaTime 3.1.11
+nuget MessagePack 2.5.140
 nuget Newtonsoft.Json 13.0.3
 nuget GeoJSON.NET 1.2.19
-nuget MediatR 12.0.1
+nuget MediatR 12.2.0
 nuget MediatR.Contracts 2.0.1
 
 // NationalRegistry specific
@@ -28,73 +28,74 @@ nuget FlatFiles 5.0.4
 
 
 // MISSING ASSEMBLY REFERENCES
-nuget Microsoft.IdentityModel.Tokens 6.25.1
-nuget Microsoft.IdentityModel.Protocols 6.25.1
-nuget Microsoft.IdentityModel.Logging 6.25.1
-nuget Microsoft.IdentityModel.Abstractions 6.25.1
-nuget Microsoft.IdentityModel.JsonWebTokens 6.25.1
-nuget Microsoft.Identity.Client 4.57.0
-nuget IdentityModel 6.0.0
+nuget Microsoft.IdentityModel.Tokens 7.4.0
+nuget Microsoft.IdentityModel.Protocols 7.4.0
+nuget Microsoft.IdentityModel.Logging 7.4.0
+nuget Microsoft.IdentityModel.Abstractions 7.4.0
+nuget Microsoft.IdentityModel.JsonWebTokens 7.4.0
+nuget Microsoft.Identity.Client 4.59.0
+nuget IdentityModel 6.2.0
 
 // ASPNET
-nuget AspNetCore.HealthChecks.NpgSql 6.0.2
+nuget AspNetCore.HealthChecks.NpgSql 8.0.0
 
 // MICROSOFT EXTENSIONS
-nuget Microsoft.Extensions.DependencyModel 6.0.0
-nuget Microsoft.Extensions.Configuration 6.0.1
-nuget Microsoft.Extensions.Configuration.CommandLine 6.0.0
-nuget Microsoft.Extensions.Configuration.FileExtensions 6.0.0
-nuget Microsoft.Extensions.Configuration.Json 6.0.0
-nuget Microsoft.Extensions.Configuration.EnvironmentVariables 6.0.1
-nuget Microsoft.Extensions.DependencyInjection.Abstractions 6.0.0
-nuget Microsoft.Extensions.Hosting 6.0.1
-nuget Microsoft.Extensions.Http 6.0.0
+nuget Microsoft.Extensions.DependencyModel 8.0.0
+nuget Microsoft.Extensions.Configuration 8.0.0
+nuget Microsoft.Extensions.Configuration.CommandLine 8.0.0
+nuget Microsoft.Extensions.Configuration.FileExtensions 8.0.0
+nuget Microsoft.Extensions.Configuration.Json 8.0.0
+nuget Microsoft.Extensions.Configuration.EnvironmentVariables 8.0.0
+nuget Microsoft.Extensions.DependencyInjection.Abstractions 8.0.1
+nuget Microsoft.Extensions.Hosting 8.0.0
+nuget Microsoft.Extensions.Http 8.0.0
 
-nuget Microsoft.EntityFrameworkCore.Design 6.0.0
+nuget Microsoft.EntityFrameworkCore.Design 8.0.3
 
 // ENTITY FRAMEWORK
-nuget NetTopologySuite 2.4.0
-nuget Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite 6.0.22
-nuget Npgsql.EntityFrameworkCore.PostgreSQL 6.0.22
+nuget NetTopologySuite 2.5.0
+nuget Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite 8.0.2
+nuget Npgsql.EntityFrameworkCore.PostgreSQL 8.0.2
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
-//nuget Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime 6.0.22
+//nuget Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime 8.0.2
 
 
 // VBR STUFF
-nuget Be.Vlaanderen.Basisregisters.Api 20.0.0
+nuget Be.Vlaanderen.Basisregisters.Api 21.0.0
 
-nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 1.4.1
-nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 3.0.1
-nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.5
-nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 5.1.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 20.6.1
-nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 20.6.1
-nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Consumer 4.9.1
-nuget Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded 1.3.4
-nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
+nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 2.0.0
+nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 4.0.1
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.1.0
+nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 6.0.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 21.0.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.0.0
+nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Consumer 5.0.1
+nuget Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded 2.0.0
+nuget Be.Vlaanderen.Basisregisters.Shaperon 10.0.2
 
 // TEST STUFF
-nuget Microsoft.EntityFrameworkCore.InMemory 6.0.3
-nuget Microsoft.NET.Test.Sdk 17.3.1
-nuget Microsoft.NET.StringTools 17.8.3
-nuget Microsoft.NETCore.Platforms 6.0.6
-nuget Be.Vlaanderen.Basisregisters.DockerUtilities 1.0.1
-nuget Microsoft.AspNetCore.Mvc.Testing 6.0.11
-nuget Microsoft.AspNetCore.TestHost 6.0.11
+nuget Microsoft.EntityFrameworkCore.InMemory 8.0.3
+nuget Microsoft.NET.Test.Sdk 17.9.0
+nuget Microsoft.NET.StringTools 17.9.5
+nuget Microsoft.NETCore.Platforms 7.0.4
+nuget Be.Vlaanderen.Basisregisters.DockerUtilities 2.0.0
+nuget Microsoft.AspNetCore.Mvc.Testing 8.0.3
+nuget Microsoft.AspNetCore.TestHost 8.0.3
 nuget AutoFixture 4.18.1
-nuget FluentAssertions 6.5.1
-nuget xunit.runner.visualstudio 2.4.3
-nuget xunit.categories 2.0.6
-nuget Moq 4.17.2
+nuget FluentAssertions 6.12.0
+nuget xunit 2.7.0
+nuget xunit.runner.visualstudio 2.5.7
+nuget xunit.categories 2.0.8
+nuget Moq 4.20.70
 
-nuget Serilog 2.10.0
-nuget Serilog.Settings.Configuration 3.3.0
-nuget Serilog.Extensions.Logging 3.1.0
-nuget Serilog.Sinks.Console 4.0.1
+nuget Serilog 3.1.1
+nuget Serilog.Settings.Configuration 8.0.0
+nuget Serilog.Extensions.Logging 8.0.0
+nuget Serilog.Sinks.Console 5.0.1
 nuget Serilog.Sinks.File 5.0.0
 nuget Serilog.Enrichers.Thread 3.1.0
-nuget Serilog.Enrichers.Environment 2.2.0
-nuget Serilog.Formatting.Compact 1.1.0
+nuget Serilog.Enrichers.Environment 2.3.0
+nuget Serilog.Formatting.Compact 2.0.0
 
 // BUILD STUFF
 nuget SourceLink.Embed.AllSourceFiles 2.8.3 copy_local: true

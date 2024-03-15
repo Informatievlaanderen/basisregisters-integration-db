@@ -15,14 +15,14 @@ licenseUrl https://opensource.org/licenses/EUPL-1.2
 description Integration Db Suspicious Cases Api Abstractions
 
 dependencies
-  framework: net6.0
+  framework: net8.0
     Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
 
 files
-  Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.dll => lib\net6.0
-  Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.pdb => lib\net6.0
-  Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.xml => lib\net6.0
+  Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.dll => lib\net8.0
+  Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.pdb => lib\net8.0
+  Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.xml => lib\net8.0
   Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.xml => content
 
-  Basisregisters.IntegrationDb.SuspiciousCases.dll => lib\net6.0
-  Basisregisters.IntegrationDb.SuspiciousCases.pdb => lib\net6.0
+  Basisregisters.IntegrationDb.SuspiciousCases.dll => lib\net8.0
+  Basisregisters.IntegrationDb.SuspiciousCases.pdb => lib\net8.0
