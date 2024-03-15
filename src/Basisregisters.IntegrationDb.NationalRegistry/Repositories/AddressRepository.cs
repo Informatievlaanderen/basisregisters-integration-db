@@ -38,9 +38,13 @@
             WHERE a.removed = false and (a.oslo_status = 'InGebruik' or a.oslo_status = 'Voorgesteld')
             ;";
 
-            using var connection = new NpgsqlConnection(_connectionString);
+            // https://www.npgsql.org/doc/release-notes/7.0.html#managing-type-mappings-at-the-connection-level-is-no-longer-supported
+            var dataSourceBuilder = new NpgsqlDataSourceBuilder(_connectionString);
+            dataSourceBuilder.UseNetTopologySuite();
+            using var dataSource = dataSourceBuilder.Build();
+            using var connection = dataSource.CreateConnection();
+
             connection.Open();
-            connection.TypeMapper.UseNetTopologySuite();
 
             var addresses = connection.Query<Address>(sql);
 
