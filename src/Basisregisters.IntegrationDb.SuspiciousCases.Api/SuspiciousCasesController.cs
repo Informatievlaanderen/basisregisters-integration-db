@@ -5,6 +5,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
     using System.Threading.Tasks;
     using Abstractions.Detail;
     using Abstractions.List;
+    using Asp.Versioning;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;

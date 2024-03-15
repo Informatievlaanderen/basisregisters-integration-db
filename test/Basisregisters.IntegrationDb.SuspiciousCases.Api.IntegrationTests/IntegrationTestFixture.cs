@@ -12,9 +12,10 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
     using Infrastructure;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.TestHost;
-    using Microsoft.Data.SqlClient;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
+    using Npgsql;
+    using SuspiciousCases.Infrastructure;
     using Xunit;
 
     public class IntegrationTestFixture : IAsyncLifetime
@@ -24,7 +25,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
         private readonly IDictionary<string, AccessToken> _accessTokens = new Dictionary<string, AccessToken>();
 
         public TestServer TestServer { get; private set; }
-        public SqlConnection SqlConnection { get; private set; }
+        public NpgsqlConnection NpgsqlConnection { get; private set; }
 
         public async Task<string> GetAccessToken(string requiredScopes)
         {
@@ -62,10 +63,10 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
             _clientId = configuration.GetValue<string>("ClientId");
             _clientSecret = configuration.GetValue<string>("ClientSecret");
 
-            using var _ = DockerComposer.Compose("sqlserver.yml", "suspicious-cases-integration-tests");
+            using var _ = DockerComposer.Compose("postgresql.yml", "suspicious-cases-integration-tests");
             await WaitForSqlServerToBecomeAvailable();
 
-           await CreateDatabase();
+            await CreateDatabase();
 
             var hostBuilder = new WebHostBuilder()
                 .UseConfiguration(configuration)
@@ -93,8 +94,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
         {
             try
             {
-                SqlConnection = new SqlConnection("Server=localhost,5437;User Id=sa;Password=Pass@word;database=master;TrustServerCertificate=True;");
-                await SqlConnection.OpenAsync();
+                NpgsqlConnection = new NpgsqlConnection("Host=localhost;port=5434;Username=postgres;Password=postgres");
+                await NpgsqlConnection.OpenAsync();
                 return true;
             }
             catch (Exception)
@@ -105,13 +106,123 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
 
         private async Task CreateDatabase()
         {
-            var cmd = new SqlCommand(@"IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'integration-db') BEGIN CREATE DATABASE [integration-db] END", SqlConnection);
-            await cmd.ExecuteNonQueryAsync();
+            await using var command = new NpgsqlCommand("CREATE DATABASE integration", NpgsqlConnection);
+            await command.ExecuteNonQueryAsync();
+
+            await using var postgisExtensioncommand = new NpgsqlCommand("CREATE EXTENSION postgis", NpgsqlConnection);
+            await postgisExtensioncommand.ExecuteNonQueryAsync();
+
+            var tables = new[]
+            {
+                SchemaLatestItems.StreetName,
+                SchemaLatestItems.Address,
+                SchemaLatestItems.Building,
+                SchemaLatestItems.BuildingUnit,
+                SchemaLatestItems.BuildingUnitAddresses,
+                SchemaLatestItems.Parcel,
+                SchemaLatestItems.ParcelAddresses,
+                SchemaLatestItems.Postal,
+                SchemaLatestItems.RoadSegment,
+                SchemaLatestItems.Municipality,
+                SchemaLatestItems.MunicipalityGeometries,
+            };
+
+            foreach (var schema in tables.Select(x => x.Split('.').First()))
+            {
+                await using var createSchemaCommand = new NpgsqlCommand($"CREATE SCHEMA IF NOT EXISTS {schema}", NpgsqlConnection);
+                await createSchemaCommand.ExecuteNonQueryAsync();
+            }
+
+            var sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.Municipality} (
+                    building_unit_persistent_local_id INT,
+                    municipality_id UUID,
+                    nis_code INT,
+                    name_dutch TEXT,
+                    version_timestamp TIMESTAMP WITH TIME ZONE
+                );";
+            await using var createMunicipalityTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createMunicipalityTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.MunicipalityGeometries} (
+                    nis_code INT,
+                    geometry geometry
+                );";
+            await using var createMunicipalityGeometriesTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createMunicipalityGeometriesTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.StreetName} (
+                    persistent_local_id INT,
+                    municipality_id UUID,
+                    nis_code INT,
+                    name_dutch TEXT,
+                    status INT,
+                    is_removed BOOL,
+                    version_timestamp TIMESTAMP WITH TIME ZONE
+                );";
+            await using var createStreetNameTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createStreetNameTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.Address} (
+                    persistent_local_id INT,
+                    street_name_persistent_local_id INT,
+                    house_number TEXT,
+                    box_number TEXT,
+                    postal_code TEXT,
+                    status INT,
+                    removed BOOL,
+                    position_specification INT,
+                    position_method INT,
+                    geometry geometry,
+                    version_timestamp TIMESTAMP WITH TIME ZONE
+                );";
+            await using var createAddressTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createAddressTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.Building} (
+                    building_persistent_local_id INT,
+                    version_timestamp TIMESTAMP WITH TIME ZONE,
+                    nis_code INT,
+                    status TEXT,
+                    is_removed BOOL
+                );";
+            await using var createBuildingTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createBuildingTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.BuildingUnit} (
+                    building_unit_persistent_local_id INT,
+                    building_persistent_local_id INT,
+                    version_timestamp TIMESTAMP WITH TIME ZONE,
+                    is_removed BOOL,
+                    status TEXT
+                );";
+            await using var createBuildingUnitTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createBuildingUnitTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.BuildingUnitAddresses} (
+                    building_unit_persistent_local_id INT,
+                    address_persistent_local_id INT
+                );";
+            await using var createBuildingUnitAddressTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createBuildingUnitAddressTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.ParcelAddresses} (
+                    address_persistent_local_id INT
+                );";
+            await using var createParcelAddressTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createParcelAddressTable.ExecuteNonQueryAsync();
         }
 
         public async Task DisposeAsync()
         {
-            await SqlConnection.DisposeAsync();
+            await NpgsqlConnection.DisposeAsync();
         }
     }
 
