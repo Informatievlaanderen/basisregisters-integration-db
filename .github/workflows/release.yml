@@ -93,6 +93,7 @@ jobs:
       test-project: Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests
       build-project: Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions
       semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
     secrets: inherit
 
   release:
