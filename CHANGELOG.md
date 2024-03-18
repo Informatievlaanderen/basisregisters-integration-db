@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.4...v2.0.0) (2024-03-18)
+
+
+### Features
+
+* inwonersaantallen ([b56aeab](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/b56aeab25d3cf5e69e76e1f29e659ad98704c6ff))
+* move to dotnet 8.0.2 ([cbb3b3c](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/cbb3b3c510440b95750bc10f41c6b1ed290212d6))
+
+
+### BREAKING CHANGES
+
+* move to dotnet 8.0.2
+
 ## [1.4.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.3...v1.4.4) (2024-02-28)
 
 
