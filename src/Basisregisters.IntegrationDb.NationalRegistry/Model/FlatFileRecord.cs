@@ -60,7 +60,7 @@
 
         public string ToSafeString()
         {
-            return $"{NisCode}{PostalCode}{StreetCode}{HouseNumber}{Index.SourceValue ?? "    "}{StreetName}";
+            return $"{NisCode.PadLeft(5, '0')}{PostalCode.PadLeft(4, '0')}{StreetCode.PadLeft(4, '0')}{HouseNumber.PadLeft(4, '0')}{Index.SourceValue?.PadLeft(4) ?? "    "}{StreetName}";
         }
     }
 
