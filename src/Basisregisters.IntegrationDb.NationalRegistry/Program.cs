@@ -75,7 +75,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
             try
             {
-                var directory = configuration["Directory"];
+                var directory = configuration["OutputDirectory"];
                 var sourceFileName = configuration["SourceFileName"];
 
                 var flatFileRecords = ReadFlatFileRecordsRecords(Path.Combine(directory, sourceFileName));
