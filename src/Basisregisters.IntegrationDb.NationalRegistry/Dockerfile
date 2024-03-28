@@ -1,23 +1,13 @@
-FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.3
+# Use Alpine Linux as the base image
+FROM ghcr.io/osgeo/gdal:alpine-small-3.8.4
 
-# create group & user
-RUN addgroup --gid 1000 --system app && adduser --uid 1000 -system app --gid 1000
-
-# create work dir and set permissions as WORKDIR sets permissions as root
-RUN mkdir /app && chown -R app:app /app
+# Create a working directory
 WORKDIR /app
 
-LABEL maintainer "Digitaal Vlaanderen <digitaal.vlaanderen@vlaanderen.be>"
-LABEL registry="integration-db"
+# Set the entrypoint to ogr2ogr
+ENTRYPOINT ["ogr2ogr"]
 
-COPY / /app
-WORKDIR /app
+# Default command (override with docker run command)
+CMD ["--help"]
 
-RUN apt-get update && \
-    apt-get install curl jq -y && \
-    chmod +x ./init.sh
-
-# switch to created user
-USER app
-
-ENTRYPOINT ["./init.sh"]
+# docker run -v "C:\Users\Arne\Downloads\gebouw_ALL":/app ogr2ogr -f "GPKG" output.gpkg gebouw_ALL.shp
