@@ -25,8 +25,11 @@
             };
         }
 
-        public SeparatorBetweenNumbers(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public SeparatorBetweenNumbers(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }

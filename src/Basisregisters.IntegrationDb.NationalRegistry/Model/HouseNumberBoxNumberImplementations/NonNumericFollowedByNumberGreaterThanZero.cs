@@ -36,8 +36,11 @@
             };
         }
 
-        public NonNumericFollowedByNumberGreaterThanZero(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public NonNumericFollowedByNumberGreaterThanZero(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }

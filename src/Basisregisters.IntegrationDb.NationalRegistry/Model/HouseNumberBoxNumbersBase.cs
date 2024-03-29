@@ -5,6 +5,7 @@
 
     public abstract class HouseNumberBoxNumbersBase
     {
+        protected readonly string NisCode;
         protected readonly string SourceSourceHouseNumber;
 
         public NationalRegistryIndex Index { get; }
@@ -12,8 +13,12 @@
         public abstract bool IsMatch();
         public abstract IList<HouseNumberWithBoxNumber> GetValues();
 
-        protected HouseNumberBoxNumbersBase(string sourceHouseNumber, NationalRegistryIndex index)
+        protected HouseNumberBoxNumbersBase(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
         {
+            NisCode = nisCode;
             SourceSourceHouseNumber = sourceHouseNumber.TrimStart('0');
             Index = index;
         }
@@ -21,6 +26,12 @@
         protected static bool ContainsOnlyLetters(string input)
         {
             var regex = new Regex("^[a-zA-Z]+$", RegexOptions.Compiled);
+            return regex.IsMatch(input);
+        }
+
+        protected static bool ContainsOnlyCapitalLetters(string input)
+        {
+            var regex = new Regex("^[A-Z]+$", RegexOptions.Compiled);
             return regex.IsMatch(input);
         }
 
