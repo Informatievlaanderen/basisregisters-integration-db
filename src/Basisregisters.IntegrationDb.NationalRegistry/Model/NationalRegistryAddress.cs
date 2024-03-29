@@ -38,6 +38,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 
             yield return new Turnhout(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Lier(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Aartselaar(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Wommelgem(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Hemiksem(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
