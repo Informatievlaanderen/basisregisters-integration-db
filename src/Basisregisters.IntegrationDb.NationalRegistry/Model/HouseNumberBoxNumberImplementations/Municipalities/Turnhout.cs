@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumberImplementations
+namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumberImplementations.Municipalities
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@
         public override bool IsMatch() =>
             NisCode == "13040" &&
             (Index.SourceValue!.StartsWith("b")
-            || (Index.SourceValue!.StartsWith("0") && IsGreaterThanZero(Index.SourceValue))
+            || Index.SourceValue!.StartsWith("0") && IsGreaterThanZero(Index.SourceValue)
             || ContainsOnlyCapitalLetters(Index.SourceValue!.Substring(0, 1)));
 
         public override IList<HouseNumberWithBoxNumber> GetValues()

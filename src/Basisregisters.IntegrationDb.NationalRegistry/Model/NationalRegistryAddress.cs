@@ -1,8 +1,9 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
+namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
     using System;
     using System.Collections.Generic;
     using HouseNumberBoxNumberImplementations;
+    using HouseNumberBoxNumberImplementations.Municipalities;
 
     public class NationalRegistryAddress
     {
@@ -36,6 +37,7 @@
             yield return new NoIndex(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new Turnhout(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Lier(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
