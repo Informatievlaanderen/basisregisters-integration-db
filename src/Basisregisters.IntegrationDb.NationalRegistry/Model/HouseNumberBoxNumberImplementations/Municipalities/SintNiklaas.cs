@@ -8,19 +8,21 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public SintNiklaas(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
-        public override bool IsMatch() => NisCode == "46021" && (
-            Index.SourceValue!.StartsWith('B') && IsGreaterThanZero(Index.SourceValue[1..])
-            ||
-            !Index.SourceValue!.StartsWith('B') && ContainsOnlyCapitalLetters(Index.SourceValue[0]) && Index.SourceValue[1..] == "000"
-            ||
-            !Index.SourceValue!.StartsWith('B') && IsGreaterThanZero(Index.SourceValue[1..])
-            ||
-            ContainsOnlyCapitalLetters(Index.SourceValue[..2]) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..])
-        );
+        public override bool IsMatch() =>
+            NisCode == "46021" &&
+            (
+                Index.SourceValue!.StartsWith('B') && IsNumberGreaterThanZero(Index.SourceValue[1..])
+                ||
+                !Index.SourceValue!.StartsWith('B') && ContainsOnlyCapitalLetters(Index.SourceValue[0]) && Index.SourceValue[1..] == "000"
+                ||
+                !Index.SourceValue!.StartsWith('B') && IsNumberGreaterThanZero(Index.SourceValue[1..])
+                ||
+                ContainsOnlyCapitalLetters(Index.SourceValue[..2]) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..])
+            );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith('B') && IsGreaterThanZero(Index.SourceValue[1..]))
+            if (Index.SourceValue!.StartsWith('B') && IsNumberGreaterThanZero(Index.SourceValue[1..]))
             {
                 return new[]
                 {
@@ -44,7 +46,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (!Index.SourceValue!.StartsWith('B') && IsGreaterThanZero(Index.SourceValue[1..]))
+            if (!Index.SourceValue!.StartsWith('B') && IsNumberGreaterThanZero(Index.SourceValue[1..]))
             {
                 var bisNumber = Index.SourceValue[0];
 

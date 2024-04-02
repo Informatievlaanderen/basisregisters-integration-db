@@ -2,20 +2,21 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Beveren : HouseNumberBoxNumbersBase
     {
         public Beveren(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
-        public override bool IsMatch() => NisCode == "46003" && (
-            (Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue![1..]))
-            ||
-            (char.ToLower(Index.SourceValue![0]) != 'b' && char.ToLower(Index.SourceValue![1]) == 'b' && IsNumeric(Index.SourceValue![2..]))
-            ||
-            (Index.SourceValue!.StartsWith("000") && char.IsDigit(Index.SourceValue![3]))
-        );
+        public override bool IsMatch() =>
+            NisCode == "46003" &&
+            (
+                (Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue![1..]))
+                ||
+                (!Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(Index.SourceValue![1]) == 'b' && IsNumeric(Index.SourceValue![2..]))
+                ||
+                (Index.SourceValue!.StartsWith("000") && char.IsDigit(Index.SourceValue![3]))
+            );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
@@ -30,7 +31,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (char.ToLower(Index.SourceValue![0]) != 'b' && char.ToLower(Index.SourceValue![1]) == 'b' && IsNumeric(Index.SourceValue![2..]))
+            if (!Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(Index.SourceValue![1]) == 'b' && IsNumeric(Index.SourceValue![2..]))
             {
                 var bisNumber = Index.SourceValue![0];
                 var houseNumber = char.IsDigit(bisNumber) ? $"{SourceSourceHouseNumber}_{bisNumber}" : $"{SourceSourceHouseNumber}{bisNumber}";

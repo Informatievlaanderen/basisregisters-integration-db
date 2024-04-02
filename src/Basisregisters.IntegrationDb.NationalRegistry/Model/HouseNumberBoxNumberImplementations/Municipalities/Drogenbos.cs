@@ -9,7 +9,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         { }
 
         public override bool IsMatch() =>
-            NisCode == "23098" && (
+            NisCode == "23098" &&
+            (
                 Index.SourceValue!.Contains("e/", StringComparison.InvariantCultureIgnoreCase)
                 ||
                 Index.SourceValue!.StartsWith("RCH", StringComparison.InvariantCultureIgnoreCase)

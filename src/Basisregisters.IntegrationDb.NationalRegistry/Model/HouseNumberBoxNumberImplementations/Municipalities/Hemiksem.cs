@@ -7,8 +7,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public Hemiksem(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
-        public override bool IsMatch() =>
-            NisCode == "11018";
+        public override bool IsMatch() => NisCode == "11018";
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {

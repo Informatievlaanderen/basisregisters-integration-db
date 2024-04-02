@@ -10,13 +10,17 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override bool IsMatch() =>
             NisCode == "13040" &&
-            (Index.SourceValue!.StartsWith("b")
-            || Index.SourceValue!.StartsWith("0") && IsGreaterThanZero(Index.SourceValue)
-            || ContainsOnlyCapitalLetters(Index.SourceValue!.Substring(0, 1)));
+            (
+                Index.SourceValue!.StartsWith('b')
+                ||
+                Index.SourceValue!.StartsWith('0') && IsNumberGreaterThanZero(Index.SourceValue)
+                ||
+                ContainsOnlyCapitalLetters(Index.SourceValue![..1])
+            );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith("b"))
+            if (Index.SourceValue!.StartsWith('b'))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
@@ -26,7 +30,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (Index.SourceValue!.StartsWith("0") && IsGreaterThanZero(Index.SourceValue))
+            if (Index.SourceValue!.StartsWith('0') && IsNumberGreaterThanZero(Index.SourceValue))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {

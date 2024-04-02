@@ -1,6 +1,5 @@
 namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumberImplementations.Municipalities
 {
-    using System;
     using System.Collections.Generic;
 
     public class Grimbergen : HouseNumberBoxNumbersBase

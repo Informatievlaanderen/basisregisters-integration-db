@@ -13,7 +13,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             (
                 char.ToLower(Index.SourceValue![0]) == 'b' && IsNumeric(Index.SourceValue[1..])
                 ||
-                char.IsLetter(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..])
+                IsLetter(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..])
                 ||
                 Index.SourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase)
             );

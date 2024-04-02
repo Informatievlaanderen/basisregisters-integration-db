@@ -8,9 +8,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public Machelen(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
-        public override bool IsMatch() => NisCode == "23047" && (
-            Index.SourceValue!.StartsWith("BS")
-        );
+        public override bool IsMatch() =>
+            NisCode == "23047" &&
+            (
+                Index.SourceValue!.StartsWith("BS")
+            );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {

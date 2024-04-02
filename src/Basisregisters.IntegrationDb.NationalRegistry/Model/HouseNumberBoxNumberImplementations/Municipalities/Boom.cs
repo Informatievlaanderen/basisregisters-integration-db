@@ -12,14 +12,14 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11005" &&
             (
-                Index.SourceValue!.Contains(".")
+                Index.SourceValue!.Contains('.')
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.Contains("."))
+            if (Index.SourceValue!.Contains('.'))
             {
-                var indexWithoutLetters = string.Join("", Index.SourceValue!.Where(x => !char.IsLetter(x)));
+                var indexWithoutLetters = string.Join("", Index.SourceValue!.Where(x => !IsLetter(x)));
 
                 return new[]
                 {

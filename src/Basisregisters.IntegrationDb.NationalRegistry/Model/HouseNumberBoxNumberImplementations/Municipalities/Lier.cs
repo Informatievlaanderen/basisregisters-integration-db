@@ -2,7 +2,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Lier : HouseNumberBoxNumbersBase
     {
@@ -12,14 +11,14 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "12021" &&
             (
-                (Index.SourceValue!.StartsWith("B") && IsNumeric(Index.SourceValue[1..].Trim()))
+                (Index.SourceValue!.StartsWith('B') && IsNumeric(Index.SourceValue[1..].Trim()))
                 ||
-                (ContainsOnlyCapitalLetters(Index.SourceValue[0].ToString()) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..].Trim()))
+                (ContainsOnlyCapitalLetters(Index.SourceValue[0]) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..]))
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith("B") && IsNumeric(Index.SourceValue[1..].Trim()))
+            if (Index.SourceValue!.StartsWith('B') && IsNumeric(Index.SourceValue[1..]))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
@@ -29,7 +28,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (ContainsOnlyCapitalLetters(Index.SourceValue[0].ToString()) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..].Trim()))
+            if (ContainsOnlyCapitalLetters(Index.SourceValue[0]) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..]))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {

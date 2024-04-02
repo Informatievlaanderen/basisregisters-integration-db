@@ -11,12 +11,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11001" &&
             (
-                (ContainsOnlyCapitalLetters(Index.SourceValue![0].ToString()) && IsNumeric(Index.SourceValue[1..].Trim()))
+                ContainsOnlyCapitalLetters(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (ContainsOnlyCapitalLetters(Index.SourceValue![0].ToString()) && IsNumeric(Index.SourceValue[1..].Trim()))
+            if (ContainsOnlyCapitalLetters(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..]))
             {
                 return new []
                 {

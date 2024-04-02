@@ -9,9 +9,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public Tongeren(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
-        public override bool IsMatch() => NisCode == "73083" && (
-            Index.SourceValue!.StartsWith("00b") || Index.SourceValue!.StartsWith("0b")
-        );
+        public override bool IsMatch() =>
+            NisCode == "73083" &&
+            (
+                Index.SourceValue!.StartsWith("00b") || Index.SourceValue!.StartsWith("0b")
+            );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
