@@ -42,6 +42,7 @@
             yield return new Wommelgem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Hemiksem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Vilvoorde(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Drogenbos(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
