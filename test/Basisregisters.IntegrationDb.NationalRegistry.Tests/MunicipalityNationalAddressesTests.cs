@@ -167,7 +167,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0002", "gelA", "2", "gelA")]
         [InlineData("0002", "gel0", "2", "0.0")]
         [InlineData("0002", "007L", "2", "007L")]
-        [InlineData("0002", "007R", "2", "OO7R")]
+        [InlineData("0002", "007R", "2", "007R")]
         [InlineData("0002", "02LA", "2", "02LA")]
         public void Borsbeek(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
