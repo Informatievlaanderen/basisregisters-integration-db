@@ -236,5 +236,27 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "B001", "46", "1")]
+        [InlineData("0046", "V001", "46", "V1")]
+        [InlineData("0046", "Glv0", "46", "0.0")]
+        [InlineData("0046", "Glv ", "46", "0.0")]
+        public void Zwijndrecht(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11056",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }
