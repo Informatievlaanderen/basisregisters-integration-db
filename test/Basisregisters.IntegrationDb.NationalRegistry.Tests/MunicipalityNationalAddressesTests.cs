@@ -510,5 +510,45 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Single().HouseNumber.Should().Be(expectedHouseNumber);
             result.Single().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "V002", "46", "V2")]
+        [InlineData("0046", "AV01", "46", "AV01")]
+        public void Torhout(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "31033",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "B002", "46", "B002")]
+        [InlineData("0046", "A1.1", "46", "A1.1")]
+        public void Zele(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "71020",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }

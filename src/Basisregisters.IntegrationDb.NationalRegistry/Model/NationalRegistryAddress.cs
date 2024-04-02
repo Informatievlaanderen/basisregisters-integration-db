@@ -59,6 +59,8 @@
             yield return new SintNiklaas(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Vosselaar(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new DePanne(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Torhout(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Zele(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
