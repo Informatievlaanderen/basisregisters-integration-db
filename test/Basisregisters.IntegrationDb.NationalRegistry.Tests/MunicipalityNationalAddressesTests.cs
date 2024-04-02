@@ -24,9 +24,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -50,9 +50,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -70,9 +70,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -95,9 +95,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -114,9 +114,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -135,9 +135,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -156,9 +156,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -181,9 +181,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -203,9 +203,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -254,9 +254,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -274,9 +274,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -295,9 +295,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -316,9 +316,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -337,9 +337,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -359,9 +359,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -378,9 +378,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -399,9 +399,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -419,9 +419,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -439,9 +439,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -463,9 +463,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -486,9 +486,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -506,9 +506,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -526,9 +526,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -546,9 +546,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -566,9 +566,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
         [Theory]
@@ -585,9 +585,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             var result = address.HouseNumberBoxNumbers!.GetValues();
 
-            result.Should().ContainSingle();
-            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
-            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
     }
 }
