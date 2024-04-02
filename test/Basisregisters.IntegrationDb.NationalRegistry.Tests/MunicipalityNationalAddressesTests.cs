@@ -258,5 +258,213 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Single().HouseNumber.Should().Be(expectedHouseNumber);
             result.Single().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "1B", "46", "1B")]
+        [InlineData("0046", "2A", "46", "2A")]
+        public void Wemmel(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "23102",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "01.1", "46", "01.1")]
+        [InlineData("0046", "02.1", "46", "02.1")]
+        [InlineData("0046", "0O.3", "46", "0.3")]
+        public void Boom(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11005",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "1A  ", "46", "1A")]
+        [InlineData("0046", "GLVA", "46", "GLVA")]
+        [InlineData("0046", "GLVB", "46", "GLVB")]
+        public void Ieper(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "33011",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "00b1", "46", "1")]
+        [InlineData("0046", "00b5", "46", "5")]
+        public void Tongeren(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "73083",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "GL-L", "46", "GL-L")]
+        [InlineData("0046", "GL-R", "46", "GL-R")]
+        [InlineData("0046", "2R  ", "46", "2R")]
+        [InlineData("0046", "2L  ", "46", "2L")]
+        public void Lint(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11025",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "BS22", "46", "BS22")]
+        public void Machelen(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "23047",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "B102", "46", "B102")]
+        [InlineData("0046", "B10 ", "46", "B10")]
+        [InlineData("0046", "B1  ", "46", "B1")]
+        public void Beerse(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "13004",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "b1  ", "46", "b1")]
+        [InlineData("0046", "b5  ", "46", "b5")]
+        public void Zoersel(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11055",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "A000", "46", "A000")]
+        [InlineData("0046", "B004", "46", "B004")]
+        public void Diest(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "24020",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "B001", "46", "1")]
+        [InlineData("0046", "E000", "46E", null)]
+        [InlineData("0046", "E201", "46E", "0201")]
+        [InlineData("0046", "AB06", "46A", "6")]
+        [InlineData("0046", "BB02", "46B", "2")]
+        [InlineData("0046", "CB02", "46C", "2")]
+        public void SintNiklaas(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "46021",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }
