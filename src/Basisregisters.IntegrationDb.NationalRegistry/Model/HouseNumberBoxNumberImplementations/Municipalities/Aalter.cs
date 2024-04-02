@@ -14,6 +14,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 char.ToUpper(Index.SourceValue![2]) == 'O'
                 ||
                 (Index.SourceValue.StartsWith('0') && IsLetter(Index.SourceValue[3]))
+                ||
+                (IsLetter(Index.SourceValue[0]) && Index.SourceValue[1..] == "000")
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
@@ -36,6 +38,17 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
                         Index.SourceValue!.Trim().TrimStart('0')
+                    )
+                };
+            }
+
+            if (IsLetter(Index.SourceValue[0]) && Index.SourceValue[1..] == "000")
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        $"{SourceSourceHouseNumber}{Index.SourceValue[0]}",
+                        null
                     )
                 };
             }

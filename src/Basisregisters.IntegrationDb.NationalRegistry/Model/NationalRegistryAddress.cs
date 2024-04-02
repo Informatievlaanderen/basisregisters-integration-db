@@ -71,6 +71,7 @@
             yield return new Zele(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Aalter(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Ravels(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new SintGillisWaas(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()

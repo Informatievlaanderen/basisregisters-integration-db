@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
+namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -44,6 +44,7 @@
 
         protected static bool IsNumberGreaterThanZero(string input) => int.TryParse(input, out var number) && number > 0;
 
+        protected static bool IsNumeric(char input) => IsNumeric(input.ToString());
         protected static bool IsNumeric(string? input) => int.TryParse(input, out _);
     }
 

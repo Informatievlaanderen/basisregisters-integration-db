@@ -554,6 +554,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [Theory]
         [InlineData("0046", "00OB", "46", "00OB")]
         [InlineData("0046", "001A", "46", "1A")]
+        [InlineData("0046", "E000", "46E", null)]
         public void Aalter(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
@@ -578,6 +579,35 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             var record = new FlatFileRecord
             {
                 NisCode = "13035",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "E000", "46E", null)]
+        [InlineData("0046", "B002", "46", "2")]
+        [InlineData("0046", "b002", "46", "2")]
+        [InlineData("0046", "B012", "46", "12")]
+        [InlineData("0046", "B/B2", "46B", "2")]
+        [InlineData("0046", "A/B2", "46A", "2")]
+        [InlineData("0046", "A/02", "46A", "2")]
+        [InlineData("0046", "A/12", "46A", "12")]
+        [InlineData("0046", "AB03", "46A", "3")]
+        [InlineData("0046", "AB23", "46A", "23")]
+        [InlineData("0046", "BB23", "46B", "23")]
+        public void SintGillisWaas(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "46020",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
