@@ -61,6 +61,8 @@
             yield return new DePanne(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Torhout(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Zele(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Aalter(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Ravels(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
