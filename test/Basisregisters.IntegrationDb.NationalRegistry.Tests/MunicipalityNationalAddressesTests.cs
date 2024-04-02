@@ -22,7 +22,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -48,7 +48,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -68,7 +68,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -93,7 +93,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -112,7 +112,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -133,7 +133,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -154,7 +154,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -179,7 +179,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -201,7 +201,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -230,7 +230,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -252,7 +252,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -272,7 +272,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -293,7 +293,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -314,7 +314,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -335,7 +335,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -357,7 +357,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -376,7 +376,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -397,7 +397,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -417,7 +417,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -437,7 +437,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -461,7 +461,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -484,7 +484,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -504,7 +504,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -524,7 +524,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -544,7 +544,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -564,7 +564,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
@@ -583,7 +583,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers!.GetValues();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);

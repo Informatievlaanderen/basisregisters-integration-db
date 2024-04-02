@@ -24,8 +24,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NoIndex>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NoIndex>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
         }
@@ -45,8 +45,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<BisIndication>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<BisIndication>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
         }
@@ -65,8 +65,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericFollowedByZeros>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NonNumericFollowedByZeros>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().BeNull();
         }
@@ -92,8 +92,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericFollowedByNumberGreaterThanZero>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NonNumericFollowedByNumberGreaterThanZero>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
@@ -126,8 +126,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<SpecificPrefix>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<SpecificPrefix>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
@@ -148,8 +148,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<SpecificPrefix>();
-            var houseNumberWithBoxNumbers = address.HouseNumberBoxNumbers.GetValues();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<SpecificPrefix>();
+            var houseNumberWithBoxNumbers = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
             houseNumberWithBoxNumbers.Should().HaveCount(2);
             houseNumberWithBoxNumbers.First().HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumbers.First().BoxNumber.Should().Be(boxNumber);
@@ -172,8 +172,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NumbersOnly>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NumbersOnly>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
@@ -193,8 +193,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<SeparatorBetweenNumbers>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<SeparatorBetweenNumbers>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(index);
         }
@@ -216,8 +216,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericBetweenNumbers>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NonNumericBetweenNumbers>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
@@ -237,8 +237,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NonNumericBetweenNumbers>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NonNumericBetweenNumbers>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
@@ -258,8 +258,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NumericFollowedByNonNumeric>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NumericFollowedByNonNumeric>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber + bisNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
@@ -278,8 +278,8 @@
             };
             var address = new NationalRegistryAddress(record);
 
-            address.HouseNumberBoxNumbers.Should().BeOfType<NumericFollowedBySpecificSuffix>();
-            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.GetValues().First();
+            address.HouseNumberBoxNumbers.First().Should().BeOfType<NumericFollowedBySpecificSuffix>();
+            var houseNumberWithBoxNumber = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).First();
             houseNumberWithBoxNumber.HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumber.BoxNumber.Should().Be(boxNumber);
         }
