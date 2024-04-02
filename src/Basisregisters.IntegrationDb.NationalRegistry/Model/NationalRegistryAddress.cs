@@ -47,6 +47,13 @@
             yield return new Grimbergen(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Beveren(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Zwijndrecht(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Wemmel(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Boom(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Ieper(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Tongeren(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Lint(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Machelen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Beerse(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);

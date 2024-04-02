@@ -324,6 +324,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [Theory]
         [InlineData("0046", "00b1", "46", "1")]
         [InlineData("0046", "00b5", "46", "5")]
+        [InlineData("0046", "0b52", "46", "52")]
         public void Tongeren(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
