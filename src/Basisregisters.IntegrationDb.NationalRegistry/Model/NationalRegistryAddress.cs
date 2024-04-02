@@ -1,4 +1,4 @@
-namespace Basisregisters.IntegrationDb.NationalRegistry.Model
+﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
     using System;
     using System.Collections.Generic;
@@ -41,6 +41,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Aartselaar(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Wommelgem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Hemiksem(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Vilvoorde(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
