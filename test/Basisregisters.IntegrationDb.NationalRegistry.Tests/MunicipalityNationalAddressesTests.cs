@@ -207,5 +207,34 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Single().HouseNumber.Should().Be(expectedHouseNumber);
             result.Single().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "b  1", "46", "001")]
+        [InlineData("0046", "b 4 ", "46", "004")]
+        [InlineData("0002", "b101", "2", "101")]
+        [InlineData("0002", "b201", "2", "201")]
+        [InlineData("0002", "Fb01", "2F", "001")]
+        [InlineData("0002", "Eb11", "2E", "011")]
+        [InlineData("0002", "1b 7", "2_1", "007")]
+        [InlineData("0002", "CB01", "2C", "001")]
+        [InlineData("0002", "CB13", "2C", "013")]
+        [InlineData("0002", "0001", "2_1", null)]
+        [InlineData("0002", "0002", "2_2", null)]
+        public void Beveren(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "46003",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }

@@ -45,6 +45,7 @@
             yield return new Drogenbos(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Borsbeek(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Grimbergen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Beveren(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);
