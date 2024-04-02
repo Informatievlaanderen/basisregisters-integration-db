@@ -54,6 +54,9 @@
             yield return new Lint(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Machelen(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Beerse(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Zoersel(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Diest(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new SintNiklaas(_record.NisCode, _record.HouseNumber, _record.Index);
 
             yield return new BisIndication(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SpecificPrefix(_record.NisCode, _record.HouseNumber, _record.Index);

@@ -29,6 +29,11 @@
             return regex.IsMatch(input);
         }
 
+        protected static bool ContainsOnlyCapitalLetters(char input)
+        {
+            return ContainsOnlyCapitalLetters(input.ToString());
+        }
+
         protected static bool ContainsOnlyCapitalLetters(string input)
         {
             var regex = new Regex("^[A-Z]+$", RegexOptions.Compiled);
