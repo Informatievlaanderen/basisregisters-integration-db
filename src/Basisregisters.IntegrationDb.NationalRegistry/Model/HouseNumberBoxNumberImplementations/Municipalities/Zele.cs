@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Zele : HouseNumberBoxNumbersBase
+    public class Zele : MunicipalityHouseNumberBoxNumbersBase
     {
         public Zele(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,31 +11,31 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "71020" &&
             (
-                Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[1..])
+                IndexSourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..])
                 ||
-                Index.SourceValue.Contains('.')
+                IndexSourceValue.Contains('.')
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[1..]))
+            if (IndexSourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }
 
-            if (Index.SourceValue.Contains('.'))
+            if (IndexSourceValue.Contains('.'))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }

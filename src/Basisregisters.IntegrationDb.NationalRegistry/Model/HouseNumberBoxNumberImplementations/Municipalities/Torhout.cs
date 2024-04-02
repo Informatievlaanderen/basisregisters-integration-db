@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Torhout : HouseNumberBoxNumbersBase
+    public class Torhout : MunicipalityHouseNumberBoxNumbersBase
     {
         public Torhout(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,31 +11,31 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "31033" &&
             (
-                Index.SourceValue!.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[1..])
+                IndexSourceValue!.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..])
                 ||
-                Index.SourceValue!.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[2..])
+                IndexSourceValue!.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[1..]))
+            if (IndexSourceValue!.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        $"{Index.SourceValue[0]}{int.Parse(Index.SourceValue[1..])}"
+                        $"{IndexSourceValue[0]}{int.Parse(IndexSourceValue[1..])}"
                     )
                 };
             }
 
-            if (Index.SourceValue!.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[2..]))
+            if (IndexSourceValue!.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }

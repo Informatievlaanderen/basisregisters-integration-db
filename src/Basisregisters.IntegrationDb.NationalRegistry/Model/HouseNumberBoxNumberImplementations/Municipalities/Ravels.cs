@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Ravels : HouseNumberBoxNumbersBase
+    public class Ravels : MunicipalityHouseNumberBoxNumbersBase
     {
         public Ravels(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,18 +11,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "13035" &&
             (
-                Index.SourceValue!.Contains('-')
+                IndexSourceValue!.Contains('-')
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.Contains('-'))
+            if (IndexSourceValue!.Contains('-'))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }

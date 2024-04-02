@@ -4,7 +4,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Brecht : HouseNumberBoxNumbersBase
+    public class Brecht : MunicipalityHouseNumberBoxNumbersBase
     {
         public Brecht(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -12,18 +12,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11009" &&
             (
-                IsLetter(Index.SourceValue![0]) && Index.SourceValue.Contains('/')
+                IsLetter(IndexSourceValue![0]) && IndexSourceValue.Contains('/')
                 ||
-                Index.SourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[2..])
+                IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..])
                 ||
-                Index.SourceValue[0] == '0' && IsLetter(Index.SourceValue[3])
+                IndexSourceValue[0] == '0' && IsLetter(IndexSourceValue[3])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(Index.SourceValue![0]) && Index.SourceValue.Contains('/'))
+            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue.Contains('/'))
             {
-                var parts = Index.SourceValue.Split('/');
+                var parts = IndexSourceValue.Split('/');
 
                 return new[]
                 {
@@ -34,24 +34,24 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (Index.SourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue[2..]))
+            if (IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }
 
-            if (Index.SourceValue[0] == '0' && IsLetter(Index.SourceValue[3]))
+            if (IndexSourceValue[0] == '0' && IsLetter(IndexSourceValue[3]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.TrimStart('0')
+                        IndexSourceValue.TrimStart('0')
                     )
                 };
             }

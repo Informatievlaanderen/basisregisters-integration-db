@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Houthalen : HouseNumberBoxNumbersBase
+    public class Houthalen : MunicipalityHouseNumberBoxNumbersBase
     {
         public Houthalen(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,29 +11,29 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "72039" &&
             (
-                Index.SourceValue!.Contains('-')
+                IndexSourceValue!.Contains('-')
                 ||
-                IsLetter(Index.SourceValue[0]) && Index.SourceValue[1..] == "000"
+                IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000"
                 ||
-                Index.SourceValue[0] == '0' && IsNumeric(Index.SourceValue)
+                IndexSourceValue[0] == '0' && IsNumeric(IndexSourceValue)
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.Contains('-'))
+            if (IndexSourceValue!.Contains('-'))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }
 
-            if (IsLetter(Index.SourceValue[0]) && Index.SourceValue[1..] == "000")
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
             {
-                var bisNumber = Index.SourceValue[0];
+                var bisNumber = IndexSourceValue[0];
 
                 return new[]
                 {
@@ -44,13 +44,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (Index.SourceValue[0] == '0' && IsNumeric(Index.SourceValue))
+            if (IndexSourceValue[0] == '0' && IsNumeric(IndexSourceValue))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        $"{int.Parse(Index.SourceValue)}"
+                        $"{int.Parse(IndexSourceValue)}"
                     )
                 };
             }

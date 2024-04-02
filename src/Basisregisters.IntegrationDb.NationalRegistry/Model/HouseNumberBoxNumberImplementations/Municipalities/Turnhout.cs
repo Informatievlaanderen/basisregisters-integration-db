@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Turnhout : HouseNumberBoxNumbersBase
+    public class Turnhout : MunicipalityHouseNumberBoxNumbersBase
     {
         public Turnhout(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,38 +11,38 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "13040" &&
             (
-                Index.SourceValue!.StartsWith('b')
+                IndexSourceValue!.StartsWith('b')
                 ||
-                Index.SourceValue!.StartsWith('0') && IsNumberGreaterThanZero(Index.SourceValue)
+                IndexSourceValue!.StartsWith('0') && IsNumberGreaterThanZero(IndexSourceValue)
                 ||
-                ContainsOnlyCapitalLetters(Index.SourceValue![..1])
+                ContainsOnlyCapitalLetters(IndexSourceValue![..1])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith('b'))
+            if (IndexSourceValue!.StartsWith('b'))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue.Replace("b00", string.Empty).Replace("b0", string.Empty))
+                        IndexSourceValue.Replace("b00", string.Empty).Replace("b0", string.Empty))
                 };
             }
 
-            if (Index.SourceValue!.StartsWith('0') && IsNumberGreaterThanZero(Index.SourceValue))
+            if (IndexSourceValue!.StartsWith('0') && IsNumberGreaterThanZero(IndexSourceValue))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}_{Index.SourceValue!.TrimStart('0')}",
+                        $"{SourceSourceHouseNumber}_{IndexSourceValue!.TrimStart('0')}",
                         null)
                 };
             }
 
-            if (ContainsOnlyCapitalLetters(Index.SourceValue!.Substring(0, 1)))
+            if (ContainsOnlyCapitalLetters(IndexSourceValue!.Substring(0, 1)))
             {
-                var boxNumber = $"{Index.SourceValue[0]}{Index.SourceValue[1..].TrimStart('0')}";
+                var boxNumber = $"{IndexSourceValue[0]}{IndexSourceValue[1..].TrimStart('0')}";
 
                 return new List<HouseNumberWithBoxNumber>
                 {

@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Borsbeek : HouseNumberBoxNumbersBase
+    public class Borsbeek : MunicipalityHouseNumberBoxNumbersBase
     {
         public Borsbeek(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.Equals("gel0", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue!.Equals("gel0", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
@@ -27,7 +27,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             {
                 new HouseNumberWithBoxNumber(
                     SourceSourceHouseNumber,
-                    Index.SourceValue!.Trim()
+                    IndexSourceValue!.Trim()
                 )
             };
         }

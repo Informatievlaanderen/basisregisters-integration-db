@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Drogenbos : HouseNumberBoxNumbersBase
+    public class Drogenbos : MunicipalityHouseNumberBoxNumbersBase
     {
         public Drogenbos(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,31 +11,31 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "23098" &&
             (
-                Index.SourceValue!.Contains("e/", StringComparison.InvariantCultureIgnoreCase)
+                IndexSourceValue!.Contains("e/", StringComparison.InvariantCultureIgnoreCase)
                 ||
-                Index.SourceValue!.StartsWith("RCH", StringComparison.InvariantCultureIgnoreCase)
+                IndexSourceValue!.StartsWith("RCH", StringComparison.InvariantCultureIgnoreCase)
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.Contains("e/", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue!.Contains("e/", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Replace("e/", string.Empty, StringComparison.InvariantCultureIgnoreCase).Trim()
+                        IndexSourceValue!.Replace("e/", string.Empty, StringComparison.InvariantCultureIgnoreCase).Trim()
                     )
                 };
             }
 
-            if (Index.SourceValue!.StartsWith("RCH", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue!.StartsWith("RCH", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }

@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class DePanne : HouseNumberBoxNumbersBase
+    public class DePanne : MunicipalityHouseNumberBoxNumbersBase
     {
         public DePanne(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,30 +11,30 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "38008" &&
             (
-                IsLetter(Index.SourceValue![0])
+                IsLetter(IndexSourceValue![0])
                 ||
-                IsNumeric(Index.SourceValue!)
+                IsNumeric(IndexSourceValue!)
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(Index.SourceValue![0]))
+            if (IsLetter(IndexSourceValue![0]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }
 
-            if (IsNumeric(Index.SourceValue!))
+            if (IsNumeric(IndexSourceValue!))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}_{int.Parse(Index.SourceValue!)}",
+                        $"{SourceSourceHouseNumber}_{int.Parse(IndexSourceValue!)}",
                         null
                     )
                 };

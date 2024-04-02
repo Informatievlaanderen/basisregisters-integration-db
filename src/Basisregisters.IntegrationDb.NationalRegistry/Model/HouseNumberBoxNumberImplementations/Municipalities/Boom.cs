@@ -4,7 +4,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Boom : HouseNumberBoxNumbersBase
+    public class Boom : MunicipalityHouseNumberBoxNumbersBase
     {
         public Boom(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -12,14 +12,14 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11005" &&
             (
-                Index.SourceValue!.Contains('.')
+                IndexSourceValue!.Contains('.')
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.Contains('.'))
+            if (IndexSourceValue!.Contains('.'))
             {
-                var indexWithoutLetters = string.Join("", Index.SourceValue!.Where(x => !IsLetter(x)));
+                var indexWithoutLetters = string.Join("", IndexSourceValue!.Where(x => !IsLetter(x)));
 
                 return new[]
                 {

@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Aalter : HouseNumberBoxNumbersBase
+    public class Aalter : MunicipalityHouseNumberBoxNumbersBase
     {
         public Aalter(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,43 +11,43 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "44084" &&
             (
-                char.ToUpper(Index.SourceValue![2]) == 'O'
+                char.ToUpper(IndexSourceValue![2]) == 'O'
                 ||
-                (Index.SourceValue.StartsWith('0') && IsLetter(Index.SourceValue[3]))
+                (IndexSourceValue.StartsWith('0') && IsLetter(IndexSourceValue[3]))
                 ||
-                (IsLetter(Index.SourceValue[0]) && Index.SourceValue[1..] == "000")
+                (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (char.ToUpper(Index.SourceValue![2]) == 'O')
+            if (char.ToUpper(IndexSourceValue![2]) == 'O')
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }
 
-            if (Index.SourceValue.StartsWith('0') && IsLetter(Index.SourceValue[3]))
+            if (IndexSourceValue.StartsWith('0') && IsLetter(IndexSourceValue[3]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim().TrimStart('0')
+                        IndexSourceValue!.Trim().TrimStart('0')
                     )
                 };
             }
 
-            if (IsLetter(Index.SourceValue[0]) && Index.SourceValue[1..] == "000")
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.SourceValue[0]}",
+                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
                         null
                     )
                 };

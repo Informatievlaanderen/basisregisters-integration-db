@@ -2,7 +2,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 {
     using System.Collections.Generic;
 
-    public class Grimbergen : HouseNumberBoxNumbersBase
+    public class Grimbergen : MunicipalityHouseNumberBoxNumbersBase
     {
         public Grimbergen(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -15,7 +15,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             {
                 new HouseNumberWithBoxNumber(
                     SourceSourceHouseNumber,
-                    Index.SourceValue!.Trim()
+                    IndexSourceValue!.Trim()
                 )
             };
         }

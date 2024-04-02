@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Beerse : HouseNumberBoxNumbersBase
+    public class Beerse : MunicipalityHouseNumberBoxNumbersBase
     {
         public Beerse(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,18 +11,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "13004" &&
             (
-                Index.SourceValue!.StartsWith('B') && IsNumeric(Index.SourceValue![1..])
+                IndexSourceValue!.StartsWith('B') && IsNumeric(IndexSourceValue![1..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith('B') && IsNumeric(Index.SourceValue![1..]))
+            if (IndexSourceValue!.StartsWith('B') && IsNumeric(IndexSourceValue![1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }

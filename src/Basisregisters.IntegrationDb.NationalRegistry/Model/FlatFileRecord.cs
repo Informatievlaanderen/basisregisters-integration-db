@@ -21,22 +21,6 @@
 
         public int RecordNumber { get; set; }
 
-        // public static FixedLengthSchema Schema
-        // {
-        //     get
-        //     {
-        //         var schema = new FixedLengthSchema();
-        //         schema.AddColumn(new StringColumn("NisCode"), 5);
-        //         schema.AddColumn(new StringColumn("PostalCode"), 4);
-        //         schema.AddColumn(new StringColumn("StreetCode"), 4);
-        //         schema.AddColumn(new StringColumn("HouseNumber"), 4);
-        //         schema.AddColumn(new StringColumn("Index"), 4);
-        //         schema.AddColumn(new StringColumn("StreetName"), 32);
-        //         schema.AddColumn(new Int32Column("RegisteredCount"), 4);
-        //         return schema;
-        //     }
-        // }
-
         public static IFixedLengthTypeMapper<FlatFileRecord> Mapper
         {
             get
@@ -47,7 +31,7 @@
                 mapper.Property(x => x.StreetCode, 4);
                 mapper.Property(x => x.HouseNumber, 4);
                 mapper
-                    .CustomMapping(new StringColumn("Index") { Trim = false }, 4)
+                    .CustomMapping(new StringColumn("Index"), 4)
                     .WithReader((x, y) => x.Index = new NationalRegistryIndex(y?.ToString()));
                 mapper.Property(x => x.StreetName, 32);
                 mapper.Property(x => x.RegisteredCount, 4);

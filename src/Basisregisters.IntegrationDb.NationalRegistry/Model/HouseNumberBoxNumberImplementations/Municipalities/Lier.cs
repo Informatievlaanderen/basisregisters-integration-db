@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Lier : HouseNumberBoxNumbersBase
+    public class Lier : MunicipalityHouseNumberBoxNumbersBase
     {
         public Lier(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,30 +11,30 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "12021" &&
             (
-                (Index.SourceValue!.StartsWith('B') && IsNumeric(Index.SourceValue[1..].Trim()))
+                (IndexSourceValue!.StartsWith('B') && IsNumeric(IndexSourceValue[1..].Trim()))
                 ||
-                (ContainsOnlyCapitalLetters(Index.SourceValue[0]) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..]))
+                (ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1] == 'B' && IsNumeric(IndexSourceValue[2..]))
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith('B') && IsNumeric(Index.SourceValue[1..]))
+            if (IndexSourceValue!.StartsWith('B') && IsNumeric(IndexSourceValue[1..]))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        int.Parse(Index.SourceValue[1..].Trim()).ToString())
+                        int.Parse(IndexSourceValue[1..].Trim()).ToString())
                 };
             }
 
-            if (ContainsOnlyCapitalLetters(Index.SourceValue[0]) && Index.SourceValue[1] == 'B' && IsNumeric(Index.SourceValue[2..]))
+            if (ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1] == 'B' && IsNumeric(IndexSourceValue[2..]))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.SourceValue[0]}",
-                        int.Parse(Index.SourceValue[2..].Trim()).ToString())
+                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        int.Parse(IndexSourceValue[2..].Trim()).ToString())
                 };
             }
 

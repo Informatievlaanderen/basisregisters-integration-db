@@ -2,7 +2,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 {
     using System.Collections.Generic;
 
-    public class Bornem : HouseNumberBoxNumbersBase
+    public class Bornem : MunicipalityHouseNumberBoxNumbersBase
     {
         public Bornem(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -15,7 +15,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             {
                 new HouseNumberWithBoxNumber(
                     SourceSourceHouseNumber,
-                    Index.SourceValue
+                    IndexSourceValue
                 )
             };
         }

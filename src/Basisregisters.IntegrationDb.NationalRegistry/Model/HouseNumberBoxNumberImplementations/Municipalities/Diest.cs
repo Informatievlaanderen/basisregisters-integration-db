@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Diest : HouseNumberBoxNumbersBase
+    public class Diest : MunicipalityHouseNumberBoxNumbersBase
     {
         public Diest(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,18 +11,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "24020" &&
             (
-                ContainsOnlyCapitalLetters(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..])
+                ContainsOnlyCapitalLetters(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (ContainsOnlyCapitalLetters(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..]))
+            if (ContainsOnlyCapitalLetters(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }

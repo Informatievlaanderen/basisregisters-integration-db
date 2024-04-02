@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Zoersel : HouseNumberBoxNumbersBase
+    public class Zoersel : MunicipalityHouseNumberBoxNumbersBase
     {
         public Zoersel(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,18 +11,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11055" &&
             (
-                Index.SourceValue!.StartsWith('b') && IsNumeric(Index.SourceValue[1..])
+                IndexSourceValue!.StartsWith('b') && IsNumeric(IndexSourceValue[1..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith('b') && IsNumeric(Index.SourceValue[1..]))
+            if (IndexSourceValue!.StartsWith('b') && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        Index.SourceValue!.Trim()
+                        IndexSourceValue!.Trim()
                     )
                 };
             }

@@ -4,7 +4,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Geraardsbergen : HouseNumberBoxNumbersBase
+    public class Geraardsbergen : MunicipalityHouseNumberBoxNumbersBase
     {
         public Geraardsbergen(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -12,57 +12,57 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "41018" &&
             (
-                (IsLetter(Index.SourceValue![0]) && Index.SourceValue[1..] == "000")
+                (IsLetter(IndexSourceValue![0]) && IndexSourceValue[1..] == "000")
                 ||
-                (char.ToUpper(Index.SourceValue[0]) == 'B' && IsNumberGreaterThanZero(Index.SourceValue[1..]))
+                (char.ToUpper(IndexSourceValue[0]) == 'B' && IsNumberGreaterThanZero(IndexSourceValue[1..]))
                 ||
-                (IsLetter(Index.SourceValue[0]) && Index.SourceValue.Contains('/') && IsNumeric(Index.SourceValue[3]))
+                (IsLetter(IndexSourceValue[0]) && IndexSourceValue.Contains('/') && IsNumeric(IndexSourceValue[3]))
                 ||
-                (IsLetter(Index.SourceValue[0]) && char.ToUpper(Index.SourceValue[1]) == 'B' && IsNumeric(Index.SourceValue[2..]))
+                (IsLetter(IndexSourceValue[0]) && char.ToUpper(IndexSourceValue[1]) == 'B' && IsNumeric(IndexSourceValue[2..]))
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(Index.SourceValue![0]) && Index.SourceValue[1..] == "000")
+            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue[1..] == "000")
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.SourceValue[0]}",
+                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
                         null
                     )
                 };
             }
 
-            if (char.ToUpper(Index.SourceValue[0]) == 'B' && IsNumberGreaterThanZero(Index.SourceValue[1..]))
+            if (char.ToUpper(IndexSourceValue[0]) == 'B' && IsNumberGreaterThanZero(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        int.Parse(Index.SourceValue[1..]).ToString()
+                        int.Parse(IndexSourceValue[1..]).ToString()
                     )
                 };
             }
 
-            if (IsLetter(Index.SourceValue[0]) && Index.SourceValue.Contains('/') && IsNumeric(Index.SourceValue[3]))
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue.Contains('/') && IsNumeric(IndexSourceValue[3]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.SourceValue[0]}",
-                        int.Parse(string.Join(string.Empty, Index.SourceValue.Split('/').Last().Where(char.IsDigit))).ToString()
+                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        int.Parse(string.Join(string.Empty, IndexSourceValue.Split('/').Last().Where(char.IsDigit))).ToString()
                     )
                 };
             }
 
-            if (IsLetter(Index.SourceValue[0]) && char.ToUpper(Index.SourceValue[1]) == 'B' && IsNumeric(Index.SourceValue[2..]))
+            if (IsLetter(IndexSourceValue[0]) && char.ToUpper(IndexSourceValue[1]) == 'B' && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.SourceValue[0]}",
-                        int.Parse(Index.SourceValue[2..]).ToString()
+                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        int.Parse(IndexSourceValue[2..]).ToString()
                     )
                 };
             }

@@ -2,7 +2,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 {
     using System.Collections.Generic;
 
-    public class Vilvoorde : HouseNumberBoxNumbersBase
+    public class Vilvoorde : MunicipalityHouseNumberBoxNumbersBase
     {
         public Vilvoorde(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,13 +11,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(Index.SourceValue![0]) && Index.SourceValue!.Contains('/'))
+            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue!.Contains('/'))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.SourceValue![0]}",
-                        Index.SourceValue[1..])
+                        $"{SourceSourceHouseNumber}{IndexSourceValue![0]}",
+                        IndexSourceValue[1..])
                 };
             }
 
@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             {
                 new HouseNumberWithBoxNumber(
                     SourceSourceHouseNumber,
-                    Index.SourceValue)
+                    IndexSourceValue)
             };
         }
     }

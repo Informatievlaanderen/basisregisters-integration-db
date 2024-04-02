@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Beveren : HouseNumberBoxNumbersBase
+    public class Beveren : MunicipalityHouseNumberBoxNumbersBase
     {
         public Beveren(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,47 +11,47 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "46003" &&
             (
-                (Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue![1..]))
+                (IndexSourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue![1..]))
                 ||
-                (!Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(Index.SourceValue![1]) == 'b' && IsNumeric(Index.SourceValue![2..]))
+                (!IndexSourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(IndexSourceValue![1]) == 'b' && IsNumeric(IndexSourceValue![2..]))
                 ||
-                (Index.SourceValue!.StartsWith("000") && char.IsDigit(Index.SourceValue![3]))
+                (IndexSourceValue!.StartsWith("000") && char.IsDigit(IndexSourceValue![3]))
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(Index.SourceValue![1..]))
+            if (IndexSourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue![1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        int.Parse(Index.SourceValue![1..]).ToString().PadLeft(3, '0')
+                        int.Parse(IndexSourceValue![1..]).ToString().PadLeft(3, '0')
                     )
                 };
             }
 
-            if (!Index.SourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(Index.SourceValue![1]) == 'b' && IsNumeric(Index.SourceValue![2..]))
+            if (!IndexSourceValue!.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(IndexSourceValue![1]) == 'b' && IsNumeric(IndexSourceValue![2..]))
             {
-                var bisNumber = Index.SourceValue![0];
+                var bisNumber = IndexSourceValue![0];
                 var houseNumber = char.IsDigit(bisNumber) ? $"{SourceSourceHouseNumber}_{bisNumber}" : $"{SourceSourceHouseNumber}{bisNumber}";
 
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         houseNumber,
-                        int.Parse(Index.SourceValue![2..]).ToString().PadLeft(3, '0')
+                        int.Parse(IndexSourceValue![2..]).ToString().PadLeft(3, '0')
                     ),
                     new HouseNumberWithBoxNumber(
                         houseNumber,
-                        int.Parse(Index.SourceValue![2..]).ToString().PadLeft(2, '0')
+                        int.Parse(IndexSourceValue![2..]).ToString().PadLeft(2, '0')
                     ),
                 };
             }
 
-            if (Index.SourceValue!.StartsWith("000") && char.IsDigit(Index.SourceValue![3]))
+            if (IndexSourceValue!.StartsWith("000") && char.IsDigit(IndexSourceValue![3]))
             {
-                var bisNumber = Index.SourceValue![3];
+                var bisNumber = IndexSourceValue![3];
                 var houseNumber = $"{SourceSourceHouseNumber}_{bisNumber}";
 
                 return new[]

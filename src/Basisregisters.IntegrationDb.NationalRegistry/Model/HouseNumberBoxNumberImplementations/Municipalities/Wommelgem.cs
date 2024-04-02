@@ -2,7 +2,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 {
     using System.Collections.Generic;
 
-    public class Wommelgem : HouseNumberBoxNumbersBase
+    public class Wommelgem : MunicipalityHouseNumberBoxNumbersBase
     {
         public Wommelgem(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -15,7 +15,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             {
                 new HouseNumberWithBoxNumber(
                     SourceSourceHouseNumber,
-                    Index.SourceValue!.Trim()
+                    IndexSourceValue!.Trim()
                 )
             };
         }

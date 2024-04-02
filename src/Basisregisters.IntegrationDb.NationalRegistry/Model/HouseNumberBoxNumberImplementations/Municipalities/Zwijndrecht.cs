@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Zwijndrecht : HouseNumberBoxNumbersBase
+    public class Zwijndrecht : MunicipalityHouseNumberBoxNumbersBase
     {
         public Zwijndrecht(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
@@ -11,38 +11,38 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11056" &&
             (
-                char.ToLower(Index.SourceValue![0]) == 'b' && IsNumeric(Index.SourceValue[1..])
+                char.ToLower(IndexSourceValue![0]) == 'b' && IsNumeric(IndexSourceValue[1..])
                 ||
-                IsLetter(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..])
+                IsLetter(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..])
                 ||
-                Index.SourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase)
+                IndexSourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase)
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (char.ToLower(Index.SourceValue![0]) == 'b' && IsNumeric(Index.SourceValue[1..]))
+            if (char.ToLower(IndexSourceValue![0]) == 'b' && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        int.Parse(Index.SourceValue[1..]).ToString()
+                        int.Parse(IndexSourceValue[1..]).ToString()
                     )
                 };
             }
 
-            if (char.IsLetter(Index.SourceValue![0]) && IsNumeric(Index.SourceValue[1..]))
+            if (char.IsLetter(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        $"{Index.SourceValue[0]}{int.Parse(Index.SourceValue[1..])}"
+                        $"{IndexSourceValue[0]}{int.Parse(IndexSourceValue[1..])}"
                     )
                 };
             }
 
-            if (Index.SourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
