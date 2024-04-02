@@ -47,7 +47,7 @@
                 mapper.Property(x => x.StreetCode, 4);
                 mapper.Property(x => x.HouseNumber, 4);
                 mapper
-                    .CustomMapping(new StringColumn("Index"), 4)
+                    .CustomMapping(new StringColumn("Index") { Trim = false }, 4)
                     .WithReader((x, y) => x.Index = new NationalRegistryIndex(y?.ToString()));
                 mapper.Property(x => x.StreetName, 32);
                 mapper.Property(x => x.RegisteredCount, 4);
@@ -85,7 +85,7 @@
         public NationalRegistryIndex(string? value)
         {
             SourceValue = value;
-            if (string.IsNullOrEmpty(value) || value == "0000") //TODO: possible improvement if we consider 0000 as value and not clear values.
+            if (string.IsNullOrWhiteSpace(value) || value == "0000") //TODO: possible improvement if we consider 0000 as value and not clear values.
             {
                 Value = null;
                 Left = null;
@@ -95,7 +95,7 @@
             }
             else
             {
-                var formatted = value.TrimStart('0').Trim();
+                var formatted = value.Trim().TrimStart('0').Trim();
                 Value = formatted.Length > 0 && HasNumeric.IsMatch(formatted)
                     ? formatted.PadLeft(4, '0')
                     : formatted.PadRight(4, '0');
