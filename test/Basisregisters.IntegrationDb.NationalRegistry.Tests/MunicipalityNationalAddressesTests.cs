@@ -185,5 +185,27 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Single().HouseNumber.Should().Be(expectedHouseNumber);
             result.Single().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "B001", "46", "B001")]
+        [InlineData("0046", "Ab01", "46", "Ab01")]
+        [InlineData("0046", "Db05", "46", "Db05")]
+        [InlineData("0046", "Cb03", "46", "Cb03")]
+        public void Grimbergen(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "23025",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }

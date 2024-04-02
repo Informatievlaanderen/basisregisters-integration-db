@@ -1,0 +1,24 @@
+namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumberImplementations.Municipalities
+{
+    using System;
+    using System.Collections.Generic;
+
+    public class Grimbergen : HouseNumberBoxNumbersBase
+    {
+        public Grimbergen(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
+        { }
+
+        public override bool IsMatch() => NisCode == "23025";
+
+        public override IList<HouseNumberWithBoxNumber> GetValues()
+        {
+            return new[]
+            {
+                new HouseNumberWithBoxNumber(
+                    SourceSourceHouseNumber,
+                    Index.SourceValue!.Trim()
+                )
+            };
+        }
+    }
+}
