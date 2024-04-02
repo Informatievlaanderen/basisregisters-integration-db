@@ -467,5 +467,48 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Single().HouseNumber.Should().Be(expectedHouseNumber);
             result.Single().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "b003", "46", "3")]
+        [InlineData("0046", "B003", "46", "3")]
+        [InlineData("0046", "b000", "46", "0")]
+        [InlineData("0046", "b010", "46", "10")]
+        [InlineData("0046", "b100", "46", "100")]
+        public void Vosselaar(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "13046",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "G001", "46", "G001")]
+        [InlineData("0046", "0234", "46_234", null)]
+        public void DePanne(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "38008",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }
