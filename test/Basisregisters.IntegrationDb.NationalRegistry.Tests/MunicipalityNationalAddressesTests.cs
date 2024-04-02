@@ -160,5 +160,30 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Single().HouseNumber.Should().Be(expectedHouseNumber);
             result.Single().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0002", "gelR", "2", "gelR")]
+        [InlineData("0002", "gelL", "2", "gelL")]
+        [InlineData("0002", "gelA", "2", "gelA")]
+        [InlineData("0002", "gel0", "2", "0.0")]
+        [InlineData("0002", "007L", "2", "007L")]
+        [InlineData("0002", "007R", "2", "OO7R")]
+        [InlineData("0002", "02LA", "2", "02LA")]
+        public void Borsbeek(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11007",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers!.GetValues();
+
+            result.Should().ContainSingle();
+            result.Single().HouseNumber.Should().Be(expectedHouseNumber);
+            result.Single().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }
