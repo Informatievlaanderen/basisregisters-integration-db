@@ -83,6 +83,7 @@
             yield return new Mortsel(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Vorselaar(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Stabroek(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Antwerpen(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
