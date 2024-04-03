@@ -143,7 +143,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [Theory]
         [InlineData("0002", "1e/A", "2", "1A")]
         [InlineData("0002", "2e/F", "2", "2F")]
-        [InlineData("0002", "RCH ", "2", "RCH")]
+        [InlineData("0002", "RCH ", "2", "RCH ")]
+        [InlineData("0002", "1e/E", "2", "1.0")]
+        [InlineData("0002", "2e/E", "2", "2.0")]
+        [InlineData("0002", "0201", "2", "0201")]
+        [InlineData("0002", " RCH", "2", " RCH")]
         public void Drogenbos(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
@@ -534,6 +538,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [Theory]
         [InlineData("0046", "B002", "46", "B002")]
         [InlineData("0046", "A1.1", "46", "A1.1")]
+        [InlineData("0046", "W001", "46", "W1")]
+        [InlineData("0046", "W012", "46", "W012")]
+        [InlineData("0046", "AW01", "46A", "W1")]
+        [InlineData("0046", "BW01", "46B", "W1")]
         public void Zele(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
