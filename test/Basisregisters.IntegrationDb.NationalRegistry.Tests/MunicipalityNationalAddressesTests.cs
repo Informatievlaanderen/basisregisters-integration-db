@@ -737,5 +737,27 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "KV03", "46", "KV03")]
+        [InlineData("0046", "GV01", "46", "GV01")]
+        [InlineData("0046", "XGV1", "46", "XGV1")]
+        [InlineData("0046", "K999", "46", "K999")]
+        public void Koksijde(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "38014",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }

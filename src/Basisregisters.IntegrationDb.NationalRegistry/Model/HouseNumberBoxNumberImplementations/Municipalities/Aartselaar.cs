@@ -21,7 +21,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new []
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{IndexSourceValue[0]}{IndexSourceValue[1..].TrimStart('0')}"
                     )
                 };

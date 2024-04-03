@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Replace("b00", string.Empty).Replace("b0", string.Empty))
                 };
             }
@@ -35,7 +35,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}_{IndexSourceValue.TrimStart('0')}",
+                        $"{HouseNumberSourceValue}_{IndexSourceValue.TrimStart('0')}",
                         null)
                 };
             }
@@ -47,7 +47,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         boxNumber)
                 };
             }

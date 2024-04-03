@@ -23,7 +23,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         int.Parse(IndexSourceValue[1..].Trim()).ToString())
                 };
             }
@@ -33,7 +33,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         int.Parse(IndexSourceValue[2..].Trim()).ToString())
                 };
             }

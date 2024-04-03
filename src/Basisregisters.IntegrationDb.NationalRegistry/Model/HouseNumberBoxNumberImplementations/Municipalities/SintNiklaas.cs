@@ -27,7 +27,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{int.Parse(IndexSourceValue[1..])}"
                     )
                 };
@@ -40,7 +40,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         null
                     )
                 };
@@ -53,7 +53,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         $"{int.Parse(IndexSourceValue[1..])}".PadLeft(4, '0')
                     )
                 };
@@ -66,7 +66,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         $"{int.Parse(IndexSourceValue[2..])}"
                     )
                 };

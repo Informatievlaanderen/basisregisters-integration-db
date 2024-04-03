@@ -77,6 +77,7 @@
             yield return new Brecht(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Houthalen(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Olen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Koksijde(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()

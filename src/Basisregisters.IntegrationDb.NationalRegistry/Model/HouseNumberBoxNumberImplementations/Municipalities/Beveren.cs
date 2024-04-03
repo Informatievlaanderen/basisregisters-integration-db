@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         int.Parse(IndexSourceValue[1..]).ToString().PadLeft(3, '0')
                     )
                 };
@@ -34,7 +34,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             if (!IndexSourceValue.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && char.ToLower(IndexSourceValue[1]) == 'b' && IsNumeric(IndexSourceValue[2..]))
             {
                 var bisNumber = IndexSourceValue[0];
-                var houseNumber = char.IsDigit(bisNumber) ? $"{SourceSourceHouseNumber}_{bisNumber}" : $"{SourceSourceHouseNumber}{bisNumber}";
+                var houseNumber = char.IsDigit(bisNumber) ? $"{HouseNumberSourceValue}_{bisNumber}" : $"{HouseNumberSourceValue}{bisNumber}";
 
                 return new[]
                 {
@@ -52,7 +52,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             if (IndexSourceValue.StartsWith("000") && char.IsDigit(IndexSourceValue[3]))
             {
                 var bisNumber = IndexSourceValue[3];
-                var houseNumber = $"{SourceSourceHouseNumber}_{bisNumber}";
+                var houseNumber = $"{HouseNumberSourceValue}_{bisNumber}";
 
                 return new[]
                 {

@@ -20,7 +20,7 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    SourceSourceHouseNumber,
+                    HouseNumberSourceValue,
                     Index.SourceValue)
             };
         }

@@ -20,9 +20,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 IndexSourceValue.StartsWith("W", StringComparison.InvariantCultureIgnoreCase) && IndexSourceValue[1] == '0'
                 ||
                 (
-                    IndexSourceValue.StartsWith("AW", StringComparison.InvariantCultureIgnoreCase)
+                    (IndexSourceValue.StartsWith("AW", StringComparison.InvariantCultureIgnoreCase)
                     ||
-                    IndexSourceValue.StartsWith("BW", StringComparison.InvariantCultureIgnoreCase)
+                    IndexSourceValue.StartsWith("BW", StringComparison.InvariantCultureIgnoreCase))
+                    && IsNumeric(IndexSourceValue[2..])
                 )
             );
 
@@ -33,7 +34,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
                 };
@@ -44,7 +45,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
                 };
@@ -55,7 +56,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Replace("00", string.Empty).Trim()
                     )
                 };
@@ -66,29 +67,29 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
                 };
             }
 
-            if (IndexSourceValue.StartsWith("AW", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue.StartsWith("AW", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}A",
+                        $"{HouseNumberSourceValue}A",
                         $"W{int.Parse(IndexSourceValue[2..])}"
                     )
                 };
             }
 
-            if (IndexSourceValue.StartsWith("BW", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue.StartsWith("BW", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}B",
+                        $"{HouseNumberSourceValue}B",
                         $"W{int.Parse(IndexSourceValue[2..])}"
                     )
                 };
