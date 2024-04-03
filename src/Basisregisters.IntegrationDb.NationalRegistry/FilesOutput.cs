@@ -38,7 +38,7 @@
                 Path.Combine(directory, MatchedRecordsFileName),
                 addressesWithRegisteredCount
                     .Where(x => x.FlatFileRecord is not null)
-                    .Select(x => $"{x.FlatFileRecord!.ToSafeString()};{x.HouseNumberBoxNumberType}"));
+                    .Select(x => $"{x.FlatFileRecord!.ToSafeString()};{x.HouseNumberBoxNumberTypes}"));
         }
 
         public static void WriteRecordsWithMultipleAddresses(IDictionary<FlatFileRecordWithStreetNames, List<Address>> records, string directory)

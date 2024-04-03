@@ -58,8 +58,11 @@
             throw new InvalidOperationException("Invalid use of matches");
         }
 
-        public NonNumericBetweenNumbers(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public NonNumericBetweenNumbers(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }

@@ -21,22 +21,6 @@
 
         public int RecordNumber { get; set; }
 
-        // public static FixedLengthSchema Schema
-        // {
-        //     get
-        //     {
-        //         var schema = new FixedLengthSchema();
-        //         schema.AddColumn(new StringColumn("NisCode"), 5);
-        //         schema.AddColumn(new StringColumn("PostalCode"), 4);
-        //         schema.AddColumn(new StringColumn("StreetCode"), 4);
-        //         schema.AddColumn(new StringColumn("HouseNumber"), 4);
-        //         schema.AddColumn(new StringColumn("Index"), 4);
-        //         schema.AddColumn(new StringColumn("StreetName"), 32);
-        //         schema.AddColumn(new Int32Column("RegisteredCount"), 4);
-        //         return schema;
-        //     }
-        // }
-
         public static IFixedLengthTypeMapper<FlatFileRecord> Mapper
         {
             get
@@ -85,7 +69,7 @@
         public NationalRegistryIndex(string? value)
         {
             SourceValue = value;
-            if (string.IsNullOrEmpty(value) || value == "0000") //TODO: possible improvement if we consider 0000 as value and not clear values.
+            if (string.IsNullOrWhiteSpace(value) || value == "0000") //TODO: possible improvement if we consider 0000 as value and not clear values.
             {
                 Value = null;
                 Left = null;
@@ -95,7 +79,7 @@
             }
             else
             {
-                var formatted = value.TrimStart('0').Trim();
+                var formatted = value.Trim().TrimStart('0').Trim();
                 Value = formatted.Length > 0 && HasNumeric.IsMatch(formatted)
                     ? formatted.PadLeft(4, '0')
                     : formatted.PadRight(4, '0');

@@ -26,7 +26,7 @@
         {
             var matchesPerRecord = flatFileRecords.ToDictionary(
                 x => x,
-                _ => new ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>());
+                _ => new ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>());
 
             var recordsPerHouseNumber = flatFileRecords
                 .GroupBy(x => new { x.Record.NisCode, x.Record.PostalCode, x.Record.StreetName, x.Record.HouseNumber })
@@ -58,19 +58,17 @@
 
                         var matches = addresses
                             .Where(x =>
-                                nationalRegistryAddress.HouseNumberBoxNumbers is not null
-                                && nationalRegistryAddress.HouseNumberBoxNumbers
-                                    .GetValues()
-                                    .Any(y =>
-                                        string.Equals(y.HouseNumber, x.HouseNumber, StringComparison.InvariantCultureIgnoreCase)
-                                        && string.Equals(y.BoxNumber, x.BoxNumber?.TrimStart('0'), StringComparison.InvariantCultureIgnoreCase)))
+                                nationalRegistryAddress.HouseNumberBoxNumbers.SelectMany(y => y.GetValues())
+                                    .Any(z =>
+                                        string.Equals(z.HouseNumber, x.HouseNumber, StringComparison.InvariantCultureIgnoreCase)
+                                        && string.Equals(z.BoxNumber?.TrimStart('0'), x.BoxNumber?.TrimStart('0'), StringComparison.InvariantCultureIgnoreCase)))
                             .ToList();
 
                         foreach (var matchedAddress in matches)
                         {
                             matchesPerRecord[record].Add((
                                 matchedAddress,
-                                nationalRegistryAddress.HouseNumberBoxNumbersType!.Name));
+                                string.Join(',', nationalRegistryAddress.HouseNumberBoxNumbers.Select(x => x.GetType().Name))));
                         }
                     }
                 });
@@ -113,9 +111,9 @@
         }
 
         private IList<AddressWithRegisteredCount> GetMatchedRecords(
-            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord,
+            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>> matchesPerRecord,
             IDictionary<Address, List<FlatFileRecordWithStreetNames>> addressesMatchedWithMultipleRecords,
-            List<Address> allAddresses)
+            IEnumerable<Address> allAddresses)
         {
             var singleMatches = matchesPerRecord
                 .Where(x =>
@@ -138,14 +136,14 @@
 
                 reversed.Add(
                     address.Address.AddressPersistentLocalId,
-                    (record.Record, address.Address, address.HouseNumberBoxNumberType));
+                    (record.Record, address.Address, HouseNumberBoxNumberType: address.HouseNumberBoxNumberTypes));
 
                 if (address.Address.IsBoxNumber)
                 {
                     if (boxNumberMatchesByHouseNumber.ContainsKey(address.Address.ParentPersistentLocalId!.Value))
                     {
                         boxNumberMatchesByHouseNumber[address.Address.ParentPersistentLocalId.Value].Add(
-                            (record.Record, address.Address, address.HouseNumberBoxNumberType));
+                            (record.Record, address.Address, HouseNumberBoxNumberType: address.HouseNumberBoxNumberTypes));
                     }
                     else
                     {
@@ -153,7 +151,7 @@
                             address.Address.ParentPersistentLocalId.Value,
                             new List<(FlatFileRecord Record, Address Address, string HouseNumberBoxNumberType)>
                             {
-                                (record.Record, address.Address, address.HouseNumberBoxNumberType)
+                                (record.Record, address.Address, HouseNumberBoxNumberType: address.HouseNumberBoxNumberTypes)
                             }
                         );
                     }
@@ -224,7 +222,7 @@
         }
 
         private static IList<FlatFileRecordWithStreetNames> GetUnmatchedRecords(
-            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>> matchesPerRecord)
         {
             return matchesPerRecord
                 .Where(x => !x.Value.Any())
@@ -233,7 +231,7 @@
         }
 
         private static IDictionary<FlatFileRecordWithStreetNames, List<Address>> GetRecordsMatchedWithMultipleAddresses(
-            IDictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+            IDictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>> matchesPerRecord)
         {
             return matchesPerRecord
                 .Where(x => x.Value.Count > 1)
@@ -243,7 +241,7 @@
         }
 
         private static IDictionary<Address, List<FlatFileRecordWithStreetNames>> GetAddressesMatchedWithMultipleRecords(
-            IDictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>> matchesPerRecord)
+            IDictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>> matchesPerRecord)
         {
             var matchesPerRecordReversed = new Dictionary<Address, List<FlatFileRecordWithStreetNames>>();
             foreach (var kvp in matchesPerRecord)

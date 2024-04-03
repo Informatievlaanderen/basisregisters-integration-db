@@ -1,9 +1,5 @@
 framework: net8.0
-strategy: min
 source https://api.nuget.org/v3/index.json
-
-// Kafka
-nuget Confluent.Kafka 2.3.0 3.7.301
 
 // AWS
 nuget AWSSDK.DynamoDBv2 3.7.301.21
@@ -16,7 +12,6 @@ nuget Autofac 8.0.0
 nuget Dapper 2.1.35
 nuget Destructurama.JsonNet 3.0.0
 nuget NodaTime 3.1.11
-nuget MessagePack 2.5.140
 nuget Newtonsoft.Json 13.0.3
 nuget GeoJSON.NET 1.2.19
 nuget MediatR 12.2.0
@@ -26,59 +21,34 @@ nuget MediatR.Contracts 2.0.1
 nuget Fastenshtein 1.0.0.8
 nuget FlatFiles 5.0.4
 
-
-// MISSING ASSEMBLY REFERENCES
-nuget Microsoft.IdentityModel.Tokens 7.4.0
-nuget Microsoft.IdentityModel.Protocols 7.4.0
-nuget Microsoft.IdentityModel.Logging 7.4.0
-nuget Microsoft.IdentityModel.Abstractions 7.4.0
-nuget Microsoft.IdentityModel.JsonWebTokens 7.4.0
-nuget Microsoft.Identity.Client 4.59.0
-nuget IdentityModel 6.2.0
-
 // ASPNET
-nuget AspNetCore.HealthChecks.NpgSql 8.0.0
+nuget AspNetCore.HealthChecks.NpgSql 8.0.1
 
 // MICROSOFT EXTENSIONS
-nuget Microsoft.Extensions.DependencyModel 8.0.0
-nuget Microsoft.Extensions.Configuration 8.0.0
-nuget Microsoft.Extensions.Configuration.CommandLine 8.0.0
-nuget Microsoft.Extensions.Configuration.FileExtensions 8.0.0
-nuget Microsoft.Extensions.Configuration.Json 8.0.0
-nuget Microsoft.Extensions.Configuration.EnvironmentVariables 8.0.0
-nuget Microsoft.Extensions.DependencyInjection.Abstractions 8.0.1
-nuget Microsoft.Extensions.Hosting 8.0.0
 nuget Microsoft.Extensions.Http 8.0.0
-
-nuget Microsoft.EntityFrameworkCore.Design 8.0.3
 
 // ENTITY FRAMEWORK
 nuget NetTopologySuite 2.5.0
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite 8.0.2
 nuget Npgsql.EntityFrameworkCore.PostgreSQL 8.0.2
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
-//nuget Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime 8.0.2
-
+nuget Microsoft.EntityFrameworkCore.Design 8.0.3
 
 // VBR STUFF
-nuget Be.Vlaanderen.Basisregisters.Api 21.0.0
+nuget Be.Vlaanderen.Basisregisters.Api 22.0.0
 
 nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 4.0.1
-nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.1.0
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.4
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 6.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.0.0
-nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Consumer 5.0.1
+nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.1.0
 nuget Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Shaperon 10.0.2
 
 // TEST STUFF
+nuget Be.Vlaanderen.Basisregisters.DockerUtilities 2.0.0
 nuget Microsoft.EntityFrameworkCore.InMemory 8.0.3
 nuget Microsoft.NET.Test.Sdk 17.9.0
-nuget Microsoft.NET.StringTools 17.9.5
-nuget Microsoft.NETCore.Platforms 7.0.4
-nuget Be.Vlaanderen.Basisregisters.DockerUtilities 2.0.0
 nuget Microsoft.AspNetCore.Mvc.Testing 8.0.3
 nuget Microsoft.AspNetCore.TestHost 8.0.3
 nuget AutoFixture 4.18.1
