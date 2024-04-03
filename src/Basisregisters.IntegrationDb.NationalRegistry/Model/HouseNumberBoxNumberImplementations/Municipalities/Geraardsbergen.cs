@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "41018" &&
             (
-                (IsLetter(IndexSourceValue![0]) && IndexSourceValue[1..] == "000")
+                (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
                 ||
                 (char.ToUpper(IndexSourceValue[0]) == 'B' && IsNumberGreaterThanZero(IndexSourceValue[1..]))
                 ||
@@ -23,7 +23,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue[1..] == "000")
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
             {
                 return new[]
                 {

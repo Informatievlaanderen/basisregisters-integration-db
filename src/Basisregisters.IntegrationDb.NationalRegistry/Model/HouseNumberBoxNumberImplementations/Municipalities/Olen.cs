@@ -11,18 +11,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "13029" &&
             (
-                IndexSourceValue!.Trim().Length == 1 && IsLetter(IndexSourceValue.Trim()[0])
+                IndexSourceValue.Trim().Length == 1 && IsLetter(IndexSourceValue.Trim()[0])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.Trim().Length == 1 && IsLetter(IndexSourceValue.Trim()[0]))
+            if (IndexSourceValue.Trim().Length == 1 && IsLetter(IndexSourceValue.Trim()[0]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        IndexSourceValue!.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }

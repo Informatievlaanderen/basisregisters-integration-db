@@ -11,12 +11,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue!.Contains('/'))
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue.Contains('/'))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{IndexSourceValue![0]}",
+                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
                         IndexSourceValue[1..])
                 };
             }

@@ -11,7 +11,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "44084" &&
             (
-                char.ToUpper(IndexSourceValue![2]) == 'O'
+                char.ToUpper(IndexSourceValue[2]) == 'O'
                 ||
                 (IndexSourceValue.StartsWith('0') && IsLetter(IndexSourceValue[3]))
                 ||
@@ -20,13 +20,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (char.ToUpper(IndexSourceValue![2]) == 'O')
+            if (char.ToUpper(IndexSourceValue[2]) == 'O')
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        IndexSourceValue!.Trim()
+                        IndexSourceValue.Trim()
                     )
                 };
             }
@@ -37,7 +37,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 {
                     new HouseNumberWithBoxNumber(
                         SourceSourceHouseNumber,
-                        IndexSourceValue!.Trim().TrimStart('0')
+                        IndexSourceValue.Trim().TrimStart('0')
                     )
                 };
             }

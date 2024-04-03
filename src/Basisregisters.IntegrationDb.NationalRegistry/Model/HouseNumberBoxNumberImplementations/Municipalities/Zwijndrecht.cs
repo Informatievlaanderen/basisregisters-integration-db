@@ -11,16 +11,16 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11056" &&
             (
-                char.ToLower(IndexSourceValue![0]) == 'b' && IsNumeric(IndexSourceValue[1..])
+                char.ToLower(IndexSourceValue[0]) == 'b' && IsNumeric(IndexSourceValue[1..])
                 ||
-                IsLetter(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..])
+                IsLetter(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..])
                 ||
                 IndexSourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase)
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (char.ToLower(IndexSourceValue![0]) == 'b' && IsNumeric(IndexSourceValue[1..]))
+            if (char.ToLower(IndexSourceValue[0]) == 'b' && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
@@ -31,7 +31,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (char.IsLetter(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..]))
+            if (char.IsLetter(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
