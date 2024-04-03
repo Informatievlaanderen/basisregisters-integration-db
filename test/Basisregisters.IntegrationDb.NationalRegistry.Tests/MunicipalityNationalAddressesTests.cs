@@ -797,5 +797,45 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0046", "glvl", "46", "glv")]
+        public void Mortsel(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11029",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "A000", "46", "A")]
+        [InlineData("0046", "A   ", "46", "A")]
+        [InlineData("0046", "   A", "46", "A")]
+        public void Vorselaar(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "13044",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
     }
 }
