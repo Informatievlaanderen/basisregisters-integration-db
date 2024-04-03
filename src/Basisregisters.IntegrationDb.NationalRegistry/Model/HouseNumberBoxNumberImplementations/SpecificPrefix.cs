@@ -10,7 +10,6 @@
     /// </summary>
     public sealed class SpecificPrefix : HouseNumberBoxNumbersBase
     {
-
         public override bool IsMatch()
         {
             return Indications.Apartment.Contains(Index.Left, StringComparer.InvariantCultureIgnoreCase)
@@ -59,8 +58,11 @@
             throw new InvalidOperationException("Invalid use of matches");
         }
 
-        public SpecificPrefix(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public SpecificPrefix(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }

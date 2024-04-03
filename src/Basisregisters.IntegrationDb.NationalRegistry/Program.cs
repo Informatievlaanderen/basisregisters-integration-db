@@ -78,7 +78,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                 var directory = configuration["OutputDirectory"];
                 var sourceFileName = configuration["SourceFileName"];
 
-                var flatFileRecords = ReadFlatFileRecordsRecords(Path.Combine(directory, sourceFileName));
+                var flatFileRecords = ReadFlatFileRecordsRecords(sourceFileName);
 
                 var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
                 var invalidRecords = new ConcurrentBag<(FlatFileRecord, FlatFileRecordErrorType)>();

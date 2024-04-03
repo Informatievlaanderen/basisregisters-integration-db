@@ -4,9 +4,6 @@
 
     public sealed class NoIndex : HouseNumberBoxNumbersBase
     {
-        public NoIndex(string sourceHouseNumber, NationalRegistryIndex index) : base(sourceHouseNumber, index)
-        { }
-
         public override bool IsMatch()
         {
             return string.IsNullOrEmpty(Index) || Index == "0000" || string.IsNullOrEmpty(Index.Left);
@@ -21,5 +18,12 @@
                     null)
             };
         }
+
+        public NoIndex(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
+        { }
     }
 }

@@ -14,7 +14,7 @@
     {
         public override bool IsMatch()
         {
-            return ContainsOnlyLetters(Index.Left!) && IsGreaterThanZero(Index.Right!);
+            return ContainsOnlyLetters(Index.Left!) && IsNumberGreaterThanZero(Index.Right!);
         }
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
@@ -36,8 +36,11 @@
             };
         }
 
-        public NonNumericFollowedByNumberGreaterThanZero(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public NonNumericFollowedByNumberGreaterThanZero(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }

@@ -8,19 +8,19 @@
             FlatFileRecord? flatFileRecord,
             Address address,
             StreetName streetName,
-            string houseNumberBoxNumberType,
+            string houseNumberBoxNumberTypes,
             int? registeredCount)
         {
             FlatFileRecord = flatFileRecord;
             Address = address;
             StreetName = streetName;
-            HouseNumberBoxNumberType = houseNumberBoxNumberType;
+            HouseNumberBoxNumberTypes = houseNumberBoxNumberTypes;
             RegisteredCount = registeredCount;
         }
         public FlatFileRecord? FlatFileRecord { get; set; }
         public Address Address { get; set; }
         public StreetName StreetName { get; set; }
-        public string HouseNumberBoxNumberType { get; set; }
+        public string HouseNumberBoxNumberTypes { get; set; }
 
         public int? RegisteredCount { get; set; }
     }

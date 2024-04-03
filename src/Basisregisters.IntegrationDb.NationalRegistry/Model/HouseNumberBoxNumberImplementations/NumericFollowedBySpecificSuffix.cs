@@ -31,8 +31,11 @@
             };
         }
 
-        public NumericFollowedBySpecificSuffix(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public NumericFollowedBySpecificSuffix(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }

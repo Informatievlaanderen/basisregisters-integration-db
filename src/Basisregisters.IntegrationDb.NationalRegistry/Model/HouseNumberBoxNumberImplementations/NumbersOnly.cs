@@ -24,8 +24,11 @@
             };
         }
 
-        public NumbersOnly(string sourceHouseNumber, NationalRegistryIndex index)
-            : base(sourceHouseNumber, index)
+        public NumbersOnly(
+            string nisCode,
+            string sourceHouseNumber,
+            NationalRegistryIndex index)
+            : base(nisCode, sourceHouseNumber, index)
         { }
     }
 }
