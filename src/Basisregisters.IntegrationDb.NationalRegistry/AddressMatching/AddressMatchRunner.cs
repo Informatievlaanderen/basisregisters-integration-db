@@ -24,9 +24,9 @@
 
         public AddressMatchResult Match(IList<FlatFileRecordWithStreetNames> flatFileRecords)
         {
-            Dictionary<FlatFileRecordWithStreetNames, ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>> matchesPerRecord = flatFileRecords.ToDictionary(
+            var matchesPerRecord = flatFileRecords.ToDictionary(
                 x => x,
-                _ => new ConcurrentBag<(Address Address, string HouseNumberBoxNumberType)>());
+                _ => new ConcurrentBag<(Address Address, string HouseNumberBoxNumberTypes)>());
 
             var recordsPerHouseNumber = flatFileRecords
                 .GroupBy(x => new { x.Record.NisCode, x.Record.PostalCode, x.Record.StreetName, x.Record.HouseNumber })
