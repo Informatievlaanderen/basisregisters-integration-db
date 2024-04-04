@@ -85,6 +85,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Vorselaar(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Stabroek(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Antwerpen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Hasselt(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
