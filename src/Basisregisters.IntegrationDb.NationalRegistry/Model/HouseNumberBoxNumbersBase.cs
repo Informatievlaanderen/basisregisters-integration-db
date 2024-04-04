@@ -6,7 +6,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
     public abstract partial class HouseNumberBoxNumbersBase
     {
         protected readonly string NisCode;
-        protected readonly string SourceSourceHouseNumber;
+        protected readonly string HouseNumberSourceValue;
 
         public NationalRegistryIndex Index { get; }
 
@@ -19,7 +19,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             NationalRegistryIndex index)
         {
             NisCode = nisCode;
-            SourceSourceHouseNumber = sourceHouseNumber.TrimStart('0');
+            HouseNumberSourceValue = sourceHouseNumber.TrimStart('0');
             Index = index;
         }
 

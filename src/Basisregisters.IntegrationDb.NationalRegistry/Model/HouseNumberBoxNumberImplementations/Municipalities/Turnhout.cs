@@ -11,43 +11,43 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "13040" &&
             (
-                IndexSourceValue!.StartsWith('b')
+                IndexSourceValue.StartsWith('b')
                 ||
-                IndexSourceValue!.StartsWith('0') && IsNumberGreaterThanZero(IndexSourceValue)
+                IndexSourceValue.StartsWith('0') && IsNumberGreaterThanZero(IndexSourceValue)
                 ||
-                ContainsOnlyCapitalLetters(IndexSourceValue![..1])
+                ContainsOnlyCapitalLetters(IndexSourceValue[..1])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.StartsWith('b'))
+            if (IndexSourceValue.StartsWith('b'))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Replace("b00", string.Empty).Replace("b0", string.Empty))
                 };
             }
 
-            if (IndexSourceValue!.StartsWith('0') && IsNumberGreaterThanZero(IndexSourceValue))
+            if (IndexSourceValue.StartsWith('0') && IsNumberGreaterThanZero(IndexSourceValue))
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}_{IndexSourceValue!.TrimStart('0')}",
+                        $"{HouseNumberSourceValue}_{IndexSourceValue.TrimStart('0')}",
                         null)
                 };
             }
 
-            if (ContainsOnlyCapitalLetters(IndexSourceValue!.Substring(0, 1)))
+            if (ContainsOnlyCapitalLetters(IndexSourceValue.Substring(0, 1)))
             {
                 var boxNumber = $"{IndexSourceValue[0]}{IndexSourceValue[1..].TrimStart('0')}";
 
                 return new List<HouseNumberWithBoxNumber>
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         boxNumber)
                 };
             }

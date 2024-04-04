@@ -11,30 +11,30 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "31033" &&
             (
-                IndexSourceValue!.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..])
+                IndexSourceValue.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..])
                 ||
-                IndexSourceValue!.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..])
+                IndexSourceValue.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..]))
+            if (IndexSourceValue.StartsWith("V", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{IndexSourceValue[0]}{int.Parse(IndexSourceValue[1..])}"
                     )
                 };
             }
 
-            if (IndexSourceValue!.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
+            if (IndexSourceValue.StartsWith("AV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
                 };

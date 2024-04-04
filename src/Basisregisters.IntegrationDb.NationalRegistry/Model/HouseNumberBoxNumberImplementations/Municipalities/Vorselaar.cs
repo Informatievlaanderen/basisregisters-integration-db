@@ -3,39 +3,39 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class DePanne : MunicipalityHouseNumberBoxNumbersBase
+    public class Vorselaar : MunicipalityHouseNumberBoxNumbersBase
     {
-        public DePanne(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
+        public Vorselaar(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
         public override bool IsMatch() =>
-            NisCode == "38008" &&
+            NisCode == "13044" &&
             (
-                IsLetter(IndexSourceValue[0])
+                (ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
                 ||
-                IsNumeric(IndexSourceValue)
+                IndexSourceValue.Trim().Length == 1 && ContainsOnlyCapitalLetters(IndexSourceValue.Trim()[0])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(IndexSourceValue[0]))
+            if (ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        $"{IndexSourceValue[0]}"
+                    )
+                };
+            }
+
+            if (IndexSourceValue.Trim().Length == 1 && ContainsOnlyCapitalLetters(IndexSourceValue.Trim()[0]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue.Trim()
-                    )
-                };
-            }
-
-            if (IsNumeric(IndexSourceValue))
-            {
-                return new[]
-                {
-                    new HouseNumberWithBoxNumber(
-                        $"{HouseNumberSourceValue}_{int.Parse(IndexSourceValue)}",
-                        null
                     )
                 };
             }

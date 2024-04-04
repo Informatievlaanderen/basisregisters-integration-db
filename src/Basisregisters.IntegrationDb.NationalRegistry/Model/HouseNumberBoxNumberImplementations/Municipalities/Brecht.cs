@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11009" &&
             (
-                IsLetter(IndexSourceValue![0]) && IndexSourceValue.Contains('/')
+                IsLetter(IndexSourceValue[0]) && IndexSourceValue.Contains('/')
                 ||
                 IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..])
                 ||
@@ -21,14 +21,14 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue.Contains('/'))
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue.Contains('/'))
             {
                 var parts = IndexSourceValue.Split('/');
 
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{parts.First()}",
+                        $"{HouseNumberSourceValue}{parts.First()}",
                         parts.Last()
                     )
                 };
@@ -39,7 +39,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
                 };
@@ -50,7 +50,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.TrimStart('0')
                     )
                 };

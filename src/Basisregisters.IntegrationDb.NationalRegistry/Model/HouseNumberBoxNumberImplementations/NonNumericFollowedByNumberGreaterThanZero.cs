@@ -31,7 +31,7 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    $"{SourceSourceHouseNumber}{left}",
+                    $"{HouseNumberSourceValue}{left}",
                     Index.Right!.TrimStart('0'))
             };
         }

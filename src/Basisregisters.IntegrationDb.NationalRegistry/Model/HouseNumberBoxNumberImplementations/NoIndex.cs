@@ -14,7 +14,7 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    SourceSourceHouseNumber,
+                    HouseNumberSourceValue,
                     null)
             };
         }

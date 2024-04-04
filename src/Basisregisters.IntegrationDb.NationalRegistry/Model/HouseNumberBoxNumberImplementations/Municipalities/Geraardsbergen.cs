@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "41018" &&
             (
-                (IsLetter(IndexSourceValue![0]) && IndexSourceValue[1..] == "000")
+                (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
                 ||
                 (char.ToUpper(IndexSourceValue[0]) == 'B' && IsNumberGreaterThanZero(IndexSourceValue[1..]))
                 ||
@@ -23,12 +23,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(IndexSourceValue![0]) && IndexSourceValue[1..] == "000")
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         null
                     )
                 };
@@ -39,7 +39,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         int.Parse(IndexSourceValue[1..]).ToString()
                     )
                 };
@@ -50,7 +50,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         int.Parse(string.Join(string.Empty, IndexSourceValue.Split('/').Last().Where(char.IsDigit))).ToString()
                     )
                 };
@@ -61,7 +61,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{IndexSourceValue[0]}",
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         int.Parse(IndexSourceValue[2..]).ToString()
                     )
                 };

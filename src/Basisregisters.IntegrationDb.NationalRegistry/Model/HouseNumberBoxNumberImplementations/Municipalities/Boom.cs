@@ -12,19 +12,19 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11005" &&
             (
-                IndexSourceValue!.Contains('.')
+                IndexSourceValue.Contains('.')
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.Contains('.'))
+            if (IndexSourceValue.Contains('.'))
             {
-                var indexWithoutLetters = string.Join("", IndexSourceValue!.Where(x => !IsLetter(x)));
+                var indexWithoutLetters = string.Join("", IndexSourceValue.Where(x => !IsLetter(x)));
 
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         indexWithoutLetters.Trim()
                     )
                 };
