@@ -12,12 +12,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.Equals("gel0", StringComparison.InvariantCultureIgnoreCase))
+            if (IndexSourceValue.Equals("gel0", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         "0.0"
                     )
                 };
@@ -26,8 +26,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    SourceSourceHouseNumber,
-                    IndexSourceValue!.Trim()
+                    HouseNumberSourceValue,
+                    IndexSourceValue.Trim()
                 )
             };
         }

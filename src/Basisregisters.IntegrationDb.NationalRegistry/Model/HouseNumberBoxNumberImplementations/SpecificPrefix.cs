@@ -25,7 +25,7 @@
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         Index.Right!.TrimStart('0'))
                 };
             }
@@ -36,10 +36,10 @@
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         Index.Right!.TrimStart('0')),
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         Index.SourceValue)
                 };
             }
@@ -50,7 +50,7 @@
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{Index.Left}{Index.Right}")
                 };
             }

@@ -57,11 +57,18 @@
                         var nationalRegistryAddress = new NationalRegistryAddress(record.Record);
 
                         var matches = addresses
-                            .Where(x =>
-                                nationalRegistryAddress.HouseNumberBoxNumbers.SelectMany(y => y.GetValues())
-                                    .Any(z =>
-                                        string.Equals(z.HouseNumber, x.HouseNumber, StringComparison.InvariantCultureIgnoreCase)
-                                        && string.Equals(z.BoxNumber?.TrimStart('0'), x.BoxNumber?.TrimStart('0'), StringComparison.InvariantCultureIgnoreCase)))
+                            .Where(a =>
+                                nationalRegistryAddress.HouseNumberBoxNumbers.SelectMany(x => x.GetValues())
+                                    .Any(r =>
+                                        string.Equals(
+                                            r.HouseNumber,
+                                            a.HouseNumber,
+                                            StringComparison.InvariantCultureIgnoreCase)
+                                        &&
+                                        string.Equals(
+                                            r.BoxNumber?.TrimStart('0').Trim(),
+                                            a.BoxNumber?.TrimStart('0').Trim(),
+                                            StringComparison.InvariantCultureIgnoreCase)))
                             .ToList();
 
                         foreach (var matchedAddress in matches)

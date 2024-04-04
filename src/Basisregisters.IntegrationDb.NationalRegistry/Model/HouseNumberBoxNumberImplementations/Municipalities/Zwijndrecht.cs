@@ -11,32 +11,32 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "11056" &&
             (
-                char.ToLower(IndexSourceValue![0]) == 'b' && IsNumeric(IndexSourceValue[1..])
+                char.ToLower(IndexSourceValue[0]) == 'b' && IsNumeric(IndexSourceValue[1..])
                 ||
-                IsLetter(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..])
+                IsLetter(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..])
                 ||
                 IndexSourceValue.StartsWith("Glv", StringComparison.InvariantCultureIgnoreCase)
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (char.ToLower(IndexSourceValue![0]) == 'b' && IsNumeric(IndexSourceValue[1..]))
+            if (char.ToLower(IndexSourceValue[0]) == 'b' && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         int.Parse(IndexSourceValue[1..]).ToString()
                     )
                 };
             }
 
-            if (char.IsLetter(IndexSourceValue![0]) && IsNumeric(IndexSourceValue[1..]))
+            if (char.IsLetter(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{IndexSourceValue[0]}{int.Parse(IndexSourceValue[1..])}"
                     )
                 };
@@ -47,7 +47,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         "0.0"
                     )
                 };

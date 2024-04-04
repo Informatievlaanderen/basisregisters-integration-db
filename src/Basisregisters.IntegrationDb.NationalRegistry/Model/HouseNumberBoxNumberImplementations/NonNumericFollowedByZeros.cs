@@ -21,7 +21,7 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    $"{SourceSourceHouseNumber}{Index.Left}",
+                    $"{HouseNumberSourceValue}{Index.Left}",
                     null)
             };
         }

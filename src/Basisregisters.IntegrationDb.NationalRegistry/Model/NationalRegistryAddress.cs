@@ -77,6 +77,13 @@
             yield return new Brecht(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Houthalen(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Olen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Koksijde(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Lokeren(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Nijlen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Mortsel(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Vorselaar(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Stabroek(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Antwerpen(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()

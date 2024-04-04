@@ -21,7 +21,7 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    $"{SourceSourceHouseNumber}{bisNumber}",
+                    $"{HouseNumberSourceValue}{bisNumber}",
                     null)
             };
         }

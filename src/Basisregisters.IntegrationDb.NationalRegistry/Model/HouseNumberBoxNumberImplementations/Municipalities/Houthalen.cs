@@ -11,7 +11,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "72039" &&
             (
-                IndexSourceValue!.Contains('-')
+                IndexSourceValue.Contains('-')
                 ||
                 IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..] == "000"
                 ||
@@ -20,12 +20,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.Contains('-'))
+            if (IndexSourceValue.Contains('-'))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
                 };
@@ -38,7 +38,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         null
                     )
                 };
@@ -49,7 +49,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{int.Parse(IndexSourceValue)}"
                     )
                 };

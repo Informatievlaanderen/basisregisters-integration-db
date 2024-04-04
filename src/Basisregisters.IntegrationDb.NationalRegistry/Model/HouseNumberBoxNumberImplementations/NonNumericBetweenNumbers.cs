@@ -38,7 +38,7 @@
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{Index.Left}.{Index.RightPartTwo}")
                 };
             }
@@ -50,7 +50,7 @@
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{Index.RightPartOne}",
+                        $"{HouseNumberSourceValue}{Index.RightPartOne}",
                         rightPartTwo.ToString())
                 };
             }

@@ -12,19 +12,19 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "73083" &&
             (
-                IndexSourceValue!.StartsWith("00b") || IndexSourceValue!.StartsWith("0b")
+                IndexSourceValue.StartsWith("00b") || IndexSourceValue.StartsWith("0b")
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.StartsWith("00b") || IndexSourceValue!.StartsWith("0b"))
+            if (IndexSourceValue.StartsWith("00b") || IndexSourceValue.StartsWith("0b"))
             {
-                var busNumber = IndexSourceValue!.Split('b').Last();
+                var busNumber = IndexSourceValue.Split('b').Last();
 
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         busNumber
                     )
                 };

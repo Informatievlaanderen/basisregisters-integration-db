@@ -3,26 +3,26 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Olen : MunicipalityHouseNumberBoxNumbersBase
+    public class Lokeren : MunicipalityHouseNumberBoxNumbersBase
     {
-        public Olen(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
+        public Lokeren(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
         public override bool IsMatch() =>
-            NisCode == "13029" &&
+            NisCode == "46014" &&
             (
-                IndexSourceValue.Trim().Length == 1 && IsLetter(IndexSourceValue.Trim()[0])
+                ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue.Trim().Length == 1 && IsLetter(IndexSourceValue.Trim()[0]))
+            if (ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
-                        IndexSourceValue.Trim()
+                        IndexSourceValue
                     )
                 };
             }

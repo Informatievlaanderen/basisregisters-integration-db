@@ -11,49 +11,49 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override bool IsMatch() =>
             NisCode == "46021" &&
             (
-                IndexSourceValue!.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..])
+                IndexSourceValue.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..])
                 ||
-                !IndexSourceValue!.StartsWith('B') && ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1..] == "000"
+                !IndexSourceValue.StartsWith('B') && ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1..] == "000"
                 ||
-                !IndexSourceValue!.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..])
+                !IndexSourceValue.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..])
                 ||
                 ContainsOnlyCapitalLetters(IndexSourceValue[..2]) && IndexSourceValue[1] == 'B' && IsNumeric(IndexSourceValue[2..])
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue!.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..]))
+            if (IndexSourceValue.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..]))
             {
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        SourceSourceHouseNumber,
+                        HouseNumberSourceValue,
                         $"{int.Parse(IndexSourceValue[1..])}"
                     )
                 };
             }
 
-            if (!IndexSourceValue!.StartsWith('B') && ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
+            if (!IndexSourceValue.StartsWith('B') && ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IndexSourceValue[1..] == "000")
             {
                 var bisNumber = IndexSourceValue[0];
 
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         null
                     )
                 };
             }
 
-            if (!IndexSourceValue!.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..]))
+            if (!IndexSourceValue.StartsWith('B') && IsNumberGreaterThanZero(IndexSourceValue[1..]))
             {
                 var bisNumber = IndexSourceValue[0];
 
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         $"{int.Parse(IndexSourceValue[1..])}".PadLeft(4, '0')
                     )
                 };
@@ -66,7 +66,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
-                        $"{SourceSourceHouseNumber}{bisNumber}",
+                        $"{HouseNumberSourceValue}{bisNumber}",
                         $"{int.Parse(IndexSourceValue[2..])}"
                     )
                 };

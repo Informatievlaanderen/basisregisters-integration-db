@@ -25,7 +25,7 @@
             return new[]
             {
                 new HouseNumberWithBoxNumber(
-                    SourceSourceHouseNumber,
+                    HouseNumberSourceValue,
                     $"{int.Parse(Index.Left!)}.0"
                 )
             };
