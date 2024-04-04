@@ -542,11 +542,14 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "W012", "46", "W012")]
         [InlineData("0046", "AW01", "46A", "W1")]
         [InlineData("0046", "BW01", "46B", "W1")]
+        [InlineData("0046", "A000", "46A", null)]
+        [InlineData("0046", "G/02", "46G", "02")]
+        [InlineData("0046", "G/2 ", "46G", "2")]
         public void Zele(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
             {
-                NisCode = "71020",
+                NisCode = "42028",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };

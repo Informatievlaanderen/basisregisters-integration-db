@@ -9,7 +9,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         { }
 
         public override bool IsMatch() =>
-            NisCode == "71020" &&
+            NisCode == "42028" &&
             (
                 IndexSourceValue.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..])
                 ||
@@ -25,6 +25,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     IndexSourceValue.StartsWith("BW", StringComparison.InvariantCultureIgnoreCase))
                     && IsNumeric(IndexSourceValue[2..])
                 )
+                ||
+                (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..3] == "000")
+                ||
+                (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1] == '/')
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
@@ -91,6 +95,28 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         $"{HouseNumberSourceValue}B",
                         $"W{int.Parse(IndexSourceValue[2..])}"
+                    )
+                };
+            }
+
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..3] == "000")
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
+                        null
+                    )
+                };
+            }
+
+            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1] == '/')
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
+                        IndexSourceValue[2..].Trim()
                     )
                 };
             }
