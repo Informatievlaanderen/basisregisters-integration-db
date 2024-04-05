@@ -10,7 +10,6 @@ Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite
 
 Destructurama.JsonNet
 
-Microsoft.EntityFrameworkCore.InMemory
 Microsoft.Extensions.Configuration
 Microsoft.Extensions.Configuration.EnvironmentVariables
 Microsoft.Extensions.Configuration.FileExtensions

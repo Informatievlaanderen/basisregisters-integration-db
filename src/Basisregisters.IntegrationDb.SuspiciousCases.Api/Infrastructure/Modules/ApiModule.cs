@@ -6,7 +6,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -31,8 +30,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterModule(new DataDogModule(_configuration));
-
             builder
                 .RegisterType<ProblemDetailsHelper>()
                 .AsSelf();

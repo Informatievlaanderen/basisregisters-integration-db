@@ -7,7 +7,7 @@ RUN addgroup --gid 1000 --system app && adduser --uid 1000 -system app --gid 100
 RUN mkdir /app && chown -R app:app /app
 WORKDIR /app
 
-LABEL maintainer "Digitaal Vlaanderen <digitaal.vlaanderen@vlaanderen.be>"
+LABEL maintainer="Digitaal Vlaanderen <digitaal.vlaanderen@vlaanderen.be>"
 LABEL registry="integration-db"
 
 COPY / /app
@@ -16,6 +16,14 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install curl jq -y && \
     chmod +x ./init.sh
+
+ENV CORECLR_ENABLE_PROFILING=1
+ENV CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
+ENV CORECLR_PROFILER_PATH=/app/datadog/linux-x64/Datadog.Trace.ClrProfiler.Native.so
+ENV DD_DOTNET_TRACER_HOME=/app/datadog
+
+# Run the createLogPath script on Linux to ensure the automatic instrumentation logs are generated without permission issues
+RUN /app/datadog/createLogPath.sh
 
 # switch to created user
 USER app
