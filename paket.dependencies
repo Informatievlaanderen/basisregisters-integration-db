@@ -9,6 +9,8 @@ nuget AWSSDK.SimpleEmail 3.7.300.57
 
 // Misc
 nuget Autofac 8.0.0
+nuget Autofac.Extensions.DependencyInjection 9.0.0
+
 nuget Dapper 2.1.35
 nuget Destructurama.JsonNet 3.0.0
 nuget NodaTime 3.1.11
@@ -16,6 +18,9 @@ nuget Newtonsoft.Json 13.0.3
 nuget GeoJSON.NET 1.2.19
 nuget MediatR 12.2.0
 nuget MediatR.Contracts 2.0.1
+
+// Datadog
+nuget Datadog.Trace.Bundle 2.49.0
 
 // NationalRegistry specific
 nuget Fastenshtein 1.0.0.8
@@ -35,12 +40,13 @@ nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
 nuget Microsoft.EntityFrameworkCore.Design 8.0.3
 
 // VBR STUFF
-nuget Be.Vlaanderen.Basisregisters.Api 22.0.0
+nuget Be.Vlaanderen.Basisregisters.Api 23.1.0
 
 nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 4.0.1
-nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.4
-nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 6.0.0
+
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.5
+
 nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.1.0
 nuget Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Shaperon 10.0.2

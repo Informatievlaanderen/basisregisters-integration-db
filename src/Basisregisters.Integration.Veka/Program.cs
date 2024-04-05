@@ -9,7 +9,6 @@
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using Configuration;
     using Destructurama;
     using Gtmf;
@@ -99,12 +98,9 @@
                     });
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
+                .ConfigureContainer<ContainerBuilder>((_, builder) =>
                 {
                     var services = new ServiceCollection();
-
-                    builder
-                        .RegisterModule(new DataDogModule(hostContext.Configuration));
 
                     builder
                         .RegisterType<GtmfConsumer>()

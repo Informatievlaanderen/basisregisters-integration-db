@@ -9,7 +9,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using Configuration;
     using IdentityModel.AspNetCore.OAuth2Introspection;
     using Microsoft.AspNetCore.Builder;
@@ -125,29 +124,9 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
             IHostApplicationLifetime appLifetime,
             ILoggerFactory loggerFactory,
             IApiVersionDescriptionProvider apiVersionProvider,
-            ApiDataDogToggle datadogToggle,
-            ApiDebugDataDogToggle debugDataDogToggle,
             HealthCheckService healthCheckService)
         {
             app
-                //TODO: Replace by Datadog Vendor Libraries
-                .UseDataDog<Startup>(new DataDogOptions
-                {
-                    Common =
-                    {
-                        ServiceProvider = serviceProvider,
-                        LoggerFactory = loggerFactory
-                    },
-                    Toggles =
-                    {
-                        Enable = datadogToggle,
-                        Debug = debugDataDogToggle
-                    },
-                    Tracing =
-                    {
-                        ServiceName = _configuration["DataDog:ServiceName"],
-                    }
-                })
                 .UseDefaultForApi(new StartupUseOptions
                 {
                     Common =
@@ -179,6 +158,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                     },
                     MiddlewareHooks =
                     {
+                        EnableAuthorization = true,
                         AfterMiddleware = x => x.UseMiddleware<AddNoCacheHeadersMiddleware>(),
                     }
                 });

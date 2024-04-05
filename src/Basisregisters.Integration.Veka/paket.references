@@ -1,5 +1,4 @@
 Be.Vlaanderen.Basisregisters.Aws.DistributedMutex
-Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac
 
 AWSSDK.DynamoDBv2
 AWSSDK.Extensions.NETCore.Setup
@@ -9,6 +8,9 @@ AWSSDK.SimpleEmail
 Destructurama.JsonNet
 
 IdentityModel
+
+Autofac
+Autofac.Extensions.DependencyInjection
 
 Microsoft.Extensions.Configuration
 Microsoft.Extensions.Configuration.CommandLine
