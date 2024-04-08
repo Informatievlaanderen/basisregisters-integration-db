@@ -1,3 +1,17 @@
+# [2.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.0.0...v2.1.0) (2024-04-08)
+
+
+### Bug Fixes
+
+* add padding to safestring ([907d4a0](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/907d4a048613ad405feba97ff3a08cca6f93cc4f))
+* Zele matching + add Halen and Hasselt matching ([5dcd9b2](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5dcd9b2a6b2ddb4b65ad11ba9853ddc0214b895b))
+
+
+### Features
+
+* add script to pack national registry ([d388837](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d388837396b22853b66fd6d8003e1076d2f89256))
+* municipality based index interpretation ([fd83217](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/fd83217f2c71347006b363f7354d20100b6b62f3))
+
 # [2.0.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v1.4.4...v2.0.0) (2024-03-18)
 
 
