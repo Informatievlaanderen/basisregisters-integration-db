@@ -542,7 +542,37 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "W012", "46", "W012")]
         [InlineData("0046", "AW01", "46A", "W1")]
         [InlineData("0046", "BW01", "46B", "W1")]
+        [InlineData("0046", "A000", "46A", null)]
+        [InlineData("0046", "G/02", "46G", "02")]
+        [InlineData("0046", "G/2 ", "46G", "2")]
         public void Zele(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "42028",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "B002", "46", "B002")]
+        [InlineData("0046", "A1.1", "46", "A1.1")]
+        [InlineData("0046", "W001", "46", "W1")]
+        [InlineData("0046", "W012", "46", "W012")]
+        [InlineData("0046", "AW01", "46A", "W1")]
+        [InlineData("0046", "BW01", "46B", "W1")]
+        [InlineData("0046", "A000", "46A", null)]
+        [InlineData("0046", "G/02", "46G", "02")]
+        [InlineData("0046", "G/2 ", "46G", "2")]
+        public void Halen(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
             {
@@ -867,6 +897,26 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             var record = new FlatFileRecord
             {
                 NisCode = "11002",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "D1.1", "46D", "1.01")]
+        [InlineData("0046", "B0.1", "46B", "0.01")]
+        public void Hasselt(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "71022",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
