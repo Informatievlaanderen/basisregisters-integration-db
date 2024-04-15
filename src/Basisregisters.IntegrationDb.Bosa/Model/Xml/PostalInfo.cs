@@ -11,7 +11,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     }
 
     [XmlType(Namespace = KnownNamespaces.Tns, TypeName = "postalInfoResponseBySource")]
-    public class RootPostalInfo
+    public class PostalInfoRoot
     {
         [XmlElement(Namespace = KnownNamespaces.Tns, ElementName = "source")]
         public string Source { get; set; }
@@ -22,7 +22,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
         [XmlElement(Namespace = KnownNamespaces.Tns, ElementName = "postalInfo")]
         public ICollection<PostalInfo> PostalInfos { get; set; }
     }
-    
+
     public class PostalInfo
     {
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "code")]

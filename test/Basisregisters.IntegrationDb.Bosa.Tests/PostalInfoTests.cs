@@ -1,16 +1,76 @@
 namespace Basisregisters.IntegrationDb.Bosa.Tests
 {
-    using AutoFixture;
-    using Model;
+    using System;
+    using System.Collections.Generic;
+    using FluentAssertions;
+    using Model.Xml;
     using Xunit;
+    using PostalInfo = Model.PostalInfo;
 
     public class PostalInfoTests
     {
+        private PostalInfo[] _given;
+        private const string PostalInfoNamespace = "https://data.vlaanderen.be/id/postinfo";
+
+        public PostalInfoTests()
+        {
+            _given =
+            [
+                new PostalInfo(PostalInfoNamespace, "1500", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "2002-08-13T16:37:33"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "GINGELGOM", null),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Jeuk", null),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Vorsen", null)
+            ];
+        }
+
+        [Fact]
+        public void GivenPostalInfo_ThenPostalInfoRootIsExpected()
+        {
+            var expected = new PostalInfoRoot
+            {
+                Source = "flanders",
+                Timestamp = new DateTimeOffset(2024, 04, 05, 03, 50, 56, TimeSpan.Zero),
+                PostalInfos = new List<Model.Xml.PostalInfo>
+                {
+                    new()
+                    {
+                        Code = new Code
+                        {
+                            Namespace = PostalInfoNamespace,
+                            ObjectIdentifier = "1500",
+                            VersionIdentifier = "2002-08-13T16:37:33"
+                        },
+                        Name = new Name
+                        {
+                            Language = "nl",
+                            Spelling = "HALLE"
+                        }
+                    },
+                    new()
+                    {
+                        Code = new Code
+                        {
+                            Namespace = PostalInfoNamespace,
+                            ObjectIdentifier = "3890",
+                            VersionIdentifier = "2002-08-13T14:37:33+02:00"
+                        },
+                        Name = new Name
+                        {
+                            Language = "nl",
+                            Spelling = "Boekhout/GINGELOM/Jeuk/Vorsen"
+                        }
+                    }
+                }
+            };
+
+            expected.Source.Should().Be("flanders");
+            expected.Timestamp.Should().Be(new DateTimeOffset(2024, 04, 05, 03, 50, 56, TimeSpan.Zero));
+        }
+
         [Fact]
         public void GivenPostalInfo_ThenSerializesCorrectly()
         {
-            var given = new PostalInfo[];
-
             //convert to xml entity
 
 
@@ -25,7 +85,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
    <tns:timestamp>2024-04-05T03:50:56</tns:timestamp>
    <tns:postalInfo>
       <com:code>
-         <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
+         <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
          <com:objectIdentifier>1500</com:objectIdentifier>
          <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
       </com:code>
@@ -36,17 +96,16 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
    </tns:postalInfo>
    <tns:postalInfo>
       <com:code>
-         <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
+         <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
          <com:objectIdentifier>3890</com:objectIdentifier>
-         <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
+         <com:versionIdentifier>2002-08-13T14:37:33+02:00</com:versionIdentifier>
       </com:code>
       <com:name>
          <com:language>nl</com:language>
-         <com:spelling>Boekhout/GINGELOM/Jeuk/Kortijs/Montenaken/Niel-Bij-Sint-Truiden/Vorsen</com:spelling>
+         <com:spelling>Boekhout/GINGELOM/Jeuk/Vorsen</com:spelling>
       </com:name>
    </tns:postalInfo>
-</tns:postalInfoResponseBySource>
-";
+</tns:postalInfoResponseBySource>";
         }
     }
 }

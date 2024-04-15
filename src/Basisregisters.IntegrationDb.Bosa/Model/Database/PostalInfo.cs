@@ -23,16 +23,16 @@ namespace Basisregisters.IntegrationDb.Bosa.Model
        		            ( SELECT
        		                       'nl' AS 'com:language',
        								pk.postnaam AS 'com:spelling'
-       						
+
        		            FOR
        		                XML PATH('com:name') ,
        		                    TYPE
-       		            ) 	
+       		            )
        		    FROM   dbo.vbr_postinfo pk
        		FOR
        		    XML PATH('tns:postalInfo') ,
        		        TYPE, ROOT ('tns:MyRoot')
        		);
        */
-    public record PostalInfo(string Namespace, string PostalCode, DateTimeOffset VersionTimestamp, string DutchName);
+    public record PostalInfo(string Namespace, string PostalCode, DateTimeOffset VersionTimestamp, string DutchName, string? CrabVersionTimestamp);
 }
