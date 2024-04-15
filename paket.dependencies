@@ -47,6 +47,7 @@ nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 4.0.1
 
 nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.5
 
+nuget Be.Vlaanderen.Basisregisters.GrAr.Common 21.1.0
 nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.1.0
 nuget Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Shaperon 10.0.2

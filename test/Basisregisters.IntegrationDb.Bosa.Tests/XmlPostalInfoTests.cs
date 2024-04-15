@@ -1,18 +1,20 @@
 namespace Basisregisters.IntegrationDb.Bosa.Tests
 {
     using System;
-    using System.Collections.Generic;
+    using System.IO;
     using FluentAssertions;
+    using Model.Database;
     using Model.Xml;
+    using Moq;
+    using Repositories;
     using Xunit;
-    using PostalInfo = Model.PostalInfo;
 
-    public class PostalInfoTests
+    public class XmlPostalInfoTests
     {
         private PostalInfo[] _given;
         private const string PostalInfoNamespace = "https://data.vlaanderen.be/id/postinfo";
 
-        public PostalInfoTests()
+        public XmlPostalInfoTests()
         {
             _given =
             [
@@ -27,21 +29,21 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         [Fact]
         public void GivenPostalInfo_ThenPostalInfoRootIsExpected()
         {
-            var expected = new PostalInfoRoot
+            var expected = new XmlPostalInfoRoot
             {
                 Source = "flanders",
                 Timestamp = new DateTimeOffset(2024, 04, 05, 03, 50, 56, TimeSpan.Zero),
-                PostalInfos = new List<Model.Xml.PostalInfo>
-                {
+                PostalInfos =
+                [
                     new()
                     {
-                        Code = new Code
+                        Code = new XmlCode
                         {
                             Namespace = PostalInfoNamespace,
                             ObjectIdentifier = "1500",
                             VersionIdentifier = "2002-08-13T16:37:33"
                         },
-                        Name = new Name
+                        Name = new XmlName
                         {
                             Language = "nl",
                             Spelling = "HALLE"
@@ -49,19 +51,19 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     },
                     new()
                     {
-                        Code = new Code
+                        Code = new XmlCode
                         {
                             Namespace = PostalInfoNamespace,
                             ObjectIdentifier = "3890",
                             VersionIdentifier = "2002-08-13T14:37:33+02:00"
                         },
-                        Name = new Name
+                        Name = new XmlName
                         {
                             Language = "nl",
                             Spelling = "Boekhout/GINGELOM/Jeuk/Vorsen"
                         }
                     }
-                }
+                ]
             };
 
             expected.Source.Should().Be("flanders");
@@ -71,7 +73,16 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         [Fact]
         public void GivenPostalInfo_ThenSerializesCorrectly()
         {
+            var repo = new Mock<IPostalInfoRepository>();
+            repo
+                .Setup(x => x.GetAll())
+                .Returns(_given);
+
+            var service = new PostalInfoService(repo.Object);
+            var zipArchive = service.Export(new MemoryStream());
+
             //convert to xml entity
+
 
 
             // serialize to xml

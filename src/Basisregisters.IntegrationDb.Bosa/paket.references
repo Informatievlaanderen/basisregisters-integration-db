@@ -4,6 +4,7 @@ AWSSDK.SimpleNotificationService
 AWSSDK.SimpleEmail
 
 Be.Vlaanderen.Basisregisters.Aws.DistributedMutex
+Be.Vlaanderen.Basisregisters.GrAr.Common
 Be.Vlaanderen.Basisregisters.GrAr.Extracts
 
 Dapper
