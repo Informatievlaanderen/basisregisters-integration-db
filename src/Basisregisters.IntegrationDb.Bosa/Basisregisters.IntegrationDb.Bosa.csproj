@@ -16,10 +16,5 @@
     <Content Include="init.sh" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
