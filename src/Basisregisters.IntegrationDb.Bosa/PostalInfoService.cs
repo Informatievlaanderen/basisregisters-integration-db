@@ -2,23 +2,30 @@
 {
     using System;
     using System.IO;
-    using System.IO.Compression;
     using System.Linq;
-    using System.Threading.Tasks;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Extensions;
     using Model.Xml;
+    using NodaTime;
     using Repositories;
 
-    public class PostalInfoService(IPostalInfoRepository repo)
+    public class PostalInfoService(
+        IClock clock,
+        IPostalInfoRepository repo) : IRegistryService
     {
-        public async Task<ZipArchive> Export(Stream outputStream)
+        private static string GetFileName() => $"FlandersPostalInfo{DateTimeOffset.Now:yyyyMMdd}L72";
+
+        public string GetXmlFileName() => $"{GetFileName()}.xml";
+        public string GetZipFileName() => $"{GetFileName()}.zip";
+
+        public void CreateXml(Stream outputStream)
         {
             var items = repo.GetAll();
 
             var serializable = new XmlPostalInfoRoot
             {
                 Source = "flanders",
-                Timestamp = DateTimeOffset.Now,
+                Timestamp = clock.GetCurrentInstant().ToBelgianDateTimeOffset(),
                 PostalInfos = items
                     .GroupBy(x => x.PostalCode)
                     .Select(x =>
@@ -45,10 +52,7 @@
                     .ToArray()
             };
 
-            return await RegistryZipArchiveFactory.Create(
-                outputStream,
-                serializable,
-                $"FlandersPostalInfo{DateTimeOffset.Now:yyyyMMdd}L72.xml");
+            RegistryXmlSerializer.Serialize(serializable, outputStream);
         }
     }
 }

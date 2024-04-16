@@ -64,6 +64,7 @@ nuget xunit 2.7.0
 nuget xunit.runner.visualstudio 2.5.7
 nuget xunit.categories 2.0.8
 nuget Moq 4.20.70
+nuget NodaTime.Testing 3.1.11
 
 nuget Serilog 3.1.1
 nuget Serilog.Settings.Configuration 8.0.0

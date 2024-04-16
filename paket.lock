@@ -570,6 +570,8 @@ NUGET
     NodaTime.Serialization.JsonNet (3.1)
       Newtonsoft.Json (>= 13.0.3)
       NodaTime (>= 3.0 < 4.0)
+    NodaTime.Testing (3.1.11)
+      NodaTime (>= 3.1.11)
     Npgsql (8.0.2)
       Microsoft.Extensions.Logging.Abstractions (>= 8.0)
     Npgsql.EntityFrameworkCore.PostgreSQL (8.0.2)

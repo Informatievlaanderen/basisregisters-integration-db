@@ -3,7 +3,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     using System;
     using System.Xml.Serialization;
 
-    [XmlType(Namespace = KnownNamespaces.Tns, TypeName = "postalInfoResponseBySource")]
+    [XmlRoot(Namespace = KnownNamespaces.Tns, ElementName = "postalInfoResponseBySource")]
     public class XmlPostalInfoRoot
     {
         [XmlElement(Namespace = KnownNamespaces.Tns, ElementName = "source")]
