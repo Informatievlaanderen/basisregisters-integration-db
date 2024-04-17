@@ -33,6 +33,7 @@ select
     , version.version_timestamp as CrabVersionTimestamp
 from integration_municipality.municipality_latest_items municipality
 left join {DatabaseSetup.Schema}.{DatabaseSetup.MunicipalityCrabVersionsTable} version on municipality.nis_code = version.nis_code
+where municipality.is_flemish_region = true
 order by municipality.nis_code";
 
             using var connection = new NpgsqlConnection(_connectionString);
