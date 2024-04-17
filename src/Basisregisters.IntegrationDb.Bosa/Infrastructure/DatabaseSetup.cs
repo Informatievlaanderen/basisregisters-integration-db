@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
 {
+    using System;
     using Dapper;
     using Npgsql;
 
@@ -18,15 +19,21 @@
             _connectionString = connectionString;
         }
 
-        public void CreateIfNotExist()
+        public void CheckIfDataPresent()
         {
             using var connection = new NpgsqlConnection(_connectionString);
 
-            connection.Execute("CREATE SCHEMA IF NOT EXISTS integration_bosa");
-            connection.Execute($"CREATE TABLE IF NOT EXISTS {Schema}.{PostalCrabVersionsTable} (postal_code varchar(4) PRIMARY KEY, version_timestamp TEXT NOT NULL)");
-            connection.Execute($"CREATE TABLE IF NOT EXISTS {Schema}.{MunicipalityCrabVersionsTable} (nis_code varchar(5) PRIMARY KEY, version_timestamp TEXT NOT NULL)");
-            connection.Execute($"CREATE TABLE IF NOT EXISTS {Schema}.{StreetNameCrabVersionsTable} (streetname_persistent_local_id INT PRIMARY KEY, version_timestamp TEXT NOT NULL, created_on TEXT NOT NULL)");
-            connection.Execute($"CREATE TABLE IF NOT EXISTS {Schema}.{AddressCrabVersionsTable} (address_persistent_local_id INT PRIMARY KEY, version_timestamp TEXT NOT NULL, created_on TEXT NOT NULL)");
+            CheckTableData(connection, PostalCrabVersionsTable);
+            CheckTableData(connection, MunicipalityCrabVersionsTable);
+            CheckTableData(connection, StreetNameCrabVersionsTable);
+            CheckTableData(connection, AddressCrabVersionsTable);
+        }
+
+        private static void CheckTableData(NpgsqlConnection connection, string table)
+        {
+            var postal = connection.Execute($"SELECT * FROM {Schema}.{table} LIMIT 1");
+            if(postal == 0)
+                throw new InvalidOperationException($"No data found in the {table} table");
         }
     }
 }
