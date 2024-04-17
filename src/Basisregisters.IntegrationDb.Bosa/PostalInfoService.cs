@@ -12,7 +12,7 @@
 
     public class PostalInfoService(
         IClock clock,
-        IPostalInfoRepository repo) : IRegistryService
+        IPostalInfoRepository repo) : BaseRegistryService<PostalInfo>, IRegistryService
     {
         private static string GetFileName() => $"FlandersPostalInfo{DateTimeOffset.Now:yyyyMMdd}L72";
 
@@ -38,11 +38,11 @@
                         {
                             Code = new XmlCode
                             {
-                                Namespace = $"{postalInfo.Namespace}",
+                                Namespace = postalInfo.Namespace,
                                 ObjectIdentifier = postalInfo.PostalCode,
                                 VersionIdentifier = ShouldUseNewVersion(postalInfo)
                                     ? postalInfo.VersionTimestamp.ToBelgianString()
-                                    : postalInfo.CrabVersionTimestamp
+                                    : postalInfo.CrabVersionTimestamp!
                             },
                             Name = new XmlName
                             {
@@ -55,12 +55,6 @@
             };
 
             RegistryXmlSerializer.Serialize(serializable, outputStream);
-        }
-
-        private static bool ShouldUseNewVersion(PostalInfo postalInfo)
-        {
-            return postalInfo.CrabVersionTimestamp is null ||
-                   postalInfo.VersionTimestamp >= new DateTime(2023, 11, 10);
         }
     }
 }

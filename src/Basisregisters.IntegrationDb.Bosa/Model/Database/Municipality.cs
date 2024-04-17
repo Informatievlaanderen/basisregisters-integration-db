@@ -2,26 +2,26 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 {
     using System;
 
-    public class PostalInfo : IHasVersionTimestamps
+    public class Municipality : IHasVersionTimestamps
     {
         public string Namespace { get; init; }
-        public string PostalCode { get; init; }
+        public string NisCode { get; init; }
         public DateTimeOffset VersionTimestamp { get; init; }
         public string DutchName { get; init; }
         public string? CrabVersionTimestamp { get; init; }
 
         // Needed for dapper
-        protected PostalInfo() { }
+        protected Municipality() { }
 
-        public PostalInfo(
+        public Municipality(
             string @namespace,
-            string postalCode,
+            string nisCode,
             DateTimeOffset versionTimestamp,
             string dutchName,
             string? crabVersionTimestamp)
         {
             Namespace = @namespace;
-            PostalCode = postalCode;
+            NisCode = nisCode;
             VersionTimestamp = versionTimestamp;
             DutchName = dutchName;
             CrabVersionTimestamp = crabVersionTimestamp;

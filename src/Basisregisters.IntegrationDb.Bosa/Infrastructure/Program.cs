@@ -70,6 +70,9 @@
                     services.AddTransient<IPostalInfoRepository, PostalInfoRepository>(_ => new PostalInfoRepository(connectionString));
                     services.AddTransient<IRegistryService, PostalInfoService>();
 
+                    services.AddTransient<IMunicipalityRepository, MunicipalityRepository>(_ => new MunicipalityRepository(connectionString));
+                    services.AddTransient<IRegistryService, MunicipalityService>();
+
                     services.AddSingleton<IClock>(_ => SystemClock.Instance);
 
                     services.AddHostedService<FullDownloadService>();
