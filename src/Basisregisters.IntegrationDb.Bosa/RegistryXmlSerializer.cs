@@ -23,8 +23,6 @@
             namespaces.Add("xsi", KnownNamespaces.Xsi);
 
             serializer.Serialize(streamWriter, input, namespaces);
-
-            outputStream.Seek(0, SeekOrigin.Begin);
         }
     }
 }

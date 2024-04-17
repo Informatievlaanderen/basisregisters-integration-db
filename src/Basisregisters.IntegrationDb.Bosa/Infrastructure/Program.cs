@@ -3,17 +3,17 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
-    using Autofac;
-    using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
     using Destructurama;
+    using IntegrationDb.Bosa;
+    using IntegrationDb.Bosa.Repositories;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using NodaTime;
     using Serilog;
     using Serilog.Debugging;
-    using Serilog.Extensions.Logging;
 
     public sealed class Program
     {
@@ -62,50 +62,17 @@
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    var loggerFactory = new SerilogLoggerFactory(Log.Logger); //NOSONAR logging configuration is safe
+                    var connectionString = hostContext.Configuration.GetConnectionString("Integration")
+                                           ?? throw new ArgumentNullException("hostContext.Configuration.GetConnectionString(\"Integration\")");
 
-                    // var connectionString = hostContext.Configuration.GetConnectionString("Consumer");
-                    // services
-                    //     .AddDbContextFactory<IdempotentConsumerContext>((_, options) => options
-                    //         .UseLoggerFactory(loggerFactory)
-                    //         .UseSqlServer(connectionString,
-                    //             sqlServerOptions =>
-                    //             {
-                    //                 sqlServerOptions.EnableRetryOnFailure();
-                    //                 sqlServerOptions.MigrationsHistoryTable(MigrationTables.Consumer, Schema.Consumer);
-                    //             }));
-                    // services
-                    //     .AddDbContext<ConsumerContext>((_, options) => options
-                    //         .UseLoggerFactory(loggerFactory)
-                    //         .UseSqlServer(connectionString, sqlServerOptions =>
-                    //         {
-                    //             sqlServerOptions.EnableRetryOnFailure();
-                    //             sqlServerOptions.MigrationsHistoryTable(MigrationTables.ConsumerProjections, Schema.ConsumerProjections);
-                    //         }));
+                    services.AddSingleton<DatabaseSetup>(_ => new DatabaseSetup(connectionString));
 
-                    // services.ConfigureIdempotency(
-                    //     hostContext.Configuration
-                    //         .GetSection(IdempotencyConfiguration.Section)
-                    //         .Get<IdempotencyConfiguration>()
-                    //         .ConnectionString!,
-                    //     new IdempotencyMigrationsTableInfo(Schema.Import),
-                    //     new IdempotencyTableInfo(Schema.Import),
-                    //     loggerFactory);
-                })
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>((hostContext, containerBuilder) =>
-                {
-                    var services = new ServiceCollection();
-                    var loggerFactory = new SerilogLoggerFactory(Log.Logger); //NOSONAR logging configuration is safe
+                    services.AddTransient<IPostalInfoRepository, PostalInfoRepository>(_ => new PostalInfoRepository(connectionString));
+                    services.AddTransient<IRegistryService, PostalInfoService>();
 
-                    // containerBuilder.RegisterModule(new ApiModule(hostContext.Configuration, services, loggerFactory));
+                    services.AddSingleton<IClock>(_ => SystemClock.Instance);
 
-                    // containerBuilder
-                    //     .RegisterType<ConsumerProjections>()
-                    //     .As<IHostedService>()
-                    //     .SingleInstance();
-
-                    containerBuilder.Populate(services);
+                    services.AddHostedService<FullDownloadService>();
                 })
                 .UseConsoleLifetime()
                 .Build();
@@ -113,19 +80,20 @@
             Log.Information("Starting IntegrationDb.Bosa");
 
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
-            var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
             var configuration = host.Services.GetRequiredService<IConfiguration>();
 
             try
             {
                 await DistributedLock<Program>.RunAsync(
-                        async () =>
-                        {
-                            await host.RunAsync().ConfigureAwait(false);
-                        },
-                        DistributedLockOptions.LoadFromConfiguration(configuration),
-                        logger)
-                    .ConfigureAwait(false);
+                    async () =>
+                    {
+                        host.Services.GetRequiredService<DatabaseSetup>().CheckIfDataPresent();
+
+                        await host.RunAsync().ConfigureAwait(false);
+                    },
+                    DistributedLockOptions.LoadFromConfiguration(configuration),
+                    logger)
+                .ConfigureAwait(false);
             }
             catch (AggregateException aggregateException)
             {
@@ -137,7 +105,7 @@
             catch (Exception e)
             {
                 logger.LogCritical(e, "Encountered a fatal exception, exiting program.");
-                Log.CloseAndFlush();
+                await Log.CloseAndFlushAsync();
 
                 // Allow some time for flushing before shutdown.
                 await Task.Delay(500, default);
@@ -148,22 +116,5 @@
                 logger.LogInformation("Stopping...");
             }
         }
-
-        // private static IServiceProvider ConfigureServices(IConfiguration configuration)
-        // {
-        //     var services = new ServiceCollection();
-        //     var builder = new ContainerBuilder();
-        //
-        //     var tempProvider = services.BuildServiceProvider();
-        //     var loggerFactory = tempProvider.GetRequiredService<ILoggerFactory>();
-        //
-        //     // builder.RegisterModule(new ApiModule(configuration, services, loggerFactory));
-        //     // builder.RegisterModule(new ConsumerModule(configuration, services, loggerFactory));
-        //     // builder.RegisterModule(new ProjectorModule(configuration));
-        //
-        //     builder.Populate(services);
-        //
-        //     return new AutofacServiceProvider(builder.Build());
-        // }
     }
 }
