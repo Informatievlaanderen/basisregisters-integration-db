@@ -6,8 +6,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     {
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "namespace")]
         public string Namespace { get; set; }
+
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "objectIdentifier")]
         public string ObjectIdentifier { get; set; }
+
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "versionIdentifier")]
         public string VersionIdentifier { get; set; }
     }

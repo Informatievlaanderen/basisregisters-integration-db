@@ -5,6 +5,7 @@
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Extensions;
+    using Model.Database;
     using Model.Xml;
     using NodaTime;
     using Repositories;
@@ -37,10 +38,11 @@
                         {
                             Code = new XmlCode
                             {
-                                Namespace = $"{postalInfo.Namespace}/", // Remove slash after comparison
+                                Namespace = $"{postalInfo.Namespace}",
                                 ObjectIdentifier = postalInfo.PostalCode,
-                                VersionIdentifier = postalInfo.CrabVersionTimestamp
-                                                    ?? postalInfo.VersionTimestamp.ToBelgianString()
+                                VersionIdentifier = ShouldUseNewVersion(postalInfo)
+                                    ? postalInfo.VersionTimestamp.ToBelgianString()
+                                    : postalInfo.CrabVersionTimestamp
                             },
                             Name = new XmlName
                             {
@@ -53,6 +55,12 @@
             };
 
             RegistryXmlSerializer.Serialize(serializable, outputStream);
+        }
+
+        private static bool ShouldUseNewVersion(PostalInfo postalInfo)
+        {
+            return postalInfo.CrabVersionTimestamp is null ||
+                   postalInfo.VersionTimestamp >= new DateTime(2023, 11, 10);
         }
     }
 }

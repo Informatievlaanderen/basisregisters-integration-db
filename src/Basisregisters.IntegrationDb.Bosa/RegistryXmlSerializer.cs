@@ -14,7 +14,6 @@
             {
                 Encoding = new UTF8Encoding(false),
                 Indent = true,
-                IndentChars = "   "
             });
 
             var serializer = new XmlSerializer(typeof(T));
