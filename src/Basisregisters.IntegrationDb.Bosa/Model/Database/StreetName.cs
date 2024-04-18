@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Bosa.Model.Database
+namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 {
     using System;
 
@@ -10,7 +10,7 @@
         Rejected = 3
     }
 
-    public class StreetName
+    public class StreetName : IHasVersionTimestamps
     {
         public string StreetNamePersistentLocalId { get; set; }
         public string Namespace { get; set; }
