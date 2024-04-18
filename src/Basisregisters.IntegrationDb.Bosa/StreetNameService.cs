@@ -1,15 +1,14 @@
 namespace Basisregisters.IntegrationDb.Bosa
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Extensions;
     using Model.Database;
     using Model.Xml;
     using NodaTime;
     using Repositories;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
     public class StreetNameService(
         IClock clock,
@@ -31,22 +30,34 @@ namespace Basisregisters.IntegrationDb.Bosa
                 StreetNames = items
                     .Select(streetName =>
                     {
+                        var beginLifeSpanVersion = GetVersionAsString(streetName.CreatedOn);
+                        var endLifeSpanVersion = GetEndLifeSpanVersion(streetName);
+
                         return new XmlStreetName
                         {
-                            BeginLifeSpanVersion = streetName.CreatedOn,
+                            BeginLifeSpanVersion = beginLifeSpanVersion,
                             EndLifeSpanVersion = GetEndLifeSpanVersion(streetName),
                             Code = new XmlCode
                             {
                                 Namespace = streetName.Namespace,
                                 ObjectIdentifier = streetName.StreetNamePersistentLocalId,
-                                VersionIdentifier = ShouldUseNewVersion(streetName)
-                                    ? streetName.VersionTimestamp.ToBelgianString()
-                                    : streetName.CrabVersionTimestamp!
+                                VersionIdentifier = GetVersionAsString(streetName)
                             },
                             Names = GetNames(streetName).ToArray(),
                             Status = new XmlStreetNameStatus
                             {
-                                Status = 
+                                Status = GetStatus(streetName),
+                                ValidFrom = beginLifeSpanVersion,
+                                ValidTo = endLifeSpanVersion
+                            },
+                            Type = "streetname",
+                            IsAssignedByMunicipality = new XmlCode
+                            {
+                                Namespace = streetName.MunicipalityNamespace,
+                                ObjectIdentifier = streetName.NisCode,
+                                VersionIdentifier = GetVersionAsString(
+                                    streetName.MunicipalityCrabVersionTimestamp,
+                                    streetName.MunicipalityVersionTimestamp)
                             }
                         };
                     })
@@ -59,9 +70,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         private static string? GetEndLifeSpanVersion(StreetName streetName)
         {
             return streetName.Status is StreetNameStatus.Rejected or StreetNameStatus.Retired
-                ? ShouldUseNewVersion(streetName)
-                    ? streetName.VersionTimestamp.ToBelgianString()
-                    : streetName.CrabVersionTimestamp!
+                ? GetVersionAsString(streetName)
                 : null;
         }
 
@@ -93,6 +102,18 @@ namespace Basisregisters.IntegrationDb.Bosa
                     Spelling = streetName.NameGerman
                 };
             }
+        }
+
+        private static string GetStatus(StreetName streetName)
+        {
+            return streetName.Status switch
+            {
+                StreetNameStatus.Proposed => "proposed",
+                StreetNameStatus.Current => "current",
+                StreetNameStatus.Retired => "retired",
+                StreetNameStatus.Rejected => "retired",
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     public class XmlStreetName
     {
         [XmlAttribute("beginLifeSpanVersion")]
-        public DateTimeOffset BeginLifeSpanVersion { get; set; }
+        public string BeginLifeSpanVersion { get; set; }
 
         [XmlAttribute("endLifeSpanVersion")]
         public string? EndLifeSpanVersion { get; set; }
@@ -47,8 +47,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "status")]
         public string Status { get; set; }
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "validFrom")]
-        public DateTimeOffset ValidFrom { get; set; }
+        public string ValidFrom { get; set; }
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "validTo")]
-        public DateTimeOffset ValidTo { get; set; }
+        public string? ValidTo { get; set; }
     }
 }

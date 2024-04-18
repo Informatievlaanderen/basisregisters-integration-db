@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Bosa
+namespace Basisregisters.IntegrationDb.Bosa
 {
     using System;
     using System.IO;
@@ -40,9 +40,7 @@
                             {
                                 Namespace = postalInfo.Namespace,
                                 ObjectIdentifier = postalInfo.PostalCode,
-                                VersionIdentifier = ShouldUseNewVersion(postalInfo)
-                                    ? postalInfo.VersionTimestamp.ToBelgianString()
-                                    : postalInfo.CrabVersionTimestamp!
+                                VersionIdentifier = GetVersionAsString(postalInfo)
                             },
                             Name = new XmlName
                             {

@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Bosa
+namespace Basisregisters.IntegrationDb.Bosa
 {
     using System;
     using System.IO;
@@ -34,9 +34,7 @@
                         {
                             Namespace = x.Namespace,
                             ObjectIdentifier = x.NisCode,
-                            VersionIdentifier = ShouldUseNewVersion(x)
-                                ? x.VersionTimestamp.ToBelgianString()
-                                : x.CrabVersionTimestamp!
+                            VersionIdentifier = GetVersionAsString(x)
                         },
                         Name = new XmlName
                         {

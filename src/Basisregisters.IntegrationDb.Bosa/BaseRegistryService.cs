@@ -1,14 +1,31 @@
-﻿namespace Basisregisters.IntegrationDb.Bosa
+namespace Basisregisters.IntegrationDb.Bosa
 {
     using System;
+    using Extensions;
     using Model;
 
     public class BaseRegistryService<T> where T : IHasVersionTimestamps
     {
-        protected static bool ShouldUseNewVersion(T obj)
+        private static readonly DateTime NewVersionMigration = new (2023, 11, 10);
+
+        protected static string GetVersionAsString(T obj)
         {
-            return obj.CrabVersionTimestamp is null ||
-                   obj.VersionTimestamp >= new DateTime(2023, 11, 10);
+            return GetVersionAsString(obj.CrabVersionTimestamp, obj.VersionTimestamp);
+        }
+
+        protected static string GetVersionAsString(string? crabVersionTimestamp, DateTimeOffset versionTimestamp)
+        {
+            return crabVersionTimestamp is null ||
+                   versionTimestamp >= NewVersionMigration
+                ? versionTimestamp.ToBelgianString()
+                : crabVersionTimestamp;
+        }
+
+        protected static string GetVersionAsString(DateTimeOffset value)
+        {
+            return value >= NewVersionMigration
+                ? value.ToBelgianString()
+                : value.ToString(); //TODO-rik wacht op Koen reply
         }
     }
 }
