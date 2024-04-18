@@ -8,7 +8,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Repositories
 
     public interface IPostalInfoRepository
     {
-        IEnumerable<PostalInfo> GetAll();
+        IEnumerable<PostalInfo> GetFlemish();
     }
 
     public sealed class PostalInfoRepository : IPostalInfoRepository
@@ -20,7 +20,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Repositories
             _connectionString = connectionString;
         }
 
-        public IEnumerable<PostalInfo> GetAll()
+        public IEnumerable<PostalInfo> GetFlemish()
         {
             const string sql = @$"
 select

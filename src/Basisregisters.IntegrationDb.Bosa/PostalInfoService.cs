@@ -21,7 +21,7 @@
 
         public void CreateXml(Stream outputStream)
         {
-            var items = repo.GetAll();
+            var items = repo.GetFlemish();
 
             var serializable = new XmlPostalInfoRoot
             {

@@ -73,6 +73,9 @@
                     services.AddTransient<IMunicipalityRepository, MunicipalityRepository>(_ => new MunicipalityRepository(connectionString));
                     services.AddTransient<IRegistryService, MunicipalityService>();
 
+                    services.AddTransient<IStreetNameRepository, StreetNameRepository>(_ => new StreetNameRepository(connectionString));
+
+
                     services.AddSingleton<IClock>(_ => SystemClock.Instance);
 
                     services.AddHostedService<FullDownloadService>();

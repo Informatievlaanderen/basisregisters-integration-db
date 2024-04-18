@@ -35,7 +35,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             var repo = new Mock<IPostalInfoRepository>();
             repo
-                .Setup(x => x.GetAll())
+                .Setup(x => x.GetFlemish())
                 .Returns(_given);
 
             var clock = new FakeClock(NodaConstants.UnixEpoch);
