@@ -47,6 +47,7 @@ inner join
 (select sv.persistent_local_id, min(sv.created_on_timestamp) as created_on
 from integration_streetname.streetname_versions sv
 group by sv.persistent_local_id) c on s.persistent_local_id = c.persistent_local_id
+where s.is_removed = false
 order by m.nis_code, s.persistent_local_id";
 
             using var connection = new NpgsqlConnection(_connectionString);
