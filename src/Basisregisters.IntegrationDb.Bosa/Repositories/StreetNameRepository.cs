@@ -23,8 +23,8 @@
         {
             const string sql = @"
 select
-	s.persistent_local_id as StreetNamePersistentLocalId
-	, s.namespace as Namespace
+    s.namespace as Namespace
+	, s.persistent_local_id as StreetNamePersistentLocalId
 	, s.status as Status
 	, s.version_timestamp as VersionTimestamp
 	, sc.version_timestamp as CrabVersionTimestamp

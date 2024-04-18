@@ -46,8 +46,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     {
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "status")]
         public string Status { get; set; }
+
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "validFrom")]
         public string ValidFrom { get; set; }
+
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "validTo")]
         public string? ValidTo { get; set; }
     }

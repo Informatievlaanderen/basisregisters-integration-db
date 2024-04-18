@@ -34,11 +34,11 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         protected StreetName() { }
 
         public StreetName(
-            string streetNamePersistentLocalId,
             string @namespace,
+            string streetNamePersistentLocalId,
             StreetNameStatus status,
             DateTimeOffset versionTimestamp,
-            string crabVersionTimestamp,
+            string? crabVersionTimestamp,
             DateTimeOffset createdOn,
             string? nameDutch,
             string? nameFrench,
@@ -48,8 +48,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             DateTimeOffset municipalityVersionTimestamp,
             string municipalityCrabVersionTimestamp)
         {
-            StreetNamePersistentLocalId = streetNamePersistentLocalId;
             Namespace = @namespace;
+            StreetNamePersistentLocalId = streetNamePersistentLocalId;
             Status = status;
             VersionTimestamp = versionTimestamp;
             CrabVersionTimestamp = crabVersionTimestamp;

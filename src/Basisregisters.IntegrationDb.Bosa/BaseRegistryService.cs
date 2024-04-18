@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         {
             return value >= NewVersionMigration
                 ? value.ToBelgianString()
-                : value.ToString(); //TODO-rik wacht op Koen reply
+                : value.ToString("yyyy-MM-ddTHH:mm:ss");
         }
     }
 }
