@@ -36,9 +36,6 @@ select
 	, m.namespace as MunicipalityNamespace
 	, m.version_timestamp as MunicipalityVersionTimestamp
 	, mc.version_timestamp as MunicipalityCrabVersionTimestamp
-	, m.official_language_dutch as HasOfficialLanguageDutch
-	, m.official_language_french as HasOfficialLanguageFrench
-	, m.official_language_german as HasOfficialLanguageGerman
 from integration_streetname.streetname_latest_items s
 inner join integration_municipality.municipality_latest_items m on m.municipality_id = s.municipality_id and m.is_flemish_region = true
 left join integration_bosa.municipality_crab_versions mc on mc.nis_code = m.nis_code

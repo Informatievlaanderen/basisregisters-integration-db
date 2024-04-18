@@ -30,11 +30,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public DateTimeOffset MunicipalityVersionTimestamp { get; set; }
         public string? MunicipalityCrabVersionTimestamp { get; set; }
 
-        public bool? HasOfficialLanguageDutch { get; set; }
-        public bool? HasOfficialLanguageFrench { get; set; }
-        public bool? HasOfficialLanguageGerman { get; set; }
-
-
         // Needed for Dapper
         protected StreetName() { }
 
@@ -51,10 +46,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             string nisCode,
             string municipalityNamespace,
             DateTimeOffset municipalityVersionTimestamp,
-            string municipalityCrabVersionTimestamp,
-            bool? hasOfficialLanguageDutch,
-            bool? hasOfficialLanguageFrench,
-            bool? hasOfficialLanguageGerman)
+            string municipalityCrabVersionTimestamp)
         {
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
             Namespace = @namespace;
@@ -69,9 +61,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             MunicipalityNamespace = municipalityNamespace;
             MunicipalityVersionTimestamp = municipalityVersionTimestamp;
             MunicipalityCrabVersionTimestamp = municipalityCrabVersionTimestamp;
-            HasOfficialLanguageDutch = hasOfficialLanguageDutch;
-            HasOfficialLanguageFrench = hasOfficialLanguageFrench;
-            HasOfficialLanguageGerman = hasOfficialLanguageGerman;
         }
     }
 }
