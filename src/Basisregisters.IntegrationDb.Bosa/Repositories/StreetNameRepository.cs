@@ -60,10 +60,11 @@ order by m.nis_code, s.persistent_local_id";
         {
             const string sql = @"
 select
-	s.persistent_local_id as StreetNamePersistentLocalId
-    , s.namespace as Namespace
-	, s.version_timestamp as VersionTimestamp
+	s.namespace as Namespace
+	, s.persistent_local_id as StreetNamePersistentLocalId
+    , s.version_timestamp as VersionTimestamp
 	, sc.version_timestamp as CrabVersionTimestamp
+	, m.nis_code as NisCode
 from integration_streetname.streetname_latest_items s
 inner join integration_municipality.municipality_latest_items m on m.municipality_id = s.municipality_id and m.is_flemish_region = true
 left join integration_bosa.streetname_crab_versions sc on sc.streetname_persistent_local_id = s.persistent_local_id

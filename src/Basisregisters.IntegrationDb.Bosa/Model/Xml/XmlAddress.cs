@@ -19,6 +19,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     [XmlType(Namespace = KnownNamespaces.Tns, TypeName = "address")]
     public class XmlAddress
     {
+        [XmlIgnore]
+        public int AddressPeristentLocalId { get; set; }
+
         [XmlAttribute("beginLifeSpanVersion")]
         public string BeginLifeSpanVersion { get; set; }
 

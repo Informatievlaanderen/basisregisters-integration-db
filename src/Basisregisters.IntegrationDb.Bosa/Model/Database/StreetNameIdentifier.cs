@@ -4,26 +4,28 @@
 
     public class StreetNameIdentifier
     {
-        public string StreetNamePersistentLocalId { get; init; }
         public string Namespace { get; init; }
+        public int StreetNamePersistentLocalId { get; init; }
         public DateTimeOffset VersionTimestamp { get; init; }
         public string? CrabVersionTimestamp { get; init; }
-
-        public StreetNameIdentifier(
-            string streetNamePersistentLocalId,
-            string @namespace,
-            DateTimeOffset versionTimestamp,
-            string? crabVersionTimestamp)
-        {
-            StreetNamePersistentLocalId = streetNamePersistentLocalId;
-            Namespace = @namespace;
-            VersionTimestamp = versionTimestamp;
-            CrabVersionTimestamp = crabVersionTimestamp;
-        }
-
+        public string NisCode { get; set; }
 
         // Needed for Dapper
         protected StreetNameIdentifier()
         { }
+
+        public StreetNameIdentifier(
+            string @namespace,
+            int streetNamePersistentLocalId,
+            DateTimeOffset versionTimestamp,
+            string? crabVersionTimestamp,
+            string nisCode)
+        {
+            Namespace = @namespace;
+            StreetNamePersistentLocalId = streetNamePersistentLocalId;
+            VersionTimestamp = versionTimestamp;
+            CrabVersionTimestamp = crabVersionTimestamp;
+            NisCode = nisCode;
+        }
     }
 }

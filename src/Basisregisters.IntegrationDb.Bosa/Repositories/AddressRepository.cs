@@ -30,7 +30,6 @@ select
 	, a.version_timestamp as VersionTimestamp
 	, ac.version_timestamp as CrabVersionTimestamp
     , ac.created_on as CrabCreatedOn
-	--, c.created_on as CreatedOn
     , (select av.created_on_timestamp
        from integration_address.address_versions av
        where av.persistent_local_id = a.persistent_local_id
@@ -45,10 +44,6 @@ select
 	, a.officially_assigned as OfficiallyAssigned
 from integration_address.address_latest_items a
 left join integration_bosa.address_crab_versions ac on ac.address_persistent_local_id = a.persistent_local_id
---inner join
---(select av.persistent_local_id, min(av.created_on_timestamp) as created_on
---from integration_address.address_versions av
---group by av.persistent_local_id) c on a.persistent_local_id = c.persistent_local_id
 where a.removed = false
 order by a.persistent_local_id";
 
