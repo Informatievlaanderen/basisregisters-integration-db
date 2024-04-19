@@ -67,7 +67,7 @@ namespace Basisregisters.IntegrationDb.Bosa
             RegistryXmlSerializer.Serialize(serializable, outputStream);
         }
 
-        private static string? GetBeginLifeSpanVersion(StreetName streetName)
+        private static string GetBeginLifeSpanVersion(StreetName streetName)
             => streetName.CrabCreatedOn ?? GetVersionAsString(streetName.CreatedOn);
 
         private static string? GetEndLifeSpanVersion(StreetName streetName)

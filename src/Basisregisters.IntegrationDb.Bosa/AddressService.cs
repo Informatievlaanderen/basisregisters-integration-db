@@ -41,9 +41,6 @@ namespace Basisregisters.IntegrationDb.Bosa
             var xmlAddresses = new ConcurrentBag<XmlAddress>();
             Parallel.ForEach(addresses, address =>
             {
-                var beginLifeSpanVersion = GetBeginLifeSpanVersion(address);
-                var endLifeSpanVersion = GetEndLifeSpanVersion(address);
-
                 if (!streetNames.TryGetValue(address.StreetNamePersistentLocalId, out var streetName))
                 {
                     logger.LogInformation($"No street name found for {address.StreetNamePersistentLocalId}");
@@ -57,6 +54,9 @@ namespace Basisregisters.IntegrationDb.Bosa
                 }
 
                 var municipality = municipalities[streetName.NisCode];
+
+                var beginLifeSpanVersion = GetBeginLifeSpanVersion(address);
+                var endLifeSpanVersion = GetEndLifeSpanVersion(address);
 
                 var xmlAddress = new XmlAddress
                 {
@@ -138,7 +138,7 @@ namespace Basisregisters.IntegrationDb.Bosa
             RegistryXmlSerializer.Serialize(serializable, outputStream);
         }
 
-        private static string? GetBeginLifeSpanVersion(Address address)
+        private static string GetBeginLifeSpanVersion(Address address)
             => address.CrabCreatedOn ?? GetVersionAsString(address.CreatedOn);
 
         private static string? GetEndLifeSpanVersion(Address address)
@@ -148,7 +148,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 : null;
         }
 
-        private string GetPositionSpecification(Address address)
+        private static string GetPositionSpecification(Address address)
         {
             return address.PositionSpecification switch
             {
@@ -166,7 +166,7 @@ namespace Basisregisters.IntegrationDb.Bosa
             };
         }
 
-        private string GetPositionGeometryMethod(Address address)
+        private static string GetPositionGeometryMethod(Address address)
         {
             return address.PositionGeometryMethod switch
             {
