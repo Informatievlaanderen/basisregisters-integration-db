@@ -12,8 +12,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
     public class StreetName : IHasVersionTimestamps
     {
-        public string StreetNamePersistentLocalId { get; init; }
         public string Namespace { get; init; }
+        public string StreetNamePersistentLocalId { get; init; }
 
         public StreetNameStatus Status { get; init; }
 
