@@ -8,6 +8,7 @@
     public interface IStreetNameRepository
     {
         IEnumerable<StreetName> GetFlemish();
+        IEnumerable<StreetNameIdentifier> GetFlemishIdentifiers();
     }
 
     public class StreetNameRepository : IStreetNameRepository
@@ -50,9 +51,30 @@ order by m.nis_code, s.persistent_local_id";
 
             using var connection = new NpgsqlConnection(_connectionString);
 
-            var postalCodes = connection.Query<StreetName>(sql);
+            var streetNames = connection.Query<StreetName>(sql);
 
-            return postalCodes;
+            return streetNames;
+        }
+
+        public IEnumerable<StreetNameIdentifier> GetFlemishIdentifiers()
+        {
+            const string sql = @"
+select
+	s.persistent_local_id as StreetNamePersistentLocalId
+    , s.namespace as Namespace
+	, s.version_timestamp as VersionTimestamp
+	, sc.version_timestamp as CrabVersionTimestamp
+from integration_streetname.streetname_latest_items s
+inner join integration_municipality.municipality_latest_items m on m.municipality_id = s.municipality_id and m.is_flemish_region = true
+left join integration_bosa.streetname_crab_versions sc on sc.streetname_persistent_local_id = s.persistent_local_id
+where s.is_removed = false
+order by m.nis_code, s.persistent_local_id";
+
+            using var connection = new NpgsqlConnection(_connectionString);
+
+            var identifiers = connection.Query<StreetNameIdentifier>(sql);
+
+            return identifiers;
         }
     }
 }
