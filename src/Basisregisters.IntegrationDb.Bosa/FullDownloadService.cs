@@ -10,6 +10,7 @@ namespace Basisregisters.IntegrationDb.Bosa
     using Be.Vlaanderen.Basisregisters.BlobStore;
     using Be.Vlaanderen.Basisregisters.BlobStore.Aws;
     using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
+    using FluentFTP;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -19,6 +20,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         private readonly IEnumerable<IRegistryService> _registryServices;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
         private readonly IBlobClient _blobClient;
+        private readonly IAsyncFtpClient _asyncFtpClient;
         private readonly INotificationService _notificationService;
         private readonly FullDownloadOptions _options;
         private readonly ILogger<FullDownloadService> _logger;
@@ -28,12 +30,14 @@ namespace Basisregisters.IntegrationDb.Bosa
             IHostApplicationLifetime hostApplicationLifetime,
             IOptions<FullDownloadOptions> options,
             IBlobClient blobClient,
+            IAsyncFtpClient asyncFtpClient,
             INotificationService notificationService,
             ILoggerFactory loggerFactory)
         {
             _registryServices = registryServices;
             _hostApplicationLifetime = hostApplicationLifetime;
             _blobClient = blobClient;
+            _asyncFtpClient = asyncFtpClient;
             _notificationService = notificationService;
             _options = options.Value;
             _logger = loggerFactory.CreateLogger<FullDownloadService>();
@@ -75,7 +79,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
                 if (_options.UploadToFtp)
                 {
-                    // Todo: place full zip on FTP
+                    await UploadToFtp(fullZipStream, fullZipFileName, stoppingToken);
                 }
 
                 await _notificationService.PublishToTopicAsync(new NotificationMessage(
@@ -95,6 +99,20 @@ namespace Basisregisters.IntegrationDb.Bosa
                     NotificationSeverity.Danger));
 
                 throw;
+            }
+        }
+
+        private async Task UploadToFtp(Stream stream, string fileName, CancellationToken cancellationToken)
+        {
+            await _asyncFtpClient.AutoConnect(cancellationToken);
+
+            var uploadStatus = await _asyncFtpClient.UploadStream(stream, $"{_options.FtpFolder}/{fileName}", token: cancellationToken);
+
+            await _asyncFtpClient.Disconnect(cancellationToken);
+
+            if (uploadStatus != FtpStatus.Success)
+            {
+                throw new Exception($"Upload to FTP failed with status '{uploadStatus}'");
             }
         }
 

@@ -13,6 +13,7 @@ nuget Autofac.Extensions.DependencyInjection 9.0.0
 
 nuget Dapper 2.1.35
 nuget Destructurama.JsonNet 3.0.0
+nuget FluentFTP 50.0.1
 nuget NodaTime 3.1.11
 nuget Newtonsoft.Json 13.0.3
 nuget GeoJSON.NET 1.2.19

@@ -11,6 +11,7 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
     using Be.Vlaanderen.Basisregisters.BlobStore.Aws;
     using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
     using Destructurama;
+    using FluentFTP;
     using IntegrationDb.Bosa;
     using IntegrationDb.Bosa.Infrastructure.Options;
     using IntegrationDb.Bosa.Repositories;
@@ -114,6 +115,14 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
                             : new AmazonS3Client();
                         
                         return new S3BlobClient(s3Client, options.UploadBucket);
+                    });
+
+                    services.Configure<FtpOptions>(hostContext.Configuration.GetSection("Ftp"));
+                    services.AddSingleton<IAsyncFtpClient>(sp =>
+                    {
+                        var options = sp.GetRequiredService<IOptions<FtpOptions>>().Value;
+
+                        return new AsyncFtpClient(options.Host, options.Username, options.Password, options.Port ?? 0);
                     });
                     
                     services.AddHostedService<FullDownloadService>();

@@ -231,6 +231,7 @@ NUGET
       System.ValueTuple (>= 4.5)
     FluentAssertions (6.12)
       System.Configuration.ConfigurationManager (>= 4.4)
+    FluentFTP (50.0.1)
     FluentValidation (11.9)
     FluentValidation.AspNetCore (11.3)
       FluentValidation (>= 11.5.1)
