@@ -62,7 +62,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 {
                     AddressPeristentLocalId = address.AddressPersistentLocalId,
                     BeginLifeSpanVersion = beginLifeSpanVersion,
-                    EndLifeSpanVersion = GetEndLifeSpanVersion(address),
+                    EndLifeSpanVersion = endLifeSpanVersion,
                     Code = new XmlCode
                     {
                         Namespace = address.Namespace, ObjectIdentifier = address.AddressPersistentLocalId.ToString(),
@@ -94,8 +94,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     Status = new XmlAddressStatus
                     {
                         Status = GetStatus(address),
-                        ValidFrom = beginLifeSpanVersion,
-                        ValidTo = endLifeSpanVersion
+                        ValidFrom = beginLifeSpanVersion
                     },
                     HasStreetName = new XmlCode
                     {

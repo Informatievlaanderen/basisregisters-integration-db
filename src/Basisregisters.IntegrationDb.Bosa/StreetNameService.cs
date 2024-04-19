@@ -36,7 +36,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                         return new XmlStreetName
                         {
                             BeginLifeSpanVersion = beginLifeSpanVersion,
-                            EndLifeSpanVersion = GetEndLifeSpanVersion(streetName),
+                            EndLifeSpanVersion = endLifeSpanVersion,
                             Code = new XmlCode
                             {
                                 Namespace = streetName.Namespace,
