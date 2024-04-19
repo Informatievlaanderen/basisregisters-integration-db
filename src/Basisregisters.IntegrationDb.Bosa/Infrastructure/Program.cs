@@ -74,7 +74,7 @@
                     services.AddTransient<IRegistryService, MunicipalityService>();
 
                     services.AddTransient<IStreetNameRepository, StreetNameRepository>(_ => new StreetNameRepository(connectionString));
-
+                    services.AddTransient<IRegistryService, StreetNameService>();
 
                     services.AddSingleton<IClock>(_ => SystemClock.Instance);
 

@@ -30,7 +30,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 StreetNames = items
                     .Select(streetName =>
                     {
-                        var beginLifeSpanVersion = GetVersionAsString(streetName.CreatedOn);
+                        var beginLifeSpanVersion = GetBeginLifeSpanVersion(streetName);
                         var endLifeSpanVersion = GetEndLifeSpanVersion(streetName);
 
                         return new XmlStreetName
@@ -66,6 +66,9 @@ namespace Basisregisters.IntegrationDb.Bosa
 
             RegistryXmlSerializer.Serialize(serializable, outputStream);
         }
+
+        private static string? GetBeginLifeSpanVersion(StreetName streetName)
+            => streetName.CrabCreatedOn ?? GetVersionAsString(streetName.CreatedOn);
 
         private static string? GetEndLifeSpanVersion(StreetName streetName)
         {

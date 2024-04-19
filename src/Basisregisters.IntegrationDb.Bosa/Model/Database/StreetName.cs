@@ -12,26 +12,28 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
     public class StreetName : IHasVersionTimestamps
     {
-        public string StreetNamePersistentLocalId { get; set; }
-        public string Namespace { get; set; }
+        public string StreetNamePersistentLocalId { get; init; }
+        public string Namespace { get; init; }
 
-        public StreetNameStatus Status { get; set; }
+        public StreetNameStatus Status { get; init; }
 
         public DateTimeOffset VersionTimestamp { get; init; }
         public string? CrabVersionTimestamp { get; init; }
+        public string? CrabCreatedOn { get; init; }
 
-        public DateTimeOffset CreatedOn { get; set; }
-        public string? NameDutch { get; }
-        public string? NameFrench { get; }
-        public string? NameGerman { get; }
+        public DateTimeOffset CreatedOn { get; init; }
+        public string? NameDutch { get; init; }
+        public string? NameFrench { get; init; }
+        public string? NameGerman { get; init; }
 
-        public string NisCode { get; set; }
-        public string MunicipalityNamespace { get; set; }
-        public DateTimeOffset MunicipalityVersionTimestamp { get; set; }
-        public string? MunicipalityCrabVersionTimestamp { get; set; }
+        public string NisCode { get; init; }
+        public string MunicipalityNamespace { get; init; }
+        public DateTimeOffset MunicipalityVersionTimestamp { get; init; }
+        public string? MunicipalityCrabVersionTimestamp { get; init; }
 
         // Needed for Dapper
-        protected StreetName() { }
+        protected StreetName()
+        { }
 
         public StreetName(
             string @namespace,
@@ -39,6 +41,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             StreetNameStatus status,
             DateTimeOffset versionTimestamp,
             string? crabVersionTimestamp,
+            string? crabCreatedOn,
             DateTimeOffset createdOn,
             string? nameDutch,
             string? nameFrench,
@@ -53,6 +56,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             Status = status;
             VersionTimestamp = versionTimestamp;
             CrabVersionTimestamp = crabVersionTimestamp;
+            CrabCreatedOn = crabCreatedOn;
             CreatedOn = createdOn;
             NameDutch = nameDutch;
             NameFrench = nameFrench;

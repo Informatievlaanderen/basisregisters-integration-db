@@ -28,6 +28,7 @@ select
 	, s.status as Status
 	, s.version_timestamp as VersionTimestamp
 	, sc.version_timestamp as CrabVersionTimestamp
+    , sc.created_on as CrabCreatedOn
 	, c.created_on as CreatedOn
     , s.name_dutch as NameDutch
 	, s.name_french as NameFrench
