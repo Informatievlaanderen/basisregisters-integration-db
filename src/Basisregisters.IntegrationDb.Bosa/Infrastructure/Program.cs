@@ -76,6 +76,9 @@
                     services.AddTransient<IStreetNameRepository, StreetNameRepository>(_ => new StreetNameRepository(connectionString));
                     services.AddTransient<IRegistryService, StreetNameService>();
 
+                    services.AddTransient<IAddressRepository, AddressRepository>(_ => new AddressRepository(connectionString));
+                    services.AddTransient<IRegistryService, AddressService>();
+
                     services.AddSingleton<IClock>(_ => SystemClock.Instance);
 
                     services.AddHostedService<FullDownloadService>();

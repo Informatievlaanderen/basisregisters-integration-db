@@ -40,7 +40,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                             Code = new XmlCode
                             {
                                 Namespace = streetName.Namespace,
-                                ObjectIdentifier = streetName.StreetNamePersistentLocalId,
+                                ObjectIdentifier = streetName.StreetNamePersistentLocalId.ToString(),
                                 VersionIdentifier = GetVersionAsString(streetName)
                             },
                             Names = GetNames(streetName).ToArray(),

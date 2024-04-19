@@ -25,7 +25,6 @@
 
     public enum AddressStatus
     {
-        Unknown = 0,
         Proposed = 1,
         Current = 2,
         Retired = 3,
@@ -35,7 +34,9 @@
     public class Address : IHasVersionTimestamps
     {
         public string Namespace { get; init; }
-        public string AddressPersistentLocalId { get; init; }
+        public int AddressPersistentLocalId { get; init; }
+        public int StreetNamePersistentLocalId { get; init; }
+        public string PostalCode { get; init; }
 
         public DateTimeOffset VersionTimestamp { get; init; }
         public string? CrabVersionTimestamp { get; init; }
@@ -49,7 +50,7 @@
         public GeometryMethod PositionGeometryMethod { get; init; }
         public GeometrySpecification PositionSpecification { get; init; }
 
-        public AddressStatus AddressStatus { get; init; }
+        public AddressStatus Status { get; init; }
 
         public string HouseNumber { get; init; }
         public string? BoxNumber { get; init; }
@@ -61,7 +62,9 @@
 
         public Address(
             string @namespace,
-            string addressPersistentLocalId,
+            int addressPersistentLocalId,
+            int streetNamePersistentLocalId,
+            string postalCode,
             DateTimeOffset versionTimestamp,
             string? crabVersionTimestamp,
             string? crabCreatedOn,
@@ -71,13 +74,15 @@
             int srId,
             GeometryMethod positionGeometryMethod,
             GeometrySpecification positionSpecification,
-            AddressStatus addressStatus,
+            AddressStatus status,
             string houseNumber,
             string? boxNumber,
             bool? officiallyAssigned)
         {
             Namespace = @namespace;
             AddressPersistentLocalId = addressPersistentLocalId;
+            StreetNamePersistentLocalId = streetNamePersistentLocalId;
+            PostalCode = postalCode;
             VersionTimestamp = versionTimestamp;
             CrabVersionTimestamp = crabVersionTimestamp;
             CrabCreatedOn = crabCreatedOn;
@@ -87,7 +92,7 @@
             SrId = srId;
             PositionGeometryMethod = positionGeometryMethod;
             PositionSpecification = positionSpecification;
-            AddressStatus = addressStatus;
+            Status = status;
             HouseNumber = houseNumber;
             BoxNumber = boxNumber;
             OfficiallyAssigned = officiallyAssigned;

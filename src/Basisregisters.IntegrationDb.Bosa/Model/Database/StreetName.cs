@@ -13,7 +13,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
     public class StreetName : IHasVersionTimestamps
     {
         public string Namespace { get; init; }
-        public string StreetNamePersistentLocalId { get; init; }
+        public int StreetNamePersistentLocalId { get; init; }
 
         public StreetNameStatus Status { get; init; }
 
@@ -37,7 +37,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
         public StreetName(
             string @namespace,
-            string streetNamePersistentLocalId,
+            int streetNamePersistentLocalId,
             StreetNameStatus status,
             DateTimeOffset versionTimestamp,
             string? crabVersionTimestamp,
