@@ -65,7 +65,8 @@ namespace Basisregisters.IntegrationDb.Bosa
                     EndLifeSpanVersion = endLifeSpanVersion,
                     Code = new XmlCode
                     {
-                        Namespace = address.Namespace, ObjectIdentifier = address.AddressPersistentLocalId.ToString(),
+                        Namespace = address.Namespace,
+                        ObjectIdentifier = address.AddressPersistentLocalId.ToString(),
                         VersionIdentifier = GetVersionAsString(address)
                     },
                     Position = new XmlAddressPosition
@@ -81,7 +82,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                                     SrsName = $"http://www.opengis.net/def/crs/EPSG/0/{address.SrId}",
                                     UomLabels = "m m",
                                     Value =
-                                        $"{address.X.ToString("0.0", CultureInfo.InvariantCulture)} {address.Y.ToString("0.0", CultureInfo.InvariantCulture)}"
+                                        $"{address.X.ToString("0.00000", CultureInfo.InvariantCulture)} {address.Y.ToString("0.00000", CultureInfo.InvariantCulture)}"
                                 }
                             }
                         },

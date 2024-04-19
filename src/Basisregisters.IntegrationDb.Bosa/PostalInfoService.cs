@@ -4,7 +4,6 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Extensions;
     using Model.Database;
     using Model.Xml;
     using NodaTime;

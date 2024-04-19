@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Bosa.Model.Database
+namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 {
     using System;
 
@@ -40,8 +40,8 @@
 
         public DateTimeOffset VersionTimestamp { get; init; }
         public string? CrabVersionTimestamp { get; init; }
-        public string? CrabCreatedOn { get; init; }
         public DateTimeOffset CreatedOn { get; init; }
+        public string? CrabCreatedOn { get; init; }
 
         public double X { get; init; }
         public double Y { get; init; }
@@ -67,8 +67,8 @@
             string postalCode,
             DateTimeOffset versionTimestamp,
             string? crabVersionTimestamp,
-            string? crabCreatedOn,
             DateTimeOffset createdOn,
+            string? crabCreatedOn,
             double x,
             double y,
             int srId,
@@ -85,8 +85,8 @@
             PostalCode = postalCode;
             VersionTimestamp = versionTimestamp;
             CrabVersionTimestamp = crabVersionTimestamp;
-            CrabCreatedOn = crabCreatedOn;
             CreatedOn = createdOn;
+            CrabCreatedOn = crabCreatedOn;
             X = x;
             Y = y;
             SrId = srId;

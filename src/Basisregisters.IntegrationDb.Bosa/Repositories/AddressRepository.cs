@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Bosa.Repositories
+namespace Basisregisters.IntegrationDb.Bosa.Repositories
 {
     using System.Collections.Generic;
     using Dapper;
@@ -29,11 +29,11 @@ select
 	, a.postal_code as PostalCode
 	, a.version_timestamp as VersionTimestamp
 	, ac.version_timestamp as CrabVersionTimestamp
-    , ac.created_on as CrabCreatedOn
     , (select av.created_on_timestamp
        from integration_address.address_versions av
        where av.persistent_local_id = a.persistent_local_id
        limit 1) as CreatedOn
+    , ac.created_on as CrabCreatedOn
     , ST_X(a.geometry) as X
     , ST_Y(a.geometry) as Y
     , ST_SRID(a.geometry) as SrId

@@ -24,7 +24,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
             [
                 new StreetName(
                     StreetNameNamespace,
-                    "27114",
+                    27114,
                     StreetNameStatus.Retired,
                     new DateTimeOffset(2015, 08, 31, 17, 19, 02, 397, TimeSpan.FromHours(2)),
                     "2015-08-31T17:19:02.397",
@@ -39,7 +39,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "2002-08-13T17:32:32"),
                 new StreetName(
                     StreetNameNamespace,
-                    "30376",
+                    30376,
                     StreetNameStatus.Current,
                     new DateTimeOffset(2016, 10, 03, 08, 44, 22, 810, TimeSpan.FromHours(2)),
                     "2016-10-03T08:44:22.810",
@@ -55,7 +55,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 ),
                 new StreetName(
                     StreetNameNamespace,
-                    "228584",
+                    228584,
                     StreetNameStatus.Proposed,
                     new DateTimeOffset(2024, 01, 31, 14, 16, 08, TimeSpan.FromHours(1)),
                     crabVersionTimestamp:null,
