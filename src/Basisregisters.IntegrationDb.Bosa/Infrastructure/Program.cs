@@ -1,16 +1,24 @@
-﻿namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
+namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using Amazon.Runtime;
+    using Amazon.S3;
+    using Amazon.SimpleNotificationService;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
+    using Be.Vlaanderen.Basisregisters.BlobStore;
+    using Be.Vlaanderen.Basisregisters.BlobStore.Aws;
+    using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
     using Destructurama;
     using IntegrationDb.Bosa;
+    using IntegrationDb.Bosa.Infrastructure.Options;
     using IntegrationDb.Bosa.Repositories;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
     using NodaTime;
     using Serilog;
     using Serilog.Debugging;
@@ -81,6 +89,33 @@
 
                     services.AddSingleton<IClock>(_ => SystemClock.Instance);
 
+                    services.AddAWSService<IAmazonSimpleNotificationService>();
+                    services.AddSingleton<INotificationService>(sp =>
+                        new NotificationService(sp.GetRequiredService<IAmazonSimpleNotificationService>(),
+                            hostContext.Configuration.GetValue<string>("TopicArn")));
+
+                    services.Configure<S3Options>(hostContext.Configuration.GetSection("S3"));
+                    services.Configure<FullDownloadOptions>(hostContext.Configuration);
+                    services.AddSingleton<IBlobClient>(sp =>
+                    {
+                        var options = sp.GetRequiredService<IOptions<FullDownloadOptions>>().Value;
+                        var s3Options = sp.GetRequiredService<IOptions<S3Options>>().Value;
+
+                        var s3Client = !string.IsNullOrEmpty(s3Options.ServiceUrl)
+                            ? new AmazonS3Client(new BasicAWSCredentials(s3Options.AccessKey, s3Options.SecretKey),
+                                new AmazonS3Config
+                                {
+
+                                    ServiceURL = s3Options.ServiceUrl,
+                                    DisableHostPrefixInjection = true,
+                                    ForcePathStyle = true,
+                                    LogResponse = true
+                                })
+                            : new AmazonS3Client();
+                        
+                        return new S3BlobClient(s3Client, options.UploadBucket);
+                    });
+                    
                     services.AddHostedService<FullDownloadService>();
                 })
                 .UseConsoleLifetime()
