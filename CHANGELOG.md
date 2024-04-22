@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.2.0...v2.2.1) (2024-04-22)
+
+
+### Bug Fixes
+
+* **ci:** deploy bosa ([c340135](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/c3401350e5be31f6ead5bda02dfb57b3019f15f8))
+
 # [2.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.1.0...v2.2.0) (2024-04-22)
 
 
