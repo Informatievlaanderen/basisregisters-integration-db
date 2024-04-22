@@ -41,10 +41,11 @@ select
     , a.position_specification as PositionSpecification
 	, a.status as Status
 	, a.house_number as HouseNumber
+	, a.box_number as BoxNumber
 	, a.officially_assigned as OfficiallyAssigned
 from integration_address.address_latest_items a
 left join integration_bosa.address_crab_versions ac on ac.address_persistent_local_id = a.persistent_local_id
-where a.removed = false
+where a.removed = false and a.postal_code is not null
 order by a.persistent_local_id";
 
             using var connection = new NpgsqlConnection(_connectionString);

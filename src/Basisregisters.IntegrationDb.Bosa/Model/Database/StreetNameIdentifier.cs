@@ -8,7 +8,7 @@
         public int StreetNamePersistentLocalId { get; init; }
         public DateTimeOffset VersionTimestamp { get; init; }
         public string? CrabVersionTimestamp { get; init; }
-        public string NisCode { get; set; }
+        public string NisCode { get; init; }
 
         // Needed for Dapper
         protected StreetNameIdentifier()

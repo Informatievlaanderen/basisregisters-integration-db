@@ -2,11 +2,11 @@ namespace Basisregisters.IntegrationDb.Bosa
 {
     using System;
     using System.Collections.Concurrent;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common.SpatialTools.GeometryCoordinates;
     using Microsoft.Extensions.Logging;
     using Model.Database;
     using Model.Xml;
@@ -29,16 +29,19 @@ namespace Basisregisters.IntegrationDb.Bosa
         public void CreateXml(Stream outputStream)
         {
             var logger = loggerFactory.CreateLogger<AddressService>();
+            logger.LogInformation("Retrieving address data...");
 
-            var addresses = addressRepo.GetFlemish();
-            var postalCodes = postalInfoRepo.GetFlemish().ToDictionary(
-                x => x.PostalCode, x => x);
+            var postalCodes = postalInfoRepo.GetFlemish()
+                .GroupBy(x => x.PostalCode)
+                .ToDictionary(x => x.Key, x => x.First());
             var municipalities = municipalityRepo.GetFlemish().ToDictionary(
                 x => x.NisCode, x => x);
             var streetNames = streetNameRepo.GetFlemishIdentifiers().ToDictionary(
                 x => x.StreetNamePersistentLocalId, x => x);
+            var addresses = addressRepo.GetFlemish();
 
-            var xmlAddresses = new ConcurrentBag<XmlAddress>();
+            logger.LogInformation("Processing address data...");
+            var xmlAddresses = new ConcurrentDictionary<int, XmlAddress>();
             Parallel.ForEach(addresses, address =>
             {
                 if (!streetNames.TryGetValue(address.StreetNamePersistentLocalId, out var streetName))
@@ -60,7 +63,6 @@ namespace Basisregisters.IntegrationDb.Bosa
 
                 var xmlAddress = new XmlAddress
                 {
-                    AddressPeristentLocalId = address.AddressPersistentLocalId,
                     BeginLifeSpanVersion = beginLifeSpanVersion,
                     EndLifeSpanVersion = endLifeSpanVersion,
                     Code = new XmlCode
@@ -82,7 +84,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                                     SrsName = $"http://www.opengis.net/def/crs/EPSG/0/{address.SrId}",
                                     UomLabels = "m m",
                                     Value =
-                                        $"{address.X.ToString("0.00000", CultureInfo.InvariantCulture)} {address.Y.ToString("0.00000", CultureInfo.InvariantCulture)}"
+                                        $"{address.X.ToPointGeometryCoordinateValueFormat()} {address.Y.ToPointGeometryCoordinateValueFormat()}"
                                 }
                             }
                         },
@@ -123,15 +125,20 @@ namespace Basisregisters.IntegrationDb.Bosa
                     }
                 };
 
-                xmlAddresses.Add(xmlAddress);
+                var isAdded = xmlAddresses.TryAdd(address.AddressPersistentLocalId, xmlAddress);
+
+                if (!isAdded)
+                    logger.LogError($"Address {address.AddressPersistentLocalId} already exists");
             });
 
+            logger.LogInformation("Serializing address data...");
             var serializable = new XmlAddressRoot
             {
                 Source = "flanders",
                 Timestamp = clock.GetCurrentInstant().ToBelgianDateTimeOffset(),
                 Addresses = xmlAddresses
-                    .OrderBy(x => x.AddressPeristentLocalId)
+                    .OrderBy(x => x.Key)
+                    .Select(x => x.Value)
                     .ToArray()
             };
 
