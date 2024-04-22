@@ -18,25 +18,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SEMVER.md = SEMVER.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.MigrationHelper", "src\EF.MigrationsHelper\EF.MigrationHelper.csproj", "{1005EBD8-0E8D-4D8F-8780-70F8B281550C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EF.MigrationHelper", "src\EF.MigrationsHelper\EF.MigrationHelper.csproj", "{1005EBD8-0E8D-4D8F-8780-70F8B281550C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases", "src\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj", "{B6540121-7CE0-4E3C-B247-9E9E966EA8BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases", "src\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj", "{B6540121-7CE0-4E3C-B247-9E9E966EA8BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api\Basisregisters.IntegrationDb.SuspiciousCases.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api\Basisregisters.IntegrationDb.SuspiciousCases.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A5E1149A-0437-4CD0-93A2-6E7E059C74BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.Integration.Veka", "src\Basisregisters.Integration.Veka\Basisregisters.Integration.Veka.csproj", "{71436A98-CF9A-4C6A-8ECB-9BF7B0AA7A6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.Integration.Veka", "src\Basisregisters.Integration.Veka\Basisregisters.Integration.Veka.csproj", "{71436A98-CF9A-4C6A-8ECB-9BF7B0AA7A6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.csproj", "{4B22C78C-C4F2-4038-903F-A68B46A9CEC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.csproj", "{4B22C78C-C4F2-4038-903F-A68B46A9CEC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.NationalRegistry.Tests", "test\Basisregisters.IntegrationDb.NationalRegistry.Tests\Basisregisters.IntegrationDb.NationalRegistry.Tests.csproj", "{DEBC4559-CD00-4BB0-A9F9-B01D07BEE1DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.NationalRegistry.Tests", "test\Basisregisters.IntegrationDb.NationalRegistry.Tests\Basisregisters.IntegrationDb.NationalRegistry.Tests.csproj", "{DEBC4559-CD00-4BB0-A9F9-B01D07BEE1DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.NationalRegistry", "src\Basisregisters.IntegrationDb.NationalRegistry\Basisregisters.IntegrationDb.NationalRegistry.csproj", "{FD1DC9DE-C095-4041-AFD7-9F633B0FF745}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.NationalRegistry", "src\Basisregisters.IntegrationDb.NationalRegistry\Basisregisters.IntegrationDb.NationalRegistry.csproj", "{FD1DC9DE-C095-4041-AFD7-9F633B0FF745}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Bosa", "src\Basisregisters.IntegrationDb.Bosa\Basisregisters.IntegrationDb.Bosa.csproj", "{4B126BF9-2BF9-47CC-AC76-0F399072B176}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Bosa.Tests", "test\Basisregisters.IntegrationDb.Bosa.Tests\Basisregisters.IntegrationDb.Bosa.Tests.csproj", "{0A997802-5E09-4ABD-965D-F7BA459B669B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +90,16 @@ Global
 		{F3D39574-A172-40C5-A072-D33D19576419}.Release|x86.Build.0 = Release|Any CPU
 		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Debug|x64.Build.0 = Debug|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Debug|x86.Build.0 = Debug|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Release|x64.ActiveCfg = Release|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Release|x64.Build.0 = Release|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Release|x86.ActiveCfg = Release|Any CPU
+		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}.Release|x86.Build.0 = Release|Any CPU
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -146,19 +160,45 @@ Global
 		{FD1DC9DE-C095-4041-AFD7-9F633B0FF745}.Release|x64.Build.0 = Release|Any CPU
 		{FD1DC9DE-C095-4041-AFD7-9F633B0FF745}.Release|x86.ActiveCfg = Release|Any CPU
 		{FD1DC9DE-C095-4041-AFD7-9F633B0FF745}.Release|x86.Build.0 = Release|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Debug|x64.Build.0 = Debug|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Debug|x86.Build.0 = Debug|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Release|x64.ActiveCfg = Release|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Release|x64.Build.0 = Release|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176}.Release|x86.Build.0 = Release|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Debug|x64.Build.0 = Debug|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Debug|x86.Build.0 = Debug|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Release|x64.ActiveCfg = Release|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Release|x64.Build.0 = Release|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Release|x86.ActiveCfg = Release|Any CPU
+		{0A997802-5E09-4ABD-965D-F7BA459B669B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{B6540121-7CE0-4E3C-B247-9E9E966EA8BC} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{F3D39574-A172-40C5-A072-D33D19576419} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{012CD10E-1EDE-4014-B7CE-B870E62D1BEC} = {A5E1149A-0437-4CD0-93A2-6E7E059C74BE}
 		{2046F886-AA42-4EAD-A8FC-F8FC10A743F9} = {A5E1149A-0437-4CD0-93A2-6E7E059C74BE}
-		{B6540121-7CE0-4E3C-B247-9E9E966EA8BC} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{71436A98-CF9A-4C6A-8ECB-9BF7B0AA7A6A} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{4B22C78C-C4F2-4038-903F-A68B46A9CEC7} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{DEBC4559-CD00-4BB0-A9F9-B01D07BEE1DF} = {A5E1149A-0437-4CD0-93A2-6E7E059C74BE}
 		{FD1DC9DE-C095-4041-AFD7-9F633B0FF745} = {C2F8FF63-7A48-4179-A720-86206C42F496}
+		{4B126BF9-2BF9-47CC-AC76-0F399072B176} = {C2F8FF63-7A48-4179-A720-86206C42F496}
+		{0A997802-5E09-4ABD-965D-F7BA459B669B} = {A5E1149A-0437-4CD0-93A2-6E7E059C74BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2EB87445-E263-4E1E-89CC-3839170028E5}
