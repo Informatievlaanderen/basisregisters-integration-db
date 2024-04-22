@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.1.0...v2.2.0) (2024-04-22)
+
+
+### Bug Fixes
+
+* add datadog reference to bosa ([6ad72fd](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6ad72fda71e2e0694dabc1174dcbf17725176814))
+
+
+### Features
+
+* GAWR-5492 add Bosa Full Download service ([c8de07a](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/c8de07a8f701d697a30efbcd9899ba167ab63347))
+
 # [2.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.0.0...v2.1.0) (2024-04-08)
 
 
