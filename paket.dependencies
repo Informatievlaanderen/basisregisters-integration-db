@@ -13,6 +13,7 @@ nuget Autofac.Extensions.DependencyInjection 9.0.0
 
 nuget Dapper 2.1.35
 nuget Destructurama.JsonNet 3.0.0
+nuget FluentFTP 50.0.1
 nuget NodaTime 3.1.11
 nuget Newtonsoft.Json 13.0.3
 nuget GeoJSON.NET 1.2.19
@@ -45,9 +46,12 @@ nuget Be.Vlaanderen.Basisregisters.Api 23.1.0
 nuget Be.Vlaanderen.Basisregisters.Auth.AcmIdm 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 4.0.1
 
+nuget Be.Vlaanderen.Basisregisters.BlobStore 4.0.0
 nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.5
 
+nuget Be.Vlaanderen.Basisregisters.GrAr.Common 21.1.0
 nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.1.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Notifications 21.1.0
 nuget Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded 2.0.0
 nuget Be.Vlaanderen.Basisregisters.Shaperon 10.0.2
 
@@ -63,6 +67,7 @@ nuget xunit 2.7.0
 nuget xunit.runner.visualstudio 2.5.7
 nuget xunit.categories 2.0.8
 nuget Moq 4.20.70
+nuget NodaTime.Testing 3.1.11
 
 nuget Serilog 3.1.1
 nuget Serilog.Settings.Configuration 8.0.0
