@@ -451,7 +451,7 @@ jobs:
       matrix:
         services: [
           'integration-veka',
-          'bosa-full-download'
+          'integration-bosa-full-download'
         ]
     steps:
     - name: Deploy tasks
