@@ -13,6 +13,8 @@ Be.Vlaanderen.Basisregisters.GrAr.Notifications
 Dapper
 Destructurama.JsonNet
 
+Datadog.Trace.Bundle
+
 FluentFTP
 NodaTime
 Npgsql.EntityFrameworkCore.PostgreSQL
