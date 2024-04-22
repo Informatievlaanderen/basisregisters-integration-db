@@ -154,7 +154,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:position>
                       <com:pointGeometry>
                         <com:point>
-                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">188473.52000 193390.22000</com:pos>
+                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">188473.52 193390.22</com:pos>
                         </com:point>
                       </com:pointGeometry>
                       <com:positionGeometryMethod>derivedFromObject</com:positionGeometryMethod>
@@ -192,7 +192,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:position>
                       <com:pointGeometry>
                         <com:point>
-                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">165260.87000 210822.78000</com:pos>
+                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">165260.87 210822.78</com:pos>
                         </com:point>
                       </com:pointGeometry>
                       <com:positionGeometryMethod>derivedFromObject</com:positionGeometryMethod>
@@ -229,7 +229,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:position>
                       <com:pointGeometry>
                         <com:point>
-                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">165260.87000 210822.78000</com:pos>
+                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">165260.87 210822.78</com:pos>
                         </com:point>
                       </com:pointGeometry>
                       <com:positionGeometryMethod>derivedFromObject</com:positionGeometryMethod>
