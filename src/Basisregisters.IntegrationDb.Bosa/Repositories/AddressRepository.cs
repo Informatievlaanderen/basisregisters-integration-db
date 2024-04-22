@@ -33,6 +33,7 @@ select
     , (select av.created_on_timestamp
        from integration_address.address_versions av
        where av.persistent_local_id = a.persistent_local_id
+       order by created_on_timestamp
        limit 1) as CreatedOn
     , ac.created_on as CrabCreatedOn
     , ST_X(a.geometry) as X
