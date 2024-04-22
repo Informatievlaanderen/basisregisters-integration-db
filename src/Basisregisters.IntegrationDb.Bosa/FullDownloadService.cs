@@ -56,7 +56,6 @@ namespace Basisregisters.IntegrationDb.Bosa
                 }
 
                 using var fullZipStream = new MemoryStream();
-                //await using var fullZipStream = new FileStream("C:\\Git\\test.zip", FileMode.Create);
                 using var fullZipArchive = new ZipArchive(fullZipStream, ZipArchiveMode.Create, leaveOpen: true);
 
                 foreach (var registryService in _registryServices)

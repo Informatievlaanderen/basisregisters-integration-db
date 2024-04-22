@@ -1,6 +1,7 @@
 namespace Basisregisters.IntegrationDb.Bosa.Repositories
 {
     using System.Collections.Generic;
+    using Basisregisters.IntegrationDB.Bosa.Infrastructure;
     using Dapper;
     using Model.Database;
     using Npgsql;
@@ -21,7 +22,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Repositories
 
         public IEnumerable<Address> GetFlemish()
         {
-            const string sql = @"
+            const string sql = @$"
 select
     a.namespace as Namespace
 	, a.persistent_local_id as AddressPersistentLocalId
@@ -44,7 +45,7 @@ select
 	, a.box_number as BoxNumber
 	, a.officially_assigned as OfficiallyAssigned
 from integration_address.address_latest_items a
-left join integration_bosa.address_crab_versions ac on ac.address_persistent_local_id = a.persistent_local_id
+left join {DatabaseSetup.Schema}.{DatabaseSetup.AddressCrabVersionsTable} ac on ac.address_persistent_local_id = a.persistent_local_id
 where a.removed = false and a.postal_code is not null
 order by a.persistent_local_id";
 
