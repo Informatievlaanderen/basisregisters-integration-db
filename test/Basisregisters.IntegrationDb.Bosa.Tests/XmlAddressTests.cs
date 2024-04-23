@@ -36,7 +36,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     DateBeforeMigration,
                     "2015-08-31T17:19:02",
                     DateBeforeMigration,
-                    "1830-01-01T00:00:00",
                     188473.52,
                     193390.22,
                     31370,
@@ -55,7 +54,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     new DateTimeOffset(2024, 4, 4, 18, 44, 37, TimeSpan.FromHours(2)),
                     null,
                     new DateTimeOffset(2014, 4, 4, 18, 44, 32, TimeSpan.FromHours(2)),
-                    null,
                     165260.87,
                     210822.78,
                     31370,
@@ -74,7 +72,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     new DateTimeOffset(2024, 4, 4, 18, 44, 37, TimeSpan.FromHours(2)),
                     "2016-08-31T17:19:02",
                     new DateTimeOffset(2014, 4, 4, 18, 44, 32, TimeSpan.FromHours(2)),
-                    null,
                     165260.87,
                     210822.78,
                     31370,
@@ -145,7 +142,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 <tns:addressResponseBySource xmlns:com="http://fsb.belgium.be/data/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://fsb.belgium.be/mappingservices/FullDownload/v1_00">
                   <tns:source>flanders</tns:source>
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
-                  <tns:address beginLifeSpanVersion="1830-01-01T00:00:00" endLifeSpanVersion="2015-08-31T17:19:02">
+                  <tns:address beginLifeSpanVersion="2023-11-09T00:00:00" endLifeSpanVersion="2015-08-31T17:19:02">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
                       <com:objectIdentifier>200001</com:objectIdentifier>
@@ -162,7 +159,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>retired</com:status>
-                      <com:validFrom>1830-01-01T00:00:00</com:validFrom>
+                      <com:validFrom>2023-11-09T00:00:00</com:validFrom>
                     </com:addressStatus>
                     <com:boxNumber>0101</com:boxNumber>
                     <com:houseNumber>59</com:houseNumber>
