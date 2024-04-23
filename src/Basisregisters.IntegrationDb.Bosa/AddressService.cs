@@ -58,7 +58,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
                 var municipality = municipalities[streetName.NisCode];
 
-                var beginLifeSpanVersion = GetBeginLifeSpanVersion(address);
+                var beginLifeSpanVersion = GetVersionAsString(address.CreatedOn);
                 var endLifeSpanVersion = GetEndLifeSpanVersion(address);
 
                 var xmlAddress = new XmlAddress
@@ -144,9 +144,6 @@ namespace Basisregisters.IntegrationDb.Bosa
 
             RegistryXmlSerializer.Serialize(serializable, outputStream);
         }
-
-        private static string GetBeginLifeSpanVersion(Address address)
-            => address.CrabCreatedOn ?? GetVersionAsString(address.CreatedOn);
 
         private static string? GetEndLifeSpanVersion(Address address)
         {
