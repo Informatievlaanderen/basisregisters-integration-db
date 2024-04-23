@@ -35,7 +35,6 @@ select
        where av.persistent_local_id = a.persistent_local_id
        order by created_on_timestamp
        limit 1) as CreatedOn
-    , ac.created_on as CrabCreatedOn
     , ST_X(a.geometry) as X
     , ST_Y(a.geometry) as Y
     , ST_SRID(a.geometry) as SrId

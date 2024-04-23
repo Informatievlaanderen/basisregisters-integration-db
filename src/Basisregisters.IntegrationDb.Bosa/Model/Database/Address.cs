@@ -41,7 +41,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public DateTimeOffset VersionTimestamp { get; init; }
         public string? CrabVersionTimestamp { get; init; }
         public DateTimeOffset CreatedOn { get; init; }
-        public string? CrabCreatedOn { get; init; }
 
         public double X { get; init; }
         public double Y { get; init; }
@@ -68,7 +67,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             DateTimeOffset versionTimestamp,
             string? crabVersionTimestamp,
             DateTimeOffset createdOn,
-            string? crabCreatedOn,
             double x,
             double y,
             int srId,
@@ -86,7 +84,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             VersionTimestamp = versionTimestamp;
             CrabVersionTimestamp = crabVersionTimestamp;
             CreatedOn = createdOn;
-            CrabCreatedOn = crabCreatedOn;
             X = x;
             Y = y;
             SrId = srId;
