@@ -23,9 +23,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
             [
                 new PostalInfo(PostalInfoNamespace, "1500", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "2002-08-13T16:37:33"),
                 new PostalInfo(PostalInfoNamespace, "1600", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null),
-                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", "2002-08-13T16:37:33"),
-                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "GINGELOM", "2002-08-13T16:37:33"),
                 new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Jeuk", "2002-08-13T16:37:33"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "GINGELOM", "2002-08-13T16:37:33"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", "2002-08-13T16:37:33"),
                 new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Vorsen", "2002-08-13T16:37:33")
             ];
         }
