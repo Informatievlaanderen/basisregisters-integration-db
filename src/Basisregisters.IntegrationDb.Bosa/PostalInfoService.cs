@@ -31,7 +31,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     .Select(x =>
                     {
                         var postalInfo = x.First();
-                        var names = string.Join('/', x.Select(y => y.DutchName));
+                        var names = string.Join('/', x.Select(y => y.DutchName).OrderBy(y => y));
 
                         return new XmlPostalInfo
                         {
