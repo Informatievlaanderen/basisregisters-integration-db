@@ -942,6 +942,32 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0046", "GV  ", "46", "GV")]
+        [InlineData("0046", "gv  ", "46", "gv")]
+        [InlineData("0046", "GV-L", "46", "GV-L")]
+        [InlineData("0046", "GV-R", "46", "GV-R")]
+        [InlineData("0046", "A-b3", "46A", "3")]
+        [InlineData("0046", "bs 1", "46", "1")]
+        [InlineData("0046", "bs12", "46", "12")]
+        [InlineData("0046", "bs01", "46", "1")]
+        public void SintPietersLeeuw(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "23077",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
         private void AnyAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
