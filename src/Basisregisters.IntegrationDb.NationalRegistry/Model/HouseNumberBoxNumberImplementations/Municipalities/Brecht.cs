@@ -17,6 +17,19 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..])
                 ||
                 IndexSourceValue[0] == '0' && IsLetter(IndexSourceValue[3])
+                ||
+                (
+                    IndexSourceValue.Equals("GV.L", StringComparison.InvariantCultureIgnoreCase)
+                    || IndexSourceValue.Equals("GV.R", StringComparison.InvariantCultureIgnoreCase)
+                    || IndexSourceValue.Equals("GLVL", StringComparison.InvariantCultureIgnoreCase)
+                )
+                ||
+                (
+                    TrimmedIndexSourceValue.Length == 3
+                    && IsNumeric(TrimmedIndexSourceValue[0])
+                    && char.ToUpper(TrimmedIndexSourceValue[1]) == 'V'
+                    && IsNumeric(TrimmedIndexSourceValue[2])
+                )
             );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
@@ -36,11 +49,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
             if (IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
+                var boxNumber = IndexSourceValue[2..] == "00" ? IndexSourceValue[..2] : TrimmedIndexSourceValue;
+
                 return new[]
                 {
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
-                        IndexSourceValue.Trim()
+                        boxNumber
                     )
                 };
             }
@@ -52,6 +67,33 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue.TrimStart('0')
+                    )
+                };
+            }
+
+            if (IndexSourceValue.Equals("GV.L", StringComparison.InvariantCultureIgnoreCase)
+                || IndexSourceValue.Equals("GV.R", StringComparison.InvariantCultureIgnoreCase)
+                || IndexSourceValue.Equals("GLVL", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        IndexSourceValue
+                    )
+                };
+            }
+
+            if (TrimmedIndexSourceValue.Length == 3
+                && IsNumeric(TrimmedIndexSourceValue[0])
+                && char.ToUpper(TrimmedIndexSourceValue[1]) == 'V'
+                && IsNumeric(TrimmedIndexSourceValue[2]))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        TrimmedIndexSourceValue
                     )
                 };
             }
