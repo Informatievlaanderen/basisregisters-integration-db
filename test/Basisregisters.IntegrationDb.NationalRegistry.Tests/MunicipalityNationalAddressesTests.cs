@@ -1,5 +1,6 @@
 namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 {
+    using System;
     using System.Linq;
     using FluentAssertions;
     using Model;
@@ -790,7 +791,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
             
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -844,7 +845,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -923,7 +924,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -1003,7 +1004,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -1019,7 +1020,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -1034,7 +1035,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -1048,7 +1049,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -1062,16 +1063,30 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
-        private void AtLeastOneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
+        [Theory]
+        [InlineData("0056", "X123", "56", "X123")]
+        public void Zaventem(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "23094",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
+        private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
             var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
 
             result.Should().NotBeEmpty();
-            result.Any(x => x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber).Should().BeTrue();
+            result.Count(x => x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber).Should().Be(1);
         }
     }
 }
