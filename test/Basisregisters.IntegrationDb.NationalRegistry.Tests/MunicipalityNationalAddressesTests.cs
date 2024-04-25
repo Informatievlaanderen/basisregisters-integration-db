@@ -1051,6 +1051,20 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0045", "B   ", "45", "B")]
+        public void Maldegem(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "43010",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void AtLeastOneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
