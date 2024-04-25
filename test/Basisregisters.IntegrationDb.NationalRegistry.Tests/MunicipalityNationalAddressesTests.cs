@@ -712,6 +712,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "A/1V", "46A", "1V")]
         [InlineData("0046", "GV1 ", "46", "GV1")]
         [InlineData("0046", "001A", "46", "1A")]
+        [InlineData("0046", "GV.L", "46", "GV.L")]
+        [InlineData("0046", "GV.R", "46", "GV.R")]
+        [InlineData("0046", "GLVL", "46", "GLVL")]
+        [InlineData("0046", "GV00", "46", "GV")]
+        [InlineData("0046", "1V2 ", "46", "1V2")]
         public void Brecht(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
