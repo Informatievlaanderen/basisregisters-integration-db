@@ -1022,6 +1022,21 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0046", "0001", "46", "0001")]
+        [InlineData("0046", "001 ", "46", "001")]
+        public void HeusdenZolder(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "71070",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void AtLeastOneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
