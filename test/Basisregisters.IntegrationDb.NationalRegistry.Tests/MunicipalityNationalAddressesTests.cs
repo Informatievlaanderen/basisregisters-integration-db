@@ -785,7 +785,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
             
-            AnyAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -828,6 +828,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
         [Theory]
         [InlineData("0046", "glvl", "46", "glv")]
+        [InlineData("0046", "glvl", "46", "glvl")]
+        [InlineData("0046", "glvl", "46", "GLVL")]
         public void Mortsel(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
@@ -836,13 +838,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
-            var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
-
-            result.Should().NotBeEmpty();
-            result.First().HouseNumber.Should().Be(expectedHouseNumber);
-            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -921,7 +918,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 Index = new NationalRegistryIndex(index)
             };
 
-            AnyAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -989,7 +986,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
-        private void AnyAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
+        private void AtLeastOneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
             var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
