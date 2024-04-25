@@ -12,11 +12,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             NisCode == "38014" &&
             (
                 (
-                    (
                     IndexSourceValue.StartsWith("KV", StringComparison.InvariantCultureIgnoreCase)
-                    ||
+                    && IsNumeric(IndexSourceValue[2..])
+                )
+                ||
+                (
                     IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase)
-                    )
                     && IsNumeric(IndexSourceValue[2..])
                 )
                 ||
@@ -31,11 +32,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
             if ((
-                    (
-                        IndexSourceValue.StartsWith("KV", StringComparison.InvariantCultureIgnoreCase)
-                        ||
-                        IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase)
-                    )
+                    IndexSourceValue.StartsWith("KV", StringComparison.InvariantCultureIgnoreCase)
                     && IsNumeric(IndexSourceValue[2..])
                 )
                 ||
@@ -51,6 +48,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue
+                    )
+                };
+            }
+
+            if (IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase)
+                && IsNumeric(IndexSourceValue[2..]))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        $"0{IndexSourceValue[2..]}"
                     )
                 };
             }

@@ -770,9 +770,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
         [Theory]
         [InlineData("0046", "KV03", "46", "KV03")]
-        [InlineData("0046", "GV01", "46", "GV01")]
+        [InlineData("0046", "GV01", "46", "001")]
         [InlineData("0046", "XGV1", "46", "XGV1")]
         [InlineData("0046", "K999", "46", "K999")]
+        //[InlineData("0010", "K012", "10", "012")]
+        [InlineData("0010", "GV01", "10", "001")]
         public void Koksijde(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
