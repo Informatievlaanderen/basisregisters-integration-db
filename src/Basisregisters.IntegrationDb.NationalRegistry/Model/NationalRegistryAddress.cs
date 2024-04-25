@@ -92,6 +92,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Blankenberge(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Herentals(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new HeusdenZolder(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Izegem(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
