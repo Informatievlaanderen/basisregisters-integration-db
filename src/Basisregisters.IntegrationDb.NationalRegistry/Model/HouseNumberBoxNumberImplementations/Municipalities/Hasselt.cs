@@ -22,6 +22,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         $"{IndexSourceValue[1]}.0{IndexSourceValue[3]}"
+                    ),
+                    new HouseNumberWithBoxNumber(
+                        $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
+                        $"{IndexSourceValue[1]}.{IndexSourceValue[3]}"
                     )
                 };
             }
