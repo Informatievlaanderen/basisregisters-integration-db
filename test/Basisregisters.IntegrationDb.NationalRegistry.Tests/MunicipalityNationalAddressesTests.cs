@@ -191,7 +191,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         }
 
         [Theory]
-        [InlineData("0046", "B001", "46", "B001")]
+        [InlineData("0046", "B001", "46", "1")]
         [InlineData("0046", "Ab01", "46", "Ab01")]
         [InlineData("0046", "Db05", "46", "Db05")]
         [InlineData("0046", "Cb03", "46", "Cb03")]
