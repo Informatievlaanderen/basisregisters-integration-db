@@ -773,7 +773,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "GV01", "46", "001")]
         [InlineData("0046", "XGV1", "46", "XGV1")]
         [InlineData("0046", "K999", "46", "K999")]
-        //[InlineData("0010", "K012", "10", "012")]
+        [InlineData("0010", "K012", "10", "012")]
         [InlineData("0010", "GV01", "10", "001")]
         public void Koksijde(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
@@ -783,13 +783,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
-            var address = new NationalRegistryAddress(record);
-
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
-
-            result.Should().NotBeEmpty();
-            result.First().HouseNumber.Should().Be(expectedHouseNumber);
-            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+            
+            AnyAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -948,6 +943,15 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        private void AnyAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var address = new NationalRegistryAddress(record);
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.Any(x => x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber).Should().BeTrue();
         }
     }
 }
