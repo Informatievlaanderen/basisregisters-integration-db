@@ -37,11 +37,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 )
                 ||
                 (IndexSourceValue.StartsWith("XGV") && IsNumeric(IndexSourceValue[3]))
-                ||
-                (
-                    IndexSourceValue.StartsWith("K", StringComparison.InvariantCultureIgnoreCase)
-                    && IndexSourceValue.Trim().Length == 4
-                ))
+                )
             {
                 return new[]
                 {
@@ -52,11 +48,31 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
+            if (IndexSourceValue.StartsWith("K", StringComparison.InvariantCultureIgnoreCase)
+                && IndexSourceValue.Trim().Length == 4)
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        IndexSourceValue
+                    ),
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        IndexSourceValue[1..]
+                    )
+                };
+            }
+
             if (IndexSourceValue.StartsWith("GV", StringComparison.InvariantCultureIgnoreCase)
                 && IsNumeric(IndexSourceValue[2..]))
             {
                 return new[]
                 {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        IndexSourceValue
+                    ),
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         $"0{IndexSourceValue[2..]}"
