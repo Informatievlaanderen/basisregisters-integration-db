@@ -123,6 +123,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "00/1", "46", "00/1")]
         [InlineData("0046", "05/1", "46", "05/1")]
         [InlineData("0046", "A1/1", "46A", "1/1")]
+        //[InlineData("0046", "O/01", "46", "O/01")] //TODO-rik nieuwe regel
         public void Vilvoorde(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
@@ -956,6 +957,26 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             var record = new FlatFileRecord
             {
                 NisCode = "23077",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            result.First().HouseNumber.Should().Be(expectedHouseNumber);
+            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0046", "0001", "46", "0001")]
+        [InlineData("0046", "A   ", "46", "A")]
+        public void Genk(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "71016",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
