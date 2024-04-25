@@ -986,6 +986,21 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0046", "glvl", "46", "glvl")]
+        [InlineData("0046", "glvl", "46", "GLVL")]
+        public void Blankenberge(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "31004",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void AtLeastOneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);

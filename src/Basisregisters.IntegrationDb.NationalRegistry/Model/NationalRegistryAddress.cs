@@ -89,6 +89,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Oostende(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new SintPietersLeeuw(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Genk(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Blankenberge(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
