@@ -11,6 +11,17 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
+            if (char.ToUpper(IndexSourceValue[0]) == 'B' && IsNumeric(IndexSourceValue[1..]))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        int.Parse(IndexSourceValue[1..]).ToString()
+                    )
+                };
+            }
+
             return new[]
             {
                 new HouseNumberWithBoxNumber(
