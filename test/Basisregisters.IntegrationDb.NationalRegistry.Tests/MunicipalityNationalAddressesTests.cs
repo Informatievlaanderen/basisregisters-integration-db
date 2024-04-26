@@ -124,7 +124,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "00/1", "46", "00/1")]
         [InlineData("0046", "05/1", "46", "05/1")]
         [InlineData("0046", "A1/1", "46A", "1/1")]
-        //[InlineData("0046", "O/01", "46", "O/01")] //TODO-rik nieuwe regel
+        [InlineData("0046", "O/01", "46", "O/01")]
         public void Vilvoorde(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord

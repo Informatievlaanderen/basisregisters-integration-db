@@ -11,7 +11,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IsLetter(IndexSourceValue[0]) && IndexSourceValue.Contains('/'))
+            if (TrimmedIndexSourceValue.Length == 4
+                && IsLetter(IndexSourceValue[0])
+                && IndexSourceValue.IndexOf('/') == 2)
             {
                 return new List<HouseNumberWithBoxNumber>
                 {
@@ -20,12 +22,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                         IndexSourceValue[1..])
                 };
             }
-
+            
             return new List<HouseNumberWithBoxNumber>
             {
                 new HouseNumberWithBoxNumber(
                     HouseNumberSourceValue,
-                    IndexSourceValue)
+                    TrimmedIndexSourceValue)
             };
         }
     }
