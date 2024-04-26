@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 ||
                 (
                     IndexSourceValue.StartsWith("K", StringComparison.InvariantCultureIgnoreCase)
-                    && IndexSourceValue.Trim().Length == 4
+                    && TrimmedIndexSourceValue.Length == 4
                 )
             );
 
@@ -49,7 +49,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             }
 
             if (IndexSourceValue.StartsWith("K", StringComparison.InvariantCultureIgnoreCase)
-                && IndexSourceValue.Trim().Length == 4)
+                && TrimmedIndexSourceValue.Length == 4)
             {
                 return new[]
                 {
