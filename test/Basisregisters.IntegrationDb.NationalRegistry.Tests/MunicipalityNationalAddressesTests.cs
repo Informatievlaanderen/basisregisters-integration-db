@@ -245,6 +245,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
         [Theory]
         [InlineData("0046", "B001", "46", "1")]
+        [InlineData("0046", "B001", "46", "B001")]
         [InlineData("0046", "V001", "46", "V1")]
         [InlineData("0046", "Glv0", "46", "0.0")]
         [InlineData("0046", "Glv ", "46", "0.0")]
@@ -256,13 +257,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
-            var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
-
-            result.Should().NotBeEmpty();
-            result.First().HouseNumber.Should().Be(expectedHouseNumber);
-            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
