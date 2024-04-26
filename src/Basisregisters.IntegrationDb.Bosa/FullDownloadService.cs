@@ -6,11 +6,10 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO.Compression;
     using System.Threading;
     using System.Threading.Tasks;
-    using Basisregisters.IntegrationDb.Bosa.Infrastructure.Options;
     using Be.Vlaanderen.Basisregisters.BlobStore;
-    using Be.Vlaanderen.Basisregisters.BlobStore.Aws;
     using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
     using FluentFTP;
+    using Infrastructure.Options;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -47,7 +46,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         {
             try
             {
-                var fullZipFileName = $"Flanders_FD_{DateTimeOffset.Now:yyyyMMdd}_L72";
+                var fullZipFileName = string.Format(_options.FileNameFormat, DateTimeOffset.Now.ToString("yyyyMMdd"));
 
                 var zipExists = await _blobClient.BlobExistsAsync(new BlobName(fullZipFileName), stoppingToken);
                 if (zipExists)
