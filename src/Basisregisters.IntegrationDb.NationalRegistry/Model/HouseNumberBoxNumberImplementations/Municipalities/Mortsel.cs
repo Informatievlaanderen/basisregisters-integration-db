@@ -27,10 +27,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         "glvl"
-                    ),
-                    new HouseNumberWithBoxNumber(
-                        HouseNumberSourceValue,
-                        "GLVL"
                     )
                 };
             }
