@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             NisCode == "23077" &&
             (
                 (
-                    IndexSourceValue.Trim().Equals("GV", StringComparison.InvariantCultureIgnoreCase)
+                    TrimmedIndexSourceValue.Equals("GV", StringComparison.InvariantCultureIgnoreCase)
                     ||
                     IndexSourceValue.Equals("GV-L", StringComparison.InvariantCultureIgnoreCase)
                     ||
@@ -20,7 +20,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 )
                 ||
                 (
-                    IndexSourceValue.Length == 4
+                    TrimmedIndexSourceValue.Length == 4
                     && IsLetter(IndexSourceValue[0])
                     && IndexSourceValue[1] == '-'
                     && IndexSourceValue[2] == 'b'
@@ -35,7 +35,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue.Trim().Equals("GV", StringComparison.InvariantCultureIgnoreCase)
+            if (TrimmedIndexSourceValue.Equals("GV", StringComparison.InvariantCultureIgnoreCase)
                 ||
                 IndexSourceValue.Equals("GV-L", StringComparison.InvariantCultureIgnoreCase)
                 ||
@@ -50,7 +50,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 };
             }
 
-            if (IndexSourceValue.Length == 4
+            if (TrimmedIndexSourceValue.Length == 4
                 && IsLetter(IndexSourceValue[0])
                 && IndexSourceValue[1] == '-'
                 && IndexSourceValue[2] == 'b'
