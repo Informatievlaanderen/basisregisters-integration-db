@@ -37,6 +37,7 @@
 
         public const string ViewName = "view_suspicious_cases_counts";
 
+        // Todo: extend with all cases
         public static readonly string Create =
             @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
                 {CreateScript(SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, StreetNamesLongerThanTwoYearsProposedConfiguration.ViewName)}

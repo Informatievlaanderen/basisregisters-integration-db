@@ -29,7 +29,7 @@
         public DbSet<ActiveBuildingUnitWithoutAddress> ActiveBuildingUnitWithoutAddresses => Set<ActiveBuildingUnitWithoutAddress>();
         public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<AddressesLinkedToMultipleBuildingUnits>();
         public DbSet<ActiveBuildingUnitLinkedToMultipleAddresses> ActiveBuildingUnitLinkedToMultipleAddresses => Set<ActiveBuildingUnitLinkedToMultipleAddresses>();
-
+        public DbSet<AddressLinkedWithBuildingUnitButNotWithParcel> AddressesLinkedWithBuildingUnitButNotWithParcel => Set<AddressLinkedWithBuildingUnitButNotWithParcel>();
 
         public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
             SuspiciousCasesType type,
@@ -118,6 +118,13 @@
                         .ToListAsync(ct);
                 case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
                     return await AddressesLinkedToMultipleBuildingUnits
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.AddressLinkedWithBuildingUnitButNotWithParcel:
+                    return await AddressesLinkedWithBuildingUnitButNotWithParcel
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)

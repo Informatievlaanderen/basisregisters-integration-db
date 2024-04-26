@@ -27,6 +27,9 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(CurrentAddressesOutsideMunicipalityBoundsConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.Create);
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
+
+            // todo: create new migration?
+            migrationBuilder.Sql(AddressLinkedWithBuildingUnitButNotWithParcelConfiguration.Create);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

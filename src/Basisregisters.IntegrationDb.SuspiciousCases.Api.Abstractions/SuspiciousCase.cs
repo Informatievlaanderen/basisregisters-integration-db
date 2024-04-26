@@ -61,6 +61,10 @@
             {
                 SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits,
                 new SuspiciousCase(Category.Address, "Adressen met status 'voorgesteld' of 'inGebruik' die gekoppeld zijn aan meerdere gebouweenheden", Severity.Improvable)
+            },
+            {
+                SuspiciousCasesType.AddressLinkedWithBuildingUnitButNotWithParcel,
+                new SuspiciousCase(Category.Address, "Actueel gebouweenheid met koppeling adres maar adres is niet gekoppeld aan onderliggend perceel", Severity.Improvable)
             }
         };
 

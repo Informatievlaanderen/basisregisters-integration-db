@@ -15,6 +15,7 @@
         CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit = 11,
         ActiveBuildingUnitsWithoutAddress = 12,
         ActiveBuildingUnitsLinkedToMultipleAddresses = 13,
-        AddressesLinkedToMultipleBuildingUnits = 14
+        AddressesLinkedToMultipleBuildingUnits = 14,
+        AddressLinkedWithBuildingUnitButNotWithParcel = 15
     }
 }
