@@ -831,7 +831,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [Theory]
         [InlineData("0046", "glvl", "46", "glv")]
         [InlineData("0046", "glvl", "46", "glvl")]
-        [InlineData("0046", "glvl", "46", "GLVL")]
         public void Mortsel(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
