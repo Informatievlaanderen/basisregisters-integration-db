@@ -1,6 +1,5 @@
 namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 {
-    using System;
     using System.Linq;
     using FluentAssertions;
     using Model;
@@ -212,6 +211,35 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             result.Should().NotBeEmpty();
             result.First().HouseNumber.Should().Be(expectedHouseNumber);
             result.First().BoxNumber.Should().Be(expectedBoxNumber);
+        }
+
+        [Fact]
+        public void Grimbergen_MultipleCombinations()
+        {
+            var houseNumber = "0046";
+            var expectedHouseNumber = "46";
+            var index = "B001";
+            var expectedBoxNumbers = new[]
+            {
+                "1",
+                "B001"
+            };
+
+            var record = new FlatFileRecord
+            {
+                NisCode = "23025",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+            var address = new NationalRegistryAddress(record);
+
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            foreach (var expectedBoxNumber in expectedBoxNumbers)
+            {
+                result.Should().ContainSingle(x =>
+                    x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber);
+            }
         }
 
         [Theory]
@@ -786,7 +814,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
-            
+
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
