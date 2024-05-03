@@ -4,16 +4,16 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public sealed class StreetNamesLongerThanTwoYearsProposed : SuspiciousCase
+    public sealed class StreetNameLongerThanTwoYearsProposed : SuspiciousCase
     {
         public int StreetNamePersistentLocalId { get; set; }
 
         public override Category Category => Category.StreetName;
     }
 
-    public sealed class StreetNamesLongerThanTwoYearsProposedConfiguration : IEntityTypeConfiguration<StreetNamesLongerThanTwoYearsProposed>
+    public sealed class StreetNameLongerThanTwoYearsProposedConfiguration : IEntityTypeConfiguration<StreetNameLongerThanTwoYearsProposed>
     {
-        public void Configure(EntityTypeBuilder<StreetNamesLongerThanTwoYearsProposed> builder)
+        public void Configure(EntityTypeBuilder<StreetNameLongerThanTwoYearsProposed> builder)
         {
             builder
                 .ToView(ViewName, Schema.SuspiciousCases)

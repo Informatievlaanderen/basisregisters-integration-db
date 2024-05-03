@@ -4,75 +4,73 @@
 
     public class SuspiciousCase
     {
-        public static IDictionary<SuspiciousCasesType, SuspiciousCase> AllCases = new Dictionary<SuspiciousCasesType, SuspiciousCase>
+        public static readonly IDictionary<SuspiciousCasesType, SuspiciousCase> AllCases = new Dictionary<SuspiciousCasesType, SuspiciousCase>
         {
+            {
+                SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment,
+                new SuspiciousCase(Category.StreetName, "Straatnamen 'in gebruik' zonder koppeling met wegsegment", Severity.Incorrect)
+            },
             {
                 SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits,
                 new SuspiciousCase(Category.Address, "Adressen 'in gebruik' zonder koppeling aan perceel of gebouweenheid", Severity.Incorrect)
             },
             {
-                SuspiciousCasesType.ProposedAddressWithoutLinkedParcelsOrBuildingUnits,
-                new SuspiciousCase(Category.Address, "Adressen 'voorgesteld' zonder koppeling aan perceel of gebouweenheid", Severity.Suspicious)
+                SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits,
+                new SuspiciousCase(Category.Address, "Actieve adressen gekoppeld aan meerdere gebouweenheden", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.CurrentAddressesOutsideOfMunicipalityBounds,
+                SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed,
+                new SuspiciousCase(Category.StreetName, "Straatnamen langer dan 2 jaar 'voorgesteld'", Severity.Suspicious)
+            },
+            {
+                SuspiciousCasesType.ActiveAddressOutsideOfMunicipalityBounds,
                 new SuspiciousCase(Category.Address, "Adressen die buiten de grenzen van de gemeente vallen", Severity.Incorrect)
             },
             {
-                SuspiciousCasesType.CurrentStreetNamesWithoutRoadSegment,
-                new SuspiciousCase(Category.StreetName, "Straatnamen 'in gebruik' zonder koppeling met wegverbinding", Severity.Incorrect)
+                SuspiciousCasesType.AddressLongerThanTwoYearsProposed,
+                new SuspiciousCase(Category.Address, "Adressen die langer dan 2 jaar bestaan en nog de status 'voorgesteld' hebben", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed,
-                new SuspiciousCase(Category.StreetName, "Straatnamen langer dan 2 jaar 'voorgesteld'", Severity.Improvable)
+                SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit,
+                new SuspiciousCase(Category.Address, "Adressen met specificatie 'gebouweenheid ' en status 'inGebruik' zonder koppeling met gebouweenheid", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.AddressesLongerThanTwoYearsProposed,
-                new SuspiciousCase(Category.Address, "Adressen bestaat langer dan 2 jaar en heeft nog de status 'voorgesteld'", Severity.Improvable)
+                SuspiciousCasesType.CurrentAddressLinkedWithBuildingUnitButNotWithParcel,
+                new SuspiciousCase(Category.Address, "Actuele gebouweenheden met koppeling adres 'in gebruik' maar adres is niet gekoppeld aan onderliggend perceel", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.RoadSegmentsLongerThanTwoYearsProposed,
-                new SuspiciousCase(Category.RoadSegment, "Wegverbindingen bestaat langer dan 2 jaar en heeft nog de status 'voorgesteld'", Severity.Improvable)
+                SuspiciousCasesType.ProposedAddressWithoutLinkedParcelOrBuildingUnit,
+                new SuspiciousCase(Category.Address, "Adressen 'voorgesteld' zonder koppeling aan perceel of gebouweenheid", Severity.Suspicious)
             },
             {
                 SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned,
-                new SuspiciousCase(Category.Building, "Gebouw bestaat langer dan 2 jaar en heeft nog steeds de status 'gepland'", Severity.Improvable)
+                new SuspiciousCase(Category.Building, "Gebouwen die langer dan 2 jaar bestaan en nog steeds de status 'gepland' hebben", Severity.Suspicious)
+            },
+            {
+                SuspiciousCasesType.ActiveBuildingUnitWithoutAddress,
+                new SuspiciousCase(Category.BuildingUnit, "Actuele Gebouweenheden zonder adres", Severity.Suspicious)
             },
             {
                 SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned,
-                new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden bestaat langer dan 2 jaar en heeft nog de status 'gepland'", Severity.Improvable)
+                new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden die langer dan 2 jaar bestaan en nog steeds de status 'gepland' hebben", Severity.Suspicious)
+            },
+            {
+                SuspiciousCasesType.RoadSegmentsLongerThanTwoYearsProposed,
+                new SuspiciousCase(Category.RoadSegment, "Wegsegmenten die langer dan 2 jaar bestaan en nog steeds de status 'voorgesteld' hebben", Severity.Suspicious)
             },
             {
                 SuspiciousCasesType.StreetNameWithOnlyOneRoadSegmentToOnlyOneSide,
-                new SuspiciousCase(Category.RoadSegment, "Straatnaam waarbij enkel een wegverbindingen gekoppeld aan slechts 1 kant", Severity.Improvable)
+                new SuspiciousCase(Category.RoadSegment, "Wegverbindingen slechts aan 1 kant gekoppeld met een straatnaam", Severity.Suspicious)
             },
-            {
-                SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit,
-                new SuspiciousCase(Category.Address, "Adressen met specificatie 'gebouweenheid ' en status 'inGebruik' zonder koppeling met gebouweenheid", Severity.Improvable)
-            },
-            {
-                SuspiciousCasesType.ActiveBuildingUnitsWithoutAddress,
-                new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden met status 'gepland' of 'gerealiseerd' die niet gekoppeld zijn aan een adres", Severity.Improvable)
-            },
-            {
-                SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses,
-                new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden met status 'gepland' of 'gerealiseerd' die gekoppeld zijn aan meerdere adressen", Severity.Improvable)
-            },
-            {
-                SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits,
-                new SuspiciousCase(Category.Address, "Adressen met status 'voorgesteld' of 'inGebruik' die gekoppeld zijn aan meerdere gebouweenheden", Severity.Improvable)
-            },
-            {
-                SuspiciousCasesType.AddressLinkedWithBuildingUnitButNotWithParcel,
-                new SuspiciousCase(Category.Address, "Actueel gebouweenheid met koppeling adres maar adres is niet gekoppeld aan onderliggend perceel", Severity.Improvable)
-            }
+            // {
+            //     SuspiciousCasesType.ActiveBuildingUnitLinkedToMultipleAddresses,
+            //     new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden met status 'gepland' of 'gerealiseerd' die gekoppeld zijn aan meerdere adressen", Severity.Improvable)
+            // },
         };
 
         public Category Category { get; }
         public string Description { get; }
         public Severity Severity { get; }
-
-        // Action
 
         private SuspiciousCase(Category category, string description, Severity severity)
         {

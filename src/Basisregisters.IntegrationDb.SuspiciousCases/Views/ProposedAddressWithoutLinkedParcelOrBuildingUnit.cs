@@ -50,7 +50,7 @@
                 WHERE
                     a.removed = false
                     AND a.status = 1
-                    AND address.position_specification != 6
+                    AND a.position_specification != 6
                     AND pa.address_persistent_local_id is null AND ba.address_persistent_local_id is null
             ;";
     }

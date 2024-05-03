@@ -37,8 +37,8 @@
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
-		        CAST(a.address_persistent_local_id as varchar) AS persistent_local_id,
-                a.address_persistent_local_id,
+		        CAST(a.persistent_local_id as varchar) AS persistent_local_id,
+                a.persistent_local_id AS address_persistent_local_id,
                 s.nis_code,
                 {Schema.FullAddress}(s.name_dutch, a.house_number, a.box_number, a.postal_code, m.name_dutch) as description
             FROM {SchemaLatestItems.Address} a

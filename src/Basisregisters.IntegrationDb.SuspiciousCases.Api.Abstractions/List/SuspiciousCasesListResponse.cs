@@ -45,9 +45,9 @@
                         45,
                         new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeUrl, 1))),
                     new SuspiciousCasesListResponseItem(
-                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed].Description,
-                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed].Category.Map(),
-                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed].Severity.Map(),
+                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Description,
+                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Category.Map(),
+                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Severity.Map(),
                         5,
                         new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeUrl, 5)))
                 });

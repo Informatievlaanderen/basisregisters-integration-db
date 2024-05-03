@@ -18,18 +18,18 @@
 
         public DbSet<SuspiciousCaseCount> SuspiciousCaseCounts => Set<SuspiciousCaseCount>();
 
-        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressWithoutLinkedParcelOrBuilding => Set<CurrentAddressWithoutLinkedParcelOrBuildingUnit>();
-        public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
-        public DbSet<StreetNamesLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNamesLongerThanTwoYearsProposed>();
+        public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressesWithoutLinkedParcelOrBuilding => Set<CurrentAddressWithoutLinkedParcelOrBuildingUnit>();
+        public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressesWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
+        public DbSet<StreetNameLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNameLongerThanTwoYearsProposed>();
         public DbSet<AddressLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressLongerThanTwoYearsProposed>();
         public DbSet<BuildingsLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingsLongerThanTwoYearsPlanned>();
         public DbSet<BuildingUnitsLongerThanTwoYearsPlanned> BuildingUnitsLongerThanTwoYearsPlanned => Set<BuildingUnitsLongerThanTwoYearsPlanned>();
-        public DbSet<ActiveAddressOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds => Set<ActiveAddressOutsideMunicipalityBounds>();
-        public DbSet<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit> CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnits => Set<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit>();
+        public DbSet<ActiveAddressOutsideMunicipalityBounds> ActiveAddressesOutsideMunicipalityBounds => Set<ActiveAddressOutsideMunicipalityBounds>();
+        public DbSet<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit> CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit => Set<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit>();
         public DbSet<ActiveBuildingUnitWithoutAddress> ActiveBuildingUnitWithoutAddresses => Set<ActiveBuildingUnitWithoutAddress>();
-        public DbSet<ActiveAddresLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<ActiveAddresLinkedToMultipleBuildingUnits>();
+        public DbSet<ActiveAddresLinkedToMultipleBuildingUnits> ActiveAddressesLinkedToMultipleBuildingUnits => Set<ActiveAddresLinkedToMultipleBuildingUnits>();
         public DbSet<ActiveBuildingUnitLinkedToMultipleAddresses> ActiveBuildingUnitLinkedToMultipleAddresses => Set<ActiveBuildingUnitLinkedToMultipleAddresses>();
-        public DbSet<CurrentAddressLinkedWithBuildingUnitButNotWithParcel> AddressesLinkedWithBuildingUnitButNotWithParcel => Set<CurrentAddressLinkedWithBuildingUnitButNotWithParcel>();
+        public DbSet<CurrentAddressLinkedWithBuildingUnitButNotWithParcel> CurrentAddressesLinkedWithBuildingUnitButNotWithParcel => Set<CurrentAddressLinkedWithBuildingUnitButNotWithParcel>();
 
         public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
             SuspiciousCasesType type,
@@ -41,36 +41,36 @@
             switch (type)
             {
                 case SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits:
-                    return await CurrentAddressWithoutLinkedParcelOrBuilding
+                    return await CurrentAddressesWithoutLinkedParcelOrBuilding
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.ProposedAddressWithoutLinkedParcelsOrBuildingUnits:
-                    return await ProposedAddressWithoutLinkedParcelOrBuilding
+                case SuspiciousCasesType.ProposedAddressWithoutLinkedParcelOrBuildingUnit:
+                    return await ProposedAddressesWithoutLinkedParcelOrBuilding
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.CurrentAddressesOutsideOfMunicipalityBounds:
-                    return await CurrentAddressesOutsideMunicipalityBounds
+                case SuspiciousCasesType.ActiveAddressOutsideOfMunicipalityBounds:
+                    return await ActiveAddressesOutsideMunicipalityBounds
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.CurrentStreetNamesWithoutRoadSegment:
+                case SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment:
                     break;
-                case SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed:
+                case SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed:
                     return await StreetNamesLongerThanTwoYearsProposed
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.StreetNamePersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.AddressesLongerThanTwoYearsProposed:
+                case SuspiciousCasesType.AddressLongerThanTwoYearsProposed:
                     return await AddressesLongerThanTwoYearsProposed
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
@@ -95,14 +95,14 @@
                         .ToListAsync(ct);
                 case SuspiciousCasesType.StreetNameWithOnlyOneRoadSegmentToOnlyOneSide:
                     break;
-                case SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit:
-                    return await CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnits
+                case SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit:
+                    return await CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.ActiveBuildingUnitsWithoutAddress:
+                case SuspiciousCasesType.ActiveBuildingUnitWithoutAddress:
                     return await ActiveBuildingUnitWithoutAddresses
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.BuildingUnitPersistentLocalId)
@@ -116,15 +116,15 @@
                 //         .Skip(offset)
                 //         .Take(limit)
                 //         .ToListAsync(ct);
-                case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
-                    return await AddressesLinkedToMultipleBuildingUnits
+                case SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits:
+                    return await ActiveAddressesLinkedToMultipleBuildingUnits
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.AddressLinkedWithBuildingUnitButNotWithParcel:
-                    return await AddressesLinkedWithBuildingUnitButNotWithParcel
+                case SuspiciousCasesType.CurrentAddressLinkedWithBuildingUnitButNotWithParcel:
+                    return await CurrentAddressesLinkedWithBuildingUnitButNotWithParcel
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.AddressPersistentLocalId)
                         .Skip(offset)
