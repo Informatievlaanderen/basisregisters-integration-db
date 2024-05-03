@@ -50,7 +50,6 @@
                     bu.is_removed IS FALSE
                     AND bu.status in ('Planned', 'Realized')
                     AND rel.address_persistent_local_id IS NULL
-                ORDER BY bu.building_unit_persistent_local_id
                 ;";
     }
 }

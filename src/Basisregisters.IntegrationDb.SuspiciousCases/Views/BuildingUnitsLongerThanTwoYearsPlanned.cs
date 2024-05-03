@@ -32,7 +32,7 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string ViewName = "view_building_units_longer_than_two_years_planned";
+        public const string ViewName = "view_building_unit_longer_than_two_years_planned";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
@@ -41,7 +41,7 @@
 		        bu.building_unit_persistent_local_id AS building_unit_persistent_local_id,
 		        b.nis_code AS nis_code
 	        FROM {SchemaLatestItems.BuildingUnit} AS bu
-            LEFT OUTER JOIN {SchemaLatestItems.Building} b ON b.building_persistent_local_id = bu.building_persistent_local_id
+            JOIN {SchemaLatestItems.Building} b ON b.building_persistent_local_id = bu.building_persistent_local_id
 	        WHERE bu.status = 'Planned'
 	        AND bu.is_removed = false
 	        AND bu.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'

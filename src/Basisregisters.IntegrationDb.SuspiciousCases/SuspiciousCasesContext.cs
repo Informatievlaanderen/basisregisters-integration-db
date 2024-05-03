@@ -21,15 +21,15 @@
         public DbSet<CurrentAddressWithoutLinkedParcelOrBuildingUnit> CurrentAddressWithoutLinkedParcelOrBuilding => Set<CurrentAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<StreetNamesLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNamesLongerThanTwoYearsProposed>();
-        public DbSet<AddressesLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressesLongerThanTwoYearsProposed>();
+        public DbSet<AddressLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressLongerThanTwoYearsProposed>();
         public DbSet<BuildingsLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingsLongerThanTwoYearsPlanned>();
         public DbSet<BuildingUnitsLongerThanTwoYearsPlanned> BuildingUnitsLongerThanTwoYearsPlanned => Set<BuildingUnitsLongerThanTwoYearsPlanned>();
-        public DbSet<CurrentAddressesOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds => Set<CurrentAddressesOutsideMunicipalityBounds>();
-        public DbSet<CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit> CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnits => Set<CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit>();
+        public DbSet<ActiveAddressOutsideMunicipalityBounds> CurrentAddressesOutsideMunicipalityBounds => Set<ActiveAddressOutsideMunicipalityBounds>();
+        public DbSet<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit> CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnits => Set<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit>();
         public DbSet<ActiveBuildingUnitWithoutAddress> ActiveBuildingUnitWithoutAddresses => Set<ActiveBuildingUnitWithoutAddress>();
-        public DbSet<AddressesLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<AddressesLinkedToMultipleBuildingUnits>();
+        public DbSet<ActiveAddresLinkedToMultipleBuildingUnits> AddressesLinkedToMultipleBuildingUnits => Set<ActiveAddresLinkedToMultipleBuildingUnits>();
         public DbSet<ActiveBuildingUnitLinkedToMultipleAddresses> ActiveBuildingUnitLinkedToMultipleAddresses => Set<ActiveBuildingUnitLinkedToMultipleAddresses>();
-        public DbSet<AddressLinkedWithBuildingUnitButNotWithParcel> AddressesLinkedWithBuildingUnitButNotWithParcel => Set<AddressLinkedWithBuildingUnitButNotWithParcel>();
+        public DbSet<CurrentAddressLinkedWithBuildingUnitButNotWithParcel> AddressesLinkedWithBuildingUnitButNotWithParcel => Set<CurrentAddressLinkedWithBuildingUnitButNotWithParcel>();
 
         public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
             SuspiciousCasesType type,
@@ -109,13 +109,13 @@
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses:
-                    return await ActiveBuildingUnitLinkedToMultipleAddresses
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.BuildingUnitPersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
+                // case SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses:
+                //     return await ActiveBuildingUnitLinkedToMultipleAddresses
+                //         .Where(x => x.NisCode == nisCode)
+                //         .OrderBy(x => x.BuildingUnitPersistentLocalId)
+                //         .Skip(offset)
+                //         .Take(limit)
+                //         .ToListAsync(ct);
                 case SuspiciousCasesType.AddressesLinkedToMultipleBuildingUnits:
                     return await AddressesLinkedToMultipleBuildingUnits
                         .Where(x => x.NisCode == nisCode)

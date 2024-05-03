@@ -10,8 +10,8 @@
         public override Category Category => Category.Address;
     }
 
-    public sealed class
-        ProposedAddressWithoutLinkedParcelOrBuildingUnitsConfiguration : IEntityTypeConfiguration<ProposedAddressWithoutLinkedParcelOrBuildingUnit>
+    public sealed class ProposedAddressWithoutLinkedParcelOrBuildingUnitConfiguration
+        : IEntityTypeConfiguration<ProposedAddressWithoutLinkedParcelOrBuildingUnit>
     {
         public void Configure(EntityTypeBuilder<ProposedAddressWithoutLinkedParcelOrBuildingUnit> builder)
         {
@@ -41,20 +41,17 @@
                     s.nis_code,
                     {Schema.FullAddress}(s.name_dutch, a.house_number, a.box_number, a.postal_code, m.name_dutch) as description
                 FROM {SchemaLatestItems.Address} a
-                LEFT OUTER JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
-                LEFT OUTER JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
-                WHERE EXISTS (
-                    SELECT 1
-                    FROM {SchemaLatestItems.Address} AS address
-                    LEFT JOIN {SchemaLatestItems.ParcelAddresses} AS pa
-                        ON address.persistent_local_id = pa.address_persistent_local_id
-                    LEFT JOIN {SchemaLatestItems.BuildingUnitAddresses} AS ba
-                        ON address.persistent_local_id = ba.address_persistent_local_id
-                    WHERE address.persistent_local_id = a.persistent_local_id
-                        AND (pa.address_persistent_local_id IS NULL AND ba.address_persistent_local_id IS NULL)
-                        AND address.status = 1
-                        AND address.removed = false
-                        AND address.position_specification != 6)
+                JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
+                JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
+                LEFT JOIN {SchemaLatestItems.ParcelAddresses} AS pa
+                    ON a.persistent_local_id = pa.address_persistent_local_id
+                LEFT JOIN {SchemaLatestItems.BuildingUnitAddresses} AS ba
+                    ON a.persistent_local_id = ba.address_persistent_local_id
+                WHERE
+                    a.removed = false
+                    AND a.status = 1
+                    AND address.position_specification != 6
+                    AND pa.address_persistent_local_id is null AND ba.address_persistent_local_id is null
             ;";
     }
 }

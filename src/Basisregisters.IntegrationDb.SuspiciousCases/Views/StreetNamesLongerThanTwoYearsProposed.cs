@@ -34,6 +34,7 @@
 
         public const string ViewName = "view_streetname_longer_than_two_years_proposed";
 
+        // Todo replace schema and table name with constants
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
 	        SELECT
@@ -41,7 +42,7 @@
 		        streetname.persistent_local_id AS streetname_persistent_local_id,
 		        streetname.nis_code AS nis_code,
 		        streetname.name_dutch AS description
-	        FROM integration_streetname.streetname_latest_items AS streetname
+	        FROM {SchemaLatestItems.StreetName} AS streetname
 	        WHERE streetname.status = 0
 	        AND streetname.is_removed = false
 	        AND streetname.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'

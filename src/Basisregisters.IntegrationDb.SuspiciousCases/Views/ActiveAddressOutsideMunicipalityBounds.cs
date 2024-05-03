@@ -4,15 +4,16 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit : SuspiciousCase
+    public class ActiveAddressOutsideMunicipalityBounds : SuspiciousCase
     {
         public int AddressPersistentLocalId { get; set; }
+
         public override Category Category => Category.Address;
     }
 
-    public sealed class CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnitConfiguration : IEntityTypeConfiguration<CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit>
+    public sealed class ActiveAddressOutsideMunicipalityBoundsConfiguration : IEntityTypeConfiguration<ActiveAddressOutsideMunicipalityBounds>
     {
-        public void Configure(EntityTypeBuilder<CurrentAddressesWithSpecificationDerivedFromObjectWithoutBuildingUnit> builder)
+        public void Configure(EntityTypeBuilder<ActiveAddressOutsideMunicipalityBounds> builder)
         {
             builder
                 .ToView(ViewName, Schema.SuspiciousCases)
@@ -31,27 +32,23 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-
-        public const string ViewName = "view_current_addresses_with_specification_derived_from_object_without_building_unit";
+        public const string ViewName = "view_active_address_outside_municipality_bounds";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
-		        CAST(a.persistent_local_id as varchar) AS persistent_local_id,
-                a.persistent_local_id AS address_persistent_local_id,
+                CAST(a.persistent_local_id as varchar) AS persistent_local_id,
+                a.persistent_local_id as address_persistent_local_id,
                 s.nis_code,
                 {Schema.FullAddress}(s.name_dutch, a.house_number, a.box_number, a.postal_code, m.name_dutch) as description
             FROM {SchemaLatestItems.Address} a
-            LEFT OUTER JOIN {SchemaLatestItems.BuildingUnitAddresses} rel ON rel.address_persistent_local_id = a.persistent_local_id
-            LEFT OUTER JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
-            LEFT OUTER JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
+            JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
+            JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
+            JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code
             WHERE
                 a.removed = false
-            AND
-                a.status = 2
-            AND
-                a.position_method = 2
-            AND rel.building_unit_persistent_local_id IS NULL
+                a.status in (1, 2)
+                AND ST_Within(a.geometry, mg.geometry) IS FALSE
             ;";
     }
 }
