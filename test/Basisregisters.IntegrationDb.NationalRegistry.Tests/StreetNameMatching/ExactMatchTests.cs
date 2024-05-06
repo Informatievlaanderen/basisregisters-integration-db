@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
+namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -33,6 +33,7 @@
         [InlineData("J. Van Boendaelelaan", "J.V. BOENDAELEL.RES. BOENDAELE")]
         [InlineData("Bronplein", "BRONPLEIN RES.GERTRUDIS")]
         [InlineData("Hannuitsesteenweg", "HANNUITSESTWG. RES. HEMELRIJCK")]
+        [InlineData("D'Urselstraat", "D'Urselstraat")]
         public void DutchStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -62,6 +63,7 @@
         [InlineData("kerkstraat", "kérkstraat")]
         [InlineData("Kerkstraat", "Kérkstraat")]
         [InlineData("DeStRaat", "désTraAt")]
+        [InlineData("D'Urselstraat", "D'Urselstraat")]
         public void FrenchStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -91,6 +93,7 @@
         [InlineData("kerkstraat", "kérkstraat")]
         [InlineData("Kerkstraat", "Kérkstraat")]
         [InlineData("DeStRaat", "désTraAt")]
+        [InlineData("D'Urselstraat", "D'Urselstraat")]
         public void GermanStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
@@ -120,6 +123,7 @@
         [InlineData("kerkstraat", "kérkstraat")]
         [InlineData("Kerkstraat", "Kérkstraat")]
         [InlineData("DeStRaat", "désTraAt")]
+        [InlineData("D'Urselstraat", "D'Urselstraat")]
         public void EnglishStreetName(string streetName, string search)
         {
             var expectedStreetName = new StreetName(
