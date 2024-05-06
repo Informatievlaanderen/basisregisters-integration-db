@@ -188,7 +188,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
                     version_timestamp TIMESTAMP WITH TIME ZONE,
                     nis_code INT,
                     status TEXT,
-                    is_removed BOOL
+                    is_removed BOOL,
+                    geometry geometry
                 );";
             await using var createBuildingTable = new NpgsqlCommand(sql, NpgsqlConnection);
             await createBuildingTable.ExecuteNonQueryAsync();
@@ -199,6 +200,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
                     building_persistent_local_id INT,
                     version_timestamp TIMESTAMP WITH TIME ZONE,
                     is_removed BOOL,
+                    geometry geometry,
                     status TEXT
                 );";
             await using var createBuildingUnitTable = new NpgsqlCommand(sql, NpgsqlConnection);
@@ -214,10 +216,22 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
 
             sql =
                 @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.ParcelAddresses} (
-                    address_persistent_local_id INT
+                    address_persistent_local_id INT,
+                    capakey text,
+                    parcel_id uuid
                 );";
             await using var createParcelAddressTable = new NpgsqlCommand(sql, NpgsqlConnection);
             await createParcelAddressTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.Parcel} (
+                    parcel_id uuid,
+                    capakey varchar,
+                    status text,
+                    is_removed boolean
+                );";
+            await using var createParcelTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createParcelTable.ExecuteNonQueryAsync();
         }
 
         public async Task DisposeAsync()

@@ -18,12 +18,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.List
         /// Verdacht.
         /// </summary>
         [EnumMember]
-        Verdacht = 2,
-
-        /// <summary>
-        /// Verbeterbaar.
-        /// </summary>
-        [EnumMember]
-        Verbeterbaar = 3
+        Verdacht = 2
     }
 }

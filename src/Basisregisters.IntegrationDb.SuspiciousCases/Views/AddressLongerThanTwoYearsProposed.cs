@@ -4,16 +4,16 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public sealed class AddressesLongerThanTwoYearsProposed : SuspiciousCase
+    public sealed class AddressLongerThanTwoYearsProposed : SuspiciousCase
     {
         public int AddressPersistentLocalId { get; set; }
 
         public override Category Category => Category.Address;
     }
 
-    public sealed class AddressesLongerThanTwoYearsProposedConfiguration : IEntityTypeConfiguration<AddressesLongerThanTwoYearsProposed>
+    public sealed class AddressLongerThanTwoYearsProposedConfiguration : IEntityTypeConfiguration<AddressLongerThanTwoYearsProposed>
     {
-        public void Configure(EntityTypeBuilder<AddressesLongerThanTwoYearsProposed> builder)
+        public void Configure(EntityTypeBuilder<AddressLongerThanTwoYearsProposed> builder)
         {
             builder
                 .ToView(ViewName, Schema.SuspiciousCases)
@@ -32,7 +32,7 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string ViewName = "view_addresses_longer_than_two_years_proposed";
+        public const string ViewName = "view_address_longer_than_two_years_proposed";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
@@ -42,11 +42,12 @@
 		        s.nis_code AS nis_code,
                 {Schema.FullAddress}(s.name_dutch, a.house_number, a.box_number, a.postal_code, m.name_dutch) as description
 	        FROM {SchemaLatestItems.Address} AS a
-            LEFT OUTER JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
-            LEFT OUTER JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
-	        WHERE a.status = 1
-	        AND a.removed = false
-	        AND a.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'
+            JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
+            JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
+	        WHERE
+                a.status = 1
+	            AND a.removed = false
+	            AND a.version_timestamp <= CURRENT_TIMESTAMP - INTERVAL '2 years'
             ;";
     }
 }

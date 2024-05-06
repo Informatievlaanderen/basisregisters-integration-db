@@ -42,14 +42,14 @@
                     bu.building_unit_persistent_local_id,
                     b.nis_code
                 FROM {SchemaLatestItems.BuildingUnit} AS bu
+                JOIN {SchemaLatestItems.Building} AS b
+                    ON bu.building_persistent_local_id = b.building_persistent_local_id
                 LEFT OUTER JOIN {SchemaLatestItems.BuildingUnitAddresses} AS rel
                     ON bu.building_unit_persistent_local_id = rel.building_unit_persistent_local_id
-                LEFT OUTER JOIN {SchemaLatestItems.Building} AS b
-                    ON bu.building_persistent_local_id = bu.building_persistent_local_id
                 WHERE
                     bu.is_removed IS FALSE
+                    AND bu.status in ('Planned', 'Realized')
                     AND rel.address_persistent_local_id IS NULL
-                ORDER BY bu.building_unit_persistent_local_id
                 ;";
     }
 }
