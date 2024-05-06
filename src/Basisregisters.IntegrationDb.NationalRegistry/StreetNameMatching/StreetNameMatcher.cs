@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
+namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
 
     public class StreetNameMatcher
     {
-        private readonly IEnumerable<StreetName> _streetNames;
+        private readonly IEnumerable<MatchingStreetName> _streetNames;
 
         private readonly IList<IMatcher> _matchers;
         private readonly IList<SanitizerBase> _sanitizers;
@@ -19,16 +19,15 @@
             IEnumerable<StreetName> streetNames,
             int maxLevenshteinDistanceInPercentage = 10)
         {
-            _streetNames = streetNames.ToList();
-
-            foreach (var streetName in _streetNames)
-            {
-                streetName.NameDutch = streetName.NameDutch?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty;
-                streetName.NameFrench = streetName.NameFrench?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty;
-                streetName.NameGerman = streetName.NameGerman?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty;
-                streetName.NameEnglish = streetName.NameEnglish?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty;
-            }
-
+            _streetNames = streetNames
+                .Select(streetName => new MatchingStreetName(streetName)
+                {
+                    SanitizedNameDutch = streetName.NameDutch?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty,
+                    SanitizedNameFrench = streetName.NameFrench?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty,
+                    SanitizedNameGerman = streetName.NameGerman?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty,
+                    SanitizedNameEnglish = streetName.NameEnglish?.RemoveDiacritics().RemoveQuotations().RemoveSpecialCharacters() ?? string.Empty
+                }).ToList();
+            
             _matchers = new List<IMatcher>
             {
                 new ExactMatcher(),
@@ -76,6 +75,7 @@
         {
             var matches = _streetNames
                 .Where(x => Match(x, search, sanitizer, comparer))
+                .Select(x => x.StreetName)
                 .ToList();
 
             if (matches.Any())
@@ -90,35 +90,36 @@
 
             matches = _streetNames
                 .Where(x => Match(x, sanitizedSearch, sanitizer, comparer))
+                .Select(x => x.StreetName)
                 .ToList();
 
             return matches;
         }
 
-        private static bool Match(StreetName streetName, string search, SanitizerBase sanitizer, Func<string, string, bool> comparer)
+        private static bool Match(MatchingStreetName streetName, string search, SanitizerBase sanitizer, Func<string, string, bool> comparer)
         {
-            var sanitized = sanitizer.Sanitize(streetName.NameDutch ?? string.Empty, search);
+            var sanitized = sanitizer.Sanitize(streetName.SanitizedNameDutch, search);
             var result = comparer(sanitized.StreetName, sanitized.Search);
             if (result)
             {
                 return true;
             }
 
-            sanitized = sanitizer.Sanitize(streetName.NameFrench ?? string.Empty, search);
+            sanitized = sanitizer.Sanitize(streetName.SanitizedNameFrench, search);
             result = comparer(sanitized.StreetName, sanitized.Search);
             if (result)
             {
                 return true;
             }
 
-            sanitized= sanitizer.Sanitize(streetName.NameGerman ?? string.Empty, search);
+            sanitized= sanitizer.Sanitize(streetName.SanitizedNameGerman, search);
             result = comparer(sanitized.StreetName, sanitized.Search);
             if (result)
             {
                 return true;
             }
 
-            sanitized = sanitizer.Sanitize(streetName.NameEnglish ?? string.Empty, search);
+            sanitized = sanitizer.Sanitize(streetName.SanitizedNameEnglish, search);
             result = comparer(sanitized.StreetName, sanitized.Search);
             if (result)
             {
@@ -126,6 +127,14 @@
             }
 
             return false;
+        }
+
+        private sealed record MatchingStreetName(StreetName StreetName)
+        {
+            public required string SanitizedNameDutch { get; init; }
+            public required string SanitizedNameFrench { get; init; }
+            public required string SanitizedNameGerman { get; init; }
+            public required string SanitizedNameEnglish { get; init; }
         }
     }
 }
