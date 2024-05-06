@@ -1,8 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.Converters
 {
     using System;
-    using Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions;
-    using Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.List;
+    using List;
 
     public static class SeverityExtensions
     {
@@ -12,7 +11,6 @@
             {
                 Severity.Incorrect => Ernst.Foutief,
                 Severity.Suspicious => Ernst.Verdacht,
-                Severity.Improvable => Ernst.Verbeterbaar,
                 _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
             };
         }
