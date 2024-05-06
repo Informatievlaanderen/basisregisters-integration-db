@@ -131,10 +131,10 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.StreetNameMatching
 
         private sealed record MatchingStreetName(StreetName StreetName)
         {
-            public string SanitizedNameDutch { get; init; }
-            public string SanitizedNameFrench { get; init; }
-            public string SanitizedNameGerman { get; init; }
-            public string SanitizedNameEnglish { get; init; }
+            public required string SanitizedNameDutch { get; init; }
+            public required string SanitizedNameFrench { get; init; }
+            public required string SanitizedNameGerman { get; init; }
+            public required string SanitizedNameEnglish { get; init; }
         }
     }
 }
