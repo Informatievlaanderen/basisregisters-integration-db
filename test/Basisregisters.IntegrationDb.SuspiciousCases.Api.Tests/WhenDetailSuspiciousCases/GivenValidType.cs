@@ -61,7 +61,7 @@
                 }
             };
 
-            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, CancellationToken.None).Result;
+            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, CancellationToken.None).Result;
         }
 
         [Fact]
@@ -75,7 +75,7 @@
         {
             _mediator.Verify(x => x.Send(
                 It.Is<SuspiciousCasesDetailRequest>(y =>
-                    y.Type == SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed),
+                    y.Type == SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed),
                 It.IsAny<CancellationToken>()));
         }
     }

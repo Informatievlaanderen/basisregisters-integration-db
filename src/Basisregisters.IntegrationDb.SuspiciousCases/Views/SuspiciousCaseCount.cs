@@ -37,13 +37,24 @@
 
         public const string ViewName = "view_suspicious_cases_counts";
 
+        // Todo: extend with all cases
         public static readonly string Create =
-            @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
-                {CreateScript(SuspiciousCasesType.StreetNamesLongerThanTwoYearsProposed, StreetNamesLongerThanTwoYearsProposedConfiguration.ViewName)}
-                UNION
-                {CreateScript(SuspiciousCasesType.ActiveBuildingUnitsLinkedToMultipleAddresses, ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName)};
-                CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema.SuspiciousCases}.{ViewName} USING btree (nis_code)
-            ;";
+            $$"""
+              CREATE MATERIALIZED VIEW IF NOT EXISTS {{Schema.SuspiciousCases}}.{{ViewName}}
+              AS
+              {{CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits, ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.ViewName)}}
+              ;
+              CREATE INDEX ix_{{ViewName}}_nis_code ON {{Schema.SuspiciousCases}}.{{ViewName}} USING btree (nis_code)
+              ;
+              """;
+            // @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
+            //     {CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}
+            //     UNION
+            //     {CreateScript(SuspiciousCasesType.ActiveBuildingUnitLinkedToMultipleAddresses, ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName)};
+            //     CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema.SuspiciousCases}.{ViewName} USING btree (nis_code)
+            // ;";
 
         private static string CreateScript(SuspiciousCasesType type, string viewName)
         {

@@ -1,7 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.Converters
 {
     using System;
-    using Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.List;
+    using List;
 
     public static class CategoryExtensions
     {
