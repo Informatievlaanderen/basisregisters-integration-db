@@ -34,17 +34,20 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         private readonly IMediator _mediator;
         private readonly IActionContextAccessor _actionContextAccessor;
         private readonly IOvoCodeWhiteList _ovoCodeWhiteList;
+        private readonly IOrganisationWhiteList _organisationWhiteList;
         private readonly INisCodeService _nisCodeService;
 
         public SuspiciousCasesController(
             IMediator mediator,
             IActionContextAccessor actionContextAccessor,
             IOvoCodeWhiteList ovoCodeWhiteList,
+            IOrganisationWhiteList organisationWhiteList,
             INisCodeService nisCodeService)
         {
             _mediator = mediator;
             _actionContextAccessor = actionContextAccessor;
             _ovoCodeWhiteList = ovoCodeWhiteList;
+            _organisationWhiteList = organisationWhiteList;
             _nisCodeService = nisCodeService;
         }
 
@@ -64,29 +67,16 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> List(CancellationToken cancellationToken)
         {
-            var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
-
-            if (string.IsNullOrWhiteSpace(ovoCode))
+            var (isWhiteListed, nisCode) = await GetIfOrganisationIsWhiteListedAndNisCode(cancellationToken);
+            if (!isWhiteListed && string.IsNullOrWhiteSpace(nisCode))
             {
                 return Forbid();
             }
-
-            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>();
-
-            if (!_ovoCodeWhiteList.IsWhiteListed(ovoCode))
+            
+            var filtering = new FilteringHeader<SuspiciousCasesListFilter>(new SuspiciousCasesListFilter
             {
-                var nisCode = await _nisCodeService.Get(ovoCode, cancellationToken);
-
-                if (string.IsNullOrWhiteSpace(nisCode))
-                {
-                    return Forbid();
-                }
-
-                filtering = new FilteringHeader<SuspiciousCasesListFilter>(new SuspiciousCasesListFilter
-                {
-                    NisCode = nisCode
-                });
-            }
+                NisCode = nisCode
+            });
 
             if (filtering.Filter is null || string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
@@ -123,29 +113,16 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             [FromRoute] int type,
             CancellationToken cancellationToken)
         {
-            var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
-
-            if (string.IsNullOrWhiteSpace(ovoCode))
+            var (isWhiteListed, nisCode) = await GetIfOrganisationIsWhiteListedAndNisCode(cancellationToken);
+            if (!isWhiteListed && string.IsNullOrWhiteSpace(nisCode))
             {
                 return Forbid();
             }
 
-            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesDetailFilter>();
-
-            if (!_ovoCodeWhiteList.IsWhiteListed(ovoCode))
+            var filtering = new FilteringHeader<SuspiciousCasesDetailFilter>(new SuspiciousCasesDetailFilter
             {
-                var nisCode = await _nisCodeService.Get(ovoCode, cancellationToken);
-
-                if (string.IsNullOrWhiteSpace(nisCode))
-                {
-                    return Forbid();
-                }
-
-                filtering = new FilteringHeader<SuspiciousCasesDetailFilter>(new SuspiciousCasesDetailFilter
-                {
-                    NisCode = nisCode
-                });
-            }
+                NisCode = nisCode
+            });
 
             if (filtering.Filter is null || string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
@@ -176,6 +153,29 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                 cancellationToken);
 
             return Ok(response);
+        }
+
+        private async Task<(bool IsWhiteListed, string? NisCode)> GetIfOrganisationIsWhiteListedAndNisCode(CancellationToken cancellationToken)
+        {
+            var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
+            if (!string.IsNullOrWhiteSpace(ovoCode))
+            {
+                if (_ovoCodeWhiteList.IsWhiteListed(ovoCode))
+                {
+                    return (true, Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode);
+                }
+
+                var nisCode = await _nisCodeService.Get(ovoCode, cancellationToken);
+                return (false, nisCode);
+            }
+
+            var orgCode = _actionContextAccessor.ActionContext!.HttpContext.FindOrgCodeClaim();
+            if (!string.IsNullOrWhiteSpace(orgCode) && _organisationWhiteList.IsWhiteListed(orgCode))
+            {
+                return (true, Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode);
+            }
+
+            return (false, null);
         }
     }
 }
