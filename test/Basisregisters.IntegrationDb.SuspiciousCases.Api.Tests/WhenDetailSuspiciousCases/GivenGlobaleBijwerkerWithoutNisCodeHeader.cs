@@ -1,4 +1,4 @@
-namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspiciousCases
+namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspiciousCases
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -17,11 +17,11 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using NisCodeService.HardCoded;
     using Xunit;
 
-    public class GivenInterneBijwerkerWithoutNisCodeHeader
+    public class GivenGlobaleBijwerkerWithoutNisCodeHeader
     {
         private readonly SuspiciousCasesController _suspiciousCasesController;
 
-        public GivenInterneBijwerkerWithoutNisCodeHeader()
+        public GivenGlobaleBijwerkerWithoutNisCodeHeader()
         {
             Mock<IActionContextAccessor> actionContextAccessor = new();
             actionContextAccessor
@@ -32,7 +32,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
                     {
                         User = new ClaimsPrincipal(new[]
                         {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO002949") })
+                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOrgCode, "0643634986") })
                         }),
                     }
                 });
@@ -40,8 +40,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
             _suspiciousCasesController = new SuspiciousCasesController(
                 Mock.Of<IMediator>(),
                 actionContextAccessor.Object,
-                new OvoCodeWhiteList(new List<string> { "OVO002949" }),
-                new OrganisationWhiteList(new List<string>()),
+                new OvoCodeWhiteList(new List<string>()),
+                new OrganisationWhiteList(new List<string> { "0643634986" }),
                 new HardCodedNisCodeService())
             {
                 ControllerContext = new ControllerContext
@@ -55,9 +55,10 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
         }
 
         [Fact]
-        public void ThenThrowsValidationException()
+        public void ThenBadRequestResponse()
         {
-            var act = () => _suspiciousCasesController.List(CancellationToken.None);
+            var act = () =>
+                _suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, CancellationToken.None);
             act
                 .Should()
                 .ThrowAsync<ValidationException>()

@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspiciousCases
+namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspiciousCases
 {
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -39,6 +39,7 @@
                 new Mock<IMediator>().Object,
                 actionContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string> { "OVO002949" }),
+                new OrganisationWhiteList(new List<string>()),
                 new HardCodedNisCodeService())
             {
                 ControllerContext = new ControllerContext
