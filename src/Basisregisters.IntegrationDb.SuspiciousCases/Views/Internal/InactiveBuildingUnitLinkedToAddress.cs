@@ -12,13 +12,11 @@
                 bua.building_unit_persistent_local_id
                 , bu.status
                 , bu.is_removed
-                , a.persistent_local_id as address_persistent_local_id
+                , bua.address_persistent_local_id as address_persistent_local_id
             FROM {SchemaLatestItems.BuildingUnitAddresses} as bua
             JOIN {SchemaLatestItems.BuildingUnit} as bu
                 on bua.building_unit_persistent_local_id = bu.building_unit_persistent_local_id
                     and (bu.status in ('NotRealized','Retired') or bu.is_removed = true)
-            JOIN {SchemaLatestItems.Address} as a
-                on bua.address_persistent_local_id = a.persistent_local_id
             ORDER BY bu.building_persistent_local_id, bu.building_unit_persistent_local_id
             ;";
     }
