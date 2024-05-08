@@ -67,28 +67,17 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> List(CancellationToken cancellationToken)
         {
-            var (isWhiteListed, nisCode) = await GetIfOrganisationIsWhiteListedAndNisCode(cancellationToken);
-            if (!isWhiteListed && string.IsNullOrWhiteSpace(nisCode))
+            var nisCode = await DetermineNisCode(cancellationToken);
+            if (string.IsNullOrWhiteSpace(nisCode))
             {
                 return Forbid();
             }
-            
+
             var filtering = new FilteringHeader<SuspiciousCasesListFilter>(new SuspiciousCasesListFilter
             {
                 NisCode = nisCode
             });
-
-            if (filtering.Filter is null || string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
-            {
-                throw new ValidationException(new[]
-                {
-                    new ValidationFailure("NisCode", "Niscode ontbreekt.")
-                    {
-                        ErrorCode = "OntbrekendeNiscode"
-                    }
-                });
-            }
-
+            
             var response = await _mediator.Send(new SuspiciousCasesListRequest(filtering), cancellationToken);
 
             return Ok(response);
@@ -113,8 +102,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             [FromRoute] int type,
             CancellationToken cancellationToken)
         {
-            var (isWhiteListed, nisCode) = await GetIfOrganisationIsWhiteListedAndNisCode(cancellationToken);
-            if (!isWhiteListed && string.IsNullOrWhiteSpace(nisCode))
+            var nisCode = await DetermineNisCode(cancellationToken);
+            if (string.IsNullOrWhiteSpace(nisCode))
             {
                 return Forbid();
             }
@@ -123,18 +112,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             {
                 NisCode = nisCode
             });
-
-            if (filtering.Filter is null || string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
-            {
-                throw new ValidationException(new[]
-                {
-                    new ValidationFailure("NisCode", "Niscode ontbreekt.")
-                    {
-                        ErrorCode = "OntbrekendeNiscode"
-                    }
-                });
-            }
-
+            
             if (!Enum.IsDefined(typeof(SuspiciousCasesType), type))
             {
                 throw new ValidationException(new[]
@@ -155,27 +133,51 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             return Ok(response);
         }
 
-        private async Task<(bool IsWhiteListed, string? NisCode)> GetIfOrganisationIsWhiteListedAndNisCode(CancellationToken cancellationToken)
+        private async Task<string?> DetermineNisCode(CancellationToken cancellationToken)
         {
             var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
             if (!string.IsNullOrWhiteSpace(ovoCode))
             {
                 if (_ovoCodeWhiteList.IsWhiteListed(ovoCode))
                 {
-                    return (true, Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode);
+                    var nisCode = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode;
+
+                    if (string.IsNullOrWhiteSpace(nisCode))
+                    {
+                        throw GetMissingNisCodeValidationException();
+                    }
+
+                    return nisCode;
                 }
 
-                var nisCode = await _nisCodeService.Get(ovoCode, cancellationToken);
-                return (false, nisCode);
+                return await _nisCodeService.Get(ovoCode, cancellationToken);
             }
 
             var orgCode = _actionContextAccessor.ActionContext!.HttpContext.FindOrgCodeClaim();
             if (!string.IsNullOrWhiteSpace(orgCode) && _organisationWhiteList.IsWhiteListed(orgCode))
             {
-                return (true, Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode);
+                var nisCode = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode;
+
+                if (string.IsNullOrWhiteSpace(nisCode))
+                {
+                    throw GetMissingNisCodeValidationException();
+                }
+
+                return nisCode;
             }
 
-            return (false, null);
+            return null;
+        }
+
+        private ValidationException GetMissingNisCodeValidationException()
+        {
+            return new ValidationException(new[]
+            {
+                new ValidationFailure("NisCode", "Niscode ontbreekt.")
+                {
+                    ErrorCode = "OntbrekendeNiscode"
+                }
+            });
         }
     }
 }
