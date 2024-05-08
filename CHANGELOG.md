@@ -1,3 +1,20 @@
+# [2.3.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.2.1...v2.3.0) (2024-05-08)
+
+
+### Bug Fixes
+
+* **bosa:** dont use crab beginlifespan for address ([dd153bc](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/dd153bcf9a51b315ac53d04d60a7b4e8ce1882a7))
+* **bosa:** postalcode names ([fe6c79b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/fe6c79bb6d474dcda065cce137bf010ac28cb3bf))
+* **bosa:** zip name ([8c7b405](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/8c7b405b066b080b9d127a1af8ffabd2da8968db))
+* combine grimbergen values ([3899dfa](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/3899dfacd2406b86b4a1a3d85fe7937048b16877))
+* keep special characters in streetname when matching ([299cf4b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/299cf4b7c1fcbb1fee3e58d19df62ab45f6aac08))
+
+
+### Features
+
+* add suspicious cases views ([d21694f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d21694f879b2ef9c7db841ba133d54ea828a2bb5))
+* GAWR-5472 use OrganisationWhiteList to accept niscode query parameter ([6f1810e](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6f1810e10106126f588e04dc115cdfda485c4284))
+
 ## [2.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.2.0...v2.2.1) (2024-04-22)
 
 
