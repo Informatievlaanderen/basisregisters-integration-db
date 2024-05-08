@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.3.0...v2.3.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* permissions in Dockerfile ([e446fa9](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e446fa9659fd81985b647bf210723730914f2e35))
+
 # [2.3.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.2.1...v2.3.0) (2024-05-08)
 
 
