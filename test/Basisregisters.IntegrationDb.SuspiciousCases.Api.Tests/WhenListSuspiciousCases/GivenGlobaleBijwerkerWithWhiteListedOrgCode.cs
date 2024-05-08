@@ -1,13 +1,12 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspiciousCases
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
-    using FluentValidation;
+    using List;
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -17,11 +16,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using NisCodeService.HardCoded;
     using Xunit;
 
-    public class GivenInterneBijwerkerWithoutNisCodeHeader
+    public class GivenGlobaleBijwerkerWithWhiteListedOrgCode
     {
-        private readonly SuspiciousCasesController _suspiciousCasesController;
+        private readonly Mock<IMediator> _mediator = new();
 
-        public GivenInterneBijwerkerWithoutNisCodeHeader()
+        private readonly IActionResult _response;
+
+        public GivenGlobaleBijwerkerWithWhiteListedOrgCode()
         {
             Mock<IActionContextAccessor> actionContextAccessor = new();
             actionContextAccessor
@@ -32,38 +33,42 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
                     {
                         User = new ClaimsPrincipal(new[]
                         {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO002949") })
+                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOrgCode, "0643634986") })
                         }),
                     }
                 });
 
-            _suspiciousCasesController = new SuspiciousCasesController(
-                Mock.Of<IMediator>(),
+            var suspiciousCasesController = new SuspiciousCasesController(
+                _mediator.Object,
                 actionContextAccessor.Object,
-                new OvoCodeWhiteList(new List<string> { "OVO002949" }),
-                new OrganisationWhiteList(new List<string>()),
+                new OvoCodeWhiteList(new List<string>()),
+                new OrganisationWhiteList(new List<string> { "0643634986" }),
                 new HardCodedNisCodeService())
             {
                 ControllerContext = new ControllerContext
                 {
                     HttpContext = new DefaultHttpContext
                     {
-                        Request = { Headers = { new KeyValuePair<string, StringValues>("X-Filtering", "{ }") } }
+                        Request = { Headers = { new KeyValuePair<string, StringValues>("X-Filtering", "{ \"nisCode\": \"11001\"}") } }
                     }
                 }
             };
+
+            _response = suspiciousCasesController.List(CancellationToken.None).Result;
         }
 
         [Fact]
-        public void ThenThrowsValidationException()
+        public void ThenOkResponse()
         {
-            var act = () => _suspiciousCasesController.List(CancellationToken.None);
-            act
-                .Should()
-                .ThrowAsync<ValidationException>()
-                .Result
-                .Where(x =>
-                    x.Errors.Any(e => e.ErrorCode == "OntbrekendeNiscode" && e.ErrorMessage == "Niscode ontbreekt."));
+            _response.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public void ThenNisCodeFromHeadersIsUsed()
+        {
+            _mediator.Verify(x => x.Send(
+                It.Is<SuspiciousCasesListRequest>(y => y.FilteringHeader.Filter.NisCode == "11001"),
+                It.IsAny<CancellationToken>()));
         }
     }
 }

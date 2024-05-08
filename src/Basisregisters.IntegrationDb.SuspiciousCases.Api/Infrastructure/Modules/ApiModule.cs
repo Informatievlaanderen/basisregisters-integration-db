@@ -41,9 +41,12 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Module
             _services.AddAcmIdmAuthorizationHandlers();
 
             var ovoCodeWhiteList = _configuration.GetSection("OvoCodeWhiteList").Get<List<string>>();
+            var organisationWhiteList = _configuration.GetSection("OrganisationWhiteList").Get<List<string>>();
             _services
                 .AddHardCodedNisCodeService()
-                .AddOvoCodeWhiteList(ovoCodeWhiteList);
+                .AddOvoCodeWhiteList(ovoCodeWhiteList)
+                .AddOrganisationWhiteList(organisationWhiteList)
+                ;
 
             builder.Populate(_services);
         }
