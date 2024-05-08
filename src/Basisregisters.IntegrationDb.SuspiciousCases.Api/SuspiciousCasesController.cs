@@ -67,16 +67,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> List(CancellationToken cancellationToken)
         {
-            var nisCode = await DetermineNisCode(cancellationToken);
-            if (string.IsNullOrWhiteSpace(nisCode))
+            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>();
+
+            filtering.Filter.NisCode = await DetermineNisCode(filtering.Filter.NisCode, cancellationToken);
+            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
                 return Forbid();
             }
-
-            var filtering = new FilteringHeader<SuspiciousCasesListFilter>(new SuspiciousCasesListFilter
-            {
-                NisCode = nisCode
-            });
             
             var response = await _mediator.Send(new SuspiciousCasesListRequest(filtering), cancellationToken);
 
@@ -102,16 +99,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             [FromRoute] int type,
             CancellationToken cancellationToken)
         {
-            var nisCode = await DetermineNisCode(cancellationToken);
-            if (string.IsNullOrWhiteSpace(nisCode))
+            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesDetailFilter>();
+
+            filtering.Filter.NisCode = await DetermineNisCode(filtering.Filter.NisCode, cancellationToken);
+            if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
                 return Forbid();
             }
-
-            var filtering = new FilteringHeader<SuspiciousCasesDetailFilter>(new SuspiciousCasesDetailFilter
-            {
-                NisCode = nisCode
-            });
             
             if (!Enum.IsDefined(typeof(SuspiciousCasesType), type))
             {
@@ -133,15 +127,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             return Ok(response);
         }
 
-        private async Task<string?> DetermineNisCode(CancellationToken cancellationToken)
+        private async Task<string?> DetermineNisCode(string? nisCode, CancellationToken cancellationToken)
         {
             var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
             if (!string.IsNullOrWhiteSpace(ovoCode))
             {
                 if (_ovoCodeWhiteList.IsWhiteListed(ovoCode))
                 {
-                    var nisCode = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode;
-
                     if (string.IsNullOrWhiteSpace(nisCode))
                     {
                         throw GetMissingNisCodeValidationException();
@@ -156,8 +148,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             var orgCode = _actionContextAccessor.ActionContext!.HttpContext.FindOrgCodeClaim();
             if (!string.IsNullOrWhiteSpace(orgCode) && _organisationWhiteList.IsWhiteListed(orgCode))
             {
-                var nisCode = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>().Filter.NisCode;
-
                 if (string.IsNullOrWhiteSpace(nisCode))
                 {
                     throw GetMissingNisCodeValidationException();
