@@ -1,12 +1,7 @@
-Autofac
-
 AWSSDK.Extensions.NETCore.Setup
 AWSSDK.SimpleNotificationService
 
-Be.Vlaanderen.Basisregisters.BlobStore
 Be.Vlaanderen.Basisregisters.Aws.DistributedMutex
-Be.Vlaanderen.Basisregisters.GrAr.Common
-Be.Vlaanderen.Basisregisters.GrAr.Extracts
 Be.Vlaanderen.Basisregisters.GrAr.Notifications
 
 Dapper
@@ -14,16 +9,13 @@ Destructurama.JsonNet
 
 Datadog.Trace.Bundle
 
-FluentFTP
-NodaTime
-Npgsql.EntityFrameworkCore.PostgreSQL
-Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite
-
 Microsoft.Extensions.Configuration
 Microsoft.Extensions.Configuration.EnvironmentVariables
 Microsoft.Extensions.Configuration.FileExtensions
 Microsoft.Extensions.Configuration.Json
 Microsoft.Extensions.Hosting
+
+Npgsql
 
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles
