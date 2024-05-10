@@ -2,7 +2,7 @@
 {
     using Infrastructure;
 
-    public sealed class ActiveBuildingUnitOutsideBuildingConfiguration
+    public sealed class ActiveBuildingUnitOutsideBuilding
     {
         public const string ViewName = "view_active_building_unit_outside_building";
 

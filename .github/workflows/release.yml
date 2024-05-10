@@ -97,6 +97,20 @@ jobs:
       semver: ${{ needs.set-release-version.outputs.version }}
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
     secrets: inherit
+  
+  build-data-integrity:
+    name: Build Data Integrity
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    needs: [ set-release-version ]
+    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
+    with:
+      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
+      image-file: data-integrity-image.tar
+      image-name: data-integrity
+      build-project: Basisregisters.IntegrationDb.DataIntegrity
+      semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+    secrets: inherit
 
   pack-api-suspicious-cases:
     name: Pack Api Suspicious Cases Abstractions
@@ -115,7 +129,7 @@ jobs:
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     name: Semantic Release
     runs-on: ubuntu-latest
-    needs: [ set-release-version, build-api-suspicious-cases, build-integration-veka, build-bosa-full-download, pack-api-suspicious-cases ]
+    needs: [ set-release-version, build-api-suspicious-cases, build-integration-veka, build-bosa-full-download, pack-api-suspicious-cases, build-data-integrity ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
     steps:

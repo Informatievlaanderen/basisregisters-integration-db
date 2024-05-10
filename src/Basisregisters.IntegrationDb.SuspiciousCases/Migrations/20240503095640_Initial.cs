@@ -35,7 +35,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
 
-            migrationBuilder.Sql(ActiveBuildingUnitOutsideBuildingConfiguration.Create);
+            migrationBuilder.Sql(ActiveBuildingUnitOutsideBuilding.Create);
             migrationBuilder.Sql(InactiveAddressLinkedToParcelOrBuildingUnit.Create);
             migrationBuilder.Sql(InactiveBuildingUnitLinkedToAddress.Create);
             migrationBuilder.Sql(InactiveParcelLinkedToAddress.Create);
@@ -45,7 +45,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitOutsideBuildingConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitOutsideBuilding.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {InactiveAddressLinkedToParcelOrBuildingUnit.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {InactiveBuildingUnitLinkedToAddress.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {InactiveParcelLinkedToAddress.ViewName};");
