@@ -46,10 +46,10 @@
                 SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned,
                 new SuspiciousCase(Category.Building, "Gebouwen die langer dan 2 jaar bestaan en nog steeds de status 'gepland' hebben", Severity.Suspicious)
             },
-            {
-                SuspiciousCasesType.ActiveBuildingUnitWithoutAddress,
-                new SuspiciousCase(Category.BuildingUnit, "Actuele Gebouweenheden zonder adres", Severity.Suspicious)
-            },
+            // {
+            //     SuspiciousCasesType.ActiveBuildingUnitWithoutAddress,
+            //     new SuspiciousCase(Category.BuildingUnit, "Actuele Gebouweenheden zonder adres", Severity.Suspicious)
+            // },
             {
                 SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned,
                 new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden die langer dan 2 jaar bestaan en nog steeds de status 'gepland' hebben", Severity.Suspicious)
