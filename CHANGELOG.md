@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.0...v2.4.1) (2024-05-10)
+
+
+### Bug Fixes
+
+* specify schema when dropping view ([76595eb](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/76595eb529c4c22ab4c9950bc66e35dc80114f18))
+
 # [2.4.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.3.1...v2.4.0) (2024-05-10)
 
 
