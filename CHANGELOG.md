@@ -1,3 +1,11 @@
+# [2.4.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.3.1...v2.4.0) (2024-05-10)
+
+
+### Features
+
+* add data integrity scheduled task ([e4ebbaa](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e4ebbaac0546b800f3cfdfefcc446b5b778758ca))
+* add new internal views ([9cd70fe](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9cd70fe4d1a3411f92d7a0d50d01cefdcc8b65cb))
+
 ## [2.3.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.3.0...v2.3.1) (2024-05-08)
 
 
