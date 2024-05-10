@@ -45,26 +45,26 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitOutsideBuilding.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {InactiveAddressLinkedToParcelOrBuildingUnit.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {InactiveBuildingUnitLinkedToAddress.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {InactiveParcelLinkedToAddress.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {ActiveAddressButInActiveStreetName.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveBuildingUnitOutsideBuilding.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveAddressLinkedToParcelOrBuildingUnit.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveBuildingUnitLinkedToAddress.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveParcelLinkedToAddress.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveAddressButInActiveStreetName.ViewName};");
 
-            migrationBuilder.Sql($"DROP VIEW {SuspiciousCaseCountConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{SuspiciousCaseCountConfiguration.ViewName};");
 
-            migrationBuilder.Sql($"DROP VIEW {ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {ActiveAddressOutsideMunicipalityBoundsConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {ActiveBuildingUnitWithoutAddressConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {AddressLongerThanTwoYearsProposedConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {BuildingsLongerThanTwoYearsPlannedConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {BuildingUnitsLongerThanTwoYearsPlannedConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {CurrentAddressLinkedWithBuildingUnitButNotWithParcelConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {CurrentAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnitConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {ProposedAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {StreetNameLongerThanTwoYearsProposedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveAddressOutsideMunicipalityBoundsConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveBuildingUnitWithoutAddressConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{AddressLongerThanTwoYearsProposedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingsLongerThanTwoYearsPlannedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingUnitsLongerThanTwoYearsPlannedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentAddressLinkedWithBuildingUnitButNotWithParcelConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnitConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ProposedAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{StreetNameLongerThanTwoYearsProposedConfiguration.ViewName};");
 
             migrationBuilder.Sql($"DROP FUNCTION {Schema.FullAddress};");
         }
