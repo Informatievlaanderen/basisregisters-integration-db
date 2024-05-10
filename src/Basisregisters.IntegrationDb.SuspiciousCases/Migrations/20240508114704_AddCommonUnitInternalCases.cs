@@ -4,6 +4,7 @@
 
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 {
+    using Infrastructure;
     using Views.Internal;
 
     /// <inheritdoc />
@@ -12,7 +13,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"DROP VIEW {InactiveBuildingUnitLinkedToAddress.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveBuildingUnitLinkedToAddress.ViewName};");
             migrationBuilder.Sql(InactiveBuildingUnitLinkedToAddress.Create);
 
             migrationBuilder.Sql(BuildingWithMoreThanOneUnitWithoutCommonUnit.Create);
@@ -22,9 +23,9 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"DROP VIEW {InactiveBuildingUnitLinkedToAddress.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {BuildingWithMoreThanOneUnitWithoutCommonUnit.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {BuildingWithOneOrNoUnitWithCommonUnit.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveBuildingUnitLinkedToAddress.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingWithMoreThanOneUnitWithoutCommonUnit.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingWithOneOrNoUnitWithCommonUnit.ViewName};");
         }
     }
 }
