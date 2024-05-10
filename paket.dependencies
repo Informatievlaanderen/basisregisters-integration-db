@@ -35,6 +35,7 @@ nuget Microsoft.Extensions.Http 8.0.0
 
 // ENTITY FRAMEWORK
 nuget NetTopologySuite 2.5.0
+nuget Npgsql 8.0.2
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite 8.0.2
 nuget Npgsql.EntityFrameworkCore.PostgreSQL 8.0.2
 nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
