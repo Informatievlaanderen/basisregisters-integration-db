@@ -1,7 +1,7 @@
-﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views.Internal
 {
-    using Infrastructure;
-    using SuspiciousCases;
+    using Basisregisters.IntegrationDb.SuspiciousCases;
+    using Basisregisters.IntegrationDb.SuspiciousCases.Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
