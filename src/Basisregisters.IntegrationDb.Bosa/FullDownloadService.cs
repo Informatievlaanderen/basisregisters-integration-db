@@ -69,6 +69,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                         registryZipEntryStream);
                 }
 
+                fullZipStream.Position = 0;
                 await _blobClient.CreateBlobAsync(new BlobName(fullZipFileName),
                     Metadata.None.Add(new KeyValuePair<MetadataKey, string>(new MetadataKey("FileName"), fullZipFileName)),
                     ContentType.Parse("application/zip"),
@@ -104,6 +105,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         {
             await _asyncFtpClient.AutoConnect(cancellationToken);
 
+            stream.Position = 0;
             var uploadStatus = await _asyncFtpClient.UploadStream(stream, $"{_options.FtpFolder}/{fileName}", token: cancellationToken);
 
             await _asyncFtpClient.Disconnect(cancellationToken);
