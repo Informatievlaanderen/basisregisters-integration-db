@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.2...v2.4.3) (2024-05-31)
+
+
+### Bug Fixes
+
+* force flush zip streams ([0f90d5b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/0f90d5b37a80c7c99108834c501be510f77d4555))
+
 ## [2.4.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.1...v2.4.2) (2024-05-31)
 
 
