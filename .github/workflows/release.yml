@@ -348,55 +348,7 @@ jobs:
           BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_DEVOPS_DOCKER_REGISTRY }}
           IMAGE: ${{ matrix.image }}
           SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}
-
-      # - name: Configure AWS credentials (Staging)
-      #   if: needs.release.outputs.version != 'none'
-      #   uses: aws-actions/configure-aws-credentials@v4
-      #   with:
-      #     aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ secrets.VBR_AWS_REGION }}
-
-      # - name: Login to Amazon ECR (Staging)
-      #   if: needs.release.outputs.version != 'none'
-      #   uses: aws-actions/amazon-ecr-login@v2
-
-      # - name: Push SuspiciousCases.Api to Staging
-      #   if: needs.release.outputs.version != 'none'
-      #   shell: bash
-      #   run: |
-      #     docker tag  $BUILD_DOCKER_REGISTRY_TST/integration-db/suspicious-cases-api:$SEMVER $BUILD_DOCKER_REGISTRY/integration-db/suspicious-cases-api:$SEMVER
-      #     docker push $BUILD_DOCKER_REGISTRY/integration-db/suspicious-cases-api:$SEMVER
-      #   env:
-      #     BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_DEVOPS_DOCKER_REGISTRY }}
-      #     BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
-      #     SEMVER: ${{ needs.release.outputs.version }}
-      #     WORKSPACE: ${{ github.workspace }}
-
-      # - name: Push Integration.Veka to Staging
-      #   if: needs.release.outputs.version != 'none'
-      #   shell: bash
-      #   run: |
-      #     docker tag  $BUILD_DOCKER_REGISTRY_TST/integration-db/integration-veka:$SEMVER $BUILD_DOCKER_REGISTRY/integration-db/integration-veka:$SEMVER
-      #     docker push $BUILD_DOCKER_REGISTRY/integration-db/integration-veka:$SEMVER
-      #   env:
-      #     BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_DEVOPS_DOCKER_REGISTRY }}
-      #     BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
-      #     SEMVER: ${{ needs.release.outputs.version }}
-      #     WORKSPACE: ${{ github.workspace }}
-
-      # - name: Push Integration.Bosa to Staging
-      #   if: needs.release.outputs.version != 'none'
-      #   shell: bash
-      #   run: |
-      #     docker tag  $BUILD_DOCKER_REGISTRY_TST/integration-db/bosa-full-download:$SEMVER $BUILD_DOCKER_REGISTRY/integration-db/bosa-full-download:$SEMVER
-      #     docker push $BUILD_DOCKER_REGISTRY/integration-db/bosa-full-download:$SEMVER
-      #   env:
-      #     BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_DEVOPS_DOCKER_REGISTRY }}
-      #     BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
-      #     SEMVER: ${{ needs.release.outputs.version }}
-      #     WORKSPACE: ${{ github.workspace }}
+          WORKSPACE: ${{ github.workspace }}      
 
   deploy_to_test_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -513,80 +465,117 @@ jobs:
         SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
         REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
 
-  # deploy_to_staging_start_slack:
-  #   if: github.repository_owner == 'Informatievlaanderen'
-  #   needs: [ push_images_to_staging, deploy_to_test_finish_slack ]
-  #   name: Deploy to staging started
-  #   environment: stg
-  #   runs-on: ubuntu-latest
+  deploy_to_staging_start_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_to_test_finish_slack, release ]
+    name: Deploy to staging started
+    environment: stg
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: Parse repository name
-  #     run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-  #     shell: bash
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
 
-  #   - name: Notify deployment started
-  #     uses: slackapi/slack-github-action@v1.26.0
-  #     with:
-  #       channel-id: '#team-dinosaur-dev'
-  #       slack-message: Deployment of basisregisters-grb to staging has started
-  #     env:
-  #       SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-  #       SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-  #       REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+    - name: Notify deployment started
+      uses: slackapi/slack-github-action@v1.26.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of basisregisters-integration to staging has started
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
 
-  # deploy_to_staging:
-  #   if: github.repository_owner == 'Informatievlaanderen'
-  #   needs: [ deploy_to_staging_start_slack, release ]
-  #   name: Deploy to staging
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       services: [
-  #           'building-registry-grb-api',
-  #           'building-registry-grb-processor-upload',
-  #           'building-registry-grb-processor-job'
-  #         ]
-  #   steps:
-  #   - name: CD services
-  #     env:
-  #       BUILD_URL: ${{ secrets.VBR_AWS_BUILD_API }}/${{matrix.services}}
-  #       STATUS_URL: ${{ secrets.VBR_AWS_BUILD_STATUS_API }}/${{matrix.services}}
-  #     uses: informatievlaanderen/awscurl-polling-action/polling-action@main
-  #     with:
-  #         environment: stg
-  #         version: ${{ needs.release.outputs.version }}
-  #         status-url: $STATUS_URL
-  #         deploy-url: $BUILD_URL
-  #         access-key: ${{ secrets.VBR_AWS_BUILD_USER_ACCESS_KEY_ID }}
-  #         secret-key: ${{ secrets.VBR_AWS_BUILD_USER_SECRET_ACCESS_KEY }}
-  #         region: eu-west-1
-  #         interval: 2
+  deploy_services_to_staging:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_to_staging_start_slack, release ]
+    name: Deploy to services staging
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        services: [
+          'integration-suspicious-cases-api'
+          ]
 
-  #   - name: output CD services
-  #     shell: bash
-  #     run: |
-  #       echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
-  #       echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
-  #       echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+    steps:
+    - name: Deploy services
+      env:
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS  }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+      with:
+          environment: stg
+          version: ${{ needs.release.outputs.version }}
+          status-url: $STATUS_URL
+          deploy-url: $BUILD_URL
+          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS  }}
+          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS  }}
+          deploy-target: 'agb_ecs_service'
+          interval: 2
+          domain: 'basisregisters'
+          project: 'basisregisters'
 
-  # deploy_to_staging_finish_slack:
-  #   if: github.repository_owner == 'Informatievlaanderen'
-  #   needs: [ deploy_to_staging ]
-  #   name: Deploy to staging finished
-  #   runs-on: ubuntu-latest
+    - name: Deploy services output
+      shell: bash
+      run: |
+        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
+        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
+        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
 
-  #   steps:
-  #   - name: Parse repository name
-  #     run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-  #     shell: bash
+  deploy_tasks_to_staging:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_to_test_start_slack, release ]
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        services: [
+          'integration-veka',
+          'integration-bosa-full-download'
+        ]
+    steps:
+    - name: Deploy tasks
+      env:
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+      with:
+          environment: stg
+          version: ${{ needs.release.outputs.version }}
+          status-url: $STATUS_URL
+          deploy-url: $BUILD_URL
+          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
+          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}          
+          interval: 2
+          deploy-target: 'ecs_scheduled_task'
+          domain: 'basisregisters'
+          project: 'basisregisters'
 
-  #   - name: Notify deployment finished
-  #     uses: slackapi/slack-github-action@v1.26.0
-  #     with:
-  #       channel-id: '#team-dinosaur-dev'
-  #       slack-message: Deployment of basisregisters-grb to staging has finished
-  #     env:
-  #       SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-  #       SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-  #       REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+    - name: Deploy tasks output
+      shell: bash
+      run: |
+        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
+        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
+        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+
+  deploy_to_staging_finish_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_services_to_staging, deploy_tasks_to_staging ]
+    name: Deploy to staging finished
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
+
+    - name: Notify deployment finished
+      uses: slackapi/slack-github-action@v1.26.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of basisregisters-integration to staging has finished
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
