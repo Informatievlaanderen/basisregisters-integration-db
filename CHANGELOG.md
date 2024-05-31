@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.1...v2.4.2) (2024-05-31)
+
+
+### Bug Fixes
+
+* reset stream before upload ([edda8a7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/edda8a7a6f5c08afabcb00b6b505eea7221fbb72))
+
 ## [2.4.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.0...v2.4.1) (2024-05-10)
 
 
