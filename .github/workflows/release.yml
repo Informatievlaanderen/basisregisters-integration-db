@@ -525,8 +525,8 @@ jobs:
 
   deploy_tasks_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_to_test_start_slack, release ]
-    name: Deploy to staging
+    needs: [ deploy_to_staging_start_slack, release ]
+    name: Deploy tasks to staging
     runs-on: ubuntu-latest
     strategy:
       matrix:
