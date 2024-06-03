@@ -1,3 +1,10 @@
+## [2.4.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.3...v2.4.4) (2024-06-03)
+
+
+### Bug Fixes
+
+* dispose ZipArchive before reading stream to upload to s3 ([58bfd1f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/58bfd1f3d9e6d5a8b17f6f72207e6eba401cabba))
+
 ## [2.4.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.2...v2.4.3) (2024-05-31)
 
 
