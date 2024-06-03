@@ -54,24 +54,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     throw new InvalidOperationException($"Blob with name '{fullZipFileName}' already exists in bucket '{_options.UploadBucket}'");
                 }
 
-                using var fullZipStream = new MemoryStream();
-                using var fullZipArchive = new ZipArchive(fullZipStream, ZipArchiveMode.Create, leaveOpen: true);
-
-                foreach (var registryService in _registryServices)
-                {
-                    _logger.LogInformation($"Creating zip {registryService.GetZipFileName()}");
-
-                    var zipFileName = registryService.GetZipFileName();
-                    await using var registryZipEntryStream = fullZipArchive.CreateEntry(zipFileName).Open();
-
-                    await CreateRegistryZipArchiveStream(
-                        registryService,
-                        registryZipEntryStream);
-
-                    await registryZipEntryStream.FlushAsync(stoppingToken);
-                }
-
-                await fullZipStream.FlushAsync(stoppingToken);
+                using var fullZipStream = await CreateFullDownloadZipArchiveStream();
 
                 fullZipStream.Seek(0, SeekOrigin.Begin);
                 await _blobClient.CreateBlobAsync(new BlobName(fullZipFileName),
@@ -103,6 +86,27 @@ namespace Basisregisters.IntegrationDb.Bosa
 
                 throw;
             }
+        }
+
+        private async Task<MemoryStream> CreateFullDownloadZipArchiveStream()
+        {
+            var fullZipStream = new MemoryStream();
+
+            using var fullZipArchive = new ZipArchive(fullZipStream, ZipArchiveMode.Create, leaveOpen: true);
+
+            foreach (var registryService in _registryServices)
+            {
+                _logger.LogInformation($"Creating zip {registryService.GetZipFileName()}");
+
+                var zipFileName = registryService.GetZipFileName();
+                await using var registryZipEntryStream = fullZipArchive.CreateEntry(zipFileName).Open();
+
+                await CreateRegistryZipArchiveStream(
+                    registryService,
+                    registryZipEntryStream);
+            }
+
+            return fullZipStream;
         }
 
         private async Task UploadToFtp(Stream stream, string fileName, CancellationToken cancellationToken)
