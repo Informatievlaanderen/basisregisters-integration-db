@@ -1,6 +1,6 @@
 {
   "name": "basisregisters-integration-db",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "Manages schema for Registry integration Db's.",
   "author": "Basisregisters Vlaanderen",
   "license": "EUPL-1.2",
