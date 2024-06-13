@@ -36,21 +36,21 @@
         public SuspiciousCasesListResponse GetExamples()
         {
             return new SuspiciousCasesListResponse(
-                new List<SuspiciousCasesListResponseItem>
-                {
-                    new SuspiciousCasesListResponseItem(
-                        SuspiciousCase.AllCases[SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits].Description,
-                        SuspiciousCase.AllCases[SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits].Category.Map(),
-                        SuspiciousCase.AllCases[SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits].Severity.Map(),
-                        45,
-                        new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeUrl, 1))),
-                    new SuspiciousCasesListResponseItem(
-                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Description,
-                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Category.Map(),
-                        SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Severity.Map(),
-                        5,
-                        new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeUrl, 5)))
-                });
+            [
+                new SuspiciousCasesListResponseItem(
+                    SuspiciousCase.AllCases[SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits].Description,
+                    SuspiciousCase.AllCases[SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits].Category.Map(),
+                    SuspiciousCase.AllCases[SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits].Severity.Map(),
+                    45,
+                    new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeUrl, 1))),
+
+                new SuspiciousCasesListResponseItem(
+                    SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Description,
+                    SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Category.Map(),
+                    SuspiciousCase.AllCases[SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed].Severity.Map(),
+                    5,
+                    new Uri(string.Format(_responseOptions.Value.SuspiciousCasesTypeUrl, 5)))
+            ]);
         }
     }
 }

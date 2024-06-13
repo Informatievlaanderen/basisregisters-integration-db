@@ -37,24 +37,37 @@
 
         public const string ViewName = "view_suspicious_cases_counts";
 
-        // Todo: extend with all cases
         public static readonly string Create =
             $$"""
               CREATE MATERIALIZED VIEW IF NOT EXISTS {{Schema.SuspiciousCases}}.{{ViewName}}
               AS
-              {{CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}}
-              UNION
               {{CreateScript(SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits, ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.ActiveAddressOutsideOfMunicipalityBounds, ActiveAddressOutsideMunicipalityBoundsConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.AddressLongerThanTwoYearsProposed, AddressLongerThanTwoYearsProposedConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned, BuildingsLongerThanTwoYearsPlannedConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned, BuildingUnitsLongerThanTwoYearsPlannedConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.CurrentAddressLinkedWithBuildingUnitButNotWithParcel, CurrentAddressLinkedWithBuildingUnitButNotWithParcelConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits, CurrentAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit, CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnitConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment, CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.ProposedAddressWithoutLinkedParcelOrBuildingUnit, ProposedAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.RoadSegmentLongerThanTwoYearsWithPermit, RoadSegmentLongerThanTwoYearsWithPermitConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}}
               ;
               CREATE INDEX ix_{{ViewName}}_nis_code ON {{Schema.SuspiciousCases}}.{{ViewName}} USING btree (nis_code)
               ;
               """;
-            // @$"CREATE MATERIALIZED VIEW IF NOT EXISTS {Schema.SuspiciousCases}.{ViewName} AS
-            //     {CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}
-            //     UNION
-            //     {CreateScript(SuspiciousCasesType.ActiveBuildingUnitLinkedToMultipleAddresses, ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName)};
-            //     CREATE INDEX ""ix_{ViewName}_nis_code"" ON {Schema.SuspiciousCases}.{ViewName} USING btree (nis_code)
-            // ;";
 
         private static string CreateScript(SuspiciousCasesType type, string viewName)
         {

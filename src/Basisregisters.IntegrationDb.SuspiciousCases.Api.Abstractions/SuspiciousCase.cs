@@ -55,12 +55,12 @@
                 new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden die langer dan 2 jaar bestaan en nog steeds de status 'gepland' hebben", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.RoadSegmentsLongerThanTwoYearsProposed,
+                SuspiciousCasesType.RoadSegmentLongerThanTwoYearsWithPermit,
                 new SuspiciousCase(Category.RoadSegment, "Wegsegmenten die langer dan 2 jaar bestaan en nog steeds de status 'voorgesteld' hebben", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.StreetNameWithOnlyOneRoadSegmentToOnlyOneSide,
-                new SuspiciousCase(Category.RoadSegment, "Wegverbindingen slechts aan 1 kant gekoppeld met een straatnaam", Severity.Suspicious)
+                SuspiciousCasesType.MeasuredRoadSegmentWithNoOrSingleLinkedStreetName,
+                new SuspiciousCase(Category.RoadSegment, "Ingemeten wegsegementen die slechts 1 of geen koppeling hebben met straatnaam", Severity.Suspicious)
             },
             // {
             //     SuspiciousCasesType.ActiveBuildingUnitLinkedToMultipleAddresses,

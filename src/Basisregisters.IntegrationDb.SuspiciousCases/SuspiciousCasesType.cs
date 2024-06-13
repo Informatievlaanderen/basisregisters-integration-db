@@ -14,8 +14,8 @@
         BuildingLongerThanTwoYearsPlanned = 10,
         // ActiveBuildingUnitWithoutAddress = 11,
         BuildingUnitLongerThanTwoYearsPlanned = 12,
-        RoadSegmentsLongerThanTwoYearsProposed = 13,
-        StreetNameWithOnlyOneRoadSegmentToOnlyOneSide = 14,
+        RoadSegmentLongerThanTwoYearsWithPermit = 13,
+        MeasuredRoadSegmentWithNoOrSingleLinkedStreetName = 14,
 
         // ActiveBuildingUnitLinkedToMultipleAddresses = 15,
     }
