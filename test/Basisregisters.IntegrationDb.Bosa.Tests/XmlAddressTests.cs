@@ -90,8 +90,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             var municipalities = new Municipality[]
             {
-                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "2002-08-13T17:32:32"),
-                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", "2002-08-13T17:32:32")
+                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", "2002-08-13T17:32:32"),
+                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", null, null, null, "2002-08-13T17:32:32")
             };
 
             var postalInfos = new PostalInfo[]

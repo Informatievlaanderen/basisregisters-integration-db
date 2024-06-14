@@ -21,9 +21,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             _given =
             [
-                new Municipality(MunicipalityNamespace, "23027", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "2002-08-13T16:37:33"),
-                new Municipality(MunicipalityNamespace, "93027", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null),
-                new Municipality(MunicipalityNamespace, "23028", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", "2002-08-13T16:37:33")
+                new Municipality(MunicipalityNamespace, "23027", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "HALLE_FR", null, null, "2002-08-13T16:37:33"),
+                new Municipality(MunicipalityNamespace, "93027", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null, "FAKE_DE", null,  null),
+                new Municipality(MunicipalityNamespace, "23028", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", "2002-08-13T16:37:33"),
             ];
         }
 
@@ -61,6 +61,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:language>nl</com:language>
                       <com:spelling>HALLE</com:spelling>
                     </com:name>
+                    <com:name>
+                      <com:language>fr</com:language>
+                      <com:spelling>HALLE_FR</com:spelling>
+                    </com:name>
                   </tns:municipality>
                   <tns:municipality>
                     <com:code>
@@ -72,6 +76,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:language>nl</com:language>
                       <com:spelling>FAKE</com:spelling>
                     </com:name>
+                    <com:name>
+                      <com:language>de</com:language>
+                      <com:spelling>FAKE_DE</com:spelling>
+                    </com:name>
                   </tns:municipality>
                   <tns:municipality>
                     <com:code>
@@ -82,6 +90,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:name>
                       <com:language>nl</com:language>
                       <com:spelling>Boekhout</com:spelling>
+                    </com:name>
+                    <com:name>
+                      <com:language>en</com:language>
+                      <com:spelling>Boekhout_EN</com:spelling>
                     </com:name>
                   </tns:municipality>
                 </tns:municipalityResponseBySource>
