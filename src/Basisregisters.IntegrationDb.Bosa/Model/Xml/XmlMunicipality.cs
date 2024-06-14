@@ -21,7 +21,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     {
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "code")]
         public XmlCode Code { get; set; }
+        
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "name")]
-        public XmlName Name { get; set; }
+        public XmlName[] Name { get; set; }
     }
 }
