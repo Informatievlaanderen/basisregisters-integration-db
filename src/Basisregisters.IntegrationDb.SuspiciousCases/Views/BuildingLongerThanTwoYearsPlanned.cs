@@ -4,16 +4,16 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public sealed class BuildingsLongerThanTwoYearsPlanned : SuspiciousCase
+    public sealed class BuildingLongerThanTwoYearsPlanned : SuspiciousCase
     {
         public int BuildingPersistentLocalId { get; set; }
 
         public override Category Category => Category.Building;
     }
 
-    public sealed class BuildingsLongerThanTwoYearsPlannedConfiguration : IEntityTypeConfiguration<BuildingsLongerThanTwoYearsPlanned>
+    public sealed class BuildingLongerThanTwoYearsPlannedConfiguration : IEntityTypeConfiguration<BuildingLongerThanTwoYearsPlanned>
     {
-        public void Configure(EntityTypeBuilder<BuildingsLongerThanTwoYearsPlanned> builder)
+        public void Configure(EntityTypeBuilder<BuildingLongerThanTwoYearsPlanned> builder)
         {
             builder
                 .ToView(ViewName, Schema.SuspiciousCases)
@@ -23,7 +23,7 @@
                                 persistent_local_id,
                                 building_persistent_local_id,
                                 nis_code,
-                                CONCAT('Gebouw-',  building_persistent_local_id) as description
+                                CONCAT('Gebouw-', building_persistent_local_id) as description
                             FROM  {Schema.SuspiciousCases}.{ViewName}");
 
             builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");

@@ -1,8 +1,6 @@
-﻿namespace Basisregisters.IntegrationDb.Schema.Views.SuspiciousCases
+﻿namespace Basisregisters.IntegrationDb.SuspiciousCases.Views
 {
-    using IntegrationDb.SuspiciousCases;
-    using IntegrationDb.SuspiciousCases.Infrastructure;
-    using IntegrationDb.SuspiciousCases.Views;
+    using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +8,7 @@
     {
         public int StreetNamePersistentLocalId { get; set; }
 
-        public override Category Category => Category.RoadSegment;
+        public override Category Category => Category.StreetName;
     }
 
     public sealed class CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration : IEntityTypeConfiguration<CurrentStreetNameWithoutLinkedRoadSegments>
@@ -34,7 +32,7 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string ViewName = "view_current_street_name_without_linked_roadsegments";
+        public const string ViewName = "view_current_street_name_without_linked_road_segments";
 
         public const string Create = $@"
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
@@ -44,14 +42,14 @@
 		        s.nis_code AS nis_code,
 		        s.name_dutch AS description
             FROM {SchemaLatestItems.StreetName} AS s
-            WHERE NOT EXISTS (
-                SELECT 1
-                FROM {SchemaLatestItems.RoadSegment} rs
-                WHERE rs.left_side_street_name_id = s.persistent_local_id
-                AND rs.right_side_street_name_id = s.persistent_local_id
-            )
+
+            LEFT JOIN {SchemaLatestItems.RoadSegment} rs_left
+                on rs_left.left_side_street_name_id = s.persistent_local_id
+            LEFT JOIN {SchemaLatestItems.RoadSegment} rs_right
+                on rs_right.right_side_street_name_id = s.persistent_local_id
             AND s.status = 1
             AND s.is_removed = false
-            ;";
+            AND rs_left.id is null
+            AND rs_right.id is null;";
     }
 }

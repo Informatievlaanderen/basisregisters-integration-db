@@ -22,13 +22,16 @@
         public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressesWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<StreetNameLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNameLongerThanTwoYearsProposed>();
         public DbSet<AddressLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressLongerThanTwoYearsProposed>();
-        public DbSet<BuildingsLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingsLongerThanTwoYearsPlanned>();
+        public DbSet<BuildingLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingLongerThanTwoYearsPlanned>();
         public DbSet<BuildingUnitsLongerThanTwoYearsPlanned> BuildingUnitsLongerThanTwoYearsPlanned => Set<BuildingUnitsLongerThanTwoYearsPlanned>();
         public DbSet<ActiveAddressOutsideMunicipalityBounds> ActiveAddressesOutsideMunicipalityBounds => Set<ActiveAddressOutsideMunicipalityBounds>();
         public DbSet<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit> CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit => Set<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit>();
         public DbSet<ActiveAddresLinkedToMultipleBuildingUnits> ActiveAddressesLinkedToMultipleBuildingUnits => Set<ActiveAddresLinkedToMultipleBuildingUnits>();
         public DbSet<ActiveBuildingUnitLinkedToMultipleAddresses> ActiveBuildingUnitLinkedToMultipleAddresses => Set<ActiveBuildingUnitLinkedToMultipleAddresses>();
         public DbSet<CurrentAddressLinkedWithBuildingUnitButNotWithParcel> CurrentAddressesLinkedWithBuildingUnitButNotWithParcel => Set<CurrentAddressLinkedWithBuildingUnitButNotWithParcel>();
+        public DbSet<RoadSegmentLongerThanTwoYearsWithPermit> RoadSegmentsLongerThanTwoYearsWithPermit => Set<RoadSegmentLongerThanTwoYearsWithPermit>();
+        public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNamesWithoutLinkedRoadSegments => Set<CurrentStreetNameWithoutLinkedRoadSegments>();
+        public DbSet<MeasuredRoadSegmentWithNoOrSingleLinkedStreetName> MeasuredRoadSegmentsWithNoOrSingleLinkedStreetName => Set<MeasuredRoadSegmentWithNoOrSingleLinkedStreetName>();
 
         public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
             SuspiciousCasesType type,
@@ -61,7 +64,12 @@
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment:
-                    break;
+                    return await CurrentStreetNamesWithoutLinkedRoadSegments
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.StreetNamePersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
                 case SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed:
                     return await StreetNamesLongerThanTwoYearsProposed
                         .Where(x => x.NisCode == nisCode)
@@ -76,8 +84,13 @@
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.RoadSegmentsLongerThanTwoYearsProposed:
-                    break;
+                case SuspiciousCasesType.RoadSegmentLongerThanTwoYearsWithPermit:
+                    return await RoadSegmentsLongerThanTwoYearsWithPermit
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.RoadSegmentPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
                 case SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned:
                     return await BuildingsLongerThanTwoYearsPlanned
                         .Where(x => x.NisCode == nisCode)
@@ -92,8 +105,13 @@
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.StreetNameWithOnlyOneRoadSegmentToOnlyOneSide:
-                    break;
+                case SuspiciousCasesType.MeasuredRoadSegmentWithNoOrSingleLinkedStreetName:
+                    return await MeasuredRoadSegmentsWithNoOrSingleLinkedStreetName
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.RoadSegmentPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
                 case SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit:
                     return await CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit
                         .Where(x => x.NisCode == nisCode)
@@ -132,8 +150,6 @@
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
-
-            throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
 
         public SuspiciousCasesContext()
@@ -147,11 +163,6 @@
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SuspiciousCasesContext).Assembly);
         }
-
-        // public void RefreshView(string viewName)
-        // {
-        //     Database.ExecuteSqlRaw(@$"REFRESH MATERIALIZED VIEW ""{Schema}"".""{viewName}"";");
-        // }
     }
 
     public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<SuspiciousCasesContext>
