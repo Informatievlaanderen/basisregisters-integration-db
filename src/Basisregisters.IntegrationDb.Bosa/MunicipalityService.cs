@@ -1,6 +1,7 @@
 namespace Basisregisters.IntegrationDb.Bosa
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
@@ -36,16 +37,32 @@ namespace Basisregisters.IntegrationDb.Bosa
                             ObjectIdentifier = x.NisCode,
                             VersionIdentifier = GetVersionAsString(x)
                         },
-                        Name = new XmlName
+                        Name = GetNames(x).Select(name => new XmlName
                         {
-                            Language = "nl",
-                            Spelling = x.DutchName
-                        }
+                            Language = name.Key,
+                            Spelling = name.Value
+                        }).ToArray()
                     })
                     .ToArray()
             };
 
             RegistryXmlSerializer.Serialize(serializable, outputStream);
+        }
+
+        private static Dictionary<string, string> GetNames(Municipality municipality)
+        {
+            var namesByLanguage = new Dictionary<string, string> { { "nl", municipality.DutchName } };
+
+            if(!string.IsNullOrWhiteSpace(municipality.FrenchName))
+                namesByLanguage.Add("fr", municipality.FrenchName);
+
+            if(!string.IsNullOrWhiteSpace(municipality.GermanName))
+                namesByLanguage.Add("de", municipality.GermanName);
+
+            if(!string.IsNullOrWhiteSpace(municipality.EnglishName))
+                namesByLanguage.Add("en", municipality.EnglishName);
+
+            return namesByLanguage;
         }
     }
 }
