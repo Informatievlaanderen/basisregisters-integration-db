@@ -53,6 +53,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
             }
 
             using var migrator = new SuspiciousCasesContext(migratorOptions.Options);
+            migrator.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
             migrator.Database.Migrate();
         }
     }

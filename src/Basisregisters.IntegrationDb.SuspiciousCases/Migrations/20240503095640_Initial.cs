@@ -25,7 +25,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.Create);
             migrationBuilder.Sql(ActiveBuildingUnitWithoutAddressConfiguration.Create);
             migrationBuilder.Sql(AddressLongerThanTwoYearsProposedConfiguration.Create);
-            migrationBuilder.Sql(BuildingsLongerThanTwoYearsPlannedConfiguration.Create);
+            migrationBuilder.Sql(BuildingLongerThanTwoYearsPlannedConfiguration.Create);
             migrationBuilder.Sql(BuildingUnitsLongerThanTwoYearsPlannedConfiguration.Create);
             migrationBuilder.Sql(CurrentAddressLinkedWithBuildingUnitButNotWithParcelConfiguration.Create);
             migrationBuilder.Sql(CurrentAddressWithoutLinkedParcelOrBuildingUnitConfiguration.Create);
@@ -58,7 +58,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveBuildingUnitLinkedToMultipleAddressesConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveBuildingUnitWithoutAddressConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{AddressLongerThanTwoYearsProposedConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingsLongerThanTwoYearsPlannedConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingLongerThanTwoYearsPlannedConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{BuildingUnitsLongerThanTwoYearsPlannedConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentAddressLinkedWithBuildingUnitButNotWithParcelConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName};");
