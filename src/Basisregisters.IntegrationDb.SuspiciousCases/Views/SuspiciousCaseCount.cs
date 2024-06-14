@@ -39,7 +39,9 @@
 
         public static readonly string Create =
             $$"""
-              CREATE MATERIALIZED VIEW IF NOT EXISTS {{Schema.SuspiciousCases}}.{{ViewName}}
+              DROP MATERIALIZED VIEW IF EXISTS {{Schema.SuspiciousCases}}.{{ViewName}};
+
+              CREATE MATERIALIZED VIEW {{Schema.SuspiciousCases}}.{{ViewName}}
               AS
               {{CreateScript(SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits, ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.ViewName)}}
               UNION
@@ -47,7 +49,7 @@
               UNION
               {{CreateScript(SuspiciousCasesType.AddressLongerThanTwoYearsProposed, AddressLongerThanTwoYearsProposedConfiguration.ViewName)}}
               UNION
-              {{CreateScript(SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned, BuildingsLongerThanTwoYearsPlannedConfiguration.ViewName)}}
+              {{CreateScript(SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned, BuildingLongerThanTwoYearsPlannedConfiguration.ViewName)}}
               UNION
               {{CreateScript(SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned, BuildingUnitsLongerThanTwoYearsPlannedConfiguration.ViewName)}}
               UNION
@@ -65,8 +67,8 @@
               UNION
               {{CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}}
               ;
-              CREATE INDEX ix_{{ViewName}}_nis_code ON {{Schema.SuspiciousCases}}.{{ViewName}} USING btree (nis_code)
-              ;
+
+              CREATE INDEX ix_{{ViewName}}_nis_code ON {{Schema.SuspiciousCases}}.{{ViewName}} USING btree (nis_code);
               """;
 
         private static string CreateScript(SuspiciousCasesType type, string viewName)

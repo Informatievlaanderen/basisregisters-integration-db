@@ -22,7 +22,7 @@
         public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressesWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<StreetNameLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNameLongerThanTwoYearsProposed>();
         public DbSet<AddressLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressLongerThanTwoYearsProposed>();
-        public DbSet<BuildingsLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingsLongerThanTwoYearsPlanned>();
+        public DbSet<BuildingLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingLongerThanTwoYearsPlanned>();
         public DbSet<BuildingUnitsLongerThanTwoYearsPlanned> BuildingUnitsLongerThanTwoYearsPlanned => Set<BuildingUnitsLongerThanTwoYearsPlanned>();
         public DbSet<ActiveAddressOutsideMunicipalityBounds> ActiveAddressesOutsideMunicipalityBounds => Set<ActiveAddressOutsideMunicipalityBounds>();
         public DbSet<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit> CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit => Set<CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit>();
