@@ -16,6 +16,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
             migrationBuilder.Sql(MeasuredRoadSegmentWithNoOrSingleLinkedStreetNameConfiguration.Create);
             migrationBuilder.Sql(RoadSegmentLongerThanTwoYearsWithPermitConfiguration.Create);
+            migrationBuilder.Sql(ActiveAddressOutsideMunicipalityBoundsConfiguration.Create);
 
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }

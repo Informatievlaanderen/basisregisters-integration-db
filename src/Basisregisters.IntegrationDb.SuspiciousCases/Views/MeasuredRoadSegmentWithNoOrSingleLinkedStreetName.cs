@@ -23,7 +23,7 @@
                                 persistent_local_id,
                                 road_segment_persistent_local_id,
                                 nis_code,
-                                CONCAT('Wegsegment-',  road_segment_id) as description
+                                CONCAT('Wegsegment-', road_segment_persistent_local_id) as description
                             FROM {Schema.SuspiciousCases}.{ViewName}");
 
             builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");

@@ -23,7 +23,7 @@
                                 persistent_local_id,
                                 building_persistent_local_id,
                                 nis_code,
-                                CONCAT('Gebouw-',  building_persistent_local_id) as description
+                                CONCAT('Gebouw-', building_persistent_local_id) as description
                             FROM  {Schema.SuspiciousCases}.{ViewName}");
 
             builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");

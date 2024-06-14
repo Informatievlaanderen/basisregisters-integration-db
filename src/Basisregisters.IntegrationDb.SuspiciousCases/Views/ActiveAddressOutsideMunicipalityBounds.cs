@@ -35,6 +35,8 @@
         public const string ViewName = "view_active_address_outside_municipality_bounds";
 
         public const string Create = $@"
+            DROP VIEW IF EXISTS {Schema.SuspiciousCases}.{ViewName};
+
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
                 CAST(a.persistent_local_id as varchar) AS persistent_local_id,
@@ -44,11 +46,11 @@
             FROM {SchemaLatestItems.Address} a
             JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
             JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
-            JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code
+            LEFT JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code AND ST_Within(a.geometry, mg.geometry)
             WHERE
                 a.removed = false
                 AND a.status in (1, 2)
-                AND ST_Within(a.geometry, mg.geometry) IS FALSE
+                AND mg.nis_code IS NULL
             ;";
     }
 }
