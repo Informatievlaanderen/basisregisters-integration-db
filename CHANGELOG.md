@@ -1,3 +1,15 @@
+# [2.5.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.5...v2.5.0) (2024-06-15)
+
+
+### Bug Fixes
+
+* **bosa:** municipality query ([c657b83](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/c657b834aa2a1606de23932d8e200bc235417991))
+
+
+### Features
+
+* add road segment suspicious cases ([2e9acaa](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/2e9acaa88aaad99acb011c66338559e314291df1))
+
 ## [2.4.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.4...v2.4.5) (2024-06-14)
 
 ## [2.4.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.3...v2.4.4) (2024-06-03)
