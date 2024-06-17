@@ -11,7 +11,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.Abstractions;
     using Xunit;
@@ -54,10 +53,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
             {
                 ControllerContext = new ControllerContext
                 {
-                    HttpContext = new DefaultHttpContext
-                    {
-                        Request = { Headers = { new KeyValuePair<string, StringValues>("X-Filtering", "{ \"nisCode\": \"11001\"}") } }
-                    }
+                    HttpContext = new DefaultHttpContext()
                 }
             };
 
