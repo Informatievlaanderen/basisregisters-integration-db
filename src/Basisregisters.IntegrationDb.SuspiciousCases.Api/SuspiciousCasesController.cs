@@ -67,14 +67,14 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.DecentraleBijwerker)]
         public async Task<IActionResult> List(CancellationToken cancellationToken)
         {
-            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesListFilter>();
+            var filtering = ExtractFiltering<SuspiciousCasesListFilter>(Request);
 
             filtering.Filter.NisCode = await DetermineNisCode(filtering.Filter.NisCode, cancellationToken);
             if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
                 return Forbid();
             }
-            
+
             var response = await _mediator.Send(new SuspiciousCasesListRequest(filtering), cancellationToken);
 
             return Ok(response);
@@ -99,14 +99,14 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             [FromRoute] int type,
             CancellationToken cancellationToken)
         {
-            var filtering = Request.ExtractFilteringRequest<SuspiciousCasesDetailFilter>();
+            var filtering = ExtractFiltering<SuspiciousCasesDetailFilter>(Request);
 
             filtering.Filter.NisCode = await DetermineNisCode(filtering.Filter.NisCode, cancellationToken);
             if (string.IsNullOrWhiteSpace(filtering.Filter.NisCode))
             {
                 return Forbid();
             }
-            
+
             if (!Enum.IsDefined(typeof(SuspiciousCasesType), type))
             {
                 throw new ValidationException(new[]
@@ -125,6 +125,17 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                 cancellationToken);
 
             return Ok(response);
+        }
+
+        private static FilteringHeader<T> ExtractFiltering<T>(HttpRequest request) where T: new()
+        {
+            var filtering = request.ExtractFilteringRequest<T>();
+            if (filtering.Filter is null)
+            {
+                filtering = new FilteringHeader<T>(new T());
+            }
+
+            return filtering;
         }
 
         private async Task<string?> DetermineNisCode(string? nisCode, CancellationToken cancellationToken)
