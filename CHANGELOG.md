@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.0...v2.5.1) (2024-06-17)
+
+
+### Bug Fixes
+
+* **suspicious:** no filter header ([2059b0a](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/2059b0aeadc3477abd0d444c9878c6cab371314f))
+
 # [2.5.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.4.5...v2.5.0) (2024-06-15)
 
 
