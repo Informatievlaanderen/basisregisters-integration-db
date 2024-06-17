@@ -49,10 +49,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
             {
                 ControllerContext = new ControllerContext
                 {
-                    HttpContext = new DefaultHttpContext
-                    {
-                        Request = { Headers = { new KeyValuePair<string, StringValues>("X-Filtering", "{ \"nisCode\": \"11001\"}") } }
-                    }
+                    HttpContext = new DefaultHttpContext()
                 }
             };
 
