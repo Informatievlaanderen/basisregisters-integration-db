@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.1...v2.5.2) (2024-06-18)
+
+
+### Bug Fixes
+
+* deploy data integrity scheduled task to production ([fcd9287](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/fcd9287595881ced6d399243b7d3b572b11c6987))
+
 ## [2.5.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.0...v2.5.1) (2024-06-17)
 
 
