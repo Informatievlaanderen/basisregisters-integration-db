@@ -7,26 +7,36 @@
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
 
     public class DataIntegrityService(
         DataIntegrityRepository repo,
         IHostApplicationLifetime hostApplicationLifetime,
-        INotificationService notificationService
+        INotificationService notificationService,
+        ILoggerFactory loggerFactory
         )
         : BackgroundService
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var logger = loggerFactory.CreateLogger<DataIntegrityService>();
+
             var errors = await repo.GetErrors();
+
+            logger.LogInformation($"{errors.Count} Errors found");
 
             var message = FormatMessage(errors);
             var severity = errors.Any() ? NotificationSeverity.Danger : NotificationSeverity.Good;
+
+            logger.LogInformation("Sending notification...");
 
             await notificationService.PublishToTopicAsync(new NotificationMessage(
                 "DataIntegrity",
                 message,
                 "Data Integrity",
                 severity));
+
+            logger.LogInformation("Stopping application...");
 
             hostApplicationLifetime.StopApplication();
         }
