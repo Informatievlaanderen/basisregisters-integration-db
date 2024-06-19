@@ -1,3 +1,10 @@
+## [2.5.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.2...v2.5.3) (2024-06-19)
+
+
+### Bug Fixes
+
+* add logging to data-integrity scheduled task ([58c2db7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/58c2db7b51f0f249e26be79b64b71cc2d7a7e5b8))
+
 ## [2.5.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.1...v2.5.2) (2024-06-18)
 
 
