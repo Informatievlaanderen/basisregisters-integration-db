@@ -33,8 +33,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(ProposedAddressWithoutLinkedParcelOrBuildingUnitConfiguration.Create);
             migrationBuilder.Sql(StreetNameLongerThanTwoYearsProposedConfiguration.Create);
 
-            migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
-
             migrationBuilder.Sql(ActiveBuildingUnitOutsideBuilding.Create);
             migrationBuilder.Sql(InactiveAddressLinkedToParcelOrBuildingUnit.Create);
             migrationBuilder.Sql(InactiveBuildingUnitLinkedToAddress.Create);
@@ -50,8 +48,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveBuildingUnitLinkedToAddress.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{InactiveParcelLinkedToAddress.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveAddressButInActiveStreetName.ViewName};");
-
-            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{SuspiciousCaseCountConfiguration.ViewName};");
 
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{ActiveAddressOutsideMunicipalityBoundsConfiguration.ViewName};");
