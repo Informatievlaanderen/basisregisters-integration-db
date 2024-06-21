@@ -37,6 +37,17 @@
 
         public const string ViewName = "view_suspicious_cases_counts";
 
+        public static readonly string Refresh = $@"
+DO $$
+BEGIN
+    -- Check if the materialized view exists
+    IF EXISTS (SELECT 1 FROM pg_matviews WHERE schemaname = '{Schema.SuspiciousCases}' AND matviewname = '{ViewName}') THEN
+        -- Refresh the materialized view concurrently if it exists
+        REFRESH MATERIALIZED VIEW CONCURRENTLY {Schema.SuspiciousCases}.{ViewName};
+    END IF;
+END $$;
+";
+
         public static readonly string Create =
             $$"""
               DROP MATERIALIZED VIEW IF EXISTS {{Schema.SuspiciousCases}}.{{ViewName}};
