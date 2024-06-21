@@ -1,3 +1,10 @@
+## [2.5.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.3...v2.5.4) (2024-06-21)
+
+
+### Bug Fixes
+
+* remove count view from initial ([e3f4b24](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e3f4b242b8bfe73a57dab9c551aa98ece533dc82))
+
 ## [2.5.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.2...v2.5.3) (2024-06-19)
 
 
