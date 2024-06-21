@@ -108,6 +108,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
 
                 .EnableJsonErrorActionFilterOption())
                 .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"))
+                .AddHostedService<RefreshCountService>()
                 .AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // Used to retrieve the authenticated user claims.
 
             var containerBuilder = new ContainerBuilder();
