@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.4...v2.6.0) (2024-06-26)
+
+
+### Features
+
+* **suspicous:** add background task to refresh count in api ([ae44629](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ae446294850712722229e8d04b87f9253915c387))
+
 ## [2.5.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.3...v2.5.4) (2024-06-21)
 
 
