@@ -60,6 +60,7 @@
             {
                 _logger.LogInformation("Refreshing count");
 
+                _context.Database.SetCommandTimeout(Math.Max(1, _refreshInMinutes - 1) * 60);
                 await _context.Database.ExecuteSqlRawAsync(SuspiciousCaseCountConfiguration.Refresh, stoppingToken);
 
                 _logger.LogInformation("Refresh count completed");
