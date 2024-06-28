@@ -79,6 +79,8 @@ END $$;
               {{CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}}
               ;
 
+              CREATE UNIQUE INDEX ix_{{ViewName}}_unique ON {{Schema.SuspiciousCases}}.{{ViewName}} (nis_code, type);
+
               CREATE INDEX ix_{{ViewName}}_nis_code ON {{Schema.SuspiciousCases}}.{{ViewName}} USING btree (nis_code);
               """;
 
