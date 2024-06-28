@@ -1,3 +1,11 @@
+## [2.6.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.6.0...v2.6.1) (2024-06-28)
+
+
+### Bug Fixes
+
+* **susp.c:** add timeout to refresh view ([28120d4](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/28120d427462d733413888902c81882099c6d73d))
+* **susp.c:** add unique index to count view ([39da9d3](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/39da9d36f547462c6e32a3df104ec27623430d38))
+
 # [2.6.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.5.4...v2.6.0) (2024-06-26)
 
 
