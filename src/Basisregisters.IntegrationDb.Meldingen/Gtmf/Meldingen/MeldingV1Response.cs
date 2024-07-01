@@ -25,6 +25,12 @@
                 !string.IsNullOrWhiteSpace(x.Beschrijving))?.Beschrijving;
         }
 
+        public string? GetGeometrie()
+        {
+            return GetMeldingsobject().Body.FirstOrDefault(x =>
+                !string.IsNullOrWhiteSpace(x.Geometrie))?.Geometrie;
+        }
+
         public DateTimeOffset GetDatumVaststelling()
         {
             return GetMeldingsobject().Toestand.DatumVaststelling;
@@ -69,6 +75,7 @@
     public class MeldingV1ResponseMeldingsObjectBody
     {
         [JsonProperty("beschrijving")] public string? Beschrijving { get; set; }
+        [JsonProperty("geometrie")] public string? Geometrie { get; set; }
     }
 
     public class MeldingV1ResponseEigenschap

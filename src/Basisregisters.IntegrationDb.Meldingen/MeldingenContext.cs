@@ -84,6 +84,7 @@
                     npgSqlOptions.MigrationsHistoryTable(
                         MeldingenContext.MigrationsTableName,
                         MeldingenContext.Schema);
+                    npgSqlOptions.UseNetTopologySuite();
                 });
 
             return new MeldingenContext(builder.Options);

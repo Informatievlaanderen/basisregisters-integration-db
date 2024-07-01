@@ -4,12 +4,12 @@ Be.Vlaanderen.Basisregisters.Utilities.Rfc3339DateTimeOffset
 AWSSDK.Extensions.NETCore.Setup
 AWSSDK.SimpleNotificationService
 
-Destructurama.JsonNet
+Autofac
+Autofac.Extensions.DependencyInjection
 
 IdentityModel
 
-Autofac
-Autofac.Extensions.DependencyInjection
+Destructurama.JsonNet
 
 Microsoft.Extensions.Configuration
 Microsoft.Extensions.Configuration.CommandLine
@@ -20,12 +20,12 @@ Microsoft.Extensions.DependencyInjection
 Microsoft.Extensions.Hosting
 Microsoft.Extensions.Http
 
-Npgsql.EntityFrameworkCore.PostgreSQL
-
+NetTopologySuite
 Newtonsoft.Json
-
 NodaTime
-
+Npgsql.EntityFrameworkCore.PostgreSQL
+Npgsql.EntityFrameworkCore.PostgreSQL.Design
+Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite
 Polly
 
 Serilog

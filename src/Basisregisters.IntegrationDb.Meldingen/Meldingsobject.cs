@@ -4,6 +4,7 @@
     using Be.Vlaanderen.Basisregisters.Utilities;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using NetTopologySuite.Geometries;
     using NodaTime;
 
     public class Meldingsobject
@@ -50,6 +51,7 @@
         public string Thema { get; set; }
         public string Oorzaak { get; set; }
         public string OvoCode { get; set; }
+        public Geometry? Geometrie { get; set; }
 
         private Meldingsobject()
         { }
@@ -68,7 +70,8 @@
             string? samenvatting,
             string thema,
             string oorzaak,
-            string ovoCode)
+            string ovoCode,
+            Geometry? geometrie)
         {
             MeldingsobjectId = meldingsobjectId;
             MeldingId = meldingId;
@@ -84,6 +87,7 @@
             Thema = thema;
             Oorzaak = oorzaak;
             OvoCode = ovoCode;
+            Geometrie = geometrie;
         }
     }
 
@@ -114,6 +118,9 @@
         builder.Property(x => x.Thema).HasColumnName("thema");
         builder.Property(x => x.Oorzaak).HasColumnName("oorzaak");
         builder.Property(x => x.OvoCode).HasColumnName("ovo_code");
+        builder.Property(x => x.Geometrie).HasColumnName("geometrie");
+
+        builder.Property(p => p.Geometrie).HasColumnType("geometry");
 
         builder.Ignore(x => x.DatumIndieningTimestamp);
         builder.Ignore(x => x.DatumVaststellingTimestamp);

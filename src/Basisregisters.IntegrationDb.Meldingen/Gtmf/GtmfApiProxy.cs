@@ -12,6 +12,8 @@
     using IdentityModel.Client;
     using Meldingen;
     using Microsoft.Extensions.Options;
+    using NetTopologySuite.Geometries;
+    using NetTopologySuite.IO;
     using Newtonsoft.Json;
     using NodaTime;
 
@@ -27,6 +29,7 @@
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly GtmfApiOptions _gtmfApiOptions;
+        private readonly WKTReader _wktReader;
 
         public GtmfApiProxy(
             IHttpClientFactory httpClientFactory,
@@ -34,6 +37,7 @@
         {
             _httpClientFactory = httpClientFactory;
             _gtmfApiOptions = gtmfApiOptions.Value;
+            _wktReader = new WKTReader(GeometryFactory.Default);
         }
 
         public async Task<IEnumerable<MeldingEvent>> GetEventsFrom(int lastPosition)
@@ -70,6 +74,7 @@
             var indienerOrganisatie = v2Melding.GetIndienerOrganisatie();
             var thema = await GetThema(v1Melding.GetThema(), httpClient);
             var oorzaak = await GetOorzaak(v1Melding.GetOorzaak(), httpClient);
+            var geometrie = GetGeometrie(v1Melding.GetGeometrie());
 
             var meldingsobject = new Meldingsobject(
                 v1Melding.GetMeldingsobjectId(),
@@ -85,7 +90,8 @@
                 v2Melding.Samenvatting,
                 thema,
                 oorzaak,
-                v1Melding.GetOvoCode()
+                v1Melding.GetOvoCode(),
+                geometrie
             );
 
             return new IngediendMeldingsobject(meldingsobject, indienerOrganisatie);
@@ -151,6 +157,30 @@
             }
 
             return _cachedOorzaken[id];
+        }
+
+        private Geometry? GetGeometrie(string? geometrieAsString)
+        {
+            if (string.IsNullOrWhiteSpace(geometrieAsString))
+            {
+                return null;
+            }
+
+            try
+            {
+                var geometry = _wktReader.Read(geometrieAsString);
+
+                if (geometry.IsValid)
+                {
+                    return geometry;
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            return null;
         }
 
         private async Task<string> GetAccessToken()

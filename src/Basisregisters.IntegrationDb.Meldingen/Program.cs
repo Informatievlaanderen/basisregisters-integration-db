@@ -12,6 +12,7 @@
     using Gtmf;
     using Gtmf.Events;
     using Infrastructure;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -79,6 +80,7 @@
                             optionsBuilder.MigrationsHistoryTable(
                                 MeldingenContext.MigrationsTableName,
                                 MeldingenContext.Schema);
+                            optionsBuilder.UseNetTopologySuite();
                         });
 
                     services.AddAWSService<IAmazonSimpleNotificationService>();

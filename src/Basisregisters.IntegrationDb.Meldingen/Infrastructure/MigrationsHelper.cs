@@ -43,6 +43,7 @@ namespace Basisregisters.IntegrationDb.Meldingen.Infrastructure
                     {
                         optionsBuilder.EnableRetryOnFailure();
                         optionsBuilder.MigrationsHistoryTable(MeldingenContext.MigrationsTableName, MeldingenContext.Schema);
+                        optionsBuilder.UseNetTopologySuite();
                     });
 
             if (loggerFactory != null)
