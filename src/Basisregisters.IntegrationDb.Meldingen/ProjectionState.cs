@@ -5,6 +5,8 @@
 
     public class ProjectionState
     {
+        public const string GtmfProjectionName = "GTMF";
+
         public string Name { get; set; }
         public int Position { get; set; }
 

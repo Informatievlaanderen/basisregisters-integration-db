@@ -68,6 +68,8 @@
             var v2Melding = await GetMeldingV2(meldingId, httpClient);
 
             var indienerOrganisatie = v2Melding.GetIndienerOrganisatie();
+            var thema = await GetThema(v1Melding.GetThema(), httpClient);
+            var oorzaak = await GetOorzaak(v1Melding.GetOorzaak(), httpClient);
 
             var meldingsobject = new Meldingsobject(
                 v1Melding.GetMeldingsobjectId(),
@@ -81,8 +83,8 @@
                 v1Melding.GetOnderwerp(),
                 v1Melding.GetBeschrijving(),
                 v2Melding.Samenvatting,
-                v1Melding.GetThema(),
-                v1Melding.GetOorzaak(),
+                thema,
+                oorzaak,
                 v1Melding.GetOvoCode()
             );
 
@@ -109,6 +111,46 @@
 
             var v2ResponseContent = await v2Response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<MeldingV2Response>(v2ResponseContent)!;
+        }
+
+        private Dictionary<string, string> _cachedThemas = new();
+        private async Task<string> GetThema(string id, HttpClient httpClient)
+        {
+            if (!_cachedThemas.Any())
+            {
+                var requestUri = $"{_gtmfApiOptions.BaseUrl.TrimEnd('/')}/api/v1/datasets/GRAR/eigenschappen/{MeldingV1ResponseEigenschap.GRAR_Thema}";
+                var response = await httpClient.GetAsync(requestUri);
+
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var eigenschap = JsonConvert.DeserializeObject<EigenschapResponse>(responseContent)!;
+                _cachedThemas = eigenschap.Items.ToDictionary(
+                    x => x.Waarde,
+                    x => x.Label);
+            }
+
+            return _cachedThemas[id];
+        }
+
+        private Dictionary<string, string> _cachedOorzaken = new();
+        private async Task<string> GetOorzaak(string id, HttpClient httpClient)
+        {
+            if (!_cachedOorzaken.Any())
+            {
+                var requestUri = $"{_gtmfApiOptions.BaseUrl.TrimEnd('/')}/api/v1/datasets/GRAR/eigenschappen/{MeldingV1ResponseEigenschap.GRAR_Oorzaak}";
+                var response = await httpClient.GetAsync(requestUri);
+
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var eigenschap = JsonConvert.DeserializeObject<EigenschapResponse>(responseContent)!;
+                _cachedOorzaken = eigenschap.Items.ToDictionary(
+                    x => x.Waarde,
+                    x => x.Label);
+            }
+
+            return _cachedOorzaken[id];
         }
 
         private async Task<string> GetAccessToken()

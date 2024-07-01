@@ -33,13 +33,27 @@
 
         public async Task SetLastPosition(int position, CancellationToken ct)
         {
-            var projectionState = await ProjectionStates.SingleAsync(ct);
+            var projectionState = await ProjectionStates.FindAsync([ProjectionState.GtmfProjectionName], cancellationToken: ct);
+
+            if (projectionState is null)
+            {
+                projectionState = new ProjectionState
+                {
+                    Name = ProjectionState.GtmfProjectionName
+                };
+                ProjectionStates.Add(projectionState);
+            }
+
             projectionState.Position = position;
         }
 
         public async Task<int> GetLastPosition(CancellationToken ct)
         {
-            return (await ProjectionStates.SingleAsync(ct)).Position;
+            var projectionState = await ProjectionStates.FindAsync([ProjectionState.GtmfProjectionName], cancellationToken: ct);
+
+            return projectionState is null || projectionState.Position == 0
+                ? 1
+                : projectionState.Position;
         }
     }
 

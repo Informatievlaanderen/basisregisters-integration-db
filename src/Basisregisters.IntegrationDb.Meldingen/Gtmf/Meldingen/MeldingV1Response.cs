@@ -63,7 +63,7 @@
         [JsonProperty("heeftOnderwerp")] public string? Onderwerp { get; set; }
         [JsonProperty("gerelateerdeBody")] public IEnumerable<MeldingV1ResponseMeldingsObjectBody> Body { get; set; }
         [JsonProperty("heeftToestand")] public MeldingV1ResponseToestand Toestand { get; set; }
-        [JsonProperty("heeftEigenschap")] public IEnumerable<MeldingV1Eigenschap> Eigenschappen { get; set; }
+        [JsonProperty("heeftEigenschap")] public IEnumerable<MeldingV1ResponseEigenschap> Eigenschappen { get; set; }
     }
 
     public class MeldingV1ResponseMeldingsObjectBody
@@ -71,7 +71,7 @@
         [JsonProperty("beschrijving")] public string? Beschrijving { get; set; }
     }
 
-    public class MeldingV1Eigenschap
+    public class MeldingV1ResponseEigenschap
     {
         public const string GRAR_OvoCode = "GRAR_OvoCode";
         public const string GRAR_Thema = "GRAR_Thema";
@@ -80,8 +80,8 @@
         [JsonProperty("eigenschap")] public string Type { get; set; }
         [JsonProperty("voorgesteldeWaarde")] public string Waarde { get; set; }
 
-        public bool IsOvoCode => Type.Equals(GRAR_OvoCode, StringComparison.InvariantCultureIgnoreCase);
-        public bool IsThema => Type.Equals(GRAR_Thema, StringComparison.InvariantCultureIgnoreCase);
-        public bool IsOorzaak => Type.Equals(GRAR_Oorzaak, StringComparison.InvariantCultureIgnoreCase);
+        public bool IsOvoCode => Type.EndsWith(GRAR_OvoCode, StringComparison.InvariantCultureIgnoreCase);
+        public bool IsThema => Type.EndsWith(GRAR_Thema, StringComparison.InvariantCultureIgnoreCase);
+        public bool IsOorzaak => Type.EndsWith(GRAR_Oorzaak, StringComparison.InvariantCultureIgnoreCase);
     }
 }

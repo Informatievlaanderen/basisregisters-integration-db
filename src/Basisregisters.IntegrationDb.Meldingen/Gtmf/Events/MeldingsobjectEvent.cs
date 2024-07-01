@@ -46,6 +46,11 @@
 
         public BehandelendeOrganisatie GetBehandelendeOrganisatie()
         {
+            if (Initiator.Type.Equals("Applicatie", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new BehandelendeOrganisatie(Initiator.AgentId, "GTMF-Systeem", null, null);
+            }
+
             return new BehandelendeOrganisatie(Initiator.AgentId, Initiator.Naam, Initiator.OvoCode, Initiator.KboNummer);
         }
     }
@@ -56,5 +61,6 @@
         [JsonProperty("id")] public string KboNummer { get; set; }
         [JsonProperty("wettelijkeNaam")] public string Naam { get; set; }
         [JsonProperty("agentId")] public Guid AgentId { get; set; }
+        [JsonProperty("type")] public string Type { get; set; }
     }
 }

@@ -42,7 +42,7 @@
         {
             try
             {
-                var lastPosition = await GetLastPosition(stoppingToken);
+                var lastPosition = await _meldingenContext.GetLastPosition(stoppingToken);
 
                 var events = (await _gtmfApiProxy.GetEventsFrom(lastPosition)).ToList();
                 var eventsProcessedCount = 0;
@@ -83,12 +83,6 @@
             {
                 _hostApplicationLifetime.StopApplication();
             }
-        }
-
-        private async Task<int> GetLastPosition(CancellationToken stoppingToken)
-        {
-            var lastPosition = await _meldingenContext.GetLastPosition(stoppingToken);
-            return lastPosition == 0 ? 1 : lastPosition;
         }
 
         private async Task HandleMeldingEvent(MeldingEvent meldingEvent, CancellationToken ct)
@@ -168,6 +162,7 @@
                 gtmfOrganisatie.OvoCode, gtmfOrganisatie.KboNummer);
 
             _meldingenContext.Organisaties.Add(organisatie);
+            _organisaties.Add(organisatie);
 
             return organisatie;
         }
