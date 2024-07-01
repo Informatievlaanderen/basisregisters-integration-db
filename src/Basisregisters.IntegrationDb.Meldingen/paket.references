@@ -1,4 +1,5 @@
 Be.Vlaanderen.Basisregisters.Aws.DistributedMutex
+Be.Vlaanderen.Basisregisters.Utilities.Rfc3339DateTimeOffset
 
 AWSSDK.Extensions.NETCore.Setup
 AWSSDK.SimpleNotificationService

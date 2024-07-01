@@ -9,6 +9,7 @@
     using Gtmf.Events;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
+    using NodaTime;
     using Notifications;
     using GtmfOrganisatie = Basisregisters.IntegrationDb.Meldingen.Gtmf.Organisatie;
 
@@ -118,7 +119,7 @@
             var (meldingsobject, indienerOrganisatie) = ingediendMeldingsobject;
 
             var organisatie = await GetOrAddOrganisatie(indienerOrganisatie, ct);
-            meldingsobject.MeldingsOrganisatieId = organisatie.IdInternal;
+            meldingsobject.MeldingsorganisatieIdInternal = organisatie.IdInternal;
 
             _meldingenContext.Meldingsobjecten.Add(meldingsobject);
             _meldingenContext.MeldingsobjectStatuswijzigingen.Add(
@@ -128,7 +129,7 @@
                     null,
                     MeldingsobjectStatussen.Ingediend,
                     organisatie.IdInternal,
-                    meldingsobject.DatumIndiening,
+                    meldingsobject.DatumIndieningTimestamp,
                     null));
         }
 
@@ -145,7 +146,7 @@
                     meldingsobjectEvent.GetOudeStatus(),
                     meldingsobjectEvent.GetNieuweStatus(),
                     organisatie.IdInternal,
-                    meldingsobjectEvent.AangemaaktOp,
+                    Instant.FromDateTimeOffset(meldingsobjectEvent.AangemaaktOp),
                     meldingsobjectEvent.ToelichtingMelder));
         }
 

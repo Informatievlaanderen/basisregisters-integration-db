@@ -1,8 +1,12 @@
 ﻿namespace Basisregisters.IntegrationDb.Meldingen
 {
+    using System;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Design;
+    using Microsoft.Extensions.Configuration;
 
     public class MeldingenContext : DbContext
     {
@@ -36,6 +40,39 @@
         public async Task<int> GetLastPosition(CancellationToken ct)
         {
             return (await ProjectionStates.SingleAsync(ct)).Position;
+        }
+    }
+
+    public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<MeldingenContext>
+    {
+        public MeldingenContext CreateDbContext(string[] args)
+        {
+            const string connectionStringName = "IntegrationAdmin";
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{Environment.MachineName}.json", true)
+                .AddJsonFile($"appsettings.development.json", true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            var builder = new DbContextOptionsBuilder<MeldingenContext>();
+
+            var connectionString = configuration
+                                       .GetConnectionString(connectionStringName)
+                                   ?? throw new InvalidOperationException($"Could not find a connection string with name '{connectionStringName}'");
+
+            builder
+                .UseNpgsql(connectionString, npgSqlOptions =>
+                {
+                    npgSqlOptions.EnableRetryOnFailure();
+                    npgSqlOptions.MigrationsHistoryTable(
+                        MeldingenContext.MigrationsTableName,
+                        MeldingenContext.Schema);
+                });
+
+            return new MeldingenContext(builder.Options);
         }
     }
 }

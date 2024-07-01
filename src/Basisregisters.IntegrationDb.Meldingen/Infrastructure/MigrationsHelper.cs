@@ -39,10 +39,10 @@ namespace Basisregisters.IntegrationDb.Meldingen.Infrastructure
             var migratorOptions = new DbContextOptionsBuilder<MeldingenContext>()
                 .UseNpgsql(
                     connectionString,
-                    sqlServerOptions =>
+                    optionsBuilder =>
                     {
-                        sqlServerOptions.EnableRetryOnFailure();
-                        sqlServerOptions.MigrationsHistoryTable(MeldingenContext.MigrationsTableName, MeldingenContext.Schema);
+                        optionsBuilder.EnableRetryOnFailure();
+                        optionsBuilder.MigrationsHistoryTable(MeldingenContext.MigrationsTableName, MeldingenContext.Schema);
                     });
 
             if (loggerFactory != null)
@@ -51,7 +51,6 @@ namespace Basisregisters.IntegrationDb.Meldingen.Infrastructure
             }
 
             using var migrator = new MeldingenContext(migratorOptions.Options);
-            migrator.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
             migrator.Database.Migrate();
         }
     }

@@ -13,6 +13,7 @@
     using Meldingen;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
+    using NodaTime;
 
     public interface IGtmfApiProxy
     {
@@ -71,8 +72,8 @@
             var meldingsobject = new Meldingsobject(
                 v1Melding.GetMeldingsobjectId(),
                 Guid.Parse(meldingId),
-                v2Melding.DatumIndiening,
-                v1Melding.GetDatumVaststelling(),
+                Instant.FromDateTimeOffset(v2Melding.DatumIndiening),
+                Instant.FromDateTimeOffset(v1Melding.GetDatumVaststelling()),
                 indienerOrganisatie.Id,
                 v2Melding.Meldingsapplicatie,
                 v2Melding.Referentie,
