@@ -57,7 +57,7 @@
         }
     }
 
-    public class ConfigBasedIntegrationContextFactory : IDesignTimeDbContextFactory<MeldingenContext>
+    public class ConfigBasedMeldingenContextFactory : IDesignTimeDbContextFactory<MeldingenContext>
     {
         public MeldingenContext CreateDbContext(string[] args)
         {

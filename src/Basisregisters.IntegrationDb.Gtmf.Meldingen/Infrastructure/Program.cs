@@ -107,7 +107,7 @@
             var configuration = host.Services.GetRequiredService<IConfiguration>();
             var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
 
-            logger.LogInformation("Starting IntegrationDb.Meldingen");
+            logger.LogInformation("Starting IntegrationDb.Gtmf.Meldingen");
 
             try
             {
