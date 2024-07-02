@@ -19,6 +19,7 @@ nuget Newtonsoft.Json 13.0.3
 nuget GeoJSON.NET 1.2.19
 nuget MediatR 12.2.0
 nuget MediatR.Contracts 2.0.1
+nuget Polly 8.3.1
 
 // Datadog
 nuget Datadog.Trace.Bundle 2.49.0
