@@ -112,6 +112,20 @@ jobs:
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
     secrets: inherit
 
+  build-gtmf-meldingen:
+    name: Build Gtmf Meldingen
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    needs: [ set-release-version ]
+    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
+    with:
+      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
+      image-file: gtmf-meldingen-image.tar
+      image-name: gtmf-meldingen
+      build-project: Basisregisters.IntegrationDb.Gtmf.Meldingen
+      semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+    secrets: inherit
+
   pack-api-suspicious-cases:
     name: Pack Api Suspicious Cases Abstractions
     uses: Informatievlaanderen/build-pipeline/.github/workflows/pack.yml@main
@@ -135,7 +149,8 @@ jobs:
       build-integration-veka, 
       build-bosa-full-download, 
       pack-api-suspicious-cases, 
-      build-data-integrity ]
+      build-data-integrity,
+      build-gtmf-meldingen ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
     steps:
