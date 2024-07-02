@@ -11,7 +11,7 @@
     public class MeldingenContext : DbContext
     {
         public const string MigrationsTableName = "__EFMigrationsHistoryIntegration";
-        public const string Schema = "integration_meldingen";
+        public const string Schema = "integration_gtmf";
 
         public DbSet<Meldingsobject> Meldingsobjecten => Set<Meldingsobject>();
         public DbSet<MeldingsobjectStatuswijziging> MeldingsobjectStatuswijzigingen => Set<MeldingsobjectStatuswijziging>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using NetTopologySuite.Geometries;
 
 #nullable disable
 
@@ -12,11 +13,14 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "integration_meldingen");
+                name: "integration_gtmf");
+
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:PostgresExtension:postgis", ",,");
 
             migrationBuilder.CreateTable(
                 name: "meldingsobject",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 columns: table => new
                 {
                     meldingsobject_id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -35,7 +39,8 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
                     samenvatting = table.Column<string>(type: "text", nullable: true),
                     thema = table.Column<string>(type: "text", nullable: false),
                     oorzaak = table.Column<string>(type: "text", nullable: false),
-                    ovo_code = table.Column<string>(type: "text", nullable: false)
+                    ovo_code = table.Column<string>(type: "text", nullable: false),
+                    geometrie = table.Column<Geometry>(type: "geometry", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,7 +49,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
             migrationBuilder.CreateTable(
                 name: "meldingsobject_statuswijziging",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 columns: table => new
                 {
                     meldingsobject_id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -63,7 +68,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
             migrationBuilder.CreateTable(
                 name: "organisatie",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -79,7 +84,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
             migrationBuilder.CreateTable(
                 name: "projection_state",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 columns: table => new
                 {
                     naam = table.Column<string>(type: "text", nullable: false),
@@ -92,103 +97,103 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_melding_id",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "melding_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_meldingsapplicatie",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "meldingsapplicatie");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_meldingsorganisatie_id",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "meldingsorganisatie_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_meldingsorganisatie_id_internal",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "meldingsorganisatie_id_internal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_onderwerp",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "onderwerp");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_oorzaak",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "oorzaak");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_ovo_code",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "ovo_code");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_referentie",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "referentie");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_referentie_melder",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "referentie_melder");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_thema",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject",
                 column: "thema");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_statuswijziging_melding_id",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject_statuswijziging",
                 column: "melding_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_statuswijziging_nieuwe_status",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject_statuswijziging",
                 column: "nieuwe_status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_statuswijziging_organisatie_id_internal",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject_statuswijziging",
                 column: "organisatie_id_internal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meldingsobject_statuswijziging_oude_status",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "meldingsobject_statuswijziging",
                 column: "oude_status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_organisatie_id_internal",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "organisatie",
                 column: "id_internal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_organisatie_kbo_nummer",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "organisatie",
                 column: "kbo_nummer");
 
             migrationBuilder.CreateIndex(
                 name: "IX_organisatie_ovo_code",
-                schema: "integration_meldingen",
+                schema: "integration_gtmf",
                 table: "organisatie",
                 column: "ovo_code");
         }
@@ -198,19 +203,19 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
         {
             migrationBuilder.DropTable(
                 name: "meldingsobject",
-                schema: "integration_meldingen");
+                schema: "integration_gtmf");
 
             migrationBuilder.DropTable(
                 name: "meldingsobject_statuswijziging",
-                schema: "integration_meldingen");
+                schema: "integration_gtmf");
 
             migrationBuilder.DropTable(
                 name: "organisatie",
-                schema: "integration_meldingen");
+                schema: "integration_gtmf");
 
             migrationBuilder.DropTable(
                 name: "projection_state",
-                schema: "integration_meldingen");
+                schema: "integration_gtmf");
         }
     }
 }

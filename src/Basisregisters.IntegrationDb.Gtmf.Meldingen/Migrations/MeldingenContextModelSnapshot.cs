@@ -128,7 +128,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
                     b.HasIndex("Thema");
 
-                    b.ToTable("meldingsobject", "integration_meldingen");
+                    b.ToTable("meldingsobject", "integration_gtmf");
                 });
 
             modelBuilder.Entity("Basisregisters.IntegrationDb.Gtmf.Meldingen.MeldingsobjectStatuswijziging", b =>
@@ -176,7 +176,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
                     b.HasIndex("OudeStatus");
 
-                    b.ToTable("meldingsobject_statuswijziging", "integration_meldingen");
+                    b.ToTable("meldingsobject_statuswijziging", "integration_gtmf");
                 });
 
             modelBuilder.Entity("Basisregisters.IntegrationDb.Gtmf.Meldingen.Organisatie", b =>
@@ -211,7 +211,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
                     b.HasIndex("OvoCode");
 
-                    b.ToTable("organisatie", "integration_meldingen");
+                    b.ToTable("organisatie", "integration_gtmf");
                 });
 
             modelBuilder.Entity("Basisregisters.IntegrationDb.Gtmf.Meldingen.ProjectionState", b =>
@@ -226,7 +226,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("projection_state", "integration_meldingen");
+                    b.ToTable("projection_state", "integration_gtmf");
                 });
 #pragma warning restore 612, 618
         }

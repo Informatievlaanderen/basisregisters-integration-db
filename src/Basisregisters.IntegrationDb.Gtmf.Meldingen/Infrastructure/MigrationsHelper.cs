@@ -30,11 +30,11 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Infrastructure
                 .Execute(() =>
                 {
                     logger?.LogInformation("Running EF Migrations.");
-                    RunSuspiciousCasesMigrations(connectionString, loggerFactory);
+                    RunGtmfMeldingenMigrations(connectionString, loggerFactory);
                 });
         }
 
-        private static void RunSuspiciousCasesMigrations(string connectionString, ILoggerFactory? loggerFactory)
+        private static void RunGtmfMeldingenMigrations(string connectionString, ILoggerFactory? loggerFactory)
         {
             var migratorOptions = new DbContextOptionsBuilder<MeldingenContext>()
                 .UseNpgsql(
