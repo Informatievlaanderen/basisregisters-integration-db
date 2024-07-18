@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.0...v2.7.1) (2024-07-18)
+
+
+### Bug Fixes
+
+* deserializing meldingsobject event with new line character ([5022d27](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5022d27c67be3142a554cfdccdc03d2a0fb245ce))
+
 # [2.7.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.6.1...v2.7.0) (2024-07-18)
 
 
