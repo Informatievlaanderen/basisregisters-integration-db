@@ -15,7 +15,7 @@
             Position = position;
             MeldingId = meldingId;
             EventType = eventType;
-            JsonData = jsonData.Replace(@"\""", @"""");
+            JsonData = jsonData;
         }
 
         public bool IsMeldingIngediendEvent() =>

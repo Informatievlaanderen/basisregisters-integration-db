@@ -9,6 +9,7 @@
     using Api.Events;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
     using NodaTime;
     using Notifications;
     using GtmfOrganisatie = Api.Organisatie;
@@ -20,6 +21,7 @@
         private readonly IGtmfApiProxy _gtmfApiProxy;
         private readonly IMeldingsobjectEventDeserializer _meldingsobjectEventDeserializer;
         private readonly INotificationService _notificationService;
+        private readonly ILogger _logger;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
         private List<Organisatie>? _organisaties;
@@ -29,20 +31,23 @@
             IGtmfApiProxy gtmfApiProxy,
             IMeldingsobjectEventDeserializer meldingsobjectEventDeserializer,
             INotificationService notificationService,
+            ILoggerFactory loggerFactory,
             IHostApplicationLifetime hostApplicationLifetime)
         {
             _meldingenContext = meldingenContext;
             _gtmfApiProxy = gtmfApiProxy;
             _meldingsobjectEventDeserializer = meldingsobjectEventDeserializer;
             _notificationService = notificationService;
+            _logger = loggerFactory.CreateLogger<MeldingEventConsumer>();
             _hostApplicationLifetime = hostApplicationLifetime;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var lastPosition = 0;
             try
             {
-                var lastPosition = await _meldingenContext.GetLastPosition(stoppingToken);
+                lastPosition = await _meldingenContext.GetLastPosition(stoppingToken);
 
                 var events = (await _gtmfApiProxy.GetEventsFrom(lastPosition)).ToList();
                 var eventsProcessedCount = 0;
@@ -51,10 +56,10 @@
                 {
                     foreach (var @event in events)
                     {
+                        lastPosition = @event.Position;
                         await HandleMeldingEvent(@event, stoppingToken);
 
                         await _meldingenContext.SetLastPosition(@event.Position, stoppingToken);
-                        lastPosition = @event.Position;
                         eventsProcessedCount++;
                     }
 
@@ -69,11 +74,13 @@
                     "IntegrationDb notifications",
                     NotificationSeverity.Good));
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
+                _logger.LogError(exception, $"An error occured while at event position {lastPosition}.");
+
                 await _notificationService.PublishToTopicAsync(new NotificationMessage(
                     nameof(MeldingEventConsumer),
-                    $"Failed: {e}",
+                    $"Failed: {exception}",
                     "IntegrationDb notifications",
                     NotificationSeverity.Danger));
 
