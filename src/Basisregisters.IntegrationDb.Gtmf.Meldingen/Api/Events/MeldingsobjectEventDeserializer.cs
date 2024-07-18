@@ -1,5 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Api.Events
 {
+    using System;
+    using Exceptions;
     using Newtonsoft.Json;
 
     public interface IMeldingsobjectEventDeserializer
@@ -11,10 +13,20 @@
     {
         public MeldingsobjectEvent DeserializeFrom(MeldingEvent meldingEvent)
         {
-            var meldingsobjectEvent = JsonConvert.DeserializeObject<MeldingsobjectEvent>(meldingEvent.JsonData)!;
-            meldingsobjectEvent.EventType = meldingEvent.EventType;
+            try
+            {
+                var meldingsobjectEvent = JsonConvert.DeserializeObject<MeldingsobjectEvent>(meldingEvent.JsonData)!;
+                meldingsobjectEvent.EventType = meldingEvent.EventType;
 
-            return meldingsobjectEvent;
+                return meldingsobjectEvent;
+            }
+            catch (Exception exception)
+            {
+                throw new MeldingsobjectDeserializationFailedException(
+                    meldingEvent.Position,
+                    meldingEvent.JsonData,
+                    exception);
+            }
         }
     }
 }
