@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.6.1...v2.7.0) (2024-07-18)
+
+
+### Features
+
+* add integration with gtmf meldingen ([3ecd041](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/3ecd04106e216d8082cf2a2e86c72cb93ed9c11b))
+
 ## [2.6.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.6.0...v2.6.1) (2024-06-28)
 
 
