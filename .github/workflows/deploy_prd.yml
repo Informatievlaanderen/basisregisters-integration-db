@@ -74,7 +74,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: ['integration-veka', 'integration-bosa-full-download','integration-data-integrity']
+        services: [
+          'integration-veka', 
+          'integration-bosa-full-download',
+          'integration-data-integrity',
+          'integration-gtmf-meldingen'
+          ]
 
     steps:
     - name: CD tasks
