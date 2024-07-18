@@ -329,7 +329,8 @@ jobs:
           'suspicious-cases-api',
           'integration-veka',
           'bosa-full-download',
-          'data-integrity'
+          'data-integrity',
+          'gtmf-meldingen'
           ]
     steps:
       - name: Configure AWS credentials
@@ -440,7 +441,8 @@ jobs:
         services: [
           'integration-veka',
           'integration-bosa-full-download',
-          'integration-data-integrity'
+          'integration-data-integrity',
+          'integration-gtmf-meldingen'
         ]
     steps:
     - name: Deploy tasks
@@ -556,7 +558,8 @@ jobs:
         services: [
           'integration-veka',
           'integration-bosa-full-download',
-          'integration-data-integrity'
+          'integration-data-integrity',
+          'integration-gtmf-meldingen'
         ]
     steps:
     - name: Deploy tasks
