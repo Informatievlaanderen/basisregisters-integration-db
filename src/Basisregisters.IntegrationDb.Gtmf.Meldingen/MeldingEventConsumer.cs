@@ -71,7 +71,7 @@
                 await _notificationService.PublishToTopicAsync(new NotificationMessage(
                     nameof(MeldingEventConsumer),
                     $"Success: {eventsProcessedCount} events processed",
-                    "IntegrationDb notifications",
+                    "IntegrationDb GTMF meldingen",
                     NotificationSeverity.Good));
             }
             catch (Exception exception)
@@ -81,7 +81,7 @@
                 await _notificationService.PublishToTopicAsync(new NotificationMessage(
                     nameof(MeldingEventConsumer),
                     $"Failed: {exception}",
-                    "IntegrationDb notifications",
+                    "IntegrationDb GTMF meldingen",
                     NotificationSeverity.Danger));
 
                 throw;
