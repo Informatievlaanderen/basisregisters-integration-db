@@ -1,3 +1,10 @@
+## [2.7.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.1...v2.7.2) (2024-07-19)
+
+
+### Bug Fixes
+
+* GTMF meldingen sns notification service name ([ddb3cd4](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ddb3cd49aef9095691e396408f8592f40c8011a3))
+
 ## [2.7.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.0...v2.7.1) (2024-07-18)
 
 
