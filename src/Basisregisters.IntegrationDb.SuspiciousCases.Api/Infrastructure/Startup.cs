@@ -102,7 +102,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                         name: $"npgsql-{connectionString.Key.ToLowerInvariant()}",
                                         tags: new[] {DatabaseTag, "sql", "npgsql"});
                             },
-                            Authorization = options => { options.AddAcmIdmAuthorization(); }
+                            Authorization = options => { options.AddAddressPolicies([]); }
                         }
                     }
 
