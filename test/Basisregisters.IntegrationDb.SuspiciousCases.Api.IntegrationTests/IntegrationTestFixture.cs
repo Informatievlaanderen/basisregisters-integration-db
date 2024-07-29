@@ -201,7 +201,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
                     version_timestamp TIMESTAMP WITH TIME ZONE,
                     is_removed BOOL,
                     geometry geometry,
-                    status TEXT
+                    status TEXT,
+                    function TEXT
                 );";
             await using var createBuildingUnitTable = new NpgsqlCommand(sql, NpgsqlConnection);
             await createBuildingUnitTable.ExecuteNonQueryAsync();
@@ -232,6 +233,20 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
                 );";
             await using var createParcelTable = new NpgsqlCommand(sql, NpgsqlConnection);
             await createParcelTable.ExecuteNonQueryAsync();
+
+            sql =
+                @$"CREATE TABLE IF NOT EXISTS {SchemaLatestItems.RoadSegment} (
+                    id integer,
+                    maintainer_id integer,
+                    left_side_street_name_id integer,
+                    right_side_street_name_id integer,
+                    method_id integer,
+                    status_id integer,
+                    is_removed boolean,
+                    version_timestamp TIMESTAMP WITH TIME ZONE
+                );";
+            await using var createRoadSegmentTable = new NpgsqlCommand(sql, NpgsqlConnection);
+            await createRoadSegmentTable.ExecuteNonQueryAsync();
         }
 
         public async Task DisposeAsync()
