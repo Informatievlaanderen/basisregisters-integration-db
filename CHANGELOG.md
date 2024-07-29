@@ -1,3 +1,10 @@
+## [2.7.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.2...v2.7.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* hardcoded niscode-ovocode mapping without OVO-prefix ([a3a4002](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a3a4002c1e2f16f3a17f5dc21a7619fd85c6621a))
+
 ## [2.7.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.1...v2.7.2) (2024-07-19)
 
 
