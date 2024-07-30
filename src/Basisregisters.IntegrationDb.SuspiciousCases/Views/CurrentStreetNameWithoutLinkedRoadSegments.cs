@@ -47,7 +47,7 @@
                 on rs_left.left_side_street_name_id = s.persistent_local_id
             LEFT JOIN {SchemaLatestItems.RoadSegment} rs_right
                 on rs_right.right_side_street_name_id = s.persistent_local_id
-            AND s.status = 1
+            WHERE s.status = 1
             AND s.is_removed = false
             AND rs_left.id is null
             AND rs_right.id is null;";
