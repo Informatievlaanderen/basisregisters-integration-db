@@ -35,7 +35,7 @@
         public const string ViewName = "view_address_longer_than_two_years_proposed";
 
         public const string Create = $@"
-            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
+            CREATE OR REPLACE VIEW {Schema.SuspiciousCases}.{ViewName} AS
 	        SELECT
 		        CAST(a.persistent_local_id as varchar) AS persistent_local_id,
 		        a.persistent_local_id AS address_persistent_local_id,
