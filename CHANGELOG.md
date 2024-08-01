@@ -1,3 +1,10 @@
+## [2.7.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.4...v2.7.5) (2024-08-01)
+
+
+### Bug Fixes
+
+* **suspicious:** create or replace views instead of drop create ([8f19c38](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/8f19c382c26210e15e1d01e0b4b013dc47a8c014))
+
 ## [2.7.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.3...v2.7.4) (2024-07-30)
 
 
