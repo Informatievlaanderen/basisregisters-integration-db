@@ -36,7 +36,7 @@
 
         // Todo replace schema and table name with constants
         public const string Create = $@"
-            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
+            CREATE OR REPLACE VIEW {Schema.SuspiciousCases}.{ViewName} AS
 	        SELECT
 		        CAST(streetname.persistent_local_id as varchar) AS persistent_local_id,
 		        streetname.persistent_local_id AS streetname_persistent_local_id,

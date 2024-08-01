@@ -35,7 +35,7 @@
         public const string ViewName = "view_current_street_name_without_linked_road_segments";
 
         public const string Create = $@"
-            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
+            CREATE OR REPLACE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
                 CAST(s.persistent_local_id as varchar) AS persistent_local_id,
 		        s.persistent_local_id AS streetname_persistent_local_id,
