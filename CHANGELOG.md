@@ -1,3 +1,12 @@
+## [2.7.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.5...v2.7.6) (2024-08-05)
+
+
+### Bug Fixes
+
+* remove count view from previous migration ([f763c98](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/f763c9855b98bfea499e68212f2a929a129ad62e))
+* rename suspicious cases ([24bc603](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/24bc603c13e54abce5150a0e68ea5679abf4b576))
+* RoadSegmentWithSingleLinkedStreetName ([a984915](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a98491506f2864ae84643c76a81d7a5e21ded3bb))
+
 ## [2.7.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.4...v2.7.5) (2024-08-01)
 
 
