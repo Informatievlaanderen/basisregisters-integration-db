@@ -13,7 +13,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.ViewName};");
             migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
         }
 
