@@ -16,15 +16,11 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
             migrationBuilder.Sql(RoadSegmentLongerThanTwoYearsWithPermitConfiguration.Create);
             migrationBuilder.Sql(ActiveAddressOutsideMunicipalityBoundsConfiguration.Create);
-
-            migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{SuspiciousCaseCountConfiguration.ViewName};");
-
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.ViewName};");
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{RoadSegmentLongerThanTwoYearsWithPermitConfiguration.ViewName};");
         }
