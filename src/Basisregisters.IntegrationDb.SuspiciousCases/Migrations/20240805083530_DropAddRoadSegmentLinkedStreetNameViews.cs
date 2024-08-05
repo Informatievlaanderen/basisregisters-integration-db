@@ -8,14 +8,14 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
     using Views;
 
     /// <inheritdoc />
-    public partial class AddRoadSegmentViews : Migration
+    public partial class DropAddRoadSegmentLinkedStreetNameViews : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.Create);
-            migrationBuilder.Sql(RoadSegmentLongerThanTwoYearsWithPermitConfiguration.Create);
-            migrationBuilder.Sql(ActiveAddressOutsideMunicipalityBoundsConfiguration.Create);
+            migrationBuilder.Sql($"DROP VIEW IF EXISTS {Schema.SuspiciousCases}.view_measured_road_segment_with_no_or_single_linked_streetname;");
+
+            migrationBuilder.Sql(RoadSegmentWithSingleLinkedStreetNameConfiguration.Create);
 
             migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }
@@ -25,8 +25,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         {
             migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{SuspiciousCaseCountConfiguration.ViewName};");
 
-            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.ViewName};");
-            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{RoadSegmentLongerThanTwoYearsWithPermitConfiguration.ViewName};");
+            migrationBuilder.Sql($"DROP VIEW {Schema.SuspiciousCases}.{RoadSegmentWithSingleLinkedStreetNameConfiguration.ViewName};");
         }
     }
 }

@@ -59,8 +59,8 @@
                 new SuspiciousCase(Category.RoadSegment, "Wegsegment bestaat langer dan 2 jaar en heeft nog steeds de status \"voorgesteld\"", Severity.Suspicious)
             },
             {
-                SuspiciousCasesType.MeasuredRoadSegmentWithNoOrSingleLinkedStreetName,
-                new SuspiciousCase(Category.RoadSegment, "Ingemeten wegsegment met slechts 1 straatnaamkoppeling", Severity.Suspicious)
+                SuspiciousCasesType.RoadSegmentWithSingleLinkedStreetName,
+                new SuspiciousCase(Category.RoadSegment, "Wegsegment met slechts 1 straatnaamkoppeling", Severity.Suspicious)
             },
             // {
             //     SuspiciousCasesType.ActiveBuildingUnitLinkedToMultipleAddresses,

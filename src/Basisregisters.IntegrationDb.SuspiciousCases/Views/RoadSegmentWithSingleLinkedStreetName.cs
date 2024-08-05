@@ -4,16 +4,16 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class MeasuredRoadSegmentWithNoOrSingleLinkedStreetName : SuspiciousCase
+    public class RoadSegmentWithSingleLinkedStreetName : SuspiciousCase
     {
         public int RoadSegmentPersistentLocalId { get; set; }
 
         public override Category Category => Category.RoadSegment;
     }
 
-    public sealed class MeasuredRoadSegmentWithNoOrSingleLinkedStreetNameConfiguration : IEntityTypeConfiguration<MeasuredRoadSegmentWithNoOrSingleLinkedStreetName>
+    public sealed class RoadSegmentWithSingleLinkedStreetNameConfiguration : IEntityTypeConfiguration<RoadSegmentWithSingleLinkedStreetName>
     {
-        public void Configure(EntityTypeBuilder<MeasuredRoadSegmentWithNoOrSingleLinkedStreetName> builder)
+        public void Configure(EntityTypeBuilder<RoadSegmentWithSingleLinkedStreetName> builder)
         {
             builder
                 .ToView(ViewName, Schema.SuspiciousCases)
@@ -32,7 +32,7 @@
             builder.Property(x => x.Description).HasColumnName("description");
         }
 
-        public const string ViewName = "view_measured_road_segment_with_no_or_single_linked_streetname";
+        public const string ViewName = "view_road_segment_with_single_linked_streetname";
 
         public const string Create = $@"
             CREATE OR REPLACE VIEW {Schema.SuspiciousCases}.{ViewName} AS
@@ -43,8 +43,10 @@
             FROM {SchemaLatestItems.RoadSegment} rs
             WHERE
                 rs.is_removed = false
-                and rs.method_id = 2
-                and (left_side_street_name_id = -8 or right_side_street_name_id = -8)
+                and (
+                    (left_side_street_name_id = -8 and right_side_street_name_id <> -8)
+                    or (left_side_street_name_id <> -8 and right_side_street_name_id = -8)
+                )
             ;";
     }
 }
