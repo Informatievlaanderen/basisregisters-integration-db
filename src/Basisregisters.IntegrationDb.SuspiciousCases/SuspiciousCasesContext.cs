@@ -31,7 +31,7 @@
         public DbSet<CurrentAddressLinkedWithBuildingUnitButNotWithParcel> CurrentAddressesLinkedWithBuildingUnitButNotWithParcel => Set<CurrentAddressLinkedWithBuildingUnitButNotWithParcel>();
         public DbSet<RoadSegmentLongerThanTwoYearsWithPermit> RoadSegmentsLongerThanTwoYearsWithPermit => Set<RoadSegmentLongerThanTwoYearsWithPermit>();
         public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNamesWithoutLinkedRoadSegments => Set<CurrentStreetNameWithoutLinkedRoadSegments>();
-        public DbSet<MeasuredRoadSegmentWithNoOrSingleLinkedStreetName> MeasuredRoadSegmentsWithNoOrSingleLinkedStreetName => Set<MeasuredRoadSegmentWithNoOrSingleLinkedStreetName>();
+        public DbSet<RoadSegmentWithSingleLinkedStreetName> RoadSegmentsWithSingleLinkedStreetName => Set<RoadSegmentWithSingleLinkedStreetName>();
 
         public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
             SuspiciousCasesType type,
@@ -105,8 +105,8 @@
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.MeasuredRoadSegmentWithNoOrSingleLinkedStreetName:
-                    return await MeasuredRoadSegmentsWithNoOrSingleLinkedStreetName
+                case SuspiciousCasesType.RoadSegmentWithSingleLinkedStreetName:
+                    return await RoadSegmentsWithSingleLinkedStreetName
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.RoadSegmentPersistentLocalId)
                         .Skip(offset)

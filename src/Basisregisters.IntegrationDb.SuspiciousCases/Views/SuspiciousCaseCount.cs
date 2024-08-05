@@ -77,6 +77,8 @@ END $$;
               {{CreateScript(SuspiciousCasesType.RoadSegmentLongerThanTwoYearsWithPermit, RoadSegmentLongerThanTwoYearsWithPermitConfiguration.ViewName)}}
               UNION
               {{CreateScript(SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, StreetNameLongerThanTwoYearsProposedConfiguration.ViewName)}}
+              UNION
+              {{CreateScript(SuspiciousCasesType.RoadSegmentWithSingleLinkedStreetName, RoadSegmentWithSingleLinkedStreetNameConfiguration.ViewName)}}
               ;
 
               CREATE UNIQUE INDEX ix_{{ViewName}}_unique ON {{Schema.SuspiciousCases}}.{{ViewName}} (nis_code, type);
