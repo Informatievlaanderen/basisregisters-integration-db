@@ -15,7 +15,7 @@
         // ActiveBuildingUnitWithoutAddress = 11,
         BuildingUnitLongerThanTwoYearsPlanned = 12,
         RoadSegmentLongerThanTwoYearsWithPermit = 13,
-        MeasuredRoadSegmentWithNoOrSingleLinkedStreetName = 14,
+        RoadSegmentWithSingleLinkedStreetName = 14,
 
         // ActiveBuildingUnitLinkedToMultipleAddresses = 15,
     }
