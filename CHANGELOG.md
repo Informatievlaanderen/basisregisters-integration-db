@@ -1,3 +1,10 @@
+## [2.7.7](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.6...v2.7.7) (2024-08-05)
+
+
+### Bug Fixes
+
+* FixCurrentStreetNameWithoutLinkedRoadSegments migration ([a7bbd85](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a7bbd858a1f2ae7259515756ba0ab1521e7c374e))
+
 ## [2.7.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.5...v2.7.6) (2024-08-05)
 
 
