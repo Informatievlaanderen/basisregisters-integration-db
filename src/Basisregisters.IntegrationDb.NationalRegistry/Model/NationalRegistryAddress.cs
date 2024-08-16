@@ -15,6 +15,15 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             _record = record;
             HouseNumberBoxNumbers = new List<HouseNumberBoxNumbersBase>();
 
+            foreach (var houseNumberBoxNumbers in GetHouseNumberBoxNumbersByMunicipality())
+            {
+                if (houseNumberBoxNumbers.IsMatch())
+                {
+                    HouseNumberBoxNumbers.Add(houseNumberBoxNumbers);
+                    break;
+                }
+            }
+
             var noIndex = new NoIndex(_record.NisCode, _record.HouseNumber, _record.Index);
             if (noIndex.IsMatch())
             {
@@ -22,15 +31,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             }
             else
             {
-                foreach (var houseNumberBoxNumbers in GetHouseNumberBoxNumbersByMunicipality())
-                {
-                    if (houseNumberBoxNumbers.IsMatch())
-                    {
-                        HouseNumberBoxNumbers.Add(houseNumberBoxNumbers);
-                        break;
-                    }
-                }
-
                 foreach (var houseNumberBoxNumbers in GetHouseNumberBoxNumbers())
                 {
                     if (houseNumberBoxNumbers.IsMatch())
@@ -95,6 +95,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Izegem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Maldegem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Zaventem(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Maasmechelen(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Pittem(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
