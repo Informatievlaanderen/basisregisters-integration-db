@@ -1103,6 +1103,48 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0012", "/B00", "12B", null)]
+        [InlineData("0012", "/A00", "12A", null)]
+        [InlineData("0012", "/A05", "12A", "5")]
+        [InlineData("0012", "/A25", "12A", "25")]
+        [InlineData("0012", "/A-0", "12A", null)]
+        [InlineData("0012", "/A-2", "12A", "2")]
+        [InlineData("0012", "A0  ", "12A", null)]
+        [InlineData("0012", "A00 ", "12A", null)]
+        [InlineData("0012", "A000", "12A", null)]
+        public void Maasmechelen(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "73107",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
+        [Theory]
+        [InlineData("0012", "BIS", "12B", null)]
+        [InlineData("0012", "1/3", "12", "1/3")]
+        [InlineData("0012", "1/31", "12", "1/31")]
+        [InlineData("0012", "12/1", "12", "12/1")]
+        [InlineData("0012", "1/C", "12", "1C")]
+        [InlineData("0012", "1/CD", "12", "1CD")]
+        [InlineData("0012", "BUS1", "12", "BUS1")]
+        public void Pittem(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "37011",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);

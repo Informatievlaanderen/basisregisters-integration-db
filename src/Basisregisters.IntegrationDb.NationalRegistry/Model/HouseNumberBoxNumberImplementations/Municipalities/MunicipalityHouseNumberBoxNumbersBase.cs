@@ -8,8 +8,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         protected MunicipalityHouseNumberBoxNumbersBase(string nisCode, string sourceHouseNumber, NationalRegistryIndex index)
             : base(nisCode, sourceHouseNumber, index)
         {
-            IndexSourceValue = Index.SourceValue!.PadRight(4, ' ');
-            TrimmedIndexSourceValue = Index.SourceValue!.Trim();
+            IndexSourceValue = (Index.SourceValue ?? string.Empty).PadRight(4, ' ');
+            TrimmedIndexSourceValue = (Index.SourceValue ?? string.Empty).Trim();
         }
     }
 }
