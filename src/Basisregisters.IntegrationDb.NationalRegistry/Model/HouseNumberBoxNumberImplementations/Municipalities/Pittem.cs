@@ -13,6 +13,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             (TrimmedIndexSourceValue == "BIS")
             ||
             (TrimmedIndexSourceValue.Length >= 3 && IsNumeric(TrimmedIndexSourceValue[0]) && TrimmedIndexSourceValue[1] == '/' && ContainsOnlyLetters(TrimmedIndexSourceValue[2..]))
+            ||
+            (IndexSourceValue[1..4] == "BUS" && IsNumeric(IndexSourceValue[4]))
         );
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
@@ -35,6 +37,17 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         TrimmedIndexSourceValue.Replace("/", string.Empty)
+                    )
+                };
+            }
+
+            if (IndexSourceValue[1..4] == "BUS" && IsNumeric(IndexSourceValue[4]))
+            {
+                return new[]
+                {
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        IndexSourceValue
                     )
                 };
             }

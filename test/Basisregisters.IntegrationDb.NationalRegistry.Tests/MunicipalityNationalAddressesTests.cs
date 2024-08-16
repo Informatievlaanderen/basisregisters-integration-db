@@ -1132,6 +1132,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0012", "12/1", "12", "12/1")]
         [InlineData("0012", "1/C", "12", "1C")]
         [InlineData("0012", "1/CD", "12", "1CD")]
+        [InlineData("0012", "BUS1", "12", "BUS1")]
         public void Pittem(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
