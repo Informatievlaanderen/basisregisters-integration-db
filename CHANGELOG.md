@@ -1,3 +1,11 @@
+# [2.8.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.7...v2.8.0) (2024-09-30)
+
+
+### Features
+
+* custom address matching for Maasmechelen and Pittem ([#136](https://github.com/informatievlaanderen/basisregisters-integration-db/issues/136)) ([7d7ecd4](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/7d7ecd426070585a74adc1ef2de70ccaa77d7930))
+* don't export retired municipalities + clean up CRAB versions ([9e5e794](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9e5e794c564ed710260cc520210b01d16bf23ed7))
+
 ## [2.7.7](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.6...v2.7.7) (2024-08-05)
 
 
