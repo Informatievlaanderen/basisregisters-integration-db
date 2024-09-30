@@ -21,12 +21,12 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             _given =
             [
-                new PostalInfo(PostalInfoNamespace, "1500", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "2002-08-13T16:37:33"),
-                new PostalInfo(PostalInfoNamespace, "1600", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null),
-                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Jeuk", "2002-08-13T16:37:33"),
-                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "GINGELOM", "2002-08-13T16:37:33"),
-                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", "2002-08-13T16:37:33"),
-                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Vorsen", "2002-08-13T16:37:33")
+                new PostalInfo(PostalInfoNamespace, "1500", new DateTimeOffset(1940, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE"),
+                new PostalInfo(PostalInfoNamespace, "1600", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Jeuk"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "GINGELOM"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout"),
+                new PostalInfo(PostalInfoNamespace, "3890", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Vorsen")
             ];
         }
 
@@ -58,7 +58,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
                       <com:objectIdentifier>1500</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
+                      <com:versionIdentifier>1940-08-13T14:37:33+02:00</com:versionIdentifier>
                     </com:code>
                     <com:name>
                       <com:language>nl</com:language>

@@ -4,14 +4,13 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Model.Database;
     using Model.Xml;
     using NodaTime;
     using Repositories;
 
     public class PostalInfoService(
         IClock clock,
-        IPostalInfoRepository repo) : BaseRegistryService<PostalInfo>, IRegistryService
+        IPostalInfoRepository repo) : BaseRegistryService, IRegistryService
     {
         private static string GetFileName() => $"FlandersPostalInfo{DateTimeOffset.Now:yyyyMMdd}L72";
 
@@ -39,7 +38,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                             {
                                 Namespace = postalInfo.Namespace,
                                 ObjectIdentifier = postalInfo.PostalCode,
-                                VersionIdentifier = GetVersionAsString(postalInfo)
+                                VersionIdentifier = GetVersionAsString(postalInfo.VersionTimestamp),
                             },
                             Name = new XmlName
                             {
