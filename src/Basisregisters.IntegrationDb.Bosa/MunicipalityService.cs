@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
     public class MunicipalityService(
         IClock clock,
-        IMunicipalityRepository repo) : BaseRegistryService<Municipality>, IRegistryService
+        IMunicipalityRepository repo) : BaseRegistryService, IRegistryService
     {
         private static string GetFileName() => $"FlandersMunicipality{DateTimeOffset.Now:yyyyMMdd}L72";
 
@@ -34,7 +34,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                         {
                             Namespace = x.Namespace,
                             ObjectIdentifier = x.NisCode,
-                            VersionIdentifier = GetVersionAsString(x)
+                            VersionIdentifier = GetVersionAsString(x.VersionTimestamp)
                         },
                         Name = GetNames(x).Select(name => new XmlName
                         {

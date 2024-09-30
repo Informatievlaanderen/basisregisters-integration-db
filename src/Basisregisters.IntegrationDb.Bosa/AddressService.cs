@@ -116,17 +116,13 @@ namespace Basisregisters.IntegrationDb.Bosa
                     {
                         Namespace = municipality.Namespace,
                         ObjectIdentifier = municipality.NisCode,
-                        VersionIdentifier = GetVersionAsString(
-                            municipality.CrabVersionTimestamp,
-                            municipality.VersionTimestamp)
+                        VersionIdentifier = GetVersionAsString(municipality.VersionTimestamp)
                     },
                     HasPostalInfo = new XmlCode
                     {
                         Namespace = postalInfo.Namespace,
                         ObjectIdentifier = postalInfo.PostalCode,
-                        VersionIdentifier = GetVersionAsString(
-                            postalInfo.CrabVersionTimestamp,
-                            postalInfo.VersionTimestamp)
+                        VersionIdentifier = GetVersionAsString(postalInfo.VersionTimestamp)
                     }
                 };
 

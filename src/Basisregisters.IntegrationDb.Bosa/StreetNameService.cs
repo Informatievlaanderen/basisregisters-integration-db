@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
     public class StreetNameService(
         IClock clock,
-        IStreetNameRepository repo) : BaseRegistryService<StreetName>, IRegistryService
+        IStreetNameRepository repo) : BaseRegistryService, IRegistryService
     {
         private static string GetFileName() => $"FlandersStreetName{DateTimeOffset.Now:yyyyMMdd}L72";
 
@@ -41,7 +41,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                             {
                                 Namespace = streetName.Namespace,
                                 ObjectIdentifier = streetName.StreetNamePersistentLocalId.ToString(),
-                                VersionIdentifier = GetVersionAsString(streetName)
+                                VersionIdentifier = GetVersionAsString(streetName.VersionTimestamp)
                             },
                             Names = GetNames(streetName).ToArray(),
                             Status = new XmlStreetNameStatus
@@ -55,9 +55,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                             {
                                 Namespace = streetName.MunicipalityNamespace,
                                 ObjectIdentifier = streetName.NisCode,
-                                VersionIdentifier = GetVersionAsString(
-                                    streetName.MunicipalityCrabVersionTimestamp,
-                                    streetName.MunicipalityVersionTimestamp)
+                                VersionIdentifier = GetVersionAsString(streetName.MunicipalityVersionTimestamp)
                             }
                         };
                     })
@@ -68,12 +66,12 @@ namespace Basisregisters.IntegrationDb.Bosa
         }
 
         private static string GetBeginLifeSpanVersion(StreetName streetName)
-            => streetName.CrabCreatedOn ?? GetVersionAsString(streetName.CreatedOn);
+            => GetVersionAsString(streetName.CreatedOn);
 
         private static string? GetEndLifeSpanVersion(StreetName streetName)
         {
             return streetName.Status is StreetNameStatus.Rejected or StreetNameStatus.Retired
-                ? GetVersionAsString(streetName)
+                ? GetVersionAsString(streetName.VersionTimestamp)
                 : null;
         }
 

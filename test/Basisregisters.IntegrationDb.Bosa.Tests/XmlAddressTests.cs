@@ -90,14 +90,14 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             var municipalities = new Municipality[]
             {
-                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", "2002-08-13T17:32:32", MunicipalityStatus.Current),
-                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", null, null, null, "2002-08-13T17:32:32", MunicipalityStatus.Proposed)
+                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", MunicipalityStatus.Current),
+                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", null, null, null, MunicipalityStatus.Proposed)
             };
 
             var postalInfos = new PostalInfo[]
             {
-                new (PostalInfoNamespace, "2230", DateBeforeMigration, "Postcode", "2002-08-13T16:37:33"),
-                new (PostalInfoNamespace, "2520", DateBeforeMigration, "Postcode", "2002-08-13T16:37:33")
+                new (PostalInfoNamespace, "2230", DateBeforeMigration, "Postcode"),
+                new (PostalInfoNamespace, "2520", DateBeforeMigration, "Postcode")
             };
 
             var streetNames = new StreetNameIdentifier[]

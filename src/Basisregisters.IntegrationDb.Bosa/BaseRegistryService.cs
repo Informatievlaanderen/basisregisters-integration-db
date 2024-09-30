@@ -28,4 +28,9 @@ namespace Basisregisters.IntegrationDb.Bosa
                 : value.ToString("yyyy-MM-ddTHH:mm:ss");
         }
     }
+
+    public class BaseRegistryService
+    {
+        protected static string GetVersionAsString(DateTimeOffset value) => value.ToBelgianString();
+    }
 }

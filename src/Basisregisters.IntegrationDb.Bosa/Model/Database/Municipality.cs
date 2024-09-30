@@ -2,7 +2,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 {
     using System;
 
-    public class Municipality : IHasVersionTimestamps
+    public class Municipality
     {
         public string Namespace { get; init; }
         public string NisCode { get; init; }
@@ -11,7 +11,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string? FrenchName { get; init; }
         public string? GermanName { get; init; }
         public string? EnglishName { get; init; }
-        public string? CrabVersionTimestamp { get; init; }
         public MunicipalityStatus Status { get; init; }
 
         // Needed for dapper
@@ -26,7 +25,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             string? frenchName,
             string? germanName,
             string? englishName,
-            string? crabVersionTimestamp,
             MunicipalityStatus status)
         {
             Namespace = @namespace;
@@ -36,7 +34,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             FrenchName = frenchName;
             GermanName = germanName;
             EnglishName = englishName;
-            CrabVersionTimestamp = crabVersionTimestamp;
             Status = status;
         }
     }
