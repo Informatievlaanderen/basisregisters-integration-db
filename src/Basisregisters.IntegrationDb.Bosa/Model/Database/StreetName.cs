@@ -10,7 +10,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         Rejected = 3
     }
 
-    public class StreetName : IHasVersionTimestamps
+    public class StreetName
     {
         public string Namespace { get; init; }
         public int StreetNamePersistentLocalId { get; init; }
@@ -18,8 +18,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public StreetNameStatus Status { get; init; }
 
         public DateTimeOffset VersionTimestamp { get; init; }
-        public string? CrabVersionTimestamp { get; init; }
-        public string? CrabCreatedOn { get; init; }
 
         public DateTimeOffset CreatedOn { get; init; }
         public string? NameDutch { get; init; }
@@ -29,7 +27,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string NisCode { get; init; }
         public string MunicipalityNamespace { get; init; }
         public DateTimeOffset MunicipalityVersionTimestamp { get; init; }
-        public string? MunicipalityCrabVersionTimestamp { get; init; }
+        public MunicipalityStatus MunicipalityStatus { get; init; }
 
         // Needed for Dapper
         protected StreetName()
@@ -40,8 +38,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             int streetNamePersistentLocalId,
             StreetNameStatus status,
             DateTimeOffset versionTimestamp,
-            string? crabVersionTimestamp,
-            string? crabCreatedOn,
             DateTimeOffset createdOn,
             string? nameDutch,
             string? nameFrench,
@@ -49,14 +45,12 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             string nisCode,
             string municipalityNamespace,
             DateTimeOffset municipalityVersionTimestamp,
-            string municipalityCrabVersionTimestamp)
+            MunicipalityStatus municipalityStatus)
         {
             Namespace = @namespace;
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
             Status = status;
             VersionTimestamp = versionTimestamp;
-            CrabVersionTimestamp = crabVersionTimestamp;
-            CrabCreatedOn = crabCreatedOn;
             CreatedOn = createdOn;
             NameDutch = nameDutch;
             NameFrench = nameFrench;
@@ -64,7 +58,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             NisCode = nisCode;
             MunicipalityNamespace = municipalityNamespace;
             MunicipalityVersionTimestamp = municipalityVersionTimestamp;
-            MunicipalityCrabVersionTimestamp = municipalityCrabVersionTimestamp;
+            MunicipalityStatus = municipalityStatus;
         }
     }
 }

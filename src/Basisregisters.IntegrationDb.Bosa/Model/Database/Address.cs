@@ -31,7 +31,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         Rejected = 4
     }
 
-    public class Address : IHasVersionTimestamps
+    public class Address
     {
         public string Namespace { get; init; }
         public int AddressPersistentLocalId { get; init; }
@@ -39,7 +39,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string PostalCode { get; init; }
 
         public DateTimeOffset VersionTimestamp { get; init; }
-        public string? CrabVersionTimestamp { get; init; }
         public DateTimeOffset CreatedOn { get; init; }
 
         public double X { get; init; }
@@ -65,7 +64,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             int streetNamePersistentLocalId,
             string postalCode,
             DateTimeOffset versionTimestamp,
-            string? crabVersionTimestamp,
             DateTimeOffset createdOn,
             double x,
             double y,
@@ -82,7 +80,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
             PostalCode = postalCode;
             VersionTimestamp = versionTimestamp;
-            CrabVersionTimestamp = crabVersionTimestamp;
             CreatedOn = createdOn;
             X = x;
             Y = y;

@@ -5,7 +5,6 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Extensions;
     using Model.Database;
     using Model.Xml;
     using NodaTime;
@@ -13,7 +12,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
     public class MunicipalityService(
         IClock clock,
-        IMunicipalityRepository repo) : BaseRegistryService<Municipality>, IRegistryService
+        IMunicipalityRepository repo) : BaseRegistryService, IRegistryService
     {
         private static string GetFileName() => $"FlandersMunicipality{DateTimeOffset.Now:yyyyMMdd}L72";
 
@@ -22,7 +21,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
         public void CreateXml(Stream outputStream)
         {
-            var items = repo.GetFlemish();
+            var items = repo.GetFlemish().Where(x => x.Status != MunicipalityStatus.Retired);
 
             var serializable = new XmlMunicipalityRoot
             {
@@ -35,7 +34,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                         {
                             Namespace = x.Namespace,
                             ObjectIdentifier = x.NisCode,
-                            VersionIdentifier = GetVersionAsString(x)
+                            VersionIdentifier = GetVersionAsString(x.VersionTimestamp)
                         },
                         Name = GetNames(x).Select(name => new XmlName
                         {

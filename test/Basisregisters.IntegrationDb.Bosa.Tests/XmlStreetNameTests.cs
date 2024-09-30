@@ -27,23 +27,19 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     27114,
                     StreetNameStatus.Retired,
                     new DateTimeOffset(2015, 08, 31, 17, 19, 02, 397, TimeSpan.FromHours(2)),
-                    "2015-08-31T17:19:02.397",
-                    crabCreatedOn:"1830-01-01T00:00:00",
-                    new DateTimeOffset(2015, 08, 31, 17, 19, 02, 397, TimeSpan.FromHours(2)),
+                    new DateTimeOffset(2002, 08, 31, 17, 19, 02, 397, TimeSpan.FromHours(2)),
                     "NIjverheidslaan",
                     nameFrench:null,
                     nameGerman:null,
                     "23044",
                     MunicipalityNamespace,
                     new DateTimeOffset(2024, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
-                    "2002-08-13T17:32:32"),
+                    MunicipalityStatus.Proposed),
                 new StreetName(
                     StreetNameNamespace,
                     30376,
                     StreetNameStatus.Current,
                     new DateTimeOffset(2016, 10, 03, 08, 44, 22, 810, TimeSpan.FromHours(2)),
-                    "2016-10-03T08:44:22.810",
-                    crabCreatedOn:null,
                     new DateTimeOffset(2016, 10, 03, 08, 46, 40, TimeSpan.FromHours(2)),
                     "Anderlechtstraat",
                     "Rue d'Anderlecht",
@@ -51,15 +47,13 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "23098",
                     MunicipalityNamespace,
                     new DateTimeOffset(2002, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
-                    "2002-08-13T17:32:32"
+                    MunicipalityStatus.Current
                 ),
                 new StreetName(
                     StreetNameNamespace,
                     228584,
                     StreetNameStatus.Proposed,
                     new DateTimeOffset(2024, 01, 31, 14, 16, 08, TimeSpan.FromHours(1)),
-                    crabVersionTimestamp:null,
-                    crabCreatedOn:null,
                     new DateTimeOffset(2024, 01, 31, 14, 16, 03, TimeSpan.FromHours(1)),
                     "Hassyweg",
                     nameFrench:null,
@@ -67,7 +61,20 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "24059",
                     MunicipalityNamespace,
                     new DateTimeOffset(2010, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
-                    "2002-08-13T17:32:32"),
+                    MunicipalityStatus.Proposed),
+                new StreetName(
+                    StreetNameNamespace,
+                    228585,
+                    StreetNameStatus.Proposed,
+                    new DateTimeOffset(2024, 01, 31, 14, 16, 08, TimeSpan.FromHours(1)),
+                    new DateTimeOffset(2024, 01, 31, 14, 16, 03, TimeSpan.FromHours(1)),
+                    "Hassyweg",
+                    nameFrench:null,
+                    nameGerman:null,
+                    "24059",
+                    MunicipalityNamespace,
+                    new DateTimeOffset(2010, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
+                    MunicipalityStatus.Retired),
             ];
         }
 
@@ -95,11 +102,11 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 <tns:streetNameResponseBySource xmlns:com="http://fsb.belgium.be/data/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://fsb.belgium.be/mappingservices/FullDownload/v1_00">
                   <tns:source>flanders</tns:source>
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
-                  <tns:streetName beginLifeSpanVersion="1830-01-01T00:00:00" endLifeSpanVersion="2015-08-31T17:19:02.397">
+                  <tns:streetName beginLifeSpanVersion="2002-08-31T17:19:02+02:00" endLifeSpanVersion="2015-08-31T17:19:02+02:00">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
                       <com:objectIdentifier>27114</com:objectIdentifier>
-                      <com:versionIdentifier>2015-08-31T17:19:02.397</com:versionIdentifier>
+                      <com:versionIdentifier>2015-08-31T17:19:02+02:00</com:versionIdentifier>
                     </com:code>
                     <com:name>
                       <com:language>nl</com:language>
@@ -107,8 +114,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:name>
                     <com:streetNameStatus>
                       <com:status>retired</com:status>
-                      <com:validFrom>1830-01-01T00:00:00</com:validFrom>
-                      <com:validTo>2015-08-31T17:19:02.397</com:validTo>
+                      <com:validFrom>2002-08-31T17:19:02+02:00</com:validFrom>
+                      <com:validTo>2015-08-31T17:19:02+02:00</com:validTo>
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:isAssignedByMunicipality>
@@ -117,11 +124,11 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:versionIdentifier>2024-08-13T17:32:32+02:00</com:versionIdentifier>
                     </com:isAssignedByMunicipality>
                   </tns:streetName>
-                  <tns:streetName beginLifeSpanVersion="2016-10-03T08:46:40">
+                  <tns:streetName beginLifeSpanVersion="2016-10-03T08:46:40+02:00">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
                       <com:objectIdentifier>30376</com:objectIdentifier>
-                      <com:versionIdentifier>2016-10-03T08:44:22.810</com:versionIdentifier>
+                      <com:versionIdentifier>2016-10-03T08:44:22+02:00</com:versionIdentifier>
                     </com:code>
                     <com:name>
                       <com:language>nl</com:language>
@@ -133,13 +140,13 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:name>
                     <com:streetNameStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2016-10-03T08:46:40</com:validFrom>
+                      <com:validFrom>2016-10-03T08:46:40+02:00</com:validFrom>
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:isAssignedByMunicipality>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
                       <com:objectIdentifier>23098</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T17:32:32</com:versionIdentifier>
+                      <com:versionIdentifier>2002-08-13T17:32:32+02:00</com:versionIdentifier>
                     </com:isAssignedByMunicipality>
                   </tns:streetName>
                   <tns:streetName beginLifeSpanVersion="2024-01-31T14:16:03+01:00">
@@ -160,7 +167,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:isAssignedByMunicipality>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
                       <com:objectIdentifier>24059</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T17:32:32</com:versionIdentifier>
+                      <com:versionIdentifier>2010-08-13T17:32:32+02:00</com:versionIdentifier>
                     </com:isAssignedByMunicipality>
                   </tns:streetName>
                 </tns:streetNameResponseBySource>

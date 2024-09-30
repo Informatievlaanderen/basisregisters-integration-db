@@ -21,9 +21,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             _given =
             [
-                new Municipality(MunicipalityNamespace, "23027", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "HALLE_FR", null, null, "2002-08-13T16:37:33"),
-                new Municipality(MunicipalityNamespace, "93027", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null, "FAKE_DE", null,  null),
-                new Municipality(MunicipalityNamespace, "23028", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", "2002-08-13T16:37:33"),
+                new Municipality(MunicipalityNamespace, "23027", new DateTimeOffset(1940, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "HALLE_FR", null, null, MunicipalityStatus.Current),
+                new Municipality(MunicipalityNamespace, "93027", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null, "FAKE_DE", null, MunicipalityStatus.Current),
+                new Municipality(MunicipalityNamespace, "23028", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", MunicipalityStatus.Proposed),
+                new Municipality(MunicipalityNamespace, "23029", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", MunicipalityStatus.Retired),
             ];
         }
 
@@ -55,7 +56,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
                       <com:objectIdentifier>23027</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
+                      <com:versionIdentifier>1940-08-13T14:37:33+02:00</com:versionIdentifier>
                     </com:code>
                     <com:name>
                       <com:language>nl</com:language>
