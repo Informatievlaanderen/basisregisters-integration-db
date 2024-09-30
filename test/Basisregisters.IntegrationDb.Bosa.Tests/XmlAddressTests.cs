@@ -2,7 +2,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
 {
     using System;
     using System.IO;
-    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using FluentAssertions;
@@ -22,7 +21,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         private const string StreetNameNamespace = "https://data.vlaanderen.be/id/straatnaam";
         private const string PostalInfoNamespace = "https://data.vlaanderen.be/id/postinfo";
 
-        private static readonly DateTimeOffset DateBeforeMigration = new DateTimeOffset(new DateTime(2023, 11, 9));
+        private static readonly DateTimeOffset Date = new DateTimeOffset(new DateTime(2023, 11, 9), TimeSpan.FromHours(1));
 
         public XmlAddressTests()
         {
@@ -33,9 +32,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     200001,
                     14602,
                     "2230",
-                    DateBeforeMigration,
-                    "2015-08-31T17:19:02",
-                    DateBeforeMigration,
+                    Date,
+                    Date,
                     188473.52,
                     193390.22,
                     31370,
@@ -52,7 +50,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     6345,
                     "2520",
                     new DateTimeOffset(2024, 4, 4, 18, 44, 37, TimeSpan.FromHours(2)),
-                    null,
                     new DateTimeOffset(2014, 4, 4, 18, 44, 32, TimeSpan.FromHours(2)),
                     165260.87,
                     210822.78,
@@ -70,7 +67,23 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     6345,
                     "2520",
                     new DateTimeOffset(2024, 4, 4, 18, 44, 37, TimeSpan.FromHours(2)),
-                    "2016-08-31T17:19:02",
+                    new DateTimeOffset(2014, 4, 4, 18, 44, 32, TimeSpan.FromHours(2)),
+                    165260.87,
+                    210822.78,
+                    31370,
+                    GeometryMethod.DerivedFromObject,
+                    GeometrySpecification.Parcel,
+                    AddressStatus.Current,
+                    "2",
+                    null,
+                    true
+                ),
+                new Address(
+                    AddressNamespace,
+                    30328683,
+                    6348,
+                    "2520",
+                    new DateTimeOffset(2024, 4, 4, 18, 44, 37, TimeSpan.FromHours(2)),
                     new DateTimeOffset(2014, 4, 4, 18, 44, 32, TimeSpan.FromHours(2)),
                     165260.87,
                     210822.78,
@@ -90,21 +103,21 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             var municipalities = new Municipality[]
             {
-                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", MunicipalityStatus.Current),
-                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", null, null, null, MunicipalityStatus.Proposed)
+                new (MunicipalityNamespace, "13013", Date, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", MunicipalityStatus.Current),
+                new (MunicipalityNamespace, "11035", Date, "Gemeente", null, null, null, MunicipalityStatus.Proposed),
             };
 
             var postalInfos = new PostalInfo[]
             {
-                new (PostalInfoNamespace, "2230", DateBeforeMigration, "Postcode"),
-                new (PostalInfoNamespace, "2520", DateBeforeMigration, "Postcode")
+                new (PostalInfoNamespace, "2230", Date, "Postcode"),
+                new (PostalInfoNamespace, "2520", Date, "Postcode")
             };
 
             var streetNames = new StreetNameIdentifier[]
             {
-                new (StreetNameNamespace, 14602, DateBeforeMigration, "2015-01-19T20:09:59.577", "13013", MunicipalityStatus.Current),
-                new (StreetNameNamespace, 6345, DateBeforeMigration, "2014-10-22T17:45:58.707", "11035", MunicipalityStatus.Proposed),
-                new (StreetNameNamespace, 6348, DateBeforeMigration, "2014-10-22T17:45:58.707", "11035", MunicipalityStatus.Retired)
+                new (StreetNameNamespace, 14602, Date, "13013", MunicipalityStatus.Current),
+                new (StreetNameNamespace, 6345, Date, "11035", MunicipalityStatus.Proposed),
+                new (StreetNameNamespace, 6348, Date, "11035", MunicipalityStatus.Retired)
             };
 
             var municipalityRepo = new Mock<IMunicipalityRepository>();
@@ -143,11 +156,11 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 <tns:addressResponseBySource xmlns:com="http://fsb.belgium.be/data/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://fsb.belgium.be/mappingservices/FullDownload/v1_00">
                   <tns:source>flanders</tns:source>
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
-                  <tns:address beginLifeSpanVersion="2023-11-09T00:00:00" endLifeSpanVersion="2015-08-31T17:19:02">
+                  <tns:address beginLifeSpanVersion="2023-11-09T00:00:00+01:00" endLifeSpanVersion="2023-11-09T00:00:00+01:00">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
                       <com:objectIdentifier>200001</com:objectIdentifier>
-                      <com:versionIdentifier>2015-08-31T17:19:02</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:code>
                     <com:position>
                       <com:pointGeometry>
@@ -160,7 +173,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>retired</com:status>
-                      <com:validFrom>2023-11-09T00:00:00</com:validFrom>
+                      <com:validFrom>2023-11-09T00:00:00+01:00</com:validFrom>
                     </com:addressStatus>
                     <com:boxNumber>0101</com:boxNumber>
                     <com:houseNumber>59</com:houseNumber>
@@ -168,20 +181,20 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:hasStreetName>
                       <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
                       <com:objectIdentifier>14602</com:objectIdentifier>
-                      <com:versionIdentifier>2015-01-19T20:09:59.577</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasStreetName>
                     <com:hasMunicipality>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
                       <com:objectIdentifier>13013</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T17:32:32</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasMunicipality>
                     <com:hasPostalInfo>
                       <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
                       <com:objectIdentifier>2230</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
-                  <tns:address beginLifeSpanVersion="2014-04-04T18:44:32">
+                  <tns:address beginLifeSpanVersion="2014-04-04T18:44:32+02:00">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
                       <com:objectIdentifier>30328681</com:objectIdentifier>
@@ -198,27 +211,27 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2014-04-04T18:44:32</com:validFrom>
+                      <com:validFrom>2014-04-04T18:44:32+02:00</com:validFrom>
                     </com:addressStatus>
                     <com:houseNumber>1</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
                     <com:hasStreetName>
                       <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
                       <com:objectIdentifier>6345</com:objectIdentifier>
-                      <com:versionIdentifier>2014-10-22T17:45:58.707</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasStreetName>
                     <com:hasMunicipality>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
                       <com:objectIdentifier>11035</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T17:32:32</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasMunicipality>
                     <com:hasPostalInfo>
                       <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
                       <com:objectIdentifier>2520</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
-                  <tns:address beginLifeSpanVersion="2014-04-04T18:44:32">
+                  <tns:address beginLifeSpanVersion="2014-04-04T18:44:32+02:00">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
                       <com:objectIdentifier>30328682</com:objectIdentifier>
@@ -235,24 +248,24 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2014-04-04T18:44:32</com:validFrom>
+                      <com:validFrom>2014-04-04T18:44:32+02:00</com:validFrom>
                     </com:addressStatus>
                     <com:houseNumber>2</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
                     <com:hasStreetName>
                       <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
                       <com:objectIdentifier>6345</com:objectIdentifier>
-                      <com:versionIdentifier>2014-10-22T17:45:58.707</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasStreetName>
                     <com:hasMunicipality>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
                       <com:objectIdentifier>11035</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T17:32:32</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasMunicipality>
                     <com:hasPostalInfo>
                       <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
                       <com:objectIdentifier>2520</com:objectIdentifier>
-                      <com:versionIdentifier>2002-08-13T16:37:33</com:versionIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
                 </tns:addressResponseBySource>

@@ -19,7 +19,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         IStreetNameRepository streetNameRepo,
         IMunicipalityRepository municipalityRepo,
         IPostalInfoRepository postalInfoRepo,
-        ILoggerFactory loggerFactory) : BaseRegistryService<Address>, IRegistryService
+        ILoggerFactory loggerFactory) : BaseRegistryService, IRegistryService
     {
         private static string GetFileName() => $"FlandersAddress{DateTimeOffset.Now:yyyyMMdd}L72";
 
@@ -74,7 +74,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     {
                         Namespace = address.Namespace,
                         ObjectIdentifier = address.AddressPersistentLocalId.ToString(),
-                        VersionIdentifier = GetVersionAsString(address)
+                        VersionIdentifier = GetVersionAsString(address.VersionTimestamp)
                     },
                     Position = new XmlAddressPosition
                     {
@@ -108,9 +108,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     {
                         Namespace = streetName.Namespace,
                         ObjectIdentifier = streetName.StreetNamePersistentLocalId.ToString(),
-                        VersionIdentifier = GetVersionAsString(
-                            streetName.CrabVersionTimestamp,
-                            streetName.VersionTimestamp)
+                        VersionIdentifier = GetVersionAsString(streetName.VersionTimestamp)
                     },
                     HasMunicipality = new XmlCode
                     {
@@ -149,7 +147,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         private static string? GetEndLifeSpanVersion(Address address)
         {
             return address.Status is AddressStatus.Rejected or AddressStatus.Retired
-                ? GetVersionAsString(address)
+                ? GetVersionAsString(address.VersionTimestamp)
                 : null;
         }
 
