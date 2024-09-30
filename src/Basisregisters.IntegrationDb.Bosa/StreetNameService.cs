@@ -21,7 +21,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
         public void CreateXml(Stream outputStream)
         {
-            var items = repo.GetFlemish();
+            var items = repo.GetFlemish().Where(x => x.MunicipalityStatus != MunicipalityStatus.Retired);
 
             var serializable = new XmlStreetNameRoot
             {

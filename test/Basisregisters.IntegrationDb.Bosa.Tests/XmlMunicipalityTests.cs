@@ -21,9 +21,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             _given =
             [
-                new Municipality(MunicipalityNamespace, "23027", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "HALLE_FR", null, null, "2002-08-13T16:37:33"),
-                new Municipality(MunicipalityNamespace, "93027", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null, "FAKE_DE", null,  null),
-                new Municipality(MunicipalityNamespace, "23028", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", "2002-08-13T16:37:33"),
+                new Municipality(MunicipalityNamespace, "23027", new DateTimeOffset(1900, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "HALLE", "HALLE_FR", null, null, "2002-08-13T16:37:33", MunicipalityStatus.Current),
+                new Municipality(MunicipalityNamespace, "93027", new DateTimeOffset(2002, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "FAKE", null, "FAKE_DE", null, null, MunicipalityStatus.Current),
+                new Municipality(MunicipalityNamespace, "23028", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", "2002-08-13T16:37:33", MunicipalityStatus.Proposed),
+                new Municipality(MunicipalityNamespace, "23029", new DateTimeOffset(2024, 08, 13, 14, 37, 33, TimeSpan.FromHours(2)), "Boekhout", null, null, "Boekhout_EN", "2002-08-13T16:37:33", MunicipalityStatus.Retired),
             ];
         }
 

@@ -36,7 +36,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "23044",
                     MunicipalityNamespace,
                     new DateTimeOffset(2024, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
-                    "2002-08-13T17:32:32"),
+                    "2002-08-13T17:32:32",
+                    MunicipalityStatus.Proposed),
                 new StreetName(
                     StreetNameNamespace,
                     30376,
@@ -51,7 +52,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "23098",
                     MunicipalityNamespace,
                     new DateTimeOffset(2002, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
-                    "2002-08-13T17:32:32"
+                    "2002-08-13T17:32:32",
+                    MunicipalityStatus.Current
                 ),
                 new StreetName(
                     StreetNameNamespace,
@@ -67,7 +69,24 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "24059",
                     MunicipalityNamespace,
                     new DateTimeOffset(2010, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
-                    "2002-08-13T17:32:32"),
+                    "2002-08-13T17:32:32",
+                    MunicipalityStatus.Proposed),
+                new StreetName(
+                    StreetNameNamespace,
+                    228585,
+                    StreetNameStatus.Proposed,
+                    new DateTimeOffset(2024, 01, 31, 14, 16, 08, TimeSpan.FromHours(1)),
+                    crabVersionTimestamp:null,
+                    crabCreatedOn:null,
+                    new DateTimeOffset(2024, 01, 31, 14, 16, 03, TimeSpan.FromHours(1)),
+                    "Hassyweg",
+                    nameFrench:null,
+                    nameGerman:null,
+                    "24059",
+                    MunicipalityNamespace,
+                    new DateTimeOffset(2010, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
+                    "2002-08-13T17:32:32",
+                    MunicipalityStatus.Retired),
             ];
         }
 

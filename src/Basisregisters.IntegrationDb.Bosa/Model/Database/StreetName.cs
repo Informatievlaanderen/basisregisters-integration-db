@@ -30,6 +30,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string MunicipalityNamespace { get; init; }
         public DateTimeOffset MunicipalityVersionTimestamp { get; init; }
         public string? MunicipalityCrabVersionTimestamp { get; init; }
+        public MunicipalityStatus MunicipalityStatus { get; init; }
 
         // Needed for Dapper
         protected StreetName()
@@ -49,7 +50,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             string nisCode,
             string municipalityNamespace,
             DateTimeOffset municipalityVersionTimestamp,
-            string municipalityCrabVersionTimestamp)
+            string municipalityCrabVersionTimestamp,
+            MunicipalityStatus municipalityStatus)
         {
             Namespace = @namespace;
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
@@ -65,6 +67,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             MunicipalityNamespace = municipalityNamespace;
             MunicipalityVersionTimestamp = municipalityVersionTimestamp;
             MunicipalityCrabVersionTimestamp = municipalityCrabVersionTimestamp;
+            MunicipalityStatus = municipalityStatus;
         }
     }
 }

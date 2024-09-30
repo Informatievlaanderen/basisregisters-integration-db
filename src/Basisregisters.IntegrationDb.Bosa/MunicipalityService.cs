@@ -5,7 +5,6 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Extensions;
     using Model.Database;
     using Model.Xml;
     using NodaTime;
@@ -22,7 +21,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
         public void CreateXml(Stream outputStream)
         {
-            var items = repo.GetFlemish();
+            var items = repo.GetFlemish().Where(x => x.Status != MunicipalityStatus.Retired);
 
             var serializable = new XmlMunicipalityRoot
             {

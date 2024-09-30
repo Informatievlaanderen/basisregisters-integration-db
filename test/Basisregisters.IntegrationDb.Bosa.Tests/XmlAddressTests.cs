@@ -90,8 +90,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
         {
             var municipalities = new Municipality[]
             {
-                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", "2002-08-13T17:32:32"),
-                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", null, null, null, "2002-08-13T17:32:32")
+                new (MunicipalityNamespace, "13013", DateBeforeMigration, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", "2002-08-13T17:32:32", MunicipalityStatus.Current),
+                new (MunicipalityNamespace, "11035", DateBeforeMigration, "Gemeente", null, null, null, "2002-08-13T17:32:32", MunicipalityStatus.Proposed)
             };
 
             var postalInfos = new PostalInfo[]
@@ -102,8 +102,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
 
             var streetNames = new StreetNameIdentifier[]
             {
-                new (StreetNameNamespace, 14602, DateBeforeMigration, "2015-01-19T20:09:59.577", "13013"),
-                new (StreetNameNamespace, 6345, DateBeforeMigration, "2014-10-22T17:45:58.707", "11035")
+                new (StreetNameNamespace, 14602, DateBeforeMigration, "2015-01-19T20:09:59.577", "13013", MunicipalityStatus.Current),
+                new (StreetNameNamespace, 6345, DateBeforeMigration, "2014-10-22T17:45:58.707", "11035", MunicipalityStatus.Proposed),
+                new (StreetNameNamespace, 6348, DateBeforeMigration, "2014-10-22T17:45:58.707", "11035", MunicipalityStatus.Retired)
             };
 
             var municipalityRepo = new Mock<IMunicipalityRepository>();

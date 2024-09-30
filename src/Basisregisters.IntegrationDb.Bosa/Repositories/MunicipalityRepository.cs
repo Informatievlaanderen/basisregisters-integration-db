@@ -24,20 +24,23 @@
 
         public IEnumerable<Municipality> GetFlemish()
         {
-            const string sql = @$"
-select
-    municipality.namespace
-    , municipality.nis_code as NisCode
-    , municipality.version_timestamp as VersionTimestamp
-    , municipality.name_dutch as DutchName
-    , municipality.name_french as FrenchName
-    , municipality.name_german as GermanName
-    , municipality.name_english as EnglishName
-    , version.version_timestamp as CrabVersionTimestamp
-from integration_municipality.municipality_latest_items municipality
-left join {DatabaseSetup.Schema}.{DatabaseSetup.MunicipalityCrabVersionsTable} version on municipality.nis_code = version.nis_code
-where municipality.is_flemish_region = true
-order by municipality.nis_code";
+            const string sql = $"""
+
+                                select
+                                    municipality.namespace
+                                    , municipality.nis_code as NisCode
+                                    , municipality.version_timestamp as VersionTimestamp
+                                    , municipality.name_dutch as DutchName
+                                    , municipality.name_french as FrenchName
+                                    , municipality.name_german as GermanName
+                                    , municipality.name_english as EnglishName
+                                    , version.version_timestamp as CrabVersionTimestamp
+                                    , municipality.status as Status
+                                from integration_municipality.municipality_latest_items municipality
+                                left join {DatabaseSetup.Schema}.{DatabaseSetup.MunicipalityCrabVersionsTable} version on municipality.nis_code = version.nis_code
+                                where municipality.is_flemish_region = true
+                                order by municipality.nis_code
+                                """;
 
             using var connection = new NpgsqlConnection(_connectionString);
 

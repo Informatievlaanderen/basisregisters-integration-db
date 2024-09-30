@@ -50,6 +50,11 @@ namespace Basisregisters.IntegrationDb.Bosa
                     return;
                 }
 
+                if (streetName.MunicipalityStatus == MunicipalityStatus.Retired)
+                {
+                    return;
+                }
+
                 if (!postalCodes.TryGetValue(address.PostalCode, out var postalInfo))
                 {
                     logger.LogInformation($"No postal code found for {address.PostalCode}");

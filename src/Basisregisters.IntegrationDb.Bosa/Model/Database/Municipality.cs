@@ -1,7 +1,6 @@
 namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 {
     using System;
-    using System.Collections.Generic;
 
     public class Municipality : IHasVersionTimestamps
     {
@@ -13,9 +12,11 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string? GermanName { get; init; }
         public string? EnglishName { get; init; }
         public string? CrabVersionTimestamp { get; init; }
+        public MunicipalityStatus Status { get; init; }
 
         // Needed for dapper
-        protected Municipality() { }
+        protected Municipality()
+        { }
 
         public Municipality(
             string @namespace,
@@ -25,7 +26,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             string? frenchName,
             string? germanName,
             string? englishName,
-            string? crabVersionTimestamp)
+            string? crabVersionTimestamp,
+            MunicipalityStatus status)
         {
             Namespace = @namespace;
             NisCode = nisCode;
@@ -35,6 +37,14 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             GermanName = germanName;
             EnglishName = englishName;
             CrabVersionTimestamp = crabVersionTimestamp;
+            Status = status;
         }
+    }
+
+    public enum MunicipalityStatus
+    {
+        Current = 0,
+        Retired = 1,
+        Proposed = 2,
     }
 }
