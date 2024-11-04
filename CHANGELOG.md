@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.8.0...v2.8.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* **bosa:** namespace ending with slash ([2918ea8](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/2918ea832de9576794f151e972738003bc6904ae))
+
 # [2.8.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.7.7...v2.8.0) (2024-09-30)
 
 
