@@ -72,7 +72,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     EndLifeSpanVersion = endLifeSpanVersion,
                     Code = new XmlCode
                     {
-                        Namespace = address.Namespace,
+                        Namespace = FormatNamespace(address.Namespace),
                         ObjectIdentifier = address.AddressPersistentLocalId.ToString(),
                         VersionIdentifier = GetVersionAsString(address.VersionTimestamp)
                     },
@@ -106,19 +106,19 @@ namespace Basisregisters.IntegrationDb.Bosa
                     },
                     HasStreetName = new XmlCode
                     {
-                        Namespace = streetName.Namespace,
+                        Namespace = FormatNamespace(streetName.Namespace),
                         ObjectIdentifier = streetName.StreetNamePersistentLocalId.ToString(),
                         VersionIdentifier = GetVersionAsString(streetName.VersionTimestamp)
                     },
                     HasMunicipality = new XmlCode
                     {
-                        Namespace = municipality.Namespace,
+                        Namespace = FormatNamespace(municipality.Namespace),
                         ObjectIdentifier = municipality.NisCode,
                         VersionIdentifier = GetVersionAsString(municipality.VersionTimestamp)
                     },
                     HasPostalInfo = new XmlCode
                     {
-                        Namespace = postalInfo.Namespace,
+                        Namespace = FormatNamespace(postalInfo.Namespace),
                         ObjectIdentifier = postalInfo.PostalCode,
                         VersionIdentifier = GetVersionAsString(postalInfo.VersionTimestamp)
                     }
