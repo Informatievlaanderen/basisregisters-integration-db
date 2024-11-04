@@ -36,7 +36,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                         {
                             Code = new XmlCode
                             {
-                                Namespace = postalInfo.Namespace,
+                                Namespace = FormatNamespace(postalInfo.Namespace),
                                 ObjectIdentifier = postalInfo.PostalCode,
                                 VersionIdentifier = GetVersionAsString(postalInfo.VersionTimestamp),
                             },

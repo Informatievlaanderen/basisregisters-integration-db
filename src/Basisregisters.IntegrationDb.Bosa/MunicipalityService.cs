@@ -32,7 +32,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     {
                         Code = new XmlCode
                         {
-                            Namespace = x.Namespace,
+                            Namespace = FormatNamespace(x.Namespace),
                             ObjectIdentifier = x.NisCode,
                             VersionIdentifier = GetVersionAsString(x.VersionTimestamp)
                         },

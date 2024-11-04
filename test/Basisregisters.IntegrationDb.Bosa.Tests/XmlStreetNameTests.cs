@@ -104,7 +104,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
                   <tns:streetName beginLifeSpanVersion="2002-08-31T17:19:02+02:00" endLifeSpanVersion="2015-08-31T17:19:02+02:00">
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
                       <com:objectIdentifier>27114</com:objectIdentifier>
                       <com:versionIdentifier>2015-08-31T17:19:02+02:00</com:versionIdentifier>
                     </com:code>
@@ -119,14 +119,14 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:isAssignedByMunicipality>
-                      <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>23044</com:objectIdentifier>
                       <com:versionIdentifier>2024-08-13T17:32:32+02:00</com:versionIdentifier>
                     </com:isAssignedByMunicipality>
                   </tns:streetName>
                   <tns:streetName beginLifeSpanVersion="2016-10-03T08:46:40+02:00">
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
                       <com:objectIdentifier>30376</com:objectIdentifier>
                       <com:versionIdentifier>2016-10-03T08:44:22+02:00</com:versionIdentifier>
                     </com:code>
@@ -144,14 +144,14 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:isAssignedByMunicipality>
-                      <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>23098</com:objectIdentifier>
                       <com:versionIdentifier>2002-08-13T17:32:32+02:00</com:versionIdentifier>
                     </com:isAssignedByMunicipality>
                   </tns:streetName>
                   <tns:streetName beginLifeSpanVersion="2024-01-31T14:16:03+01:00">
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
                       <com:objectIdentifier>228584</com:objectIdentifier>
                       <com:versionIdentifier>2024-01-31T14:16:08+01:00</com:versionIdentifier>
                     </com:code>
@@ -165,7 +165,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:isAssignedByMunicipality>
-                      <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>24059</com:objectIdentifier>
                       <com:versionIdentifier>2010-08-13T17:32:32+02:00</com:versionIdentifier>
                     </com:isAssignedByMunicipality>

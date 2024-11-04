@@ -56,7 +56,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
                   <tns:postalInfo>
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
                       <com:objectIdentifier>1500</com:objectIdentifier>
                       <com:versionIdentifier>1940-08-13T14:37:33+02:00</com:versionIdentifier>
                     </com:code>
@@ -67,7 +67,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                   </tns:postalInfo>
                   <tns:postalInfo>
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
                       <com:objectIdentifier>1600</com:objectIdentifier>
                       <com:versionIdentifier>2002-08-13T14:37:33+02:00</com:versionIdentifier>
                     </com:code>
@@ -78,7 +78,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                   </tns:postalInfo>
                   <tns:postalInfo>
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
                       <com:objectIdentifier>3890</com:objectIdentifier>
                       <com:versionIdentifier>2024-08-13T14:37:33+02:00</com:versionIdentifier>
                     </com:code>
