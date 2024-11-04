@@ -1,5 +1,6 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspiciousCases
 {
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading;
@@ -10,7 +11,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.Extensions.Primitives;
+    using Microsoft.Extensions.Configuration;
     using Moq;
     using NisCodeService.Abstractions;
     using Xunit;
@@ -37,7 +38,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
 
             Mock<INisCodeService> nisCodeService = new();
             nisCodeService
-                .Setup(x => x.Get("OVO003105", CancellationToken.None))
+                .Setup(x => x.Get("OVO003105", It.IsAny<DateTime>(), CancellationToken.None))
                 .ReturnsAsync(string.Empty);
 
             var suspiciousCasesController = new SuspiciousCasesController(
@@ -45,7 +46,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
                 actionContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
-                nisCodeService.Object)
+                nisCodeService.Object,
+                new ConfigurationBuilder().Build())
             {
                 ControllerContext = new ControllerContext
                 {

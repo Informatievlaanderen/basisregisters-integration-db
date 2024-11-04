@@ -12,6 +12,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.HardCoded;
@@ -42,7 +43,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
                 actionContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string> { "0643634986" }),
-                new HardCodedNisCodeService())
+                new HardCodedNisCodeService(),
+                new ConfigurationBuilder().Build())
             {
                 ControllerContext = new ControllerContext
                 {
