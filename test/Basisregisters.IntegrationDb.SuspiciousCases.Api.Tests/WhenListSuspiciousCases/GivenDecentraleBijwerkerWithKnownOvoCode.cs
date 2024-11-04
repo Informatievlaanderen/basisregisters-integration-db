@@ -1,5 +1,6 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspiciousCases
 {
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading;
@@ -11,6 +12,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.Extensions.Configuration;
     using Moq;
     using NisCodeService.Abstractions;
     using Xunit;
@@ -20,8 +22,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
         private readonly Mock<IMediator> _mediator = new();
         private readonly IActionResult _response;
 
-        private const string OvoCode = "OVO003105";
-        private const string ExpectedNisCode = "11202";
+        private const string OvoCode = "OVO002037";
+        private const string ExpectedNisCode = "31005";
 
         public GivenDecentraleBijwerkerWithKnownOvoCode()
         {
@@ -41,7 +43,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
 
             Mock<INisCodeService> nisCodeService = new();
             nisCodeService
-                .Setup(x => x.Get(OvoCode, CancellationToken.None))
+                .Setup(x => x.Get(OvoCode, It.IsAny<DateTime>(), CancellationToken.None))
                 .ReturnsAsync(ExpectedNisCode);
 
             var suspiciousCasesController = new SuspiciousCasesController(
@@ -49,7 +51,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
                 actionContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
-                nisCodeService.Object)
+                nisCodeService.Object,
+                new ConfigurationBuilder().Build())
             {
                 ControllerContext = new ControllerContext
                 {

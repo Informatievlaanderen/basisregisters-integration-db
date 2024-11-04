@@ -22,6 +22,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.Extensions.Configuration;
     using NisCodeService.Abstractions;
     using Swashbuckle.AspNetCore.Filters;
 
@@ -37,18 +38,23 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         private readonly IOrganisationWhiteList _organisationWhiteList;
         private readonly INisCodeService _nisCodeService;
 
+        private readonly DateTime? _nisCodeValidFrom;
+
         public SuspiciousCasesController(
             IMediator mediator,
             IActionContextAccessor actionContextAccessor,
             IOvoCodeWhiteList ovoCodeWhiteList,
             IOrganisationWhiteList organisationWhiteList,
-            INisCodeService nisCodeService)
+            INisCodeService nisCodeService,
+            IConfiguration configuration)
         {
             _mediator = mediator;
             _actionContextAccessor = actionContextAccessor;
             _ovoCodeWhiteList = ovoCodeWhiteList;
             _organisationWhiteList = organisationWhiteList;
             _nisCodeService = nisCodeService;
+
+            _nisCodeValidFrom = configuration.GetValue<DateTime?>("NisCodeValidFrom");
         }
 
         /// <summary>
@@ -141,6 +147,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
         private async Task<string?> DetermineNisCode(string? nisCode, CancellationToken cancellationToken)
         {
             var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
+
             if (!string.IsNullOrWhiteSpace(ovoCode))
             {
                 if (_ovoCodeWhiteList.IsWhiteListed(ovoCode))
@@ -153,7 +160,9 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
                     return nisCode;
                 }
 
-                return await _nisCodeService.Get(ovoCode, cancellationToken);
+                var validFrom = _nisCodeValidFrom ?? DateTime.Now;
+
+                return await _nisCodeService.Get(ovoCode, validFrom, cancellationToken);
             }
 
             var orgCode = _actionContextAccessor.ActionContext!.HttpContext.FindOrgCodeClaim();
