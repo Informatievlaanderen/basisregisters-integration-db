@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.8.1...v2.9.0) (2024-11-04)
+
+
+### Features
+
+* **suspicious:** bump niscode package ([72c93ca](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/72c93ca9de9c201eae47de4cba40d577311ea1d2))
+
 ## [2.8.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.8.0...v2.8.1) (2024-11-04)
 
 
