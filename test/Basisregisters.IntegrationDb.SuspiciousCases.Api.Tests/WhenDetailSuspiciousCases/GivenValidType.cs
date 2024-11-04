@@ -1,5 +1,6 @@
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspiciousCases
 {
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading;
@@ -11,6 +12,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Primitives;
     using Moq;
     using NisCodeService.Abstractions;
@@ -24,8 +26,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
 
         public GivenValidType()
         {
-            const string ovoCode = "OVO003105";
-            const string expectedNisCode = "11202";
+            const string ovoCode = "OVO002037";
+            const string expectedNisCode = "31005";
 
             Mock<IActionContextAccessor> actionContextAccessor = new();
             actionContextAccessor
@@ -43,7 +45,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
 
             Mock<INisCodeService> nisCodeService = new();
             nisCodeService
-                .Setup(x => x.Get(ovoCode, CancellationToken.None))
+                .Setup(x => x.Get(ovoCode, It.IsAny<DateTime>(), CancellationToken.None))
                 .ReturnsAsync(expectedNisCode);
 
             var suspiciousCasesController = new SuspiciousCasesController(
@@ -51,7 +53,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
                 actionContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
-                nisCodeService.Object)
+                nisCodeService.Object,
+                new ConfigurationBuilder().Build())
             {
                 ControllerContext = new ControllerContext
                 {
