@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.9.0...v2.10.0) (2024-11-04)
+
+
+### Features
+
+* **suspicious:** add configuration for niscode validity ([b1bd850](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/b1bd850a5134563371559f0df641c82d46d823c4))
+
 # [2.9.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.8.1...v2.9.0) (2024-11-04)
 
 
