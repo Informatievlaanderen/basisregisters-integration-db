@@ -158,7 +158,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
                   <tns:address beginLifeSpanVersion="2023-11-09T00:00:00+01:00" endLifeSpanVersion="2023-11-09T00:00:00+01:00">
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
                       <com:objectIdentifier>200001</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:code>
@@ -179,24 +179,24 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:houseNumber>59</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
                     <com:hasStreetName>
-                      <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
                       <com:objectIdentifier>14602</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasStreetName>
                     <com:hasMunicipality>
-                      <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>13013</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasMunicipality>
                     <com:hasPostalInfo>
-                      <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
                       <com:objectIdentifier>2230</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
                   <tns:address beginLifeSpanVersion="2014-04-04T18:44:32+02:00">
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
                       <com:objectIdentifier>30328681</com:objectIdentifier>
                       <com:versionIdentifier>2024-04-04T18:44:37+02:00</com:versionIdentifier>
                     </com:code>
@@ -216,24 +216,24 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:houseNumber>1</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
                     <com:hasStreetName>
-                      <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
                       <com:objectIdentifier>6345</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasStreetName>
                     <com:hasMunicipality>
-                      <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>11035</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasMunicipality>
                     <com:hasPostalInfo>
-                      <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
                       <com:objectIdentifier>2520</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
                   <tns:address beginLifeSpanVersion="2014-04-04T18:44:32+02:00">
                     <com:code>
-                      <com:namespace>https://data.vlaanderen.be/id/adres</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
                       <com:objectIdentifier>30328682</com:objectIdentifier>
                       <com:versionIdentifier>2024-04-04T18:44:37+02:00</com:versionIdentifier>
                     </com:code>
@@ -253,17 +253,17 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     <com:houseNumber>2</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
                     <com:hasStreetName>
-                      <com:namespace>https://data.vlaanderen.be/id/straatnaam</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
                       <com:objectIdentifier>6345</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasStreetName>
                     <com:hasMunicipality>
-                      <com:namespace>https://data.vlaanderen.be/id/gemeente</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>11035</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasMunicipality>
                     <com:hasPostalInfo>
-                      <com:namespace>https://data.vlaanderen.be/id/postinfo</com:namespace>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
                       <com:objectIdentifier>2520</com:objectIdentifier>
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
