@@ -74,8 +74,6 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
                     var connectionString = hostContext.Configuration.GetConnectionString("Integration")
                                            ?? throw new ArgumentNullException("hostContext.Configuration.GetConnectionString(\"Integration\")");
 
-                    services.AddSingleton<DatabaseSetup>(_ => new DatabaseSetup(connectionString));
-
                     services.AddTransient<IPostalInfoRepository, PostalInfoRepository>(_ => new PostalInfoRepository(connectionString));
                     services.AddTransient<IRegistryService, PostalInfoService>();
 
@@ -113,7 +111,7 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
                                     LogResponse = true
                                 })
                             : new AmazonS3Client();
-                        
+
                         return new S3BlobClient(s3Client, options.UploadBucket);
                     });
 
@@ -124,7 +122,7 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
 
                         return new AsyncFtpClient(options.Host, options.Username, options.Password, options.Port ?? 0);
                     });
-                    
+
                     services.AddHostedService<FullDownloadService>();
                 })
                 .UseConsoleLifetime()
@@ -140,8 +138,6 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
                 await DistributedLock<Program>.RunAsync(
                     async () =>
                     {
-                        host.Services.GetRequiredService<DatabaseSetup>().CheckIfDataPresent();
-
                         await host.RunAsync().ConfigureAwait(false);
                     },
                     DistributedLockOptions.LoadFromConfiguration(configuration),
