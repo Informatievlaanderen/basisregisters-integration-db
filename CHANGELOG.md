@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.0...v2.10.1) (2024-11-08)
+
+
+### Bug Fixes
+
+* **bosa:** remove crab versions check ([76d4b38](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/76d4b3827a26a10536218fc0574444c65bb12507))
+
 # [2.10.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.9.0...v2.10.0) (2024-11-04)
 
 
