@@ -2,6 +2,7 @@
 using Basisregisters.IntegrationDb.SuspiciousCases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
 {
     [DbContext(typeof(SuspiciousCasesContext))]
-    partial class SuspiciousCasesContextModelSnapshot : ModelSnapshot
+    [Migration("20241112080757_RecreateParcelViews")]
+    partial class RecreateParcelViews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
