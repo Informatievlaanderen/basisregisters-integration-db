@@ -1,3 +1,10 @@
+## [2.10.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.1...v2.10.2) (2024-11-13)
+
+
+### Bug Fixes
+
+* **bosa:** add homonym addition ([bc2bf81](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/bc2bf816b77f75d64e3b240a9b126640fc7dc068))
+
 ## [2.10.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.0...v2.10.1) (2024-11-08)
 
 
