@@ -37,6 +37,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "type")]
         public string Type { get; set; }
 
+        [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "homonymAddition")]
+        public string? HomonymAddition { get; set; }
+
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "isAssignedByMunicipality")]
         public XmlCode IsAssignedByMunicipality { get; set; }
     }

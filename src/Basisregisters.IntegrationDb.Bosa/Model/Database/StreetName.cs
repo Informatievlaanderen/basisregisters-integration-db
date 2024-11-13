@@ -23,6 +23,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string? NameDutch { get; init; }
         public string? NameFrench { get; init; }
         public string? NameGerman { get; init; }
+        public string? HomonymAdditionDutch { get; init; }
+        public string? HomonymAdditionFrench { get; init; }
+        public string? HomonymAdditionGerman { get; init; }
 
         public string NisCode { get; init; }
         public string MunicipalityNamespace { get; init; }
@@ -42,6 +45,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             string? nameDutch,
             string? nameFrench,
             string? nameGerman,
+            string? homonymAdditionDutch,
+            string? homonymAdditionFrench,
+            string? homonymAdditionGerman,
             string nisCode,
             string municipalityNamespace,
             DateTimeOffset municipalityVersionTimestamp,
@@ -55,6 +61,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
             NameDutch = nameDutch;
             NameFrench = nameFrench;
             NameGerman = nameGerman;
+            HomonymAdditionDutch = homonymAdditionDutch;
+            HomonymAdditionFrench = homonymAdditionFrench;
+            HomonymAdditionGerman = homonymAdditionGerman;
             NisCode = nisCode;
             MunicipalityNamespace = municipalityNamespace;
             MunicipalityVersionTimestamp = municipalityVersionTimestamp;

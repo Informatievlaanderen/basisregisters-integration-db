@@ -32,6 +32,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Repositories
                                     , s.name_dutch as NameDutch
                                 	, s.name_french as NameFrench
                                 	, s.name_german as NameGerman
+                                	, s.homonym_addition_dutch as HomonymAdditionDutch
+                                    , s.homonym_addition_french as HomonymAdditionFrench
+                                    , s.homonym_addition_german as HomonymAdditionGerman
                                 	, m.nis_code as NisCode
                                 	, m.namespace as MunicipalityNamespace
                                 	, m.version_timestamp as MunicipalityVersionTimestamp

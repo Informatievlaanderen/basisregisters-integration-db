@@ -51,6 +51,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                                 ValidTo = endLifeSpanVersion
                             },
                             Type = "streetname",
+                            HomonymAddition = GetHomonymAddition(streetName),
                             IsAssignedByMunicipality = new XmlCode
                             {
                                 Namespace = FormatNamespace(streetName.MunicipalityNamespace),
@@ -63,6 +64,20 @@ namespace Basisregisters.IntegrationDb.Bosa
             };
 
             RegistryXmlSerializer.Serialize(serializable, outputStream);
+        }
+
+        private static string? GetHomonymAddition(StreetName streetName)
+        {
+            if (!string.IsNullOrWhiteSpace(streetName.HomonymAdditionDutch))
+                return streetName.HomonymAdditionDutch;
+
+            if (!string.IsNullOrWhiteSpace(streetName.HomonymAdditionFrench))
+                return streetName.HomonymAdditionFrench;
+
+            if (!string.IsNullOrWhiteSpace(streetName.HomonymAdditionGerman))
+                return streetName.HomonymAdditionGerman;
+
+            return null;
         }
 
         private static string GetBeginLifeSpanVersion(StreetName streetName)

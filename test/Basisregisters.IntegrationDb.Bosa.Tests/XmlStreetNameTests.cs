@@ -31,6 +31,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "NIjverheidslaan",
                     nameFrench:null,
                     nameGerman:null,
+                    homonymAdditionDutch:null,
+                    homonymAdditionFrench:null,
+                    homonymAdditionGerman:null,
                     "23044",
                     MunicipalityNamespace,
                     new DateTimeOffset(2024, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
@@ -44,6 +47,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "Anderlechtstraat",
                     "Rue d'Anderlecht",
                     nameGerman:null,
+                    homonymAdditionDutch:null,
+                    homonymAdditionFrench:null,
+                    homonymAdditionGerman:null,
                     "23098",
                     MunicipalityNamespace,
                     new DateTimeOffset(2002, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
@@ -58,6 +64,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "Hassyweg",
                     nameFrench:null,
                     nameGerman:null,
+                    homonymAdditionDutch:"HO",
+                    homonymAdditionFrench:null,
+                    homonymAdditionGerman:null,
                     "24059",
                     MunicipalityNamespace,
                     new DateTimeOffset(2010, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
@@ -71,6 +80,9 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     "Hassyweg",
                     nameFrench:null,
                     nameGerman:null,
+                    homonymAdditionDutch:null,
+                    homonymAdditionFrench:null,
+                    homonymAdditionGerman:null,
                     "24059",
                     MunicipalityNamespace,
                     new DateTimeOffset(2010, 08, 13, 17, 32, 32, TimeSpan.FromHours(2)),
@@ -164,6 +176,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:validFrom>2024-01-31T14:16:03+01:00</com:validFrom>
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
+                    <com:homonymAddition>HO</com:homonymAddition>
                     <com:isAssignedByMunicipality>
                       <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
                       <com:objectIdentifier>24059</com:objectIdentifier>
