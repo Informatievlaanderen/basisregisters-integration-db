@@ -1,3 +1,10 @@
+## [2.10.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.4...v2.10.5) (2024-11-21)
+
+
+### Bug Fixes
+
+* **suspicious:** async startup ([e97c66f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e97c66fd246c0b34b113f4690f5d4f6726a0d1c4))
+
 ## [2.10.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.3...v2.10.4) (2024-11-21)
 
 
