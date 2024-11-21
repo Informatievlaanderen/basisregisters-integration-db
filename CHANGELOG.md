@@ -1,3 +1,10 @@
+## [2.10.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.2...v2.10.3) (2024-11-21)
+
+
+### Bug Fixes
+
+* **suspicious:** recreate parcel related views to v2 tables ([40c20b7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/40c20b7b97520023eeb78e1b0ba153059d2f2419))
+
 ## [2.10.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.1...v2.10.2) (2024-11-13)
 
 
