@@ -168,7 +168,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
             {
                 MigrationsHelper.Run(
                     _configuration.GetConnectionString("Integration"),
-                    serviceProvider.GetService<ILoggerFactory>());
+                    _loggerFactory);
             });
 
             StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag, loggerFactory).GetAwaiter().GetResult();
