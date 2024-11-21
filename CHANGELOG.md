@@ -1,3 +1,10 @@
+## [2.10.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.3...v2.10.4) (2024-11-21)
+
+
+### Bug Fixes
+
+* **suspicious:** api  run migrations async ([9eba38d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9eba38daef8e1cd4bf6beb66acda1f601c0aeb9a))
+
 ## [2.10.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.2...v2.10.3) (2024-11-21)
 
 
