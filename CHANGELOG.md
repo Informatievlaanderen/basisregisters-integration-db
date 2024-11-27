@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.5...v2.11.0) (2024-11-27)
+
+
+### Features
+
+* suspicious cases sort by Description for address/streetname ([#146](https://github.com/informatievlaanderen/basisregisters-integration-db/issues/146)) ([0124116](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/01241161dcb996e58cea0210203f11513f669600))
+
 ## [2.10.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.4...v2.10.5) (2024-11-21)
 
 
