@@ -42,66 +42,78 @@
         {
             switch (type)
             {
+                // Address
                 case SuspiciousCasesType.CurrentAddressWithoutLinkedParcelsOrBuildingUnits:
                     return await CurrentAddressesWithoutLinkedParcelOrBuilding
                         .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .OrderBy(x => x.Description)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.ProposedAddressWithoutLinkedParcelOrBuildingUnit:
                     return await ProposedAddressesWithoutLinkedParcelOrBuilding
                         .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .OrderBy(x => x.Description)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.ActiveAddressOutsideOfMunicipalityBounds:
                     return await ActiveAddressesOutsideMunicipalityBounds
                         .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
-                case SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment:
-                    return await CurrentStreetNamesWithoutLinkedRoadSegments
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.StreetNamePersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
-                case SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed:
-                    return await StreetNamesLongerThanTwoYearsProposed
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.StreetNamePersistentLocalId)
+                        .OrderBy(x => x.Description)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.AddressLongerThanTwoYearsProposed:
                     return await AddressesLongerThanTwoYearsProposed
                         .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .OrderBy(x => x.Description)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
+                case SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit:
+                    return await CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits:
+                    return await ActiveAddressesLinkedToMultipleBuildingUnits
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.CurrentAddressLinkedWithBuildingUnitButNotWithParcel:
+                    return await CurrentAddressesLinkedWithBuildingUnitButNotWithParcel
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+
+                // StreetName
+                case SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment:
+                    return await CurrentStreetNamesWithoutLinkedRoadSegments
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed:
+                    return await StreetNamesLongerThanTwoYearsProposed
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+
+                // RoadSegment
                 case SuspiciousCasesType.RoadSegmentLongerThanTwoYearsWithPermit:
                     return await RoadSegmentsLongerThanTwoYearsWithPermit
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.RoadSegmentPersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
-                case SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned:
-                    return await BuildingsLongerThanTwoYearsPlanned
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.BuildingPersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
-                case SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned:
-                    return await BuildingUnitsLongerThanTwoYearsPlanned
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.BuildingUnitPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
@@ -112,10 +124,21 @@
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
-                case SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit:
-                    return await CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit
+
+                // Building
+                case SuspiciousCasesType.BuildingLongerThanTwoYearsPlanned:
+                    return await BuildingsLongerThanTwoYearsPlanned
                         .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
+                        .OrderBy(x => x.BuildingPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+
+                // BuildingUnit
+                case SuspiciousCasesType.BuildingUnitLongerThanTwoYearsPlanned:
+                    return await BuildingUnitsLongerThanTwoYearsPlanned
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.BuildingUnitPersistentLocalId)
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
@@ -133,20 +156,6 @@
                 //         .Skip(offset)
                 //         .Take(limit)
                 //         .ToListAsync(ct);
-                case SuspiciousCasesType.ActiveAddressLinkedToMultipleBuildingUnits:
-                    return await ActiveAddressesLinkedToMultipleBuildingUnits
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
-                case SuspiciousCasesType.CurrentAddressLinkedWithBuildingUnitButNotWithParcel:
-                    return await CurrentAddressesLinkedWithBuildingUnitButNotWithParcel
-                        .Where(x => x.NisCode == nisCode)
-                        .OrderBy(x => x.AddressPersistentLocalId)
-                        .Skip(offset)
-                        .Take(limit)
-                        .ToListAsync(ct);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
