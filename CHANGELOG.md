@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.11.0...v2.12.0) (2024-12-10)
+
+
+### Features
+
+* add suspicious case CurrentAddressLinkedToProposedStreetName ([e97fe85](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e97fe853cba094ae27e6d4cee2c1a999f0fdc138))
+
 # [2.11.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.10.5...v2.11.0) (2024-11-27)
 
 
