@@ -16,7 +16,7 @@
         BuildingUnitLongerThanTwoYearsPlanned = 12,
         RoadSegmentLongerThanTwoYearsWithPermit = 13,
         RoadSegmentWithSingleLinkedStreetName = 14,
-
         // ActiveBuildingUnitLinkedToMultipleAddresses = 15,
+        CurrentAddressLinkedToProposedStreetName = 16,
     }
 }
