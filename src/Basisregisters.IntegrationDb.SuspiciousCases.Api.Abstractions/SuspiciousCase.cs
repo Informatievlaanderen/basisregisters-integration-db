@@ -66,6 +66,10 @@
             //     SuspiciousCasesType.ActiveBuildingUnitLinkedToMultipleAddresses,
             //     new SuspiciousCase(Category.BuildingUnit, "Gebouweenheden met status 'gepland' of 'gerealiseerd' die gekoppeld zijn aan meerdere adressen", Severity.Improvable)
             // },
+            {
+                SuspiciousCasesType.CurrentAddressLinkedToProposedStreetName,
+                new SuspiciousCase(Category.Address, "Adres \"in gebruik\" met koppeling naar een straatnaam met de status \"voorgesteld\"", Severity.Suspicious)
+            },
         };
 
         public Category Category { get; }

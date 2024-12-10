@@ -22,6 +22,7 @@
         public DbSet<ProposedAddressWithoutLinkedParcelOrBuildingUnit> ProposedAddressesWithoutLinkedParcelOrBuilding => Set<ProposedAddressWithoutLinkedParcelOrBuildingUnit>();
         public DbSet<StreetNameLongerThanTwoYearsProposed> StreetNamesLongerThanTwoYearsProposed => Set<StreetNameLongerThanTwoYearsProposed>();
         public DbSet<AddressLongerThanTwoYearsProposed> AddressesLongerThanTwoYearsProposed => Set<AddressLongerThanTwoYearsProposed>();
+        public DbSet<CurrentAddressLinkedToProposedStreetName> CurrentAddressesLinkedToProposedStreetName => Set<CurrentAddressLinkedToProposedStreetName>();
         public DbSet<BuildingLongerThanTwoYearsPlanned> BuildingsLongerThanTwoYearsPlanned => Set<BuildingLongerThanTwoYearsPlanned>();
         public DbSet<BuildingUnitsLongerThanTwoYearsPlanned> BuildingUnitsLongerThanTwoYearsPlanned => Set<BuildingUnitsLongerThanTwoYearsPlanned>();
         public DbSet<ActiveAddressOutsideMunicipalityBounds> ActiveAddressesOutsideMunicipalityBounds => Set<ActiveAddressOutsideMunicipalityBounds>();
@@ -87,6 +88,13 @@
                         .ToListAsync(ct);
                 case SuspiciousCasesType.CurrentAddressLinkedWithBuildingUnitButNotWithParcel:
                     return await CurrentAddressesLinkedWithBuildingUnitButNotWithParcel
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.CurrentAddressLinkedToProposedStreetName:
+                    return await CurrentAddressesLinkedToProposedStreetName
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.Description)
                         .Skip(offset)

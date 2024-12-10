@@ -70,6 +70,8 @@ END $$;
               UNION
               {{CreateScript(SuspiciousCasesType.CurrentAddressesWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnit, CurrentAddressWithSpecificationDerivedFromBuildingUnitWithoutLinkedBuildingUnitConfiguration.ViewName)}}
               UNION
+              {{CreateScript(SuspiciousCasesType.CurrentAddressLinkedToProposedStreetName, CurrentAddressLinkedToProposedStreetNameConfiguration.ViewName)}}
+              UNION
               {{CreateScript(SuspiciousCasesType.CurrentStreetNameWithoutLinkedRoadSegment, CurrentStreetNameWithoutLinkedRoadSegmentsConfiguration.ViewName)}}
               UNION
               {{CreateScript(SuspiciousCasesType.ProposedAddressWithoutLinkedParcelOrBuildingUnit, ProposedAddressWithoutLinkedParcelOrBuildingUnitConfiguration.ViewName)}}
