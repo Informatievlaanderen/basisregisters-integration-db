@@ -9,6 +9,10 @@
 - Run `CREATE EXTENSION postgis;` to enable PostGIS
 - Check installation by running `SELECT postgis_version();`
 
+## Setup database settings
+
+- Execute `ALTER DATABASE integration SET statement_timeout TO 43200000;`
+
 ## Setup admin user
 
 - Log in with the SA credentials provided by AWS Team
