@@ -1,3 +1,15 @@
+# [2.13.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.12.0...v2.13.0) (2025-01-17)
+
+
+### Bug Fixes
+
+* **nationalregistry:** correct niscode hardcoded merger municipality ([69f1d75](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/69f1d757125bfd8654ab54da9d8bd30108bdcf31))
+
+
+### Features
+
+* **national-registry:** add grarid to matchedrecords ([7356e91](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/7356e910c0ad599e3dd98bfe7bd5778f8a78fe81))
+
 # [2.12.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.11.0...v2.12.0) (2024-12-10)
 
 
