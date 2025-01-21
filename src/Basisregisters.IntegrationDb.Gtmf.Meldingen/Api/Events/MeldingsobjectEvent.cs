@@ -44,14 +44,14 @@
             };
         }
 
-        public BehandelendeOrganisatie GetBehandelendeOrganisatie()
+        public InitiatorOrganisatie GetInitiatorOrganisatie()
         {
             if (Initiator.Type.Equals("Applicatie", StringComparison.InvariantCultureIgnoreCase))
             {
-                return new BehandelendeOrganisatie(Initiator.AgentId, "GTMF-Systeem", null, null);
+                return new InitiatorOrganisatie(Initiator.AgentId, "GTMF-Systeem", null, null);
             }
 
-            return new BehandelendeOrganisatie(Initiator.AgentId, Initiator.Naam, Initiator.OvoCode, Initiator.KboNummer);
+            return new InitiatorOrganisatie(Initiator.AgentId, Initiator.Naam, Initiator.OvoCode, Initiator.KboNummer);
         }
     }
 

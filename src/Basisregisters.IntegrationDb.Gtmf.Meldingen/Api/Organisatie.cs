@@ -18,9 +18,12 @@
         }
     }
 
-    public class BehandelendeOrganisatie : Organisatie
+    /// <summary>
+    /// Organisatie die de actie of statuswijziging initiëerde.
+    /// </summary>
+    public class InitiatorOrganisatie : Organisatie
     {
-        public BehandelendeOrganisatie(Guid id, string naam, string? ovoCode, string? kboNummer)
+        public InitiatorOrganisatie(Guid id, string naam, string? ovoCode, string? kboNummer)
             : base(id, naam, ovoCode, kboNummer)
         { }
     }
