@@ -138,7 +138,7 @@
         {
             var meldingsobjectEvent = _meldingsobjectEventDeserializer.DeserializeFrom(meldingEvent);
 
-            var organisatie = await GetOrAddOrganisatie(meldingsobjectEvent.GetBehandelendeOrganisatie(), ct);
+            var organisatie = await GetOrAddOrganisatie(meldingsobjectEvent.GetInitiatorOrganisatie(), ct);
 
             _meldingenContext.MeldingsobjectStatuswijzigingen.Add(
                 new MeldingsobjectStatuswijziging(

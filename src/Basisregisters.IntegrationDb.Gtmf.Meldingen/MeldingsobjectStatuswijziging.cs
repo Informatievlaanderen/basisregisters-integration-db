@@ -14,7 +14,7 @@
         public Guid MeldingId { get; set; }
         public string? OudeStatus { get; set; }
         public string NieuweStatus { get; set; }
-        public Guid OrganisatieIdInternal { get; set; }
+        public Guid InitiatorOrganisatieIdInternal { get; set; }
         public string TijdstipWijzigingAsString { get; set; }
         private DateTimeOffset TijdstipWijzigingAsDateTimeOffset { get; set; }
 
@@ -37,7 +37,7 @@
             Guid meldingId,
             string? oudeStatus,
             string nieuweStatus,
-            Guid organisatieIdInternal,
+            Guid initiatorOrganisatieIdInternal,
             Instant tijdstipWijziging,
             string? toelichting)
         {
@@ -45,7 +45,7 @@
             MeldingId = meldingId;
             OudeStatus = oudeStatus;
             NieuweStatus = nieuweStatus;
-            OrganisatieIdInternal = organisatieIdInternal;
+            InitiatorOrganisatieIdInternal = initiatorOrganisatieIdInternal;
             TijdstipWijzigingTimestamp = tijdstipWijziging;
             Toelichting = toelichting;
         }
@@ -65,7 +65,7 @@
             builder.Property(x => x.MeldingId).HasColumnName("melding_id");
             builder.Property(x => x.OudeStatus).HasColumnName("oude_status");
             builder.Property(x => x.NieuweStatus).HasColumnName("nieuwe_status");
-            builder.Property(x => x.OrganisatieIdInternal).HasColumnName("organisatie_id_internal");
+            builder.Property(x => x.InitiatorOrganisatieIdInternal).HasColumnName("initiator_organisatie_id_internal");
             builder.Property(x => x.TijdstipWijzigingAsString).HasColumnName("tijdstip_wijziging_as_string");
             builder.Property(MeldingsobjectStatuswijziging.TijdstipWijzigingBackingPropertyName).HasColumnName("tijdstip_wijziging");
             builder.Property(x => x.Toelichting).HasColumnName("toelichting");
@@ -75,7 +75,7 @@
             builder.HasIndex(x => x.MeldingId);
             builder.HasIndex(x => x.OudeStatus);
             builder.HasIndex(x => x.NieuweStatus);
-            builder.HasIndex(x => x.OrganisatieIdInternal);
+            builder.HasIndex(x => x.InitiatorOrganisatieIdInternal);
         }
     }
 }
