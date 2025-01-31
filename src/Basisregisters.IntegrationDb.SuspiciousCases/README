@@ -27,6 +27,5 @@
 - Give read access to all tables (incl views), run `GRANT SELECT ON ALL TABLES IN SCHEMA <schema> TO <username>;`
 - Set default permissions for future objects, run
 ```
-ALTER DEFAULT PRIVILEGES IN SCHEMA <schema>
-GRANT SELECT ON TABLES TO <username>;
+ALTER DEFAULT PRIVILEGES FOR USER basisregisters IN SCHEMA <schema> GRANT SELECT ON TABLES TO <username>;
 ```
