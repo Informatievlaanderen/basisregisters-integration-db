@@ -70,6 +70,10 @@
                 SuspiciousCasesType.CurrentAddressLinkedToProposedStreetName,
                 new SuspiciousCase(Category.Address, "Adres \"in gebruik\" met koppeling naar een straatnaam met de status \"voorgesteld\"", Severity.Suspicious)
             },
+            {
+                SuspiciousCasesType.RoadSegmentLinkedToRetiredStreetName,
+                new SuspiciousCase(Category.RoadSegment, "Straatnaam \"afgekeurd\" of \"gehistoreerd\" met koppeling met een wegsegment", Severity.Incorrect)
+            }
         };
 
         public Category Category { get; }

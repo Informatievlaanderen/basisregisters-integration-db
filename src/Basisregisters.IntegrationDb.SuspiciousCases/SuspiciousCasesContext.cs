@@ -33,6 +33,7 @@
         public DbSet<RoadSegmentLongerThanTwoYearsWithPermit> RoadSegmentsLongerThanTwoYearsWithPermit => Set<RoadSegmentLongerThanTwoYearsWithPermit>();
         public DbSet<CurrentStreetNameWithoutLinkedRoadSegments> CurrentStreetNamesWithoutLinkedRoadSegments => Set<CurrentStreetNameWithoutLinkedRoadSegments>();
         public DbSet<RoadSegmentWithSingleLinkedStreetName> RoadSegmentsWithSingleLinkedStreetName => Set<RoadSegmentWithSingleLinkedStreetName>();
+        public DbSet<RoadSegmentLinkedToRetiredStreetName> RoadSegmentsLinkedToRetiredStreetName => Set<RoadSegmentLinkedToRetiredStreetName>();
 
         public async Task<IEnumerable<SuspiciousCase>> GetSuspiciousCase(
             SuspiciousCasesType type,
@@ -129,6 +130,13 @@
                     return await RoadSegmentsWithSingleLinkedStreetName
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.RoadSegmentPersistentLocalId)
+                        .Skip(offset)
+                        .Take(limit)
+                        .ToListAsync(ct);
+                case SuspiciousCasesType.RoadSegmentLinkedToRetiredStreetName:
+                    return await RoadSegmentsWithSingleLinkedStreetName
+                        .Where(x => x.NisCode == nisCode)
+                        .OrderBy(x => x.Description) // Contains the StreetNameName
                         .Skip(offset)
                         .Take(limit)
                         .ToListAsync(ct);
