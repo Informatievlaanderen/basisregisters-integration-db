@@ -18,5 +18,6 @@
         RoadSegmentWithSingleLinkedStreetName = 14,
         // ActiveBuildingUnitLinkedToMultipleAddresses = 15,
         CurrentAddressLinkedToProposedStreetName = 16,
+        RoadSegmentLinkedToRetiredStreetName = 17
     }
 }
