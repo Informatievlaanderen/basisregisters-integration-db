@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.13.1...v2.14.0) (2025-02-12)
+
+
+### Features
+
+* **suspicious:** add RoadSegmentLinkedToRetiredStreetName ([46f0d38](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/46f0d381e4a88457cc0083da107d6c1eda20958f))
+
 ## [2.13.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.13.0...v2.13.1) (2025-01-21)
 
 # [2.13.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.12.0...v2.13.0) (2025-01-17)
