@@ -4,7 +4,6 @@
 
     public class AddressMatchDatabaseRecord : DbaseRecord
     {
-
         public static readonly AddressMatchDbaseSchema Schema = new AddressMatchDbaseSchema();
 
         public DbaseCharacter ID { get; }

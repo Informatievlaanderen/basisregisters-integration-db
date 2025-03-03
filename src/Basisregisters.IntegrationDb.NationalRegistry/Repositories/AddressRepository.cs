@@ -8,20 +8,26 @@
 
     public interface IAddressRepository
     {
-        List<Address> GetAll();
+        IList<Address> GetAll();
     }
 
     public class AddressRepository : IAddressRepository
     {
         private readonly string _connectionString;
+        private IList<Address>? _addresses;
 
         public AddressRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public List<Address> GetAll()
+        public IList<Address> GetAll()
         {
+            if (_addresses is not null)
+            {
+                return _addresses;
+            }
+
             const string sql = @"select
             a.persistent_local_id as AddressPersistentLocalId
             , a.street_name_persistent_local_id as StreetNamePersistentLocalId
@@ -35,7 +41,7 @@
             , a.geometry as Position
             from integration_address.address_latest_items as a
             JOIN integration_streetname.streetname_latest_items as s on a.street_name_persistent_local_id = s.persistent_local_id
-            WHERE a.removed = false and (a.oslo_status = 'InGebruik' or a.oslo_status = 'Voorgesteld')
+            WHERE a.removed = false and a.oslo_status in ('InGebruik', 'Voorgesteld')
             ;";
 
             // https://www.npgsql.org/doc/release-notes/7.0.html#managing-type-mappings-at-the-connection-level-is-no-longer-supported
@@ -46,9 +52,9 @@
 
             connection.Open();
 
-            var addresses = connection.Query<Address>(sql);
+            _addresses = connection.Query<Address>(sql).ToList();
 
-            return addresses.ToList();
+            return _addresses;
         }
     }
 
@@ -92,6 +98,6 @@
         public string Status { get; set; }
         public string Method { get; set; }
         public string Specification { get; set; }
-        public Geometry Position { get; set; }
+        public Point Position { get; set; }
     }
 }
