@@ -101,18 +101,20 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
                 Console.WriteLine("Record validation DONE");
 
+                var municipalityRepository = new MunicipalityRepository(configuration.GetConnectionString("Integration"));
                 var streetNameRepository = new StreetNameRepository(configuration.GetConnectionString("Integration"));
                 var addressRepository = new AddressRepository(configuration.GetConnectionString("Integration"));
 
-                var streetNameMatchRunner = new StreetNameMatchRunner(streetNameRepository);
+                var streetNameMatchRunner = new StreetNameMatchRunner(streetNameRepository, municipalityRepository);
                 var (matchedStreetNames, unmatchedStreetNames) =
                     streetNameMatchRunner.Match(validRecords);
 
                 FilesOutput.WriteUnmatchedRecords(unmatchedStreetNames, directory);
+
                 Console.WriteLine("Street name matching DONE");
                 Console.WriteLine($"Unmatched records to street names: {unmatchedStreetNames.Count}");
 
-                var addressMatchRunner = new AddressMatchRunner(addressRepository, streetNameRepository);
+                var addressMatchRunner = new AddressMatchRunner(addressRepository, streetNameRepository, municipalityRepository);
                 var addressMatchResult = addressMatchRunner.Match(matchedStreetNames.ToList());
 
                 FilesOutput.WriteMatchedRecords(
@@ -139,6 +141,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                     .ToList();
                 FilesOutput.WriteDbfFile(result, directory);
                 FilesOutput.WriteShapeFile(result, directory);
+
+                var unmatchedRecords = new List<UnmatchedFlatFileRecord>();
+                unmatchedRecords.AddRange(streetNameMatchRunner.ConvertToUnmatchedFlatFileRecords(unmatchedStreetNames));
+                unmatchedRecords.AddRange(addressMatchRunner.ConvertToUnmatchedFlatFileRecords(addressMatchResult.UnmatchedRecords));
+                FilesOutput.WriteDbfFile(unmatchedRecords, directory);
+                FilesOutput.WriteShapeFile(unmatchedRecords, directory);
             }
             catch (AggregateException aggregateException)
             {

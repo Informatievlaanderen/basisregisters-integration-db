@@ -15,7 +15,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
 
         public ExactMatchingTests()
         {
-            _fixture = new Fixture();
+            _fixture = new Fixture()
+                .CustomizePoint();
             _streetNames = _fixture.Create<IEnumerable<StreetName>>();
         }
 
@@ -47,7 +48,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -77,7 +79,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -107,7 +110,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -137,7 +141,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests.StreetNameMatching
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 

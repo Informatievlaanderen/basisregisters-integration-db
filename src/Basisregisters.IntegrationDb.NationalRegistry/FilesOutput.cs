@@ -93,12 +93,7 @@
             var content = matchedRecords
                 .Select(x =>
                 {
-                    var point = x.Address.Position as NetTopologySuite.Geometries.Point;
-                    if (point is null)
-                    {
-                        throw new InvalidCastException($"Could cast position of address {x.Address.AddressPersistentLocalId}");
-                    }
-
+                    var point = x.Address.Position;
                     var pointShapeContent = new PointShapeContent(new Point(point.X, point.Y));
                     return new
                     {
@@ -168,6 +163,124 @@
                 new AddressMatchDbaseSchema(),
                 addressesWithRegisteredCount,
                 () => addressesWithRegisteredCount.Count,
+                TransformRecord);
+        }
+
+        public static void WriteDbfFile(IList<UnmatchedFlatFileRecord> unmatchedRecords, string directory)
+        {
+            var dbfFile = CreateResultFile(unmatchedRecords);
+            using var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
+            dbfFile.WriteTo(fileStream, CancellationToken.None);
+        }
+
+        public static void WriteShapeFile(IList<UnmatchedFlatFileRecord> unmatchedRecords, string directory)
+        {
+            var files = CreateShapeFiles(unmatchedRecords);
+            foreach (var extractFile in files)
+            {
+                using var fileStream = File.Create(Path.Combine(directory, extractFile.Name));
+                extractFile.WriteTo(fileStream, CancellationToken.None);
+            }
+        }
+
+        private static IEnumerable<ExtractFile> CreateShapeFiles(IList<UnmatchedFlatFileRecord> unmatchedRecords)
+        {
+            var content = unmatchedRecords
+                .Select(x =>
+                {
+                    var point = x.Position;
+                    var pointShapeContent = new PointShapeContent(new Point(point.X, point.Y));
+                    return new
+                    {
+                        Point = point,
+                        Content = pointShapeContent.ToBytes(),
+                        ContentLength = pointShapeContent.ContentLength.ToInt32()
+                    };
+                })
+                .ToList();
+
+            var boundingBox = new BoundingBox3D(
+                content.Min(x => x.Point.X),
+                content.Min(x => x.Point.Y),
+                content.Max(x => x.Point.X),
+                content.Max(x => x.Point.Y),
+                0,
+                0,
+                double.NegativeInfinity,
+                double.PositiveInfinity);
+
+            yield return ExtractBuilder.CreateShapeFile<PointShapeContent>(
+                "unmatchedAddresses",
+                ShapeType.Point,
+                content.Select(x => x.Content),
+                ShapeContent.Read,
+                content.Select(x => x.ContentLength),
+                boundingBox);
+
+            yield return ExtractBuilder.CreateShapeIndexFile(
+                "unmatchedAddresses",
+                ShapeType.Point,
+                content.Select(x => x.ContentLength),
+                () => content.Count,
+                boundingBox);
+
+            yield return ExtractBuilder.CreateProjectedCoordinateSystemFile(
+                "unmatchedAddresses",
+                ProjectedCoordinateSystem.Belge_Lambert_1972);
+        }
+
+        private static ExtractFile CreateResultFile(
+            IList<UnmatchedFlatFileRecord> unmatchedRecords)
+        {
+            string ToPrecisie(UnmatchedFlatFileRecord unmatchedRecord)
+            {
+                if (unmatchedRecord.HouseNumberAddress is not null)
+                {
+                    return "Huisnummer";
+                }
+
+                if (unmatchedRecord.StreetName is not null)
+                {
+                    return "Straat";
+                }
+
+                return "Gemeente";
+            }
+
+            byte[] TransformRecord(UnmatchedFlatFileRecord unmatchedRecord)
+            {
+                var item = new UnmatchedAddressDbaseRecord
+                {
+                    RRNiscode = { Value = unmatchedRecord.Record.NisCode },
+                    RRPostcode = { Value = unmatchedRecord.Record.PostalCode },
+                    RRStraatcode = { Value = unmatchedRecord.Record.StreetCode },
+                    RRHuisnummer = { Value = unmatchedRecord.Record.HouseNumber },
+                    RRIndex = { Value = unmatchedRecord.Record.Index },
+                    RRStraatnaam = { Value = unmatchedRecord.Record.StreetName },
+                    GRARAdresID = { Value = unmatchedRecord.HouseNumberAddress is not null
+                        ? $"https://data.vlaanderen.be/id/adres/{unmatchedRecord.HouseNumberAddress.AddressPersistentLocalId}"
+                        : null
+                    },
+                    GRARStraatnaamID = { Value = unmatchedRecord.StreetName is not null
+                        ? $"https://data.vlaanderen.be/id/straatnaam/{unmatchedRecord.StreetName.StreetNamePersistentLocalId}"
+                        : null
+                    },
+                    GRARNiscode = { Value = unmatchedRecord.Record.NisCode },
+                    GRARPostcode = { Value = unmatchedRecord.Record.PostalCode },
+                    GRARStraatnaam = { Value = unmatchedRecord.StreetName?.NameDutch },
+                    GRARHuisnummer = { Value = unmatchedRecord.HouseNumberAddress?.HouseNumber },
+                    Precisie = { Value = ToPrecisie(unmatchedRecord) },
+                    Inwoners = { Value = unmatchedRecord.Record.RegisteredCount }
+                };
+
+                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
+            }
+
+            return ExtractBuilder.CreateDbfFile<UnmatchedFlatFileRecord, UnmatchedAddressDbaseRecord>(
+                "unmatchedAddresses",
+                new UnmatchedAddressDbaseSchema(),
+                unmatchedRecords,
+                () => unmatchedRecords.Count,
                 TransformRecord);
         }
     }

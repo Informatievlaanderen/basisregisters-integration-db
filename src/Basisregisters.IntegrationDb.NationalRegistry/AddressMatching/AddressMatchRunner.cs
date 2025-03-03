@@ -13,13 +13,16 @@
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IList<StreetName> _streetNames;
+        private readonly IList<Municipality> _municipalities;
 
         public AddressMatchRunner(
             IAddressRepository addressRepository,
-            IStreetNameRepository streetNameRepository)
+            IStreetNameRepository streetNameRepository,
+            IMunicipalityRepository municipalityRepository)
         {
             _addressRepository = addressRepository;
             _streetNames = streetNameRepository.GetStreetNames();
+            _municipalities = municipalityRepository.GetMunicipalities();
         }
 
         public AddressMatchResult Match(IList<FlatFileRecordWithStreetNames> flatFileRecords)
@@ -91,6 +94,104 @@
                 unmatchedRecords,
                 recordsMatchedWithMultipleAddresses,
                 addressesMatchedWithMultipleRecords);
+        }
+
+        public IList<UnmatchedFlatFileRecord> ConvertToUnmatchedFlatFileRecords(IList<FlatFileRecordWithStreetNames> unmatchedRecords)
+        {
+            if (!unmatchedRecords.Any())
+            {
+                return [];
+            }
+
+            var allAddresses = _addressRepository.GetAll();
+            var addressesPerStreetName = allAddresses
+                .GroupBy(x => x.StreetNamePersistentLocalId)
+                .ToDictionary(
+                    x => x.Key,
+                    x => x.ToList());
+
+            var recordsPerHouseNumber = unmatchedRecords
+                .GroupBy(x => new { x.Record.NisCode, x.Record.PostalCode, x.Record.StreetName, x.Record.HouseNumber })
+                .ToList();
+
+            var unmatchedFlatFileRecords = new ConcurrentBag<UnmatchedFlatFileRecord>();
+
+            Parallel.ForEach(
+                recordsPerHouseNumber,
+                new ParallelOptions { MaxDegreeOfParallelism = 50 },
+                records =>
+                {
+                    var streetNamePersistentLocalIds = records.First().StreetNames.Select(x => x.StreetNamePersistentLocalId).ToList();
+
+                    var addresses = FilterAddressesByHouseNumber(
+                        addressesPerStreetName,
+                        streetNamePersistentLocalIds,
+                        records.Key.PostalCode,
+                        records.Key.HouseNumber);
+
+                    foreach (var record in records)
+                    {
+                        var nationalRegistryAddress = new NationalRegistryAddress(record.Record);
+
+                        var houseNumberMatches = addresses
+                            .Where(a =>
+                                nationalRegistryAddress.HouseNumberBoxNumbers.SelectMany(x => x.GetValues())
+                                    .Any(r =>
+                                        string.Equals(
+                                            r.HouseNumber,
+                                            a.HouseNumber,
+                                            StringComparison.InvariantCultureIgnoreCase)))
+                            .ToList();
+
+                        if (houseNumberMatches.Count == 1)
+                        {
+                            var address = houseNumberMatches.Single();
+                            var streetName = _streetNames.Single(x => x.StreetNamePersistentLocalId == address.StreetNamePersistentLocalId);
+
+                            unmatchedFlatFileRecords.Add(new UnmatchedFlatFileRecord
+                            {
+                                Record = record.Record,
+                                Position = address.Position,
+                                StreetName = streetName,
+                                HouseNumberAddress = address
+                            });
+                        }
+                        else if (record.StreetNames.Count == 1)
+                        {
+                            var streetName = record.StreetNames.Single();
+
+                            if (streetName.Centroid is not null)
+                            {
+                                unmatchedFlatFileRecords.Add(new UnmatchedFlatFileRecord
+                                {
+                                    Record = record.Record,
+                                    Position = streetName.Centroid,
+                                    StreetName = streetName
+                                });
+                            }
+                            else
+                            {
+                                unmatchedFlatFileRecords.Add(new UnmatchedFlatFileRecord
+                                {
+                                    Record = record.Record,
+                                    Position = _municipalities.SingleOrDefault(x => x.NisCode == record.Record.NisCode)?.Centroid
+                                        ?? throw new InvalidOperationException($"No municipality centroid found for niscode '{record.Record.NisCode}'")
+                                });
+                            }
+                        }
+                        else
+                        {
+                            unmatchedFlatFileRecords.Add(new UnmatchedFlatFileRecord
+                            {
+                                Record = record.Record,
+                                Position = _municipalities.SingleOrDefault(x => x.NisCode == record.Record.NisCode)?.Centroid
+                                           ?? throw new InvalidOperationException($"No municipality centroid found for niscode '{record.Record.NisCode}'")
+                            });
+                        }
+                    }
+                });
+
+            return unmatchedFlatFileRecords.ToList();
         }
 
         private static List<Address> FilterAddressesByHouseNumber(

@@ -12,10 +12,12 @@
     public class StreetNameMatchRunner
     {
         private readonly IStreetNameRepository _repo;
+        private readonly IMunicipalityRepository _municipalityRepository;
 
-        public StreetNameMatchRunner(IStreetNameRepository streetNameRepository)
+        public StreetNameMatchRunner(IStreetNameRepository streetNameRepository, IMunicipalityRepository municipalityRepository)
         {
             _repo = streetNameRepository;
+            _municipalityRepository = municipalityRepository;
         }
 
         public (IList<FlatFileRecordWithStreetNames> Matched, IList<FlatFileRecord> Unmatched) Match(IEnumerable<FlatFileRecord> flatFileRecords)
@@ -64,6 +66,25 @@
             });
 
             return (matched.ToList(), unmatched.ToList());
+        }
+
+        public IList<UnmatchedFlatFileRecord> ConvertToUnmatchedFlatFileRecords(IList<FlatFileRecord> unmatchedRecords)
+        {
+            if (!unmatchedRecords.Any())
+            {
+                return [];
+            }
+
+            var municipalities = _municipalityRepository.GetMunicipalities();
+
+            return unmatchedRecords
+                .Select(record => new UnmatchedFlatFileRecord
+                {
+                    Record = record,
+                    Position = municipalities.SingleOrDefault(x => x.NisCode == record.NisCode)?.Centroid
+                               ?? throw new InvalidOperationException($"No municipality centroid found for niscode '{record.NisCode}'")
+                })
+                .ToList();
         }
     }
 }

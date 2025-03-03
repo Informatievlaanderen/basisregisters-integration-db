@@ -5,6 +5,7 @@
     using AutoFixture;
     using FluentAssertions;
     using NationalRegistry.StreetNameMatching;
+    using NetTopologySuite.Geometries;
     using Repositories;
     using Xunit;
 
@@ -15,7 +16,8 @@
 
         public AbbreviationMatchingTests()
         {
-            _fixture = new Fixture();
+            _fixture = new Fixture()
+                .CustomizePoint();
             _streetNames = _fixture.Create<IEnumerable<StreetName>>();
         }
 
@@ -52,7 +54,8 @@
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -82,7 +85,8 @@
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
@@ -113,7 +117,8 @@
                 null,
                 null,
                 string.Empty,
-                string.Empty);
+                string.Empty,
+                null);
             var streetNames = _streetNames.Concat(new[] { expectedStreetName });
             var matcher = new StreetNameMatcher(streetNames);
 
