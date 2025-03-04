@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.14.0...v2.15.0) (2025-03-04)
+
+
+### Features
+
+* add unmatched addresses dbf/shp ([0413d6b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/0413d6b3f2a0a7e56a8bf0edf117a5bce7e57b89))
+
 # [2.14.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.13.1...v2.14.0) (2025-02-12)
 
 
