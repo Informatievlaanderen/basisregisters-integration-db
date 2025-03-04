@@ -1,3 +1,10 @@
+## [2.15.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.15.0...v2.15.1) (2025-03-04)
+
+
+### Bug Fixes
+
+* **suspicious:** correct context RoadSegmentsLinkedToRetiredStreetName ([a95d8da](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a95d8da3230afb92dfe40afb659d24d9d2aa8009))
+
 # [2.15.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.14.0...v2.15.0) (2025-03-04)
 
 
