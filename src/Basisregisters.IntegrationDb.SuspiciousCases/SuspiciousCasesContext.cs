@@ -134,7 +134,7 @@
                         .Take(limit)
                         .ToListAsync(ct);
                 case SuspiciousCasesType.RoadSegmentLinkedToRetiredStreetName:
-                    return await RoadSegmentsWithSingleLinkedStreetName
+                    return await RoadSegmentsLinkedToRetiredStreetName
                         .Where(x => x.NisCode == nisCode)
                         .OrderBy(x => x.Description) // Contains the StreetNameName
                         .Skip(offset)
