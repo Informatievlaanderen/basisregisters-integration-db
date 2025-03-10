@@ -7,7 +7,7 @@
     {
         public static Fixture CustomizePoint(this Fixture fixture)
         {
-            fixture.Customize<Point>(c =>
+            fixture.Customize<Geometry>(c =>
                 c.FromFactory<object>(_ =>
                     new Point(
                         fixture.Create<double>(),
