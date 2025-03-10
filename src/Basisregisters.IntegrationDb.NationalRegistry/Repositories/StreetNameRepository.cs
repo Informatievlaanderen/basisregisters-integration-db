@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.NationalRegistry.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Dapper;
@@ -95,7 +96,7 @@
             string? homonymAdditionEnglish,
             string nisCode,
             string municipalityName,
-            Point? centroid)
+            Geometry? centroid)
         {
             StreetNamePersistentLocalId = streetNamePersistentLocalId;
             NameDutch = nameDutch;
@@ -108,7 +109,12 @@
             HomonymAdditionEnglish = homonymAdditionEnglish;
             NisCode = nisCode;
             MunicipalityName = municipalityName;
-            Centroid = centroid;
+            if(centroid is null)
+                Centroid = null;
+            else if(centroid is Point point)
+                Centroid = point;
+            else
+                throw new InvalidOperationException($"Centroid is not a Point {centroid.GeometryType} ({centroid.GetType().FullName})");
         }
         public int StreetNamePersistentLocalId { get; }
         public string? NameDutch { get; }
