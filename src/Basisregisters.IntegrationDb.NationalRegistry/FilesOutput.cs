@@ -266,7 +266,7 @@
                         : null
                     },
                     GRARNiscode = { Value = unmatchedRecord.Record.NisCode },
-                    GRARPostcode = { Value = unmatchedRecord.Record.PostalCode },
+                    GRARPostcode = { Value = unmatchedRecord.HouseNumberAddress?.PostalCode },
                     GRARStraatnaam = { Value = unmatchedRecord.StreetName?.NameDutch },
                     GRARHuisnummer = { Value = unmatchedRecord.HouseNumberAddress?.HouseNumber },
                     Precisie = { Value = ToPrecisie(unmatchedRecord) },
