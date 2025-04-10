@@ -18,7 +18,7 @@
             return indienerParticipatie.Agent.Id.Split('/', StringSplitOptions.RemoveEmptyEntries).Last();
         }
 
-        public string GetBeschrijving()
+        public string? GetBeschrijving()
         {
             return GetMeldingsObject().Body.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Beschrijving))?.Beschrijving ?? string.Empty;
         }
@@ -40,7 +40,7 @@
             return laatsteStatusUpdate.BehandelaarId;
         }
 
-        public string GetToelichtingBehandelaar()
+        public string? GetToelichtingBehandelaar()
         {
             var laatsteStatusUpdate = GetLaatsteStatusUpdate();
             return laatsteStatusUpdate.Toelichting;
@@ -63,7 +63,7 @@
     {
         [JsonProperty("statuswijzigingDoor")] public required string BehandelaarId { get; set; }
 
-        [JsonProperty("toelichtingStatuswijzigingMelder")] public required string Toelichting { get; set; }
+        [JsonProperty("toelichtingStatuswijzigingMelder")] public string? Toelichting { get; set; }
 
         [JsonProperty("statusType")] public required Status Status { get; set; }
     }
@@ -87,7 +87,7 @@
 
     public class MeldingsObjectBody
     {
-        [JsonProperty("beschrijving")] public required string Beschrijving { get; set; }
+        [JsonProperty("beschrijving")] public string? Beschrijving { get; set; }
     }
 
     public class Partipatie

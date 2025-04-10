@@ -8,10 +8,10 @@
         public bool IsIngediendDoorVeka { get; }
         public string? ReferentieMelder { get; }
         public string Referentie { get; }
-        public string Beschrijving { get; }
+        public string? Beschrijving { get; }
         public string Behandelaar { get; }
         public string Status { get; }
-        public string ToelichtingBehandelaar { get; }
+        public string? ToelichtingBehandelaar { get; }
         public DateTime? DatumVaststelling { get; }
 
         public static Melding NietVekaMelding(string id)
@@ -22,10 +22,10 @@
             string id,
             string? referentieMelder,
             string referentie,
-            string beschrijving,
+            string? beschrijving,
             string behandelaar,
             string status,
-            string toelichtingBehandelaar,
+            string? toelichtingBehandelaar,
             string datumVaststelling)
             => new Melding(
                 Guid.Parse(id),
@@ -42,10 +42,10 @@
             bool isIngediendDoorVeka,
             string? referentieMelder,
             string referentie,
-            string beschrijving,
+            string? beschrijving,
             string behandelaar,
             string status,
-            string toelichtingBehandelaar,
+            string? toelichtingBehandelaar,
             DateTime? datumVaststelling)
         {
             Id = id;
