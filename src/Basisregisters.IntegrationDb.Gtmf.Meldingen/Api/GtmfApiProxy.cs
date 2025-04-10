@@ -8,10 +8,11 @@
     using System.Threading.Tasks;
     using Configuration;
     using Events;
-    using IdentityModel;
-    using IdentityModel.Client;
+    using Duende.IdentityModel;
+    using Duende.IdentityModel.Client;
     using Meldingen;
     using Microsoft.Extensions.Options;
+    using NetTopologySuite;
     using NetTopologySuite.Geometries;
     using NetTopologySuite.IO;
     using Newtonsoft.Json;
@@ -37,7 +38,7 @@
         {
             _httpClientFactory = httpClientFactory;
             _gtmfApiOptions = gtmfApiOptions.Value;
-            _wktReader = new WKTReader(GeometryFactory.Default);
+            _wktReader = new WKTReader(NtsGeometryServices.Instance);
         }
 
         public async Task<IEnumerable<MeldingEvent>> GetEventsFrom(int lastPosition)

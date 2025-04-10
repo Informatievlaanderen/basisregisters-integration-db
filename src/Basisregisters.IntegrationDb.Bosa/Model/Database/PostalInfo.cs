@@ -4,10 +4,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
     public class PostalInfo
     {
-        public string Namespace { get; init; }
-        public string PostalCode { get; init; }
+        public string Namespace { get; init; } = null!;
+        public string PostalCode { get; init; } = null!;
         public DateTimeOffset VersionTimestamp { get; init; }
-        public string DutchName { get; init; }
+        public string DutchName { get; init; } = null!;
 
         // Needed for dapper
         protected PostalInfo() { }

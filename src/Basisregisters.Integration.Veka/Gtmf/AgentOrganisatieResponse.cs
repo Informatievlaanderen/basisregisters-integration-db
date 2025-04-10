@@ -4,6 +4,6 @@
 
     public class AgentOrganisatieResponse
     {
-        [JsonProperty("wettelijkeNaam")] public string Naam { get; set; }
+        [JsonProperty("wettelijkeNaam")] public required string Naam { get; set; }
     }
 }

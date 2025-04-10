@@ -15,6 +15,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
         public IActionResult Get()
             => Request.Headers[HeaderNames.Accept].ToString().Contains("text/html")
                 ? (IActionResult)new RedirectResult("/docs")
-                : new OkObjectResult($"Welcome to the Basisregisters Vlaanderen Verdachte Gevallen Api {Assembly.GetEntryAssembly().GetVersionText()}.");
+                : new OkObjectResult($"Welcome to the Basisregisters Vlaanderen Verdachte Gevallen Api {Assembly.GetEntryAssembly()!.GetVersionText()}.");
     }
 }

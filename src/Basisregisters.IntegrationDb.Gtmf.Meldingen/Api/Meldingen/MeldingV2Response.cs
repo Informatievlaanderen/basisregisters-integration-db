@@ -5,12 +5,12 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Api.Meldingen
 
     public class MeldingV2Response
     {
-        [JsonProperty("referentie")] public string Referentie { get; set; }
+        [JsonProperty("referentie")] public required string Referentie { get; set; }
         [JsonProperty("referentieMelder")] public string? ReferentieMelder { get; set; }
         [JsonProperty("indieningsDatum")] public DateTimeOffset DatumIndiening { get; set; }
-        [JsonProperty("meldingsapplicatie")] public string Meldingsapplicatie { get; set; }
+        [JsonProperty("meldingsapplicatie")] public required string Meldingsapplicatie { get; set; }
         [JsonProperty("samenvatting")] public string? Samenvatting { get; set; }
-        [JsonProperty("indiener")] public MeldingV2ResponseIndiener Indiener { get; set; }
+        [JsonProperty("indiener")] public required MeldingV2ResponseIndiener Indiener { get; set; }
 
         public IndienerOrganisatie GetIndienerOrganisatie() => Indiener.GetIndienerOrganisatie();
     }
@@ -20,9 +20,9 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Api.Meldingen
         [JsonProperty("agentId")] public Guid Id { get; set; }
         [JsonProperty("korteNaam")] public string? PubliekeOrganisatieNaam { get; set; }
         [JsonProperty("wettelijkeNaam")] public string? GeregistreerdeOrganisatieNaam { get; set; }
-        [JsonProperty("id")] public string Identifier { get; set; }
+        [JsonProperty("id")] public required string Identifier { get; set; }
         [JsonProperty("ovoCode")] public string? GeregistreerdeOrganisatieOvoCode { get; set; }
-        [JsonProperty("type")] public string OrganisatieType { get; set; }
+        [JsonProperty("type")] public required string OrganisatieType { get; set; }
 
         private bool IsGeregistreerdeOrganisatie => OrganisatieType.Equals("GeregistreerdeOrganisatie", StringComparison.InvariantCultureIgnoreCase);
 

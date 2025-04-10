@@ -123,13 +123,13 @@
             return this;
         }
 
-        public FlatFileRecordBuilder WithPostalCode(string postalCode)
+        public FlatFileRecordBuilder WithPostalCode(string? postalCode)
         {
             _record.PostalCode = postalCode;
             return this;
         }
 
-        public FlatFileRecordBuilder WithStreetCode(string streetCode)
+        public FlatFileRecordBuilder WithStreetCode(string? streetCode)
         {
             _record.StreetCode = streetCode;
             return this;

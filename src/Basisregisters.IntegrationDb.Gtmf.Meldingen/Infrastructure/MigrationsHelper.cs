@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Infrastructure
     {
         public static void Run(
             string connectionString,
-            ILoggerFactory loggerFactory = null)
+            ILoggerFactory? loggerFactory = null)
         {
             var logger = loggerFactory?.CreateLogger<MigrationsLogger>();
 

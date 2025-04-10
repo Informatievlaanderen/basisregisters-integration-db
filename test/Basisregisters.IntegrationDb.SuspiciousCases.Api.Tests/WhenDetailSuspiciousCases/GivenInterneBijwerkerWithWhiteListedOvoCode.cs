@@ -70,7 +70,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
         {
             _mediator.Verify(x => x.Send(
                 It.Is<SuspiciousCasesDetailRequest>(y =>
-                    y.FilteringHeader.Filter.NisCode == "11001"
+                    y.FilteringHeader.Filter!.NisCode == "11001"
                     && y.Type == SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed),
                 It.IsAny<CancellationToken>()));
         }

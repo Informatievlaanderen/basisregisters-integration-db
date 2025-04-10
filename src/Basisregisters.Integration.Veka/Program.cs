@@ -23,7 +23,7 @@
 
     public sealed class Program
     {
-        protected Program()
+        private Program()
         { }
 
         public static async Task Main(string[] args)
@@ -93,7 +93,7 @@
                     services.AddScoped<INotificationService>(provider =>
                     {
                         var snsService = provider.GetRequiredService<IAmazonSimpleNotificationService>();
-                        var topicArn = hostContext.Configuration["TopicArn"];
+                        var topicArn = hostContext.Configuration["TopicArn"]!;
                         return new NotificationService(snsService, topicArn);
                     });
                 })

@@ -28,7 +28,7 @@
 
             var suspiciousCases = (await _context.GetSuspiciousCase(
                 detailRequest.Type,
-                detailRequest.FilteringHeader.Filter.NisCode!,
+                detailRequest.FilteringHeader.Filter!.NisCode!,
                 paginationRequest.Offset,
                 paginationRequest.Limit + 1,
                 cancellationToken)).ToList();

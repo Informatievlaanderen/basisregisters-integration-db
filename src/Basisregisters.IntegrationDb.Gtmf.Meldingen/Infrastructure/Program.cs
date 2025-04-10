@@ -22,7 +22,7 @@
 
     public sealed class Program
     {
-        protected Program()
+        private Program()
         { }
 
         public static async Task Main(string[] args)

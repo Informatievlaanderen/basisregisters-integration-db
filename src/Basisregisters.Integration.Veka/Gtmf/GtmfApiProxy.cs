@@ -8,8 +8,8 @@
     using System.Threading.Tasks;
     using Configuration;
     using Microsoft.Extensions.Options;
-    using IdentityModel;
-    using IdentityModel.Client;
+    using Duende.IdentityModel;
+    using Duende.IdentityModel.Client;
     using Newtonsoft.Json;
 
     public interface IGtmfApiProxy
@@ -140,6 +140,8 @@
                 });
 
             var response = await tokenClient.RequestTokenAsync(OidcConstants.GrantTypes.ClientCredentials);
+            if(string.IsNullOrEmpty(response.AccessToken))
+                throw new ApplicationException("Could not get access token");
 
             _accessToken = new AccessToken(response.AccessToken, response.ExpiresIn);
 

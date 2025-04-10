@@ -2,7 +2,7 @@
 {
     public class VekaOptions
     {
-        public string EmailAddress { get; set; }
-        public string AgentId { get; set; }
+        public required string EmailAddress { get; set; }
+        public required string AgentId { get; set; }
     }
 }

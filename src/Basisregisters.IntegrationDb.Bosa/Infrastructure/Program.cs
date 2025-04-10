@@ -26,7 +26,7 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
 
     public sealed class Program
     {
-        protected Program()
+        private Program()
         { }
 
         public static async Task Main(string[] args)
@@ -91,7 +91,7 @@ namespace Basisregisters.IntegrationDB.Bosa.Infrastructure
                     services.AddAWSService<IAmazonSimpleNotificationService>();
                     services.AddSingleton<INotificationService>(sp =>
                         new NotificationService(sp.GetRequiredService<IAmazonSimpleNotificationService>(),
-                            hostContext.Configuration.GetValue<string>("TopicArn")));
+                            hostContext.Configuration.GetValue<string>("TopicArn")!));
 
                     services.Configure<S3Options>(hostContext.Configuration.GetSection("S3"));
                     services.Configure<FullDownloadOptions>(hostContext.Configuration);

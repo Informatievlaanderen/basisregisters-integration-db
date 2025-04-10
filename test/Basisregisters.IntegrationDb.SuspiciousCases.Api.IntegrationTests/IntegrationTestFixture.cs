@@ -7,8 +7,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
     using System.Net.Http;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.DockerUtilities;
-    using IdentityModel;
-    using IdentityModel.Client;
+    using Duende.IdentityModel;
+    using Duende.IdentityModel.Client;
     using Infrastructure;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.TestHost;
@@ -20,12 +20,12 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
 
     public class IntegrationTestFixture : IAsyncLifetime
     {
-        private string _clientId;
-        private string _clientSecret;
+        private string _clientId = string.Empty;
+        private string _clientSecret = string.Empty;
         private readonly IDictionary<string, AccessToken> _accessTokens = new Dictionary<string, AccessToken>();
 
-        public TestServer TestServer { get; private set; }
-        public NpgsqlConnection NpgsqlConnection { get; private set; }
+        public TestServer TestServer { get; private set; } = null!;
+        public NpgsqlConnection NpgsqlConnection { get; private set; } = null!;
 
         public async Task<string> GetAccessToken(string requiredScopes)
         {
@@ -46,7 +46,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
 
             var response = await tokenClient.RequestTokenAsync(OidcConstants.GrantTypes.ClientCredentials);
 
-            _accessTokens[requiredScopes] = new AccessToken(response.AccessToken, response.ExpiresIn);
+            _accessTokens[requiredScopes] = new AccessToken(response.AccessToken!, response.ExpiresIn);
 
             return _accessTokens[requiredScopes].Token;
         }
@@ -60,8 +60,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests
                 .AddEnvironmentVariables()
                 .Build();
 
-            _clientId = configuration.GetValue<string>("ClientId");
-            _clientSecret = configuration.GetValue<string>("ClientSecret");
+            _clientId = configuration.GetValue<string>("ClientId")!;
+            _clientSecret = configuration.GetValue<string>("ClientSecret")!;
 
             using var _ = DockerComposer.Compose("postgresql.yml", "suspicious-cases-integration-tests");
             await WaitForSqlServerToBecomeAvailable();

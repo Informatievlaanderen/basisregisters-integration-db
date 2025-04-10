@@ -13,9 +13,9 @@
         public Guid MeldingsobjectId { get; set; }
         public Guid MeldingId { get; set; }
         public string? OudeStatus { get; set; }
-        public string NieuweStatus { get; set; }
+        public string NieuweStatus { get; set; } = null!;
         public Guid InitiatorOrganisatieIdInternal { get; set; }
-        public string TijdstipWijzigingAsString { get; set; }
+        public string TijdstipWijzigingAsString { get; set; } = null!;
         private DateTimeOffset TijdstipWijzigingAsDateTimeOffset { get; set; }
 
         public Instant TijdstipWijzigingTimestamp

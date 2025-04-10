@@ -155,7 +155,7 @@
                     HuisnrStat = { Value = addressWithRegisteredCount.Address.Status },
                 };
 
-                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
+                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding()!);
             }
 
             return ExtractBuilder.CreateDbfFile<AddressWithRegisteredCount, AddressMatchDatabaseRecord>(
@@ -273,7 +273,7 @@
                     Inwoners = { Value = unmatchedRecord.Record.RegisteredCount }
                 };
 
-                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding());
+                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding()!);
             }
 
             return ExtractBuilder.CreateDbfFile<UnmatchedFlatFileRecord, UnmatchedAddressDbaseRecord>(
