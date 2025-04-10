@@ -52,7 +52,7 @@
                     var addresses = FilterAddressesByHouseNumber(
                         addressesPerStreetName,
                         streetNamePersistentLocalIds,
-                        records.Key.PostalCode,
+                        records.Key.PostalCode!,
                         records.Key.HouseNumber);
 
                     foreach (var record in records)
@@ -126,7 +126,7 @@
                     var addresses = FilterAddressesByHouseNumber(
                         addressesPerStreetName,
                         streetNamePersistentLocalIds,
-                        records.Key.PostalCode,
+                        records.Key.PostalCode!,
                         records.Key.HouseNumber);
 
                     foreach (var record in records)

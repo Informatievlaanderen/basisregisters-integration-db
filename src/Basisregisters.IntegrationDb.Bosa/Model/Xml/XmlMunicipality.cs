@@ -7,22 +7,22 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Xml
     public class XmlMunicipalityRoot
     {
         [XmlElement(Namespace = KnownNamespaces.Tns, ElementName = "source")]
-        public string Source { get; set; }
+        public required string Source { get; set; }
 
         [XmlElement(Namespace = KnownNamespaces.Tns, ElementName = "timestamp")]
         public DateTimeOffset Timestamp { get; set; }
 
         [XmlElement(Namespace = KnownNamespaces.Tns, ElementName = "municipality")]
-        public XmlMunicipality[] Municipalities { get; set; }
+        public required XmlMunicipality[] Municipalities { get; set; }
     }
 
     [XmlType(Namespace = KnownNamespaces.Tns, TypeName = "municipality")]
     public class XmlMunicipality
     {
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "code")]
-        public XmlCode Code { get; set; }
-        
+        public required XmlCode Code { get; set; }
+
         [XmlElement(Namespace = KnownNamespaces.Com, ElementName = "name")]
-        public XmlName[] Name { get; set; }
+        public required XmlName[] Name { get; set; }
     }
 }

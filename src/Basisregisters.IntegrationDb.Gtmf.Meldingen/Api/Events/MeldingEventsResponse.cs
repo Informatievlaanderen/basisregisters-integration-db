@@ -5,14 +5,14 @@
 
     public class MeldingEventsResponse
     {
-        [JsonProperty("member")] public IList<MeldingEventResponse> Events { get; set; }
+        [JsonProperty("member")] public required IList<MeldingEventResponse> Events { get; set; }
     }
 
     public class MeldingEventResponse
     {
         [JsonProperty("id")] public int Position { get; set; }
-        [JsonProperty("subject")] public string MeldingId { get; set; }
-        [JsonProperty("type")] public string Type { get; set; }
-        [JsonProperty("data")] public string Data { get; set; }
+        [JsonProperty("subject")] public required string MeldingId { get; set; }
+        [JsonProperty("type")] public required string Type { get; set; }
+        [JsonProperty("data")] public required string Data { get; set; }
     }
 }

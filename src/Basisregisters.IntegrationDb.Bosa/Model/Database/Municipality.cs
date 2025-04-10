@@ -4,10 +4,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
     public class Municipality
     {
-        public string Namespace { get; init; }
-        public string NisCode { get; init; }
+        public string Namespace { get; init; } = null!;
+        public string NisCode { get; init; } = null!;
         public DateTimeOffset VersionTimestamp { get; init; }
-        public string DutchName { get; init; }
+        public string DutchName { get; init; } = null!;
         public string? FrenchName { get; init; }
         public string? GermanName { get; init; }
         public string? EnglishName { get; init; }

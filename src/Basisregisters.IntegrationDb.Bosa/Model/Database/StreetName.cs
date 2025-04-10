@@ -12,7 +12,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
     public class StreetName
     {
-        public string Namespace { get; init; }
+        public string Namespace { get; init; } = null!;
         public int StreetNamePersistentLocalId { get; init; }
 
         public StreetNameStatus Status { get; init; }
@@ -27,8 +27,8 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
         public string? HomonymAdditionFrench { get; init; }
         public string? HomonymAdditionGerman { get; init; }
 
-        public string NisCode { get; init; }
-        public string MunicipalityNamespace { get; init; }
+        public string NisCode { get; init; } = null!;
+        public string MunicipalityNamespace { get; init; } = null!;
         public DateTimeOffset MunicipalityVersionTimestamp { get; init; }
         public MunicipalityStatus MunicipalityStatus { get; init; }
 

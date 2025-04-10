@@ -23,7 +23,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
     public sealed class Program
     {
-        protected Program()
+        private Program()
         { }
 
         public static async Task Main(string[] args)
@@ -75,12 +75,12 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
             try
             {
-                var directory = configuration["OutputDirectory"];
-                var sourceFileName = configuration["SourceFileName"];
+                var directory = configuration["OutputDirectory"]!;
+                var sourceFileName = configuration["SourceFileName"]!;
 
                 var flatFileRecords = ReadFlatFileRecordsRecords(sourceFileName);
 
-                var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")));
+                var validator = new FlatFileRecordValidator(new PostalCodeRepository(configuration.GetConnectionString("Integration")!));
                 var invalidRecords = new ConcurrentBag<(FlatFileRecord, FlatFileRecordErrorType)>();
                 var validRecords = new ConcurrentBag<FlatFileRecord>();
 
@@ -101,9 +101,9 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
 
                 Console.WriteLine("Record validation DONE");
 
-                var municipalityRepository = new MunicipalityRepository(configuration.GetConnectionString("Integration"));
-                var streetNameRepository = new StreetNameRepository(configuration.GetConnectionString("Integration"));
-                var addressRepository = new AddressRepository(configuration.GetConnectionString("Integration"));
+                var municipalityRepository = new MunicipalityRepository(configuration.GetConnectionString("Integration")!);
+                var streetNameRepository = new StreetNameRepository(configuration.GetConnectionString("Integration")!);
+                var addressRepository = new AddressRepository(configuration.GetConnectionString("Integration")!);
 
                 var streetNameMatchRunner = new StreetNameMatchRunner(streetNameRepository, municipalityRepository);
                 var (matchedStreetNames, unmatchedStreetNames) =

@@ -10,6 +10,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using Configuration;
+    using FluentValidation;
     using IdentityModel.AspNetCore.OAuth2Introspection;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     {
         private const string DatabaseTag = "db";
 
-        private IContainer _applicationContainer;
+        private IContainer _applicationContainer = null!;
 
         private readonly IConfiguration _configuration;
         private readonly ILoggerFactory _loggerFactory;
@@ -48,7 +49,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                 .GetSection(nameof(OAuth2IntrospectionOptions))
                 .Get<OAuth2IntrospectionOptions>();
 
-            var baseUrl = _configuration.GetValue<string>("BaseUrl");
+            var baseUrl = _configuration.GetValue<string>("BaseUrl")!;
             var baseUrlForExceptions = baseUrl.EndsWith("/")
                 ? baseUrl.Substring(0, baseUrl.Length - 1)
                 : baseUrl;
@@ -63,7 +64,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                 .GetSection("Cors")
                                 .GetChildren()
                                 .Select(c => c.Value)
-                                .ToArray()
+                                .ToArray()!
                         },
                         Server =
                         {
@@ -71,7 +72,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                         },
                         Swagger =
                         {
-                            ApiInfo = (provider, description) => new OpenApiInfo
+                            ApiInfo = (_, description) => new OpenApiInfo
                             {
                                 Version = description.ApiVersion.ToString(),
                                 Title = "Basisregisters Vlaanderen Verdachte Gevallen API",
@@ -83,13 +84,10 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
                                     Url = new Uri("https://backoffice.basisregisters.vlaanderen")
                                 }
                             },
-                            XmlCommentPaths = new[] { typeof(Startup).GetTypeInfo().Assembly.GetName().Name }
+                            XmlCommentPaths = new[] { typeof(Startup).GetTypeInfo().Assembly.GetName().Name! }
                         },
                         MiddlewareHooks =
                         {
-                            FluentValidation = fv => fv
-                                .RegisterValidatorsFromAssemblyContaining<Startup>(),
-
                             AfterHealthChecks = health =>
                             {
                                 var connectionStrings = _configuration
@@ -98,15 +96,15 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
 
                                 foreach (var connectionString in connectionStrings)
                                     health.AddNpgSql(
-                                        connectionString.Value,
+                                        connectionString.Value!,
                                         name: $"npgsql-{connectionString.Key.ToLowerInvariant()}",
                                         tags: new[] {DatabaseTag, "sql", "npgsql"});
                             },
                             Authorization = options => { options.AddAddressPolicies([]); }
                         }
                     }
-
                 .EnableJsonErrorActionFilterOption())
+                .AddValidatorsFromAssemblyContaining<Startup>()
                 .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"))
                 .AddHostedService<RefreshCountService>()
                 .AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // Used to retrieve the authenticated user claims.
@@ -167,7 +165,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
             appLifetime.ApplicationStarted.Register(() =>
             {
                 MigrationsHelper.Run(
-                    _configuration.GetConnectionString("Integration"),
+                    _configuration.GetConnectionString("Integration")!,
                     _loggerFactory);
             });
 

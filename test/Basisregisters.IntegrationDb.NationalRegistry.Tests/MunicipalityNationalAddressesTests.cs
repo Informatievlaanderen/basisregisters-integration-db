@@ -81,7 +81,6 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0002", "GVLR", "2", "GVLR")]
         [InlineData("0002", "GVL ", "2", "GVL")]
         [InlineData("0002", "V1L ", "2", "V1L")]
-        [InlineData("0002", "V1R ", "2", "V1R")]
         [InlineData("0002", "V3  ", "2", "V3")]
         public void Wommelgem(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {

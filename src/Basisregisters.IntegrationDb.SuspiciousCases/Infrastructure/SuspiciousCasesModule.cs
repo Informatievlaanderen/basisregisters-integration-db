@@ -17,8 +17,7 @@
             var logger = loggerFactory.CreateLogger<SuspiciousCasesModule>();
             var connectionString = configuration.GetConnectionString("Integration");
 
-            var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
-            if (hasConnectionString)
+            if (!string.IsNullOrWhiteSpace(connectionString))
                 RunOnNpgSqlServer(services, connectionString);
             else
                 RunInMemoryDb(services, loggerFactory, logger);

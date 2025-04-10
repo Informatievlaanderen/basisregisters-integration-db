@@ -2,11 +2,11 @@
 {
     public abstract class SuspiciousCase
     {
-        public string PersistentLocalId { get; set; }
-        public string NisCode { get; set; }
+        public string PersistentLocalId { get; set; } = null!;
+        public string NisCode { get; set; } = null!;
         public abstract Category Category { get; }
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
-        public SuspiciousCase() { }
+        protected SuspiciousCase() { }
     }
 }
