@@ -6,7 +6,7 @@
 
     public class SuspiciousCaseCount
     {
-        public string NisCode { get; set; }
+        public required string NisCode { get; set; }
         public int Count { get; set; }
         public SuspiciousCasesType Type { get; set; }
 

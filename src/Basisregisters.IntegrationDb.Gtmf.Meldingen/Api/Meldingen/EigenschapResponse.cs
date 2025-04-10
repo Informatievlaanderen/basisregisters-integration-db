@@ -5,12 +5,12 @@ namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Api.Meldingen
 
     public class EigenschapResponse
     {
-        [JsonProperty("codelijst")] public IEnumerable<EigenschapResponseBeschrijving> Items { get; set; }
+        [JsonProperty("codelijst")] public required IEnumerable<EigenschapResponseBeschrijving> Items { get; set; }
     }
 
     public class EigenschapResponseBeschrijving
     {
-        [JsonProperty("label")] public string Label { get; set; }
-        [JsonProperty("waarde")] public string Waarde { get; set; }
+        [JsonProperty("label")] public required string Label { get; set; }
+        [JsonProperty("waarde")] public required string Waarde { get; set; }
     }
 }

@@ -5,11 +5,11 @@
 
     public class MeldingsobjectEvent
     {
-        [JsonIgnore] public string EventType { get; set; }
+        [JsonIgnore] public required string EventType { get; set; }
         [JsonProperty("MeldingsobjectId")] public Guid MeldingsobjectId { get; set; }
         [JsonProperty("MeldingId")] public Guid MeldingId { get; set; }
-        [JsonProperty("ToelichtingMelder")] public string ToelichtingMelder { get; set; }
-        [JsonProperty("Initiator")] public Initiator Initiator { get; set; }
+        [JsonProperty("ToelichtingMelder")] public string? ToelichtingMelder { get; set; }
+        [JsonProperty("Initiator")] public required Initiator Initiator { get; set; }
         [JsonProperty("AangemaaktOp")] public DateTimeOffset AangemaaktOp { get; set; }
 
         public string GetOudeStatus()
@@ -57,10 +57,10 @@
 
     public class Initiator
     {
-        [JsonProperty("ovoCode")] public string OvoCode { get; set; }
-        [JsonProperty("id")] public string KboNummer { get; set; }
-        [JsonProperty("wettelijkeNaam")] public string Naam { get; set; }
+        [JsonProperty("ovoCode")] public required string OvoCode { get; set; }
+        [JsonProperty("id")] public required string KboNummer { get; set; }
+        [JsonProperty("wettelijkeNaam")] public required string Naam { get; set; }
         [JsonProperty("agentId")] public Guid AgentId { get; set; }
-        [JsonProperty("type")] public string Type { get; set; }
+        [JsonProperty("type")] public required string Type { get; set; }
     }
 }

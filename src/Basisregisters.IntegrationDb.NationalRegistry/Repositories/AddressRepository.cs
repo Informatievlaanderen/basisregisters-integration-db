@@ -84,7 +84,7 @@
             Position = position;
         }
 
-        public Address()
+        private Address()
         { }
 
         public int AddressPersistentLocalId { get; set; }
@@ -92,12 +92,12 @@
         public int? ParentPersistentLocalId { get; set; }
         public bool IsHouseNumber => !IsBoxNumber;
         public bool IsBoxNumber => ParentPersistentLocalId.HasValue;
-        public string PostalCode { get; set; }
-        public string HouseNumber { get; set; }
+        public required string PostalCode { get; set; }
+        public required string HouseNumber { get; set; }
         public string? BoxNumber { get; set; }
-        public string Status { get; set; }
-        public string Method { get; set; }
-        public string Specification { get; set; }
-        public Point Position { get; set; }
+        public required string Status { get; set; }
+        public required string Method { get; set; }
+        public required string Specification { get; set; }
+        public required Point Position { get; set; }
     }
 }

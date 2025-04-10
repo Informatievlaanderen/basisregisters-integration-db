@@ -7,7 +7,7 @@
     {
         public const string GtmfProjectionName = "GTMF";
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public int Position { get; set; }
 
         public ProjectionState()

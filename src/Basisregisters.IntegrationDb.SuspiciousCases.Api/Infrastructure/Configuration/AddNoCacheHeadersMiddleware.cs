@@ -14,8 +14,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure.Config
 
         public Task Invoke(HttpContext context)
         {
-            context.Response.Headers.Add("cache-control", "no-store, no-cache, must-revalidate");
-            context.Response.Headers.Add("pragma", "no-cache");
+            context.Response.Headers.AppendCommaSeparatedValues("cache-control", "no-store, no-cache, must-revalidate");
+            context.Response.Headers.Append("pragma", "no-cache");
 
             return _next(context);
         }

@@ -15,7 +15,7 @@
         public Guid MeldingsobjectId { get; set; }
         public Guid MeldingId { get; set; }
 
-        public string DatumIndieningAsString { get; set; }
+        public string DatumIndieningAsString { get; set; } = null!;
         private DateTimeOffset DatumIndieningAsDateTimeOffset { get; set; }
         public Instant DatumIndieningTimestamp
         {
@@ -27,7 +27,7 @@
             }
         }
 
-        public string DatumVaststellingAsString { get; set; }
+        public string DatumVaststellingAsString { get; set; } = null!;
         private DateTimeOffset DatumVaststellingAsDateTimeOffset { get; set; }
         public Instant DatumVaststellingTimestamp
         {
@@ -39,18 +39,17 @@
             }
         }
 
-
         public Guid MeldingsorganisatieIdInternal { get; set; }
         public Guid MeldingsorganisatieId { get; set; }
-        public string Meldingsapplicatie { get; set; }
-        public string Referentie { get; set; }
+        public string Meldingsapplicatie { get; set; } = null!;
+        public string Referentie { get; set; } = null!;
         public string? ReferentieMelder { get; set; }
         public string? Onderwerp { get; set; }
         public string? Beschrijving { get; set; }
         public string? Samenvatting { get; set; }
-        public string Thema { get; set; }
-        public string Oorzaak { get; set; }
-        public string OvoCode { get; set; }
+        public string Thema { get; set; } = null!;
+        public string Oorzaak { get; set; } = null!;
+        public string OvoCode { get; set; } = null!;
         public Geometry? Geometrie { get; set; }
 
         private Meldingsobject()

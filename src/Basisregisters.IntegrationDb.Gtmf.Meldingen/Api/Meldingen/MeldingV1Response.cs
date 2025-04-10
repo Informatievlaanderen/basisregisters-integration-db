@@ -7,7 +7,7 @@
 
     public class MeldingV1Response
     {
-        [JsonProperty("heeftDoelwit")] public IEnumerable<MeldingV1ResponseMeldingsObject> MeldingsObjecten { get; set; }
+        [JsonProperty("heeftDoelwit")] public required IEnumerable<MeldingV1ResponseMeldingsObject> MeldingsObjecten { get; set; }
 
         public Guid GetMeldingsobjectId() => Guid.Parse(GetMeldingsobject()
             .Id
@@ -65,11 +65,11 @@
 
     public class MeldingV1ResponseMeldingsObject
     {
-        [JsonProperty("@id")] public string Id { get; set; }
+        [JsonProperty("@id")] public required string Id { get; set; }
         [JsonProperty("heeftOnderwerp")] public string? Onderwerp { get; set; }
-        [JsonProperty("gerelateerdeBody")] public IEnumerable<MeldingV1ResponseMeldingsObjectBody> Body { get; set; }
-        [JsonProperty("heeftToestand")] public MeldingV1ResponseToestand Toestand { get; set; }
-        [JsonProperty("heeftEigenschap")] public IEnumerable<MeldingV1ResponseEigenschap> Eigenschappen { get; set; }
+        [JsonProperty("gerelateerdeBody")] public required IEnumerable<MeldingV1ResponseMeldingsObjectBody> Body { get; set; }
+        [JsonProperty("heeftToestand")] public required MeldingV1ResponseToestand Toestand { get; set; }
+        [JsonProperty("heeftEigenschap")] public required IEnumerable<MeldingV1ResponseEigenschap> Eigenschappen { get; set; }
     }
 
     public class MeldingV1ResponseMeldingsObjectBody
@@ -84,8 +84,8 @@
         public const string GRAR_Thema = "GRAR_Thema";
         public const string GRAR_Oorzaak = "GRAR_Oorzaak";
 
-        [JsonProperty("eigenschap")] public string Type { get; set; }
-        [JsonProperty("voorgesteldeWaarde")] public string Waarde { get; set; }
+        [JsonProperty("eigenschap")] public required string Type { get; set; }
+        [JsonProperty("voorgesteldeWaarde")] public required string Waarde { get; set; }
 
         public bool IsOvoCode => Type.EndsWith(GRAR_OvoCode, StringComparison.InvariantCultureIgnoreCase);
         public bool IsThema => Type.EndsWith(GRAR_Thema, StringComparison.InvariantCultureIgnoreCase);

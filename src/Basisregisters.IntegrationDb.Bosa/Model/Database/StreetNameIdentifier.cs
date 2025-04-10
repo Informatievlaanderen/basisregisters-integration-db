@@ -4,10 +4,10 @@
 
     public class StreetNameIdentifier
     {
-        public string Namespace { get; init; }
+        public string Namespace { get; init; } = null!;
         public int StreetNamePersistentLocalId { get; init; }
         public DateTimeOffset VersionTimestamp { get; init; }
-        public string NisCode { get; init; }
+        public string NisCode { get; init; } = null!;
         public MunicipalityStatus MunicipalityStatus { get; init; }
 
         // Needed for Dapper

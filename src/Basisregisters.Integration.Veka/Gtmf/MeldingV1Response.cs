@@ -4,14 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using Newtonsoft.Json;
-    using NodaTime;
-    using NodaTime.Text;
 
     public class MeldingV1Response
     {
-        [JsonProperty("referentie")] public string Referentie { get; set; }
-        [JsonProperty("heeftParticiperende")] public IEnumerable<Partipatie> Participaties { get; set; }
-        [JsonProperty("heeftDoelwit")] public IEnumerable<MeldingsObject> MeldingsObjecten { get; set; }
+        [JsonProperty("referentie")] public required string Referentie { get; set; }
+        [JsonProperty("heeftParticiperende")] public required IEnumerable<Partipatie> Participaties { get; set; }
+        [JsonProperty("heeftDoelwit")] public required IEnumerable<MeldingsObject> MeldingsObjecten { get; set; }
 
         public string GetIndienerId()
         {
@@ -20,7 +18,7 @@
             return indienerParticipatie.Agent.Id.Split('/', StringSplitOptions.RemoveEmptyEntries).Last();
         }
 
-        public string GetBeschrijving()
+        public string? GetBeschrijving()
         {
             return GetMeldingsObject().Body.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Beschrijving))?.Beschrijving ?? string.Empty;
         }
@@ -42,7 +40,7 @@
             return laatsteStatusUpdate.BehandelaarId;
         }
 
-        public string GetToelichtingBehandelaar()
+        public string? GetToelichtingBehandelaar()
         {
             var laatsteStatusUpdate = GetLaatsteStatusUpdate();
             return laatsteStatusUpdate.Toelichting;
@@ -63,48 +61,48 @@
 
     public class StatusUpdate
     {
-        [JsonProperty("statuswijzigingDoor")] public string BehandelaarId { get; set; }
+        [JsonProperty("statuswijzigingDoor")] public required string BehandelaarId { get; set; }
 
-        [JsonProperty("toelichtingStatuswijzigingMelder")] public string Toelichting { get; set; }
+        [JsonProperty("toelichtingStatuswijzigingMelder")] public string? Toelichting { get; set; }
 
-        [JsonProperty("statusType")] public Status Status { get; set; }
+        [JsonProperty("statusType")] public required Status Status { get; set; }
     }
 
     public class Status
     {
-        [JsonProperty("prefLabel")] public string Label { get; set; }
+        [JsonProperty("prefLabel")] public required string Label { get; set; }
     }
 
     public class Toestand
     {
-        [JsonProperty("datumVaststelling")] public string DatumVaststelling { get; set; }
+        [JsonProperty("datumVaststelling")] public required string DatumVaststelling { get; set; }
     }
 
     public class MeldingsObject
     {
-        [JsonProperty("gerelateerdeBody")] public IEnumerable<MeldingsObjectBody> Body { get; set; }
-        [JsonProperty("heeftToestand")] public Toestand Toestand { get; set; }
-        [JsonProperty("heeftStatus")] public IEnumerable<StatusUpdate> StatusUpdates { get; set; }
+        [JsonProperty("gerelateerdeBody")] public required IEnumerable<MeldingsObjectBody> Body { get; set; }
+        [JsonProperty("heeftToestand")] public required Toestand Toestand { get; set; }
+        [JsonProperty("heeftStatus")] public required IEnumerable<StatusUpdate> StatusUpdates { get; set; }
     }
 
     public class MeldingsObjectBody
     {
-        [JsonProperty("beschrijving")] public string Beschrijving { get; set; }
+        [JsonProperty("beschrijving")] public string? Beschrijving { get; set; }
     }
 
     public class Partipatie
     {
-        [JsonProperty("agent")] public Agent Agent { get; set; }
-        [JsonProperty("rol")] public AgentRol Rol { get; set; }
+        [JsonProperty("agent")] public required Agent Agent { get; set; }
+        [JsonProperty("rol")] public required AgentRol Rol { get; set; }
     }
 
     public class Agent
     {
-        [JsonProperty("@id")] public string Id { get; set; }
+        [JsonProperty("@id")] public required string Id { get; set; }
     }
 
     public class AgentRol
     {
-        [JsonProperty("prefLabel")] public string Label { get; set; }
+        [JsonProperty("prefLabel")] public required string Label { get; set; }
     }
 }

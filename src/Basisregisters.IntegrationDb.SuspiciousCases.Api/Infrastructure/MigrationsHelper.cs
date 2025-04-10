@@ -13,7 +13,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Infrastructure
     {
         public static void Run(
             string sequenceConnectionString,
-            ILoggerFactory loggerFactory = null)
+            ILoggerFactory? loggerFactory = null)
         {
             var logger = loggerFactory?.CreateLogger<MigrationsLogger>();
 

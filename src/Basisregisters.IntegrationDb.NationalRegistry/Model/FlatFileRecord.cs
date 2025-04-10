@@ -7,14 +7,14 @@
 
     public sealed class FlatFileRecord
     {
-        public string NisCode { get; set; }
-        public string PostalCode { get; set; }
-        public string StreetCode { get; set; }
-        public string HouseNumber { get; set; }
+        public string NisCode { get; set; } = null!;
+        public string? PostalCode { get; set; }
+        public string? StreetCode { get; set; }
+        public string HouseNumber { get; set; } = null!;
 
-        public NationalRegistryIndex Index { get; set; }
+        public NationalRegistryIndex Index { get; set; } = null!;
 
-        public string StreetName { get; set; }
+        public string StreetName { get; set; } = null!;
         public int RegisteredCount { get; set; }
 
         public bool HasIndex => !string.IsNullOrEmpty(Index) && Index != "0000";
@@ -44,7 +44,7 @@
 
         public string ToSafeString()
         {
-            return $"{NisCode.PadLeft(5, '0')}{PostalCode.PadLeft(4, '0')}{StreetCode.PadLeft(4, '0')}{HouseNumber.PadLeft(4, '0')}{Index.SourceValue?.PadLeft(4) ?? "    "}{StreetName}";
+            return $"{NisCode.PadLeft(5, '0')}{PostalCode?.PadLeft(4, '0')}{StreetCode?.PadLeft(4, '0')}{HouseNumber.PadLeft(4, '0')}{Index.SourceValue?.PadLeft(4) ?? "    "}{StreetName}";
         }
     }
 
@@ -95,7 +95,7 @@
                     if (IsNumericRegex.IsMatch(Value[0].ToString()) &&
                         (string.IsNullOrEmpty(tempP1) ||
                          (IsNumericRegex.IsMatch(tempP1) && string.IsNullOrEmpty(tempP2)) ||
-                         (BeginCharRegex.IsMatch(tempP1) && IsNumericRegex.IsMatch(tempP2)) ||
+                         (BeginCharRegex.IsMatch(tempP1) && IsNumericRegex.IsMatch(tempP2!)) ||
                          (BeginCharRegex.IsMatch(tempP1) && string.IsNullOrEmpty(tempP2))))
                     {
                         RightPartOne = tempP1;

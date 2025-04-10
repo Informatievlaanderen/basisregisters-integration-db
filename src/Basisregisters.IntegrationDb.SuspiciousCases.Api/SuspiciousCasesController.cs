@@ -127,7 +127,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             var pagination = Request.ExtractPaginationRequest();
 
             var response = await _mediator.Send(
-                new SuspiciousCasesDetailRequest(filtering, (SuspiciousCasesType)type, pagination),
+                new SuspiciousCasesDetailRequest(filtering!, (SuspiciousCasesType)type, pagination),
                 cancellationToken);
 
             return Ok(response);
@@ -138,10 +138,10 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api
             var filtering = request.ExtractFilteringRequest<T>();
             if (filtering.Filter is null)
             {
-                filtering = new FilteringHeader<T>(new T());
+                filtering = new FilteringHeader<T?>(new T());
             }
 
-            return filtering;
+            return filtering!;
         }
 
         private async Task<string?> DetermineNisCode(string? nisCode, CancellationToken cancellationToken)

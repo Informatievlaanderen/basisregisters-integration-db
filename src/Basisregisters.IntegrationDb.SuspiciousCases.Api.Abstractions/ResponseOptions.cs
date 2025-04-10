@@ -2,13 +2,13 @@
 {
     public class ResponseOptions
     {
-        public string AddressDetailUrl { get; set; }
-        public string BuildingDetailUrl { get; set; }
-        public string BuildingUnitDetailUrl { get; set; }
-        public string StreetNameDetailUrl { get; set; }
-        public string ParcelDetailUrl { get; set; }
-        public string RoadSegmentDetailUrl { get; set; }
-        public string SuspiciousCasesTypeUrl { get; set; }
-        public string SuspiciousCasesTypeNextUrl { get; set; }
+        public required string AddressDetailUrl { get; set; }
+        public required string BuildingDetailUrl { get; set; }
+        public required string BuildingUnitDetailUrl { get; set; }
+        public required string StreetNameDetailUrl { get; set; }
+        public required string ParcelDetailUrl { get; set; }
+        public required string RoadSegmentDetailUrl { get; set; }
+        public required string SuspiciousCasesTypeUrl { get; set; }
+        public required string SuspiciousCasesTypeNextUrl { get; set; }
     }
 }

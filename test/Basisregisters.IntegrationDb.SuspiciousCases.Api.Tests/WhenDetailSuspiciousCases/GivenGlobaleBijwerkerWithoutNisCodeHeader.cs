@@ -4,6 +4,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
     using System.Linq;
     using System.Security.Claims;
     using System.Threading;
+    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
@@ -57,14 +58,13 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenDetailSuspi
         }
 
         [Fact]
-        public void ThenBadRequestResponse()
+        public async Task ThenBadRequestResponse()
         {
             var act = () =>
                 _suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, CancellationToken.None);
-            act
+            await act
                 .Should()
                 .ThrowAsync<ValidationException>()
-                .Result
                 .Where(x =>
                     x.Errors.Any(e => e.ErrorCode == "OntbrekendeNiscode" && e.ErrorMessage == "Niscode ontbreekt."));
         }

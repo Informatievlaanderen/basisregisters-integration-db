@@ -4,6 +4,7 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
     using System.Linq;
     using System.Security.Claims;
     using System.Threading;
+    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
@@ -57,13 +58,12 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.WhenListSuspici
         }
 
         [Fact]
-        public void ThenThrowsValidationException()
+        public async Task ThenThrowsValidationException()
         {
             var act = () => _suspiciousCasesController.List(CancellationToken.None);
-            act
+            await act
                 .Should()
                 .ThrowAsync<ValidationException>()
-                .Result
                 .Where(x =>
                     x.Errors.Any(e => e.ErrorCode == "OntbrekendeNiscode" && e.ErrorMessage == "Niscode ontbreekt."));
         }

@@ -6,7 +6,7 @@
     using MediatR;
 
     public sealed record SuspiciousCasesDetailRequest(
-        FilteringHeader<SuspiciousCasesDetailFilter> FilteringHeader,
+        FilteringHeader<SuspiciousCasesDetailFilter?> FilteringHeader,
         SuspiciousCasesType Type,
         IPaginationRequest Pagination) : IRequest<SuspiciousCasesDetailResponse>;
 }

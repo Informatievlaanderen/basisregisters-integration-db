@@ -33,10 +33,10 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
     public class Address
     {
-        public string Namespace { get; init; }
+        public string Namespace { get; init; } = null!;
         public int AddressPersistentLocalId { get; init; }
         public int StreetNamePersistentLocalId { get; init; }
-        public string PostalCode { get; init; }
+        public string PostalCode { get; init; } = null!;
 
         public DateTimeOffset VersionTimestamp { get; init; }
         public DateTimeOffset CreatedOn { get; init; }
@@ -50,7 +50,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Model.Database
 
         public AddressStatus Status { get; init; }
 
-        public string HouseNumber { get; init; }
+        public string HouseNumber { get; init; } = null!;
         public string? BoxNumber { get; init; }
         public bool? OfficiallyAssigned { get; init; }
 

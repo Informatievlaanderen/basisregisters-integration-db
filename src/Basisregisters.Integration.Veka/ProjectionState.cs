@@ -83,7 +83,9 @@ namespace Basisregisters.Integration.Veka
             return Task.FromResult(meldingAfgerondEventPosition - 10);
         }
 
-        public async Task SetLastPosition(int lastPosition, CancellationToken ct)
-        { }
+        public Task SetLastPosition(int lastPosition, CancellationToken ct)
+        {
+            return Task.CompletedTask;
+        }
     }
 }
