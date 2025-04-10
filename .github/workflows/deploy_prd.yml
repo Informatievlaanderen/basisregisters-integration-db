@@ -22,7 +22,7 @@ jobs:
       shell: bash
 
     - name: Notify deployment started
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@v1.27.1
       with:
         channel-id: '#team-dinosaur-dev'
         slack-message: Deployment of basisregisters-integration to production has started
@@ -118,7 +118,7 @@ jobs:
       shell: bash
 
     - name: Notify deployment finished
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@v1.27.1
       with:
         channel-id: '#team-dinosaur-dev'
         slack-message: Deployment of basisregisters-integration to production has finished
