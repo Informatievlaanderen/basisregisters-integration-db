@@ -8,7 +8,7 @@
         [JsonIgnore] public required string EventType { get; set; }
         [JsonProperty("MeldingsobjectId")] public Guid MeldingsobjectId { get; set; }
         [JsonProperty("MeldingId")] public Guid MeldingId { get; set; }
-        [JsonProperty("ToelichtingMelder")] public required string ToelichtingMelder { get; set; }
+        [JsonProperty("ToelichtingMelder")] public string? ToelichtingMelder { get; set; }
         [JsonProperty("Initiator")] public required Initiator Initiator { get; set; }
         [JsonProperty("AangemaaktOp")] public DateTimeOffset AangemaaktOp { get; set; }
 
