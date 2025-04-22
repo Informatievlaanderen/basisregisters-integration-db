@@ -4,13 +4,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Tongeren : MunicipalityHouseNumberBoxNumbersBase
+    public class TongerenBorgloon : MunicipalityHouseNumberBoxNumbersBase
     {
-        public Tongeren(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
+        public TongerenBorgloon(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
         public override bool IsMatch() =>
-            NisCode == "73083" &&
+            NisCode == "73111" &&
             (
                 IndexSourceValue.StartsWith("00b") || IndexSourceValue.StartsWith("0b")
             );
@@ -21,13 +21,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
             {
                 var busNumber = IndexSourceValue.Split('b').Last();
 
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         busNumber
                     )
-                };
+                ];
             }
 
             throw new InvalidOperationException("Invalid use of matches");
