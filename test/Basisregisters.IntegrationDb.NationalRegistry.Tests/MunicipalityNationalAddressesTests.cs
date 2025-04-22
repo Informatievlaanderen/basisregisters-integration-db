@@ -920,7 +920,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         {
             var record = new FlatFileRecord
             {
-                NisCode = "71022",
+                NisCode = "71072",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };

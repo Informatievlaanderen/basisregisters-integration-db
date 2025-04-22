@@ -9,7 +9,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         public Hasselt(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
-        public override bool IsMatch() => NisCode == "71022" && (
+        public override bool IsMatch() => NisCode == "71072" && (
             (IndexSourceValue.Length == 4 && Regex.IsMatch(IndexSourceValue, "^[a-zA-Z]{1}[0-9]{1}.[0-9]{1}$"))
         );
 
