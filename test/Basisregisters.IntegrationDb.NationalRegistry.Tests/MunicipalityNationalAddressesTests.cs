@@ -242,50 +242,31 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         }
 
         [Theory]
-        [InlineData("0046", "b  1", "46", "001")]
-        [InlineData("0046", "b 4 ", "46", "004")]
-        [InlineData("0002", "b101", "2", "101")]
-        [InlineData("0002", "b201", "2", "201")]
-        [InlineData("0002", "Fb01", "2F", "001")]
-        [InlineData("0002", "Eb11", "2E", "011")]
-        [InlineData("0002", "1b 7", "2_1", "007")]
-        [InlineData("0002", "CB01", "2C", "001")]
-        [InlineData("0002", "CB13", "2C", "013")]
-        [InlineData("0002", "0001", "2_1", null)]
-        [InlineData("0002", "0002", "2_2", null)]
-        public void Beveren(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        [InlineData("0046", "b  1", "46", new [] {"001"})]
+        [InlineData("0046", "b 4 ", "46", new [] {"004"})]
+        [InlineData("0002", "b101", "2", new [] {"101"})]
+        [InlineData("0002", "b201", "2", new [] {"201"})]
+        [InlineData("0046", "B001", "46", new [] {"001", "1", "B001"})]
+        [InlineData("0002", "Fb01", "2F", new [] {"001"})]
+        [InlineData("0002", "Eb11", "2E", new [] {"011"})]
+        [InlineData("0002", "1b 7", "2_1", new [] {"007"})]
+        [InlineData("0002", "CB01", "2C", new [] {"001"})]
+        [InlineData("0002", "CB13", "2C", new [] {"013"})]
+        [InlineData("0002", "0001", "2_1", new [] { (string?)null })]
+        [InlineData("0002", "0002", "2_2", new [] { (string?)null })]
+        [InlineData("0046", "V001", "46", new [] {"V1"})]
+        [InlineData("0046", "Glv0", "46", new [] {"0.0"})]
+        [InlineData("0046", "Glv ", "46", new [] {"0.0"})]
+        public void BeverenKruibekeZwijndrecht(string houseNumber, string index, string expectedHouseNumber, string?[] expectedBoxNumbers)
         {
             var record = new FlatFileRecord
             {
-                NisCode = "46003",
-                HouseNumber = houseNumber,
-                Index = new NationalRegistryIndex(index)
-            };
-            var address = new NationalRegistryAddress(record);
-
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
-
-            result.Should().NotBeEmpty();
-            result.First().HouseNumber.Should().Be(expectedHouseNumber);
-            result.First().BoxNumber.Should().Be(expectedBoxNumber);
-        }
-
-        [Theory]
-        [InlineData("0046", "B001", "46", "1")]
-        [InlineData("0046", "B001", "46", "B001")]
-        [InlineData("0046", "V001", "46", "V1")]
-        [InlineData("0046", "Glv0", "46", "0.0")]
-        [InlineData("0046", "Glv ", "46", "0.0")]
-        public void Zwijndrecht(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
-        {
-            var record = new FlatFileRecord
-            {
-                NisCode = "11056",
+                NisCode = "46030",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
 
-            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+            AtLeastOneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumbers);
         }
 
         [Theory]
@@ -605,13 +586,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
-            var address = new NationalRegistryAddress(record);
-
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
-
-            result.Should().NotBeEmpty();
-            result.First().HouseNumber.Should().Be(expectedHouseNumber);
-            result.First().BoxNumber.Should().Be(expectedBoxNumber);
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
         [Theory]
@@ -1151,6 +1126,18 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             result.Should().NotBeEmpty();
             result.Count(x => x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber).Should().Be(1);
+        }
+
+        private void AtLeastOneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string?[] expectedBoxNumbers)
+        {
+            var address = new NationalRegistryAddress(record);
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+
+            result.Should().NotBeEmpty();
+            foreach (var expectedBoxNumber in expectedBoxNumbers)
+            {
+                result.Count(x => x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber).Should().BeGreaterThan(0);
+            }
         }
     }
 }
