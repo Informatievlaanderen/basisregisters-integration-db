@@ -337,11 +337,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
         [InlineData("0046", "00b1", "46", "1")]
         [InlineData("0046", "00b5", "46", "5")]
         [InlineData("0046", "0b52", "46", "52")]
-        public void Tongeren(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        public void TongerenBorgloon(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
             {
-                NisCode = "73083",
+                NisCode = "73111",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
