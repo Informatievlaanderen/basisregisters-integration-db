@@ -53,8 +53,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Drogenbos(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Borsbeek(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Grimbergen(_record.NisCode, _record.HouseNumber, _record.Index);
-            yield return new Beveren(_record.NisCode, _record.HouseNumber, _record.Index);
-            yield return new Zwijndrecht(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new BeverenKruibekeZwijndrecht(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Wemmel(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Boom(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Ieper(_record.NisCode, _record.HouseNumber, _record.Index);
