@@ -3,13 +3,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
     using System;
     using System.Collections.Generic;
 
-    public class Lokeren : MunicipalityHouseNumberBoxNumbersBase
+    public class LokerenMoerbeke : MunicipalityHouseNumberBoxNumbersBase
     {
-        public Lokeren(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
+        public LokerenMoerbeke(string nisCode, string sourceHouseNumber, NationalRegistryIndex index) : base(nisCode, sourceHouseNumber, index)
         { }
 
         public override bool IsMatch() =>
-            NisCode == "46014" &&
+            NisCode == "46029" &&
             (
                 ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..])
             );
@@ -18,13 +18,13 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         {
             if (ContainsOnlyCapitalLetters(IndexSourceValue[0]) && IsNumeric(IndexSourceValue[1..]))
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue
                     )
-                };
+                ];
             }
 
             throw new InvalidOperationException("Invalid use of matches");

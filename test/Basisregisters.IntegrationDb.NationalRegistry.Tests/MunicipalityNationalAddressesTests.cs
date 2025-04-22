@@ -798,11 +798,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
         [Theory]
         [InlineData("0046", "K999", "46", "K999")]
-        public void Lokeren(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        public void LokerenMoerbeke(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var record = new FlatFileRecord
             {
-                NisCode = "46014",
+                NisCode = "46029",
                 HouseNumber = houseNumber,
                 Index = new NationalRegistryIndex(index)
             };
