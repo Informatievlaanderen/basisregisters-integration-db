@@ -23,7 +23,7 @@
         <PackageVersion Include="MediatR.Contracts" Version="2.0.1" />
         <PackageVersion Include="Polly" Version="8.5.2" />
 
-        <PackageVersion Include="Datadog.Trace.Bundle" Version="3.14.3" />
+        <PackageVersion Include="Datadog.Trace.Bundle" Version="3.15.0" />
 
         <PackageVersion Include="Fastenshtein" Version="1.0.10" />
         <PackageVersion Include="FlatFiles" Version="5.0.4" />
