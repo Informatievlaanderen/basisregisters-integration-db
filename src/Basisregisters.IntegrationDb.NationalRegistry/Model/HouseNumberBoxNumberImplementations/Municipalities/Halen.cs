@@ -35,90 +35,94 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         {
             if (IndexSourceValue.StartsWith("b", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[1..]))
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue.Trim()
+                    ),
+                    new HouseNumberWithBoxNumber(
+                        HouseNumberSourceValue,
+                        IndexSourceValue[1..].Trim()
                     )
-                };
+                ];
             }
 
             if (IndexSourceValue.Contains('.'))
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
-                };
+                ];
             }
 
             if (IndexSourceValue.StartsWith("W", StringComparison.InvariantCultureIgnoreCase) && IndexSourceValue[1..3] == "00")
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue.Replace("00", string.Empty).Trim()
                     )
-                };
+                ];
             }
 
             if (IndexSourceValue.StartsWith("W", StringComparison.InvariantCultureIgnoreCase) && IndexSourceValue[1] == '0')
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
                         IndexSourceValue.Trim()
                     )
-                };
+                ];
             }
 
             if (IndexSourceValue.StartsWith("AW", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         $"{HouseNumberSourceValue}A",
                         $"W{int.Parse(IndexSourceValue[2..])}"
                     )
-                };
+                ];
             }
 
             if (IndexSourceValue.StartsWith("BW", StringComparison.InvariantCultureIgnoreCase) && IsNumeric(IndexSourceValue[2..]))
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         $"{HouseNumberSourceValue}B",
                         $"W{int.Parse(IndexSourceValue[2..])}"
                     )
-                };
+                ];
             }
 
             if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1..3] == "000")
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         null
                     )
-                };
+                ];
             }
 
             if (IsLetter(IndexSourceValue[0]) && IndexSourceValue[1] == '/')
             {
-                return new[]
-                {
+                return
+                [
                     new HouseNumberWithBoxNumber(
                         $"{HouseNumberSourceValue}{IndexSourceValue[0]}",
                         IndexSourceValue[2..].Trim()
                     )
-                };
+                ];
             }
 
             throw new InvalidOperationException("Invalid use of matches");
