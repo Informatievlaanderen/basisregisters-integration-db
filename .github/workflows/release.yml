@@ -371,7 +371,7 @@ jobs:
           BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_DEVOPS_DOCKER_REGISTRY }}
           IMAGE: ${{ matrix.image }}
           SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}      
+          WORKSPACE: ${{ github.workspace }}
 
   deploy_to_test_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -381,19 +381,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment started
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of basisregisters-integration to test has started
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of basisregisters-integration to test has started'
 
   deploy_services_to_test:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -476,19 +471,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment finished
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of basisregisters-integration to test has finished
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of basisregisters-integration to test has finished'
 
   deploy_to_staging_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -498,19 +488,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment started
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of basisregisters-integration to staging has started
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of basisregisters-integration to staging has started'
 
   deploy_services_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -593,16 +578,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment finished
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of basisregisters-integration to staging has finished
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of basisregisters-integration to staging has finished'
