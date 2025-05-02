@@ -1,3 +1,27 @@
+# [3.0.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.15.1...v3.0.0) (2025-05-02)
+
+
+### Bug Fixes
+
+* **inwonersaantallen:** add BeverenKruibekeZwijndrecht ([b8a8b57](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/b8a8b57f5f4425b648575090590dae54d0e8b5f9))
+* **inwonersaantallen:** fusie Hasselt ([cde45c2](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/cde45c2501499afd617382979487e55acfb82929))
+* **inwonersaantallen:** fusie LokerenMoerbeke ([b8419fb](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/b8419fb1943531e907560e0c8a13cc7ac9432c40))
+* **inwonersaantallen:** fusie TongerenBorgloon ([63d06c2](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/63d06c2152d58d7415b71fe152d311476c555407))
+* **inwonersaantallen:** update Halen ([f992ee2](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/f992ee21c6b0bfc87147b36108cb82a7b8a43e28))
+* **nationalregistry:** correct ctor to allow correct nullable type ([3d700e3](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/3d700e36d373e23d41bf2ba629994b4444b4fe31))
+* **nationalregistry:** correct postalcode unmatched dbf ([ca8a3a3](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ca8a3a3d6ff2046d3a410a1a9aca461144f316c3))
+* pipeline dotcover ([9a690fe](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9a690fe58ee1e030eeb8752007786cdf6cfce5c2))
+
+
+### Code Refactoring
+
+* use renovate and nuget + update pipeline ([d5be12d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d5be12da0ba4b238f5468a34327ab7bfe905baeb))
+
+
+### BREAKING CHANGES
+
+* update to dotnet 9
+
 ## [2.15.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.15.0...v2.15.1) (2025-03-04)
 
 
