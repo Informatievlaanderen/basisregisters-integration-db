@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.1...v3.0.2) (2025-05-02)
+
+
+### Bug Fixes
+
+* **suspicious:** fix package ([20a7cc1](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/20a7cc19c0fdd16a3b12a854957bc5d805c885c5))
+
 ## [3.0.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.0...v3.0.1) (2025-05-02)
 
 
