@@ -23,14 +23,25 @@
     <PackageProjectUrl>https://github.com/Informatievlaanderen/basisregisters-integration-db</PackageProjectUrl>
     <PackageIcon>logo.png</PackageIcon>
     <Description>Integration Db Suspicious Cases Api Abstractions</Description>
+    <!-- Include referenced projects' outputs in this package -->
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   
   <ItemGroup>
     <None Include="..\..\.build\Be.Vlaanderen.Basisregisters.Build.Pipeline\Content\logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <!-- Target to collect reference outputs for packaging -->
+  <Target Name="CopyProjectReferencesToPackage">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)Basisregisters.IntegrationDb.SuspiciousCases.dll" />
+      <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)Basisregisters.IntegrationDb.SuspiciousCases.pdb" />
+    </ItemGroup>
+  </Target>
+
   <ItemGroup>
-    <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj" />
+    <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
