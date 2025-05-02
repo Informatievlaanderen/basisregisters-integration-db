@@ -1454,7 +1454,6 @@
       "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": {
         "type": "Project",
         "dependencies": {
-          "Basisregisters.IntegrationDb.SuspiciousCases": "[1.0.0, )",
           "Be.Vlaanderen.Basisregisters.Api": "[24.0.0, )"
         }
       },
