@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.0...v3.0.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* **ci:** slack notifications ([ef5a7e0](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ef5a7e0598608ad4a3ae91b0c2a27c9ba7e5fdf5))
+
 # [3.0.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v2.15.1...v3.0.0) (2025-05-02)
 
 
