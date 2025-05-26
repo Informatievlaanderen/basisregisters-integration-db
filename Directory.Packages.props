@@ -13,6 +13,7 @@
         <PackageVersion Include="Autofac" Version="8.3.0" />
         <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
 
+        <PackageVersion Include="CsvHelper" Version="33.0.1" />
         <PackageVersion Include="Dapper" Version="2.1.66" />
         <PackageVersion Include="FluentFTP" Version="52.1.0" />
         <PackageVersion Include="NodaTime" Version="3.2.2" />

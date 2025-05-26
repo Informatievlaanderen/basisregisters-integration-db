@@ -28,6 +28,7 @@
     <PackageReference Include="Dapper" />
     <PackageReference Include="Datadog.Trace.Bundle" />
     <PackageReference Include="Destructurama.JsonNet" />
+    <PackageReference Include="CsvHelper" />
 
     <PackageReference Include="NodaTime" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
@@ -43,5 +44,9 @@
 
     <PackageReference Include="SourceLink.Embed.AllSourceFiles" PrivateAssets="all" />
     <PackageReference Include="SourceLink.Copy.PdbFiles" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj" />
   </ItemGroup>
 </Project>
