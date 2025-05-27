@@ -254,7 +254,6 @@ public sealed class ReportService : BackgroundService
     {
         await _reportingContext.Database.BeginTransactionAsync(IsolationLevel.Snapshot, stoppingToken);
 
-        // An item with the same key has already been added. Key: { NisCode = 11001, ObjectId = 5631141, SuspiciousCaseType = CurrentAddressLinkedWithBuildingUnitButNotWithParcel }
         var allSuspiciousCases = (await _suspiciousCasesRepository.GetSuspiciousCasesAsync())
             .ToDictionary(x => new { x.NisCode, x.ObjectId, x.SuspiciousCaseType });
 
