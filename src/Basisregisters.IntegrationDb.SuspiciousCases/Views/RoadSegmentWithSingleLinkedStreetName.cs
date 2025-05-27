@@ -39,8 +39,11 @@
             SELECT
                 CAST(rs.id as varchar) AS persistent_local_id,
                 rs.id AS road_segment_persistent_local_id,
-                rs.maintainer_id AS nis_code
+                muni.nis_code AS nis_code
             FROM {SchemaLatestItems.RoadSegment} rs
+            JOIN {SchemaLatestItems.Municipality} as muni on
+                rs.maintainer_id = muni.nis_code
+                and muni.is_removed = false
             WHERE
                 rs.is_removed = false
                 and (
