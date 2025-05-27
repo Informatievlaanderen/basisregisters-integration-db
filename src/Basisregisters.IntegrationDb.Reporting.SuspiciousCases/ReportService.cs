@@ -103,7 +103,7 @@ public sealed class ReportService : BackgroundService
             {
                 HttpHeaders = new BlobHttpHeaders
                 {
-                    ContentType = "application/octet-stream"
+                    ContentType = "text/csv"
                 }
             }, cancellationToken);
     }
