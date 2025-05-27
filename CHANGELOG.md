@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.2...v3.0.3) (2025-05-27)
+
+
+### Bug Fixes
+
+* use only municipalities as maintainers in road suspicious cases ([6b5c926](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6b5c9265ca8f40d588a8e1201c5995d0a1b72319))
+
 ## [3.0.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.1...v3.0.2) (2025-05-02)
 
 
