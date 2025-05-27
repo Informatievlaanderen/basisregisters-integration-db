@@ -7,6 +7,5 @@
         public required string ClientKey { get; set; }
         public required string ClientSecret { get; set; }
         public required string ContainerName { get; set; }
-        public required string ConnectionString { get; set; }
     }
 }
