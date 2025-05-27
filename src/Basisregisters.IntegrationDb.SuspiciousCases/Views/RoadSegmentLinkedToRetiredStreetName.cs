@@ -39,26 +39,32 @@
             SELECT
                 CAST(rs.id as varchar) AS persistent_local_id,
                 rs.id AS road_segment_persistent_local_id,
-                rs.maintainer_id AS nis_code,
+                leftMuni.nis_code AS nis_code,
                 leftStreetName.name_dutch AS description
             FROM {SchemaLatestItems.RoadSegment} rs
             JOIN {SchemaLatestItems.StreetName} as leftStreetName on
                 rs.left_side_street_name_id = leftStreetName.persistent_local_id
                 and leftStreetName.status in (2, 3)
                 and leftStreetName.is_removed = false
+            JOIN {SchemaLatestItems.Municipality} as leftMuni on
+                rs.maintainer_id = leftMuni.nis_code
+                and leftMuni.is_removed = false
             WHERE
                 rs.is_removed = false
             UNION
             SELECT
                 CAST(rs.id as varchar) AS persistent_local_id,
                 rs.id AS road_segment_persistent_local_id,
-                rs.maintainer_id AS nis_code,
+                rightMuni.nis_code AS nis_code,
                 rightStreetName.name_dutch AS description
             FROM {SchemaLatestItems.RoadSegment} rs
             JOIN {SchemaLatestItems.StreetName} as rightStreetName on
                 rs.right_side_street_name_id = rightStreetName.persistent_local_id
                 and rightStreetName.status in (2, 3)
                 and rightStreetName.is_removed = false
+            JOIN {SchemaLatestItems.Municipality} as rightMuni on
+                rs.maintainer_id = rightMuni.nis_code
+                and rightMuni.is_removed = false
             WHERE
                 rs.is_removed = false
             ;";
