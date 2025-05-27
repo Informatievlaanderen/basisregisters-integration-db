@@ -1,18 +1,25 @@
 ﻿namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases;
 
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Infrastructure;
+using Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 public sealed class ReportService : BackgroundService
 {
@@ -21,6 +28,8 @@ public sealed class ReportService : BackgroundService
     private readonly IMunicipalityRepository _municipalityRepository;
     private readonly IHostApplicationLifetime _applicationLifetime;
     private readonly INotificationService _notificationService;
+    private readonly BlobServiceClient _azureBlobServiceClient;
+    private readonly AzureBlobOptions _azureBlobOptions;
     private readonly ILogger<ReportService> _logger;
 
     public ReportService(
@@ -29,6 +38,8 @@ public sealed class ReportService : BackgroundService
         IMunicipalityRepository municipalityRepository,
         IHostApplicationLifetime applicationLifetime,
         INotificationService notificationService,
+        BlobServiceClient azureBlobServiceClient,
+        IOptions<AzureBlobOptions> azureBlobOptions,
         ILoggerFactory loggerFactory)
     {
         _reportingContext = reportingContext;
@@ -36,6 +47,8 @@ public sealed class ReportService : BackgroundService
         _municipalityRepository = municipalityRepository;
         _applicationLifetime = applicationLifetime;
         _notificationService = notificationService;
+        _azureBlobServiceClient = azureBlobServiceClient;
+        _azureBlobOptions = azureBlobOptions.Value;
         _logger = loggerFactory.CreateLogger<ReportService>();
     }
 
@@ -52,6 +65,15 @@ public sealed class ReportService : BackgroundService
             var monthlyReportStream = await GenerateMonthlyReport(stoppingToken);
 
             // upload to azure
+            await UploadCsvToAzure("verdachte gevallen.csv", allCasesReportStream, stoppingToken);
+            await UploadCsvToAzure("Monthly Snapshot.csv", monthlyReportStream, stoppingToken);
+
+            await _notificationService.PublishToTopicAsync(
+                new NotificationMessage(
+                    "Basisregisters.IntegrationDb.Reporting.SuspiciousCases",
+                    "New suspicious cases report has been generated successfully.",
+                    "SuspiciousCases Report",
+                    NotificationSeverity.Good));
         }
         catch (Exception ex)
         {
@@ -65,16 +87,25 @@ public sealed class ReportService : BackgroundService
         }
         finally
         {
-            await _notificationService.PublishToTopicAsync(
-                new NotificationMessage(
-                    "Basisregisters.IntegrationDb.Reporting.SuspiciousCases",
-                    "New suspicious cases report has been generated successfully.",
-                    "SuspiciousCases Report",
-                    NotificationSeverity.Good));
-
             _logger.LogInformation("Stopping report service...");
             _applicationLifetime.StopApplication();
         }
+    }
+
+    private async Task UploadCsvToAzure(string csvFileName, MemoryStream fileStream, CancellationToken cancellationToken)
+    {
+        var blobContainerClient = _azureBlobServiceClient.GetBlobContainerClient(_azureBlobOptions.ContainerName);
+
+        var blobClient = blobContainerClient.GetBlockBlobClient(csvFileName);
+        await blobClient.UploadAsync(
+            fileStream,
+            new BlobUploadOptions
+            {
+                HttpHeaders = new BlobHttpHeaders
+                {
+                    ContentType = "application/octet-stream"
+                }
+            }, cancellationToken);
     }
 
     private async Task<MemoryStream> GenerateSuspiciousCasesReport(CancellationToken stoppingToken)
@@ -105,13 +136,19 @@ public sealed class ReportService : BackgroundService
 
         const int take = 10_000;
         var offset = 0;
-        var suspiciousCases = _reportingContext.SuspiciousCases
-            .OrderBy(x => x.NisCode)
-            .ThenBy(x => x.SuspiciousCaseType)
-            .ThenBy(x => x.DateAdded)
-            .ThenBy(x => x.DateClosed)
-            .Take(take)
-            .Skip(offset);
+        List<SuspiciousCase> GetSuspiciousCases()
+        {
+            return _reportingContext.SuspiciousCases
+                .OrderBy(x => x.NisCode)
+                .ThenBy(x => x.SuspiciousCaseType)
+                .ThenBy(x => x.DateAdded)
+                .ThenBy(x => x.DateClosed)
+                .Skip(offset)
+                .Take(take)
+                .ToList();
+        }
+
+        var suspiciousCases = GetSuspiciousCases();
         while (suspiciousCases.Any() && !stoppingToken.IsCancellationRequested)
         {
             foreach (var report in suspiciousCases)
@@ -146,6 +183,8 @@ public sealed class ReportService : BackgroundService
 
             await csvWriter.FlushAsync();
             await writer.FlushAsync(stoppingToken);
+
+            suspiciousCases = GetSuspiciousCases();
         }
 
         await csvWriter.FlushAsync();
@@ -213,6 +252,9 @@ public sealed class ReportService : BackgroundService
 
     private async Task UpdateSuspiciousCasesReport(CancellationToken stoppingToken)
     {
+        await _reportingContext.Database.BeginTransactionAsync(IsolationLevel.Snapshot, stoppingToken);
+
+        // An item with the same key has already been added. Key: { NisCode = 11001, ObjectId = 5631141, SuspiciousCaseType = CurrentAddressLinkedWithBuildingUnitButNotWithParcel }
         var allSuspiciousCases = (await _suspiciousCasesRepository.GetSuspiciousCasesAsync())
             .ToDictionary(x => new { x.NisCode, x.ObjectId, x.SuspiciousCaseType });
 
@@ -246,16 +288,19 @@ public sealed class ReportService : BackgroundService
         await _reportingContext.SaveChangesAsync(stoppingToken);
 
         await UpdateMonthlyReport(stoppingToken);
+
+        await _reportingContext.Database.CommitTransactionAsync(stoppingToken);
     }
 
     private async Task UpdateMonthlyReport(CancellationToken stoppingToken)
     {
+        var startMonth = new DateOnly(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+
         var monthlyReports = await _reportingContext.SuspiciousCaseReports
-            .Where(x => x.Month == DateOnly.FromDateTime(DateTime.UtcNow))
+            .Where(x => x.Month == startMonth)
             .ToListAsync(stoppingToken);
 
         // get all suspicious cases added or closed in this month, and count them by niscode, type
-        var startMonth = new DateOnly(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
         var openCases = await _reportingContext
             .SuspiciousCases
             .AsNoTracking()

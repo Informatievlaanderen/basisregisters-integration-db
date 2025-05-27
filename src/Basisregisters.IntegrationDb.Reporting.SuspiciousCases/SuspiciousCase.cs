@@ -53,7 +53,7 @@ public sealed class SuspiciousCase
 
 public sealed class SuspiciousCaseConfiguration : IEntityTypeConfiguration<SuspiciousCase>
 {
-    public const string TableName = "suspicious_cases_reporting";
+    public const string TableName = "reporting_suspicious_cases";
 
     public void Configure(EntityTypeBuilder<SuspiciousCase> builder)
     {

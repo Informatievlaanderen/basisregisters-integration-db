@@ -15,7 +15,7 @@ namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases.Migrations
                 name: "integration_suspicious_cases");
 
             migrationBuilder.CreateTable(
-                name: "suspicious_case_reports",
+                name: "reporting_suspicious_cases_monthly",
                 schema: "integration_suspicious_cases",
                 columns: table => new
                 {
@@ -27,11 +27,11 @@ namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_suspicious_case_reports", x => new { x.nis_code, x.suspicious_case_type, x.month });
+                    table.PrimaryKey("PK_reporting_suspicious_cases_monthly", x => new { x.nis_code, x.suspicious_case_type, x.month });
                 });
 
             migrationBuilder.CreateTable(
-                name: "suspicious_cases_reporting",
+                name: "reporting_suspicious_cases",
                 schema: "integration_suspicious_cases",
                 columns: table => new
                 {
@@ -45,31 +45,31 @@ namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_suspicious_cases_reporting", x => new { x.nis_code, x.object_id, x.suspicious_case_type });
+                    table.PrimaryKey("PK_reporting_suspicious_cases", x => new { x.nis_code, x.object_id, x.suspicious_case_type });
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_suspicious_cases_reporting_nis_code",
+                name: "IX_reporting_suspicious_cases_nis_code",
                 schema: "integration_suspicious_cases",
-                table: "suspicious_cases_reporting",
+                table: "reporting_suspicious_cases",
                 column: "nis_code");
 
             migrationBuilder.CreateIndex(
-                name: "IX_suspicious_cases_reporting_object_id_object_type",
+                name: "IX_reporting_suspicious_cases_object_id_object_type",
                 schema: "integration_suspicious_cases",
-                table: "suspicious_cases_reporting",
+                table: "reporting_suspicious_cases",
                 columns: new[] { "object_id", "object_type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_suspicious_cases_reporting_status",
+                name: "IX_reporting_suspicious_cases_status",
                 schema: "integration_suspicious_cases",
-                table: "suspicious_cases_reporting",
+                table: "reporting_suspicious_cases",
                 column: "status");
 
             migrationBuilder.CreateIndex(
-                name: "IX_suspicious_cases_reporting_suspicious_case_type",
+                name: "IX_reporting_suspicious_cases_suspicious_case_type",
                 schema: "integration_suspicious_cases",
-                table: "suspicious_cases_reporting",
+                table: "reporting_suspicious_cases",
                 column: "suspicious_case_type");
         }
 
@@ -77,11 +77,11 @@ namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "suspicious_case_reports",
+                name: "reporting_suspicious_cases_monthly",
                 schema: "integration_suspicious_cases");
 
             migrationBuilder.DropTable(
-                name: "suspicious_cases_reporting",
+                name: "reporting_suspicious_cases",
                 schema: "integration_suspicious_cases");
         }
     }

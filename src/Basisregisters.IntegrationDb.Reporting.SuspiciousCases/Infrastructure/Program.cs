@@ -5,6 +5,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
+using Azure.Identity;
+using Azure.Storage.Blobs;
 using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
 using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
 using Destructurama;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NodaTime;
 using Serilog;
 using Serilog.Debugging;
@@ -73,12 +76,20 @@ public sealed class Program
                 services.AddSingleton<IMunicipalityRepository>(_ => new MunicipalityRepository(connectionString));
                 services.AddSingleton<ISuspiciousCasesRepository>(_ => new SuspiciousCasesRepository(connectionString));
 
+                services.Configure<AzureBlobOptions>(hostContext.Configuration.GetSection("AzureBlob"));
+                services.AddSingleton(sp =>
+                {
+                    var options = sp.GetRequiredService<IOptions<AzureBlobOptions>>().Value;
+                    return new BlobServiceClient(
+                        new Uri(options.BaseUrl),
+                        new ClientSecretCredential(options.TenantId, options.ClientKey, options.ClientSecret),
+                        new Azure.Storage.Blobs.BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_04_08));
+                });
+
                 services.AddAWSService<IAmazonSimpleNotificationService>();
                 services.AddSingleton<INotificationService>(sp =>
                     new NotificationService(sp.GetRequiredService<IAmazonSimpleNotificationService>(),
                         hostContext.Configuration.GetValue<string>("TopicArn")!));
-
-                services.Configure<AzureBlobOptions>(hostContext.Configuration.GetSection("AzureBlob"));
 
                 services
                     .AddDbContextFactory<SuspiciousCaseReportingContext>((serviceProvider, options) =>
@@ -86,7 +97,6 @@ public sealed class Program
                         options.UseLoggerFactory(serviceProvider.GetRequiredService<ILoggerFactory>());
                         options.UseNpgsql(connectionString, npgSqlOptions =>
                         {
-                            npgSqlOptions.EnableRetryOnFailure();
                             npgSqlOptions.MigrationsHistoryTable(
                                 SuspiciousCaseReportingContext.MigrationsTableName,
                                 Schema.SuspiciousCases);

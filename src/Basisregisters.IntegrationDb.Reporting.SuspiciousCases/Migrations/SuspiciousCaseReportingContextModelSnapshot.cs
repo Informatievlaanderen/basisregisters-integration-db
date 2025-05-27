@@ -66,7 +66,7 @@ namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases.Migrations
 
                     b.HasIndex("ObjectId", "ObjectType");
 
-                    b.ToTable("suspicious_cases_reporting", "integration_suspicious_cases");
+                    b.ToTable("reporting_suspicious_cases", "integration_suspicious_cases");
                 });
 
             modelBuilder.Entity("Basisregisters.IntegrationDb.Reporting.SuspiciousCases.SuspiciousCaseReport", b =>
@@ -98,7 +98,7 @@ namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases.Migrations
 
                     b.HasKey("NisCode", "SuspiciousCaseType", "Month");
 
-                    b.ToTable("suspicious_case_reports", "integration_suspicious_cases");
+                    b.ToTable("reporting_suspicious_cases_monthly", "integration_suspicious_cases");
                 });
 #pragma warning restore 612, 618
         }
