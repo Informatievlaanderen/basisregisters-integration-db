@@ -5,12 +5,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
 using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
 using Destructurama;
-using Options;
 using IntegrationDb.SuspiciousCases.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NodaTime;
+using Options;
 using Serilog;
 using Serilog.Debugging;
 
@@ -80,10 +79,7 @@ public sealed class Program
                 services.AddSingleton(sp =>
                 {
                     var options = sp.GetRequiredService<IOptions<AzureBlobOptions>>().Value;
-                    return new BlobServiceClient(
-                        new Uri(options.BaseUrl),
-                        new ClientSecretCredential(options.TenantId, options.ClientKey, options.ClientSecret),
-                        new Azure.Storage.Blobs.BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_04_08));
+                    return new BlobServiceClient(options.ConnectionString);
                 });
 
                 services.AddAWSService<IAmazonSimpleNotificationService>();

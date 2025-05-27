@@ -61,8 +61,8 @@ public sealed class ReportService : BackgroundService
             await UpdateSuspiciousCasesReport(stoppingToken);
 
             // make reports
-            var allCasesReportStream = await GenerateSuspiciousCasesReport(stoppingToken);
-            var monthlyReportStream = await GenerateMonthlyReport(stoppingToken);
+            using var allCasesReportStream = await GenerateSuspiciousCasesReport(stoppingToken);
+            using var monthlyReportStream = await GenerateMonthlyReport(stoppingToken);
 
             // upload to azure
             await UploadCsvToAzure("verdachte gevallen.csv", allCasesReportStream, stoppingToken);
@@ -120,7 +120,7 @@ public sealed class ReportService : BackgroundService
         };
 
         var memoryStream = new MemoryStream();
-        await using var writer = new StreamWriter(memoryStream);
+        await using var writer = new StreamWriter(memoryStream, leaveOpen: true);
         await using var csvWriter = new CsvWriter(writer, cfgOut);
 
         // header
@@ -218,7 +218,7 @@ public sealed class ReportService : BackgroundService
         };
 
         var memoryStream = new MemoryStream();
-        await using var writer = new StreamWriter(memoryStream);
+        await using var writer = new StreamWriter(memoryStream, leaveOpen: true);
         await using var csvWriter = new CsvWriter(writer, cfgOut);
 
         // header
