@@ -36,7 +36,8 @@
         public const string ViewName = "view_current_address_with_specification_derived_from_building_unit_without_linked_building_unit";
 
         public const string Create = $@"
-            CREATE OR REPLACE VIEW {Schema.SuspiciousCases}.{ViewName} AS
+            DROP VIEW IF EXISTS {Schema.SuspiciousCases}.{ViewName};
+            CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
 		        CAST(a.persistent_local_id as varchar) AS persistent_local_id,
                 a.persistent_local_id AS address_persistent_local_id,

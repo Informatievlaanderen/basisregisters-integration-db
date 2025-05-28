@@ -90,6 +90,8 @@ END $$;
               CREATE INDEX ix_{{ViewName}}_nis_code ON {{Schema.SuspiciousCases}}.{{ViewName}} USING btree (nis_code);
               """;
 
+        public static readonly string Drop = $"DROP MATERIALIZED VIEW IF EXISTS {Schema.SuspiciousCases}.{ViewName};";
+
         private static string CreateScript(SuspiciousCasesType type, string viewName)
         {
             return $@"SELECT

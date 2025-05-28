@@ -7,6 +7,7 @@
         public const string ViewName = "view_active_address_but_inactive_streetname";
 
         public const string Create = $@"
+            DROP VIEW IF EXISTS {Schema.SuspiciousCases}.{ViewName};
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
                 s.persistent_local_id as streetname_persistent_local_id
