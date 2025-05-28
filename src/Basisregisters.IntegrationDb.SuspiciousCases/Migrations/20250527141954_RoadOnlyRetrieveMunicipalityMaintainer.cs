@@ -12,6 +12,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Drop);
+
             migrationBuilder.Sql(RoadSegmentLinkedToRetiredStreetNameConfiguration.Create);
             migrationBuilder.Sql(RoadSegmentLongerThanTwoYearsWithPermitConfiguration.Create);
             migrationBuilder.Sql(RoadSegmentWithSingleLinkedStreetNameConfiguration.Create);
@@ -22,7 +24,6 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }

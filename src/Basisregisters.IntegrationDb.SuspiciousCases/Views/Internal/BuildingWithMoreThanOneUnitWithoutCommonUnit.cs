@@ -7,6 +7,7 @@
         public const string ViewName = "view_building_with_more_than_one_unit_without_common_unit";
 
         public const string Create = $@"
+            DROP VIEW IF EXISTS {Schema.SuspiciousCases}.{ViewName};
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT b.building_persistent_local_id
             FROM integration_building.building_latest_items b

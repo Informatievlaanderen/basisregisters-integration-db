@@ -7,6 +7,7 @@
         public const string ViewName = "view_inactive_building_unit_linked_to_address";
 
         public const string Create = $@"
+            DROP VIEW IF EXISTS {Schema.SuspiciousCases}.{ViewName};
             CREATE VIEW {Schema.SuspiciousCases}.{ViewName} AS
             SELECT
                 bua.building_unit_persistent_local_id
