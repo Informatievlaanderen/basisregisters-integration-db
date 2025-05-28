@@ -63,7 +63,7 @@ namespace Basisregisters.IntegrationDb.Bosa
 
                 var municipality = municipalities[streetName.NisCode];
 
-                var beginLifeSpanVersion = GetVersionAsString(address.CreatedOn);
+                var beginLifeSpanVersion = GetZuluVersionAsString(address.CreatedOn);
                 var endLifeSpanVersion = GetEndLifeSpanVersion(address);
 
                 var xmlAddress = new XmlAddress
@@ -147,7 +147,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         private static string? GetEndLifeSpanVersion(Address address)
         {
             return address.Status is AddressStatus.Rejected or AddressStatus.Retired
-                ? GetVersionAsString(address.VersionTimestamp)
+                ? GetZuluVersionAsString(address.VersionTimestamp)
                 : null;
         }
 

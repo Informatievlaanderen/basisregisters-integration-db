@@ -81,12 +81,12 @@ namespace Basisregisters.IntegrationDb.Bosa
         }
 
         private static string GetBeginLifeSpanVersion(StreetName streetName)
-            => GetVersionAsString(streetName.CreatedOn);
+            => GetZuluVersionAsString(streetName.CreatedOn);
 
         private static string? GetEndLifeSpanVersion(StreetName streetName)
         {
             return streetName.Status is StreetNameStatus.Rejected or StreetNameStatus.Retired
-                ? GetVersionAsString(streetName.VersionTimestamp)
+                ? GetZuluVersionAsString(streetName.VersionTimestamp)
                 : null;
         }
 
