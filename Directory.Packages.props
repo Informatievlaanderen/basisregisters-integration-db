@@ -10,7 +10,7 @@
         <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="3.7.400.131" />
         <PackageVersion Include="AWSSDK.SimpleEmail" Version="3.7.402.74" />
 
-        <PackageVersion Include="Autofac" Version="8.2.1" />
+        <PackageVersion Include="Autofac" Version="8.3.0" />
         <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
 
         <PackageVersion Include="Dapper" Version="2.1.66" />
