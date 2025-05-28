@@ -38,7 +38,7 @@
         <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
         <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5" />
 
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.Api" Version="24.0.0" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.Api" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Auth.AcmIdm" Version="4.0.1" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Aws.DistributedMutex" Version="5.0.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.BlobStore" Version="5.0.0" />
