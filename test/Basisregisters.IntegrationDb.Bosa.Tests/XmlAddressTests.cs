@@ -156,7 +156,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 <tns:addressResponseBySource xmlns:com="http://fsb.belgium.be/data/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://fsb.belgium.be/mappingservices/FullDownload/v1_00">
                   <tns:source>flanders</tns:source>
                   <tns:timestamp>1970-01-01T01:00:00+01:00</tns:timestamp>
-                  <tns:address beginLifeSpanVersion="2023-11-09T00:00:00+01:00" endLifeSpanVersion="2023-11-09T00:00:00+01:00">
+                  <tns:address beginLifeSpanVersion="2023-11-08T23:00:00Z" endLifeSpanVersion="2023-11-08T23:00:00Z">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
                       <com:objectIdentifier>200001</com:objectIdentifier>
@@ -173,7 +173,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>retired</com:status>
-                      <com:validFrom>2023-11-09T00:00:00+01:00</com:validFrom>
+                      <com:validFrom>2023-11-08T23:00:00Z</com:validFrom>
                     </com:addressStatus>
                     <com:boxNumber>0101</com:boxNumber>
                     <com:houseNumber>59</com:houseNumber>
@@ -194,7 +194,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
-                  <tns:address beginLifeSpanVersion="2014-04-04T18:44:32+02:00">
+                  <tns:address beginLifeSpanVersion="2014-04-04T16:44:32Z">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
                       <com:objectIdentifier>30328681</com:objectIdentifier>
@@ -211,7 +211,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2014-04-04T18:44:32+02:00</com:validFrom>
+                      <com:validFrom>2014-04-04T16:44:32Z</com:validFrom>
                     </com:addressStatus>
                     <com:houseNumber>1</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
@@ -231,7 +231,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
                     </com:hasPostalInfo>
                   </tns:address>
-                  <tns:address beginLifeSpanVersion="2014-04-04T18:44:32+02:00">
+                  <tns:address beginLifeSpanVersion="2014-04-04T16:44:32Z">
                     <com:code>
                       <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
                       <com:objectIdentifier>30328682</com:objectIdentifier>
@@ -248,7 +248,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2014-04-04T18:44:32+02:00</com:validFrom>
+                      <com:validFrom>2014-04-04T16:44:32Z</com:validFrom>
                     </com:addressStatus>
                     <com:houseNumber>2</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
