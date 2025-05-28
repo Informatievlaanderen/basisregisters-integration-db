@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj" />
     <ProjectReference Include="..\Basisregisters.IntegrationDb.NationalRegistry\Basisregisters.IntegrationDb.NationalRegistry.csproj" />
     <ProjectReference Include="..\Basisregisters.IntegrationDb.Gtmf.Meldingen\Basisregisters.IntegrationDb.Gtmf.Meldingen.csproj" />
+    <ProjectReference Include="..\Basisregisters.IntegrationDb.Reporting.SuspiciousCases\Basisregisters.IntegrationDb.Reporting.SuspiciousCases.csproj" />
   </ItemGroup>
 
   <ItemGroup>

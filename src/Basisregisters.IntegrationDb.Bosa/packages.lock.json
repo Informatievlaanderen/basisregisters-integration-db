@@ -4,9 +4,9 @@
     "net9.0": {
       "Autofac": {
         "type": "Direct",
-        "requested": "[8.2.1, )",
-        "resolved": "8.2.1",
-        "contentHash": "q5xYBykgdvBlcmrXzHcDWcfeVktGEraluypkC0IRTupfxk+r+z+JcXgKj5kldKGe1fflyW3Ya3y9Soe9J2CqEA==",
+        "requested": "[8.3.0, )",
+        "resolved": "8.3.0",
+        "contentHash": "0Bv8aSKuK4nQAiDKw3+pIv9hUhbPwS63ql9KhjR6DRgE14UNdXrMqO8YMI0PnffZPyCrMs85lNhZRI4eBgQO4w==",
         "dependencies": {
           "System.Diagnostics.DiagnosticSource": "8.0.1"
         }
@@ -95,11 +95,11 @@
       },
       "Datadog.Trace.Bundle": {
         "type": "Direct",
-        "requested": "[3.15.0, )",
-        "resolved": "3.15.0",
-        "contentHash": "mzCLTCiA1Lzlj3dRbE9G84aePo7S+7ekFdl5r3ujm8hmoeKkW0MBayhKIg2+ZvTbIbrA5oHMDcwIscLR125cVg==",
+        "requested": "[3.16.0, )",
+        "resolved": "3.16.0",
+        "contentHash": "kNi4zZQNPpYZeICdTAS1DsrR4F54Czo4/1dZHjelyDytx/Ag5sN0+hrvoqxH/7ozkjfPHi2Nz2Kq4IE5fsjBBw==",
         "dependencies": {
-          "Datadog.Trace": "3.15.0"
+          "Datadog.Trace": "3.16.0"
         }
       },
       "Destructurama.JsonNet": {
@@ -147,9 +147,9 @@
       },
       "Serilog": {
         "type": "Direct",
-        "requested": "[4.2.0, )",
-        "resolved": "4.2.0",
-        "contentHash": "gmoWVOvKgbME8TYR+gwMf7osROiWAURterc6Rt2dQyX7wtjZYpqFiA/pY6ztjGQKKV62GGCyOcmtP1UKMHgSmA=="
+        "requested": "[4.3.0, )",
+        "resolved": "4.3.0",
+        "contentHash": "+cDryFR0GRhsGOnZSKwaDzRRl4MupvJ42FhCE4zhQRVanX0Jpg6WuCBk59OVhVDPmab1bB+nRykAnykYELA9qQ=="
       },
       "Serilog.Enrichers.Environment": {
         "type": "Direct",
@@ -210,11 +210,11 @@
       },
       "Serilog.Sinks.File": {
         "type": "Direct",
-        "requested": "[6.0.0, )",
-        "resolved": "6.0.0",
-        "contentHash": "lxjg89Y8gJMmFxVkbZ+qDgjl+T4yC5F7WSLTvA+5q0R04tfKVLRL/EHpYoJ/MEQd2EeCKDuylBIVnAYMotmh2A==",
+        "requested": "[7.0.0, )",
+        "resolved": "7.0.0",
+        "contentHash": "fKL7mXv7qaiNBUC71ssvn/dU0k9t0o45+qm2XgKAlSt19xF+ijjxyA3R6HmCgfKEKwfcfkwWjayuQtRueZFkYw==",
         "dependencies": {
-          "Serilog": "4.0.0"
+          "Serilog": "4.2.0"
         }
       },
       "SourceLink.Copy.PdbFiles": {
@@ -490,8 +490,8 @@
       },
       "Datadog.Trace": {
         "type": "Transitive",
-        "resolved": "3.15.0",
-        "contentHash": "xDdce/RLnXEoyyySKoY+MEp586Yj5x9lNIhN3I2NbZhS7wnaXXHJ/1ieFxdgU2dfY5m6RlEGWKG5auzgKd9rzA==",
+        "resolved": "3.16.0",
+        "contentHash": "inbkllX9QI/FoHqtmNAMAk8I2ZcLpDJSL3caZSpTxLfunNoNlmpnnAE3fcqdNgSj2dxD3PleDp4oG698I+R6Kg==",
         "dependencies": {
           "System.Diagnostics.DiagnosticSource": "4.4.1"
         }
@@ -1606,7 +1606,7 @@
       },
       "Microsoft.Extensions.Configuration": {
         "type": "CentralTransitive",
-        "requested": "[9.0.4, )",
+        "requested": "[9.0.5, )",
         "resolved": "9.0.3",
         "contentHash": "RIEeZxWYm77+OWLwgik7DzSVSONjqkmcbuCb1koZdGAV7BgOUWnLz80VMyHZMw3onrVwFCCMHBBdruBPuQTvkg==",
         "dependencies": {
@@ -1616,7 +1616,7 @@
       },
       "Microsoft.Extensions.Configuration.CommandLine": {
         "type": "CentralTransitive",
-        "requested": "[9.0.4, )",
+        "requested": "[9.0.5, )",
         "resolved": "9.0.3",
         "contentHash": "rVwz4ml/Jve/QzzUlyTVOKXVZ37op9RK6Ize4uPmJ3S5c2ErExoy816+dslBQ06ZrFq8M9bpnV5LVBuPD1ONHQ==",
         "dependencies": {
@@ -1626,7 +1626,7 @@
       },
       "Microsoft.Extensions.Configuration.EnvironmentVariables": {
         "type": "CentralTransitive",
-        "requested": "[9.0.4, )",
+        "requested": "[9.0.5, )",
         "resolved": "9.0.3",
         "contentHash": "fo84UIa8aSBG3pOtzLsgkj1YkOVfYFy2YWcRTCevHHAkuVsxnYnKBrcW2pyFgqqfQ/rT8K1nmRXHDdQIZ8PDig==",
         "dependencies": {
@@ -1636,7 +1636,7 @@
       },
       "Microsoft.Extensions.Configuration.FileExtensions": {
         "type": "CentralTransitive",
-        "requested": "[9.0.4, )",
+        "requested": "[9.0.5, )",
         "resolved": "9.0.3",
         "contentHash": "tBNMSDJ2q7WQK2zwPhHY5I/q95t7sf6dT079mGrNm0yOZF/gM9JvR/LtCb/rwhRmh7A6XMnzv5WbpCh9KLq9EQ==",
         "dependencies": {
@@ -1649,7 +1649,7 @@
       },
       "Microsoft.Extensions.Configuration.Json": {
         "type": "CentralTransitive",
-        "requested": "[9.0.4, )",
+        "requested": "[9.0.5, )",
         "resolved": "9.0.3",
         "contentHash": "mjkp3ZwynNacZk4uq93I0DyCY48FZmi3yRV0xlfeDuWh44KcDunPXHwt8IWr4kL7cVM6eiFVe6YTJg97KzUAUA==",
         "dependencies": {
@@ -1661,7 +1661,7 @@
       },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "CentralTransitive",
-        "requested": "[9.0.4, )",
+        "requested": "[9.0.5, )",
         "resolved": "9.0.3",
         "contentHash": "lDbxJpkl6X8KZGpkAxgrrthQ42YeiR0xjPp7KPx+sCPc3ZbpaIbjzd0QQ+9kDdK2RU2DOl3pc6tQyAgEZY3V0A==",
         "dependencies": {

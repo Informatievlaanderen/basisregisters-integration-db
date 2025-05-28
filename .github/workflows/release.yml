@@ -100,6 +100,21 @@ jobs:
       prerestore-script: ./pre-restore.sh
     secrets: inherit
   
+  build-reporting-suspiciouscases:
+    name: Build Reporting SuspiciousCases
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
+    needs: [ set-release-version ]
+    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
+    with:
+      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
+      image-file: reporting-suspiciouscases-image.tar
+      image-name: reporting-suspiciouscases
+      build-project: Basisregisters.IntegrationDb.Reporting.SuspiciousCases
+      semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
+    secrets: inherit
+  
   build-data-integrity:
     name: Build Data Integrity
     uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
@@ -152,7 +167,8 @@ jobs:
       set-release-version, 
       build-api-suspicious-cases, 
       build-integration-veka, 
-      build-bosa-full-download, 
+      build-bosa-full-download,
+      build-reporting-suspiciouscases,
       pack-api-suspicious-cases, 
       build-data-integrity,
       build-gtmf-meldingen ]
@@ -329,6 +345,7 @@ jobs:
           'suspicious-cases-api',
           'integration-veka',
           'bosa-full-download',
+          'reporting-suspiciouscases',
           'data-integrity',
           'gtmf-meldingen'
           ]
@@ -436,6 +453,7 @@ jobs:
         services: [
           'integration-veka',
           'integration-bosa-full-download',
+          'integration-reporting-suspiciouscases',
           'integration-data-integrity',
           'integration-gtmf-meldingen'
         ]
@@ -543,6 +561,7 @@ jobs:
         services: [
           'integration-veka',
           'integration-bosa-full-download',
+          'integration-reporting-suspiciouscases',
           'integration-data-integrity',
           'integration-gtmf-meldingen'
         ]
