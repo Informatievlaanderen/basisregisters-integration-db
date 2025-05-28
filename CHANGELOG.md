@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.3...v3.0.4) (2025-05-28)
+
+
+### Bug Fixes
+
+* **suspicious-cases:** drop views before creating ([ba49b18](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ba49b1887cb236d7eb1b08982837a07b392b67c4))
+
 ## [3.0.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.2...v3.0.3) (2025-05-27)
 
 
