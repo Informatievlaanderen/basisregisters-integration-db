@@ -49,6 +49,8 @@ SELECT DISTINCT q.nis_code as NisCode, q.object_id as ObjectId, q.object_type as
     UNION ALL SELECT v16.nis_code, v16.address_persistent_local_id as object_id, '{{ nameof(Category.Address) }}' as object_type, {{(int)SuspiciousCasesType.CurrentAddressLinkedToProposedStreetName}} AS type FROM integration_suspicious_cases.view_current_address_linked_to_proposed_streetname as v16
     UNION ALL SELECT v17.nis_code, v17.road_segment_persistent_local_id as object_id, '{{ nameof(Category.RoadSegment) }}' as object_type, {{(int)SuspiciousCasesType.RoadSegmentLinkedToRetiredStreetName}} AS type FROM integration_suspicious_cases.view_road_segment_linked_to_retired_streetname as v17
 ) as q
+JOIN integration_municipality.municipality_latest_items municipality ON q.nis_code = municipality.nis_code
+WHERE municipality.is_flemish_region = true
 ORDER BY q.nis_code, q.type
 """;
 }

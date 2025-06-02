@@ -1517,6 +1517,12 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[9.0.4, )"
         }
       },
+      "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": {
+        "type": "Project",
+        "dependencies": {
+          "Be.Vlaanderen.Basisregisters.Api": "[24.0.0, )"
+        }
+      },
       "Autofac.Extensions.DependencyInjection": {
         "type": "CentralTransitive",
         "requested": "[10.0.0, )",

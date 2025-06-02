@@ -16,6 +16,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Infrastructure;
 using Infrastructure.Options;
+using IntegrationDb.SuspiciousCases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -116,7 +117,7 @@ public sealed class ReportService : BackgroundService
         var cfgOut = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             Delimiter = ";",
-            Encoding  = System.Text.Encoding.UTF8
+            Encoding = System.Text.Encoding.UTF8
         };
 
         var memoryStream = new MemoryStream();
@@ -127,6 +128,7 @@ public sealed class ReportService : BackgroundService
         csvWriter.WriteField("nis_code");
         csvWriter.WriteField("object_id");
         csvWriter.WriteField("object_type");
+        csvWriter.WriteField("vg_type_id");
         csvWriter.WriteField("vg_type");
         csvWriter.WriteField("Gemeentenaam");
         csvWriter.WriteField("Datum toegevoegd");
@@ -136,6 +138,7 @@ public sealed class ReportService : BackgroundService
 
         const int take = 10_000;
         var offset = 0;
+
         List<SuspiciousCase> GetSuspiciousCases()
         {
             return _reportingContext.SuspiciousCases
@@ -155,8 +158,9 @@ public sealed class ReportService : BackgroundService
             {
                 csvWriter.WriteField(report.NisCode);
                 csvWriter.WriteField(report.ObjectId);
-                csvWriter.WriteField(report.ObjectType);
-                csvWriter.WriteField(report.SuspiciousCaseType);
+                csvWriter.WriteField(report.ObjectType.ToDutchString());
+                csvWriter.WriteField((int)report.SuspiciousCaseType);
+                csvWriter.WriteField(GetDutchDescription(report.SuspiciousCaseType));
                 csvWriter.WriteField(municipalities[report.NisCode]);
                 csvWriter.WriteField(report.DateAdded.ToString("dd/MM/yyyy"));
                 csvWriter.WriteField(report.DateClosed?.ToString("dd/MM/yyyy") ?? string.Empty);
@@ -194,6 +198,16 @@ public sealed class ReportService : BackgroundService
         return memoryStream;
     }
 
+    private static string GetDutchDescription(SuspiciousCasesType type)
+    {
+        if (Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.SuspiciousCase.AllCases.TryGetValue(type, out var suspiciousCase))
+        {
+            return suspiciousCase.Description;
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+    }
+
     private async Task<MemoryStream> GenerateMonthlyReport(CancellationToken stoppingToken)
     {
         var municipalities = _municipalityRepository.GetAll()
@@ -214,7 +228,7 @@ public sealed class ReportService : BackgroundService
         var cfgOut = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             Delimiter = ";",
-            Encoding  = System.Text.Encoding.UTF8
+            Encoding = System.Text.Encoding.UTF8
         };
 
         var memoryStream = new MemoryStream();
@@ -223,6 +237,7 @@ public sealed class ReportService : BackgroundService
 
         // header
         csvWriter.WriteField("Gemeente");
+        csvWriter.WriteField("VG_type_id");
         csvWriter.WriteField("VG_type");
         csvWriter.WriteField("Date_BoM");
         csvWriter.WriteField("Jaar-Maand");
@@ -235,7 +250,8 @@ public sealed class ReportService : BackgroundService
             if (report is { OpenCases: 0, ClosedCases: 0 }) continue;
 
             csvWriter.WriteField(municipalities[report.NisCode]);
-            csvWriter.WriteField(report.SuspiciousCaseType);
+            csvWriter.WriteField((int)report.SuspiciousCaseType);
+            csvWriter.WriteField(GetDutchDescription(report.SuspiciousCaseType));
             csvWriter.WriteField(report.Month.ToString("dd/MM/yyyy"));
             csvWriter.WriteField(report.Month.ToString("yyyy-MM"));
             csvWriter.WriteField(report.OpenCases);
@@ -304,7 +320,7 @@ public sealed class ReportService : BackgroundService
             .SuspiciousCases
             .AsNoTracking()
             .Where(x => x.DateAdded >= startMonth && x.DateAdded <= DateOnly.FromDateTime(DateTime.Today))
-            .GroupBy(x => new { x.NisCode, x.SuspiciousCaseType})
+            .GroupBy(x => new { x.NisCode, x.SuspiciousCaseType })
             .Select(x => new { x.Key, Count = x.Count() })
             .ToListAsync(cancellationToken: stoppingToken);
 
@@ -312,7 +328,7 @@ public sealed class ReportService : BackgroundService
             .SuspiciousCases
             .AsNoTracking()
             .Where(x => x.DateClosed != null && x.DateClosed >= startMonth && x.DateClosed <= DateOnly.FromDateTime(DateTime.Today))
-            .GroupBy(x => new { x.NisCode, x.SuspiciousCaseType})
+            .GroupBy(x => new { x.NisCode, x.SuspiciousCaseType })
             .Select(x => new { x.Key, Count = x.Count() })
             .ToListAsync(cancellationToken: stoppingToken);
 
