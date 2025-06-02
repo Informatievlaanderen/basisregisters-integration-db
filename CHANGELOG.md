@@ -1,3 +1,16 @@
+# [3.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.4...v3.1.0) (2025-06-02)
+
+
+### Bug Fixes
+
+* **bosa:** change lifespan to zulutime ([00d18a7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/00d18a7ec8247d7b0b49ad455357a6ee361f043b))
+* suspicious cases reporting use dutch translations ([d14ae4b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d14ae4b616a8c992a67f5c344aafd58b1032a504))
+
+
+### Features
+
+* add suspicious-cases reporting GAWR-6899 ([c44a030](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/c44a030c9f48d57f219d1edc88bdb3caa465b8e7))
+
 ## [3.0.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.0.3...v3.0.4) (2025-05-28)
 
 
