@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.1...v3.1.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* **ci:** reporting-suspicious-cases ([9fe54a1](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9fe54a1606737897b09677baf5c412f300e27021))
+
 ## [3.1.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.0...v3.1.1) (2025-06-04)
 
 
