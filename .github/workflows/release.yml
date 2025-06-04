@@ -100,15 +100,15 @@ jobs:
       prerestore-script: ./pre-restore.sh
     secrets: inherit
   
-  build-reporting-suspiciouscases:
+  build-reporting-suspicious-cases:
     name: Build Reporting SuspiciousCases
     uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
       registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
-      image-file: reporting-suspiciouscases-image.tar
-      image-name: reporting-suspiciouscases
+      image-file: reporting-suspicious-cases-image.tar
+      image-name: reporting-suspicious-cases
       build-project: Basisregisters.IntegrationDb.Reporting.SuspiciousCases
       semver: ${{ needs.set-release-version.outputs.version }}
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
@@ -168,10 +168,11 @@ jobs:
       build-api-suspicious-cases, 
       build-integration-veka, 
       build-bosa-full-download,
-      build-reporting-suspiciouscases,
+      build-reporting-suspicious-cases,
       pack-api-suspicious-cases, 
       build-data-integrity,
-      build-gtmf-meldingen ]
+      build-gtmf-meldingen
+      ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
     steps:
