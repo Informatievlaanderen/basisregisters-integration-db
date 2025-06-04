@@ -345,7 +345,7 @@ jobs:
           'suspicious-cases-api',
           'integration-veka',
           'bosa-full-download',
-          'reporting-suspiciouscases',
+          'reporting-suspicious-cases',
           'data-integrity',
           'gtmf-meldingen'
           ]
@@ -453,7 +453,7 @@ jobs:
         services: [
           'integration-veka',
           'integration-bosa-full-download',
-          'integration-reporting-suspiciouscases',
+          'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen'
         ]
@@ -561,7 +561,7 @@ jobs:
         services: [
           'integration-veka',
           'integration-bosa-full-download',
-          'integration-reporting-suspiciouscases',
+          'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen'
         ]
