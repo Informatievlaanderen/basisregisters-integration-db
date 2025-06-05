@@ -1,0 +1,86 @@
+name: Manual Test Deploy
+run-name: 'Manual Test Deploy ${{ github.event.inputs.version }}'
+concurrency: Manual Test Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+      inputs:
+        type: choice
+        description: 'Environment'
+        required: true
+        default: 'tst'
+        options:
+          - tst
+          - stg
+          - prd
+
+jobs:
+  deploy_to_test_start_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    name: Deploy to test started
+    environment: tst
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify deployment started
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of basisregisters-integration to test has started'
+
+  deploy_services_to_test:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_to_test_start_slack ]
+    name: Deploy services to Test
+    strategy:
+      matrix:
+        services: [
+          'integration-suspicious-cases-api'
+        ]
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/deploy-v4.yml@main
+    with:
+        environment: tst
+        service-name: ${{ matrix.services }}
+        version: ${{ github.event.inputs.version }}
+
+  deploy_tasks_to_test:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_to_test_start_slack ]
+    name: Deploy tasks to Test
+    strategy:
+      matrix:
+        services: [
+          'integration-veka', 
+          'integration-bosa-full-download',
+          'integration-reporting-suspicious-cases',
+          'integration-data-integrity',
+          'integration-gtmf-meldingen'
+          ]
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/deploy-v4.yml@main
+    with:
+        environment: tst
+        service-name: ${{ matrix.services }}
+        version: ${{ github.event.inputs.version }}
+
+  deploy_to_test_finish_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_services_to_test, deploy_tasks_to_test ]
+    name: Deploy to test finished
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify deployment finished
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of basisregisters-integration to test has finished'
