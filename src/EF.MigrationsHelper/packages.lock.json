@@ -80,8 +80,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.402.37",
-        "contentHash": "SCAW51UFo0vvYxDN+zq7w7voWcX7O2cb31eQDbUniCDwyFvTcwSNRH+tKoNwbv4wRlH7dYFE5q2XvwsUtt5QuA=="
+        "resolved": "3.7.402.68",
+        "contentHash": "9r4O749eNm64GHOMSe9UAh96twNqoWQUoKoWwZ08Br3gqEjiw685K8ifjSD7I2OM98dut/LaDtRBZQNwbcVGjg=="
       },
       "Azure.Core": {
         "type": "Transitive",
@@ -1598,7 +1598,7 @@
         "type": "Project",
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
-          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.400.162, )",
           "Autofac": "[8.3.0, )",
           "Autofac.Extensions.DependencyInjection": "[10.0.0, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.0.0, )",
@@ -1723,7 +1723,7 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "CentralTransitive",
-        "requested": "[3.7.406.19, )",
+        "requested": "[3.7.407.23, )",
         "resolved": "3.7.406.17",
         "contentHash": "HmCeGXJwbflvvtcLTXIPJsI4XsQslUZ4BPPUmyHNLmQJdORJ8veln/tsNPFWDlhjhZ1KI3jSDTdkQZsxPNqfVg==",
         "dependencies": {
@@ -1744,11 +1744,11 @@
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "CentralTransitive",
-        "requested": "[3.7.400.131, )",
-        "resolved": "3.7.400.131",
-        "contentHash": "3hGmeDJK7S3BfK3LABgX6gRgoxQXh8o/+Hn+vQcbAsCLsjnzg+hYXky0v4IXp6YDcfP8gx3L4ExN8bIuMWwSYQ==",
+        "requested": "[3.7.400.162, )",
+        "resolved": "3.7.400.162",
+        "contentHash": "f7X3bW6TiZhPzI+IKueToPkufnx2oys8PZNnT+g5qBa2QMIsuPn73F4Ko9xywvq/A2QlM4kAZ2sgaYpyev7ukw==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.402.68, 4.0.0)"
         }
       },
       "Azure.Storage.Blobs": {

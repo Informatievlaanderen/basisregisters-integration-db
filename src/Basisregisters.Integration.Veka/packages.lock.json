@@ -23,11 +23,11 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "Direct",
-        "requested": "[3.7.406.19, )",
-        "resolved": "3.7.406.19",
-        "contentHash": "73imXALjCXNQ3KkTQJeibAxMVN9jVwarVB5YmdrLPFif8WvCdPRc5vXO3ra+EGUtOs+9aJaHenA4uXegaEiNiA==",
+        "requested": "[3.7.407.23, )",
+        "resolved": "3.7.407.23",
+        "contentHash": "Niq4JBC3arx693BzH2vqWJrw8bad/KLr7tmNXYO9PXFUOFqraXz4dpBnsuldNR1gAaY+mBONOTQV1Rp8V1Aanw==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.402.68, 4.0.0)"
         }
       },
       "AWSSDK.Extensions.NETCore.Setup": {
@@ -44,20 +44,20 @@
       },
       "AWSSDK.SimpleEmail": {
         "type": "Direct",
-        "requested": "[3.7.402.74, )",
-        "resolved": "3.7.402.74",
-        "contentHash": "F2d3+i68E6rOHq1nNPDG7YgUlebPRghuMZkZtd44njce1j3MGgKWbB68kmXeH/z+sIDlPX6+3OyUX9kImEAefA==",
+        "requested": "[3.7.402.105, )",
+        "resolved": "3.7.402.105",
+        "contentHash": "7nZrGJTE/NZAOnS0M7m5sZfw0s6BzV6BmzKgGkm3tXgL9bZTfWfYSXjfFzxTIZ+y2qaedvyelPxX4F8UfNIyGw==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.402.68, 4.0.0)"
         }
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "Direct",
-        "requested": "[3.7.400.131, )",
-        "resolved": "3.7.400.131",
-        "contentHash": "3hGmeDJK7S3BfK3LABgX6gRgoxQXh8o/+Hn+vQcbAsCLsjnzg+hYXky0v4IXp6YDcfP8gx3L4ExN8bIuMWwSYQ==",
+        "requested": "[3.7.400.162, )",
+        "resolved": "3.7.400.162",
+        "contentHash": "f7X3bW6TiZhPzI+IKueToPkufnx2oys8PZNnT+g5qBa2QMIsuPn73F4Ko9xywvq/A2QlM4kAZ2sgaYpyev7ukw==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.402.68, 4.0.0)"
         }
       },
       "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": {
@@ -288,8 +288,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.402.37",
-        "contentHash": "SCAW51UFo0vvYxDN+zq7w7voWcX7O2cb31eQDbUniCDwyFvTcwSNRH+tKoNwbv4wRlH7dYFE5q2XvwsUtt5QuA=="
+        "resolved": "3.7.402.68",
+        "contentHash": "9r4O749eNm64GHOMSe9UAh96twNqoWQUoKoWwZ08Br3gqEjiw685K8ifjSD7I2OM98dut/LaDtRBZQNwbcVGjg=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Transitive",
