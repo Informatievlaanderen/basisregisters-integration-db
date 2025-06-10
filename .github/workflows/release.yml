@@ -378,8 +378,8 @@ jobs:
     steps:
     - name: Deploy services
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4/status
       uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: tst
@@ -418,8 +418,8 @@ jobs:
     steps:
     - name: Deploy tasks
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/${{matrix.services}}
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4/status
       uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: tst
@@ -488,8 +488,8 @@ jobs:
     steps:
     - name: Deploy services
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4/status
       uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: stg
@@ -528,8 +528,8 @@ jobs:
     steps:
     - name: Deploy tasks
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/${{matrix.services}}
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4/status
       uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: stg
