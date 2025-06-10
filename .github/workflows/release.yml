@@ -291,50 +291,6 @@ jobs:
         WORKSPACE: ${{ github.workspace }}
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
-  # publish_to_atlassian:
-  #   needs: [ release ]
-  #   if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.release.outputs.version != 'none') }}
-  #   name: Publish to Atlassian
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4
-
-  #     - name: Parse repository name
-  #       run: echo REPOSITORY_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//") >> $GITHUB_ENV
-  #       shell: bash
-
-  #     - name: Cache Python
-  #       uses: actions/cache@v4
-  #       env:
-  #         cache-name: cache-pip
-  #       with:
-  #         path: ~/.cache/pip
-  #         key: ${{ runner.os }}-build-${{ env.cache-name }}
-
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version: '3.x'
-
-  #     - name: Install Python dependencies
-  #       shell: bash
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install requests markdown argparse
-
-      # - name: Restore build-pipeline
-      #   shell: bash
-      #   run: ./pre-restore.sh
-
-  #     - name: Publish to Confluence
-  #       shell: bash
-  #       run: bash ./.build/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-confluence.sh
-  #       env:
-  #         CONFLUENCE_TITLE: ${{ env.REPOSITORY_NAME }}
-  #         CONFLUENCE_USERNAME: ${{ secrets.VBR_CONFLUENCE_USER }}
-  #         CONFLUENCE_PASSWORD: ${{ secrets.VBR_CONFLUENCE_PASSWORD }}
-
   push_images:
     if: needs.release.outputs.version != 'none'
     needs: [ release ]
@@ -422,9 +378,9 @@ jobs:
     steps:
     - name: Deploy services
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS  }}/${{matrix.services}}
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: tst
           version: ${{ needs.release.outputs.version }}
@@ -432,7 +388,8 @@ jobs:
           deploy-url: $BUILD_URL
           access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS  }}
           secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS  }}
-          deploy-target: 'agb_ecs_service'
+          deploy-target: 'ecs'
+          application: 'ecs'
           interval: 2
           domain: 'basisregisters'
           project: 'basisregisters'
@@ -461,18 +418,19 @@ jobs:
     steps:
     - name: Deploy tasks
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS }}/${{matrix.services}}
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: tst
           version: ${{ needs.release.outputs.version }}
           status-url: $STATUS_URL
           deploy-url: $BUILD_URL
           access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
-          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}          
+          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
           interval: 2
-          deploy-target: 'ecs_scheduled_task'
+          deploy-target: 'ecs'
+          application: 'ecs'
           domain: 'basisregisters'
           project: 'basisregisters'
 
@@ -530,9 +488,9 @@ jobs:
     steps:
     - name: Deploy services
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS  }}/${{matrix.services}}
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: stg
           version: ${{ needs.release.outputs.version }}
@@ -540,7 +498,8 @@ jobs:
           deploy-url: $BUILD_URL
           access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS  }}
           secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS  }}
-          deploy-target: 'agb_ecs_service'
+          deploy-target: 'ecs'
+          application: 'ecs'
           interval: 2
           domain: 'basisregisters'
           project: 'basisregisters'
@@ -569,18 +528,19 @@ jobs:
     steps:
     - name: Deploy tasks
       env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS }}/${{matrix.services}}
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
       with:
           environment: stg
           version: ${{ needs.release.outputs.version }}
           status-url: $STATUS_URL
           deploy-url: $BUILD_URL
           access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
-          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}          
+          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
           interval: 2
-          deploy-target: 'ecs_scheduled_task'
+          deploy-target: 'ecs'
+          application: 'ecs'
           domain: 'basisregisters'
           project: 'basisregisters'
 
