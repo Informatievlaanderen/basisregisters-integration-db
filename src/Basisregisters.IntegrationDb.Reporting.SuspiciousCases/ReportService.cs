@@ -219,7 +219,7 @@ public sealed class ReportService : BackgroundService
             .Union(
                 _reportingContext
                     .SuspiciousCaseReports
-                    .Local)
+                    .Local, new SuspiciousCaseReportEqualityComparer())
             .ToList()
             .OrderBy(x => x.NisCode)
             .ThenBy(x => x.SuspiciousCaseType)
