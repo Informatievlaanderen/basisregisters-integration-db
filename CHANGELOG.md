@@ -1,3 +1,11 @@
+## [3.1.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.4...v3.1.5) (2025-06-11)
+
+
+### Bug Fixes
+
+* **reporting:** update open cases logic ([5bfc968](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5bfc968f2a67c5fe5636dc5384b02f284a963bbc))
+* **reporting:** use comparer to eliminate doubles ([262e6c5](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/262e6c55077e09187cbf8b63b77353dbbb971425))
+
 ## [3.1.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.3...v3.1.4) (2025-06-10)
 
 
