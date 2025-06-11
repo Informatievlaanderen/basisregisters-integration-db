@@ -33,6 +33,8 @@ public sealed class ReportService : BackgroundService
     private readonly AzureBlobOptions _azureBlobOptions;
     private readonly ILogger<ReportService> _logger;
 
+    private int? _firstRunOpenCases = null;
+
     public ReportService(
         SuspiciousCaseReportingContext reportingContext,
         ISuspiciousCasesRepository suspiciousCasesRepository,
@@ -221,6 +223,7 @@ public sealed class ReportService : BackgroundService
                     .SuspiciousCaseReports
                     .Local, new SuspiciousCaseReportEqualityComparer())
             .ToList()
+            .Where(x => x.Month <= DateOnly.FromDateTime(DateTime.UtcNow).AddDays(1)) //exclude next month(s), except if it's the last day of the month
             .OrderBy(x => x.NisCode)
             .ThenBy(x => x.SuspiciousCaseType)
             .ThenBy(x => x.Month);
@@ -276,6 +279,9 @@ public sealed class ReportService : BackgroundService
         var reportedCases = (await _reportingContext.SuspiciousCases.ToListAsync(stoppingToken))
             .ToDictionary(x => new { x.NisCode, x.ObjectId, x.SuspiciousCaseType });
 
+        if (!reportedCases.Any())
+            _firstRunOpenCases = allSuspiciousCases.Count;
+
         // find cases that need to be reported
         var casesToReport = allSuspiciousCases
             .Where(x => !reportedCases.ContainsKey(x.Key))
@@ -310,16 +316,17 @@ public sealed class ReportService : BackgroundService
     private async Task UpdateMonthlyReport(CancellationToken stoppingToken)
     {
         var startMonth = new DateOnly(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+        var startMonthOpenCases = startMonth.AddMonths(1);
 
         var monthlyReports = await _reportingContext.SuspiciousCaseReports
             .Where(x => x.Month == startMonth)
             .ToListAsync(stoppingToken);
 
-        // get all suspicious cases still open in this month, and count them by niscode, type
+        // get all suspicious cases still open before the start of the next month, and count them by niscode, type
         var openCases = await _reportingContext
             .SuspiciousCases
             .AsNoTracking()
-            .Where(x => x.DateAdded <= DateOnly.FromDateTime(DateTime.Today))
+            .Where(x => x.DateAdded < startMonthOpenCases && x.DateClosed == null)
             .GroupBy(x => new { x.NisCode, x.SuspiciousCaseType })
             .Select(x => new { x.Key, Count = x.Count() })
             .ToListAsync(cancellationToken: stoppingToken);
@@ -340,12 +347,15 @@ public sealed class ReportService : BackgroundService
 
             if (report is null)
             {
-                report = new SuspiciousCaseReport(openCase.Key.NisCode, openCase.Key.SuspiciousCaseType, startMonth);
+                report = new SuspiciousCaseReport(openCase.Key.NisCode, openCase.Key.SuspiciousCaseType, startMonthOpenCases);
                 monthlyReports.Add(report);
                 _reportingContext.SuspiciousCaseReports.Add(report);
             }
 
-            report.OpenCases = openCase.Count;
+            if(_firstRunOpenCases.HasValue && report.OpenCases == 0)
+                report.OpenCases = _firstRunOpenCases.Value;
+            else
+                report.OpenCases = openCase.Count;
         }
 
         foreach (var closedCase in closedCases)
