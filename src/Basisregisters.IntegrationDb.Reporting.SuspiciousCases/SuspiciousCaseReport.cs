@@ -1,6 +1,7 @@
 ﻿namespace Basisregisters.IntegrationDb.Reporting.SuspiciousCases;
 
 using System;
+using System.Collections.Generic;
 using IntegrationDb.SuspiciousCases;
 using IntegrationDb.SuspiciousCases.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,22 @@ public sealed class SuspiciousCaseReport
         Month = month;
         OpenCases = openCases;
         ClosedCases = closedCases;
+    }
+}
+
+public class SuspiciousCaseReportEqualityComparer : IEqualityComparer<SuspiciousCaseReport>
+{
+    public bool Equals(SuspiciousCaseReport? x, SuspiciousCaseReport? y)
+    {
+        if (x is null || y is null) return false;
+        return x.NisCode == y.NisCode &&
+               x.SuspiciousCaseType == y.SuspiciousCaseType &&
+               x.Month == y.Month;
+    }
+
+    public int GetHashCode(SuspiciousCaseReport obj)
+    {
+        return HashCode.Combine(obj.NisCode, obj.SuspiciousCaseType, obj.Month);
     }
 }
 
