@@ -315,15 +315,16 @@ public sealed class ReportService : BackgroundService
             .Where(x => x.Month == startMonth)
             .ToListAsync(stoppingToken);
 
-        // get all suspicious cases added or closed in this month, and count them by niscode, type
+        // get all suspicious cases still open in this month, and count them by niscode, type
         var openCases = await _reportingContext
             .SuspiciousCases
             .AsNoTracking()
-            .Where(x => x.DateAdded >= startMonth && x.DateAdded <= DateOnly.FromDateTime(DateTime.Today))
+            .Where(x => x.DateAdded <= DateOnly.FromDateTime(DateTime.Today))
             .GroupBy(x => new { x.NisCode, x.SuspiciousCaseType })
             .Select(x => new { x.Key, Count = x.Count() })
             .ToListAsync(cancellationToken: stoppingToken);
 
+        // get all suspicious cases closed in this month, and count them by niscode, type
         var closedCases = await _reportingContext
             .SuspiciousCases
             .AsNoTracking()
