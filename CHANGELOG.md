@@ -1,3 +1,10 @@
+## [3.1.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.5...v3.1.6) (2025-06-12)
+
+
+### Bug Fixes
+
+* **reporting:** change logic monthly report ([58909c7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/58909c7fa81b894b336385430d6c10fa09cafbb2))
+
 ## [3.1.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.4...v3.1.5) (2025-06-11)
 
 
