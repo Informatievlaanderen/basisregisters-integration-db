@@ -367,45 +367,8 @@ jobs:
   deploy_services_to_test:
     if: github.repository_owner == 'Informatievlaanderen'
     needs: [ deploy_to_test_start_slack, release ]
-    name: Deploy to services test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        services: [
-          'integration-suspicious-cases-api'
-          ]
-
-    steps:
-    - name: Deploy services
-      env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4/status
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
-      with:
-          environment: tst
-          version: ${{ needs.release.outputs.version }}
-          status-url: $STATUS_URL
-          deploy-url: $BUILD_URL
-          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS  }}
-          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS  }}
-          deploy-target: 'ecs'
-          application: 'ecs'
-          interval: 2
-          domain: 'basisregisters'
-          project: 'basisregisters'
-
-    - name: Deploy services output
-      shell: bash
-      run: |
-        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
-        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
-        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
-
-  deploy_tasks_to_test:
-    if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_to_test_start_slack, release ]
-    name: Deploy to test
-    runs-on: ubuntu-latest
+    name: Deploy
+    uses: informatievlaanderen/build-pipeline/.github/workflows/deploy-v4.yml@main
     strategy:
       matrix:
         services: [
@@ -413,37 +376,20 @@ jobs:
           'integration-bosa-full-download',
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
-          'integration-gtmf-meldingen'
+          'integration-gtmf-meldingen',
+          'integration-suspicious-cases-api'
         ]
-    steps:
-    - name: Deploy tasks
-      env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/tst/deploy/v4/status
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
-      with:
-          environment: tst
-          version: ${{ needs.release.outputs.version }}
-          status-url: $STATUS_URL
-          deploy-url: $BUILD_URL
-          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
-          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
-          interval: 2
-          deploy-target: 'ecs'
-          application: 'ecs'
-          domain: 'basisregisters'
-          project: 'basisregisters'
-
-    - name: Deploy tasks output
-      shell: bash
-      run: |
-        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
-        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
-        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+    with:
+      environment: tst
+      service-name: ${{ matrix.services }}
+      version: ${{ needs.release.outputs.version }}
+      domain: 'basisregisters'
+      project: 'basisregisters'
+    secrets: inherit
 
   deploy_to_test_finish_slack:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_services_to_test, deploy_tasks_to_test ]
+    needs: [ deploy_services_to_test ]
     name: Deploy to test finished
     runs-on: ubuntu-latest
 
@@ -476,46 +422,9 @@ jobs:
 
   deploy_services_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_to_staging_start_slack, release ]
-    name: Deploy to services staging
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        services: [
-          'integration-suspicious-cases-api'
-          ]
-
-    steps:
-    - name: Deploy services
-      env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4/status
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
-      with:
-          environment: stg
-          version: ${{ needs.release.outputs.version }}
-          status-url: $STATUS_URL
-          deploy-url: $BUILD_URL
-          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS  }}
-          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS  }}
-          deploy-target: 'ecs'
-          application: 'ecs'
-          interval: 2
-          domain: 'basisregisters'
-          project: 'basisregisters'
-
-    - name: Deploy services output
-      shell: bash
-      run: |
-        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
-        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
-        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
-
-  deploy_tasks_to_staging:
-    if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_to_staging_start_slack, release ]
-    name: Deploy tasks to staging
-    runs-on: ubuntu-latest
+    needs: [ deploy_to_test_start_slack, release ]
+    name: Deploy
+    uses: informatievlaanderen/build-pipeline/.github/workflows/deploy-v4.yml@main
     strategy:
       matrix:
         services: [
@@ -523,37 +432,20 @@ jobs:
           'integration-bosa-full-download',
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
-          'integration-gtmf-meldingen'
+          'integration-gtmf-meldingen',
+          'integration-suspicious-cases-api'
         ]
-    steps:
-    - name: Deploy tasks
-      env:
-        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4
-        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS_V4 }}/basisregisters/basisregisters/${{matrix.services}}/stg/deploy/v4/status
-      uses: informatievlaanderen/awscurl-polling-action/polling-action@deploy-v4
-      with:
-          environment: stg
-          version: ${{ needs.release.outputs.version }}
-          status-url: $STATUS_URL
-          deploy-url: $BUILD_URL
-          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
-          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
-          interval: 2
-          deploy-target: 'ecs'
-          application: 'ecs'
-          domain: 'basisregisters'
-          project: 'basisregisters'
-
-    - name: Deploy tasks output
-      shell: bash
-      run: |
-        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
-        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
-        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+    with:
+      environment: stg
+      service-name: ${{ matrix.services }}
+      version: ${{ needs.release.outputs.version }}
+      domain: 'basisregisters'
+      project: 'basisregisters'
+    secrets: inherit
 
   deploy_to_staging_finish_slack:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_services_to_staging, deploy_tasks_to_staging ]
+    needs: [ deploy_services_to_staging ]
     name: Deploy to staging finished
     runs-on: ubuntu-latest
 
