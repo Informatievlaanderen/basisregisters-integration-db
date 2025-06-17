@@ -319,7 +319,7 @@ public sealed class ReportService : BackgroundService
         var startMonthOpenCases = startMonth.AddMonths(1);
 
         var monthlyReports = await _reportingContext.SuspiciousCaseReports
-            .Where(x => x.Month == startMonth)
+            .Where(x => x.Month == startMonth || x.Month == startMonthOpenCases)
             .ToListAsync(stoppingToken);
 
         // get all suspicious cases still open before the start of the next month, and count them by niscode, type
@@ -343,6 +343,7 @@ public sealed class ReportService : BackgroundService
         foreach (var openCase in openCases)
         {
             var report = monthlyReports
+                .Where(x => x.Month == startMonthOpenCases)
                 .FirstOrDefault(x => x.NisCode == openCase.Key.NisCode && x.SuspiciousCaseType == openCase.Key.SuspiciousCaseType);
 
             if (report is null)
@@ -361,6 +362,7 @@ public sealed class ReportService : BackgroundService
         foreach (var closedCase in closedCases)
         {
             var report = monthlyReports
+                .Where(x => x.Month == startMonth)
                 .FirstOrDefault(x => x.NisCode == closedCase.Key.NisCode && x.SuspiciousCaseType == closedCase.Key.SuspiciousCaseType);
 
             if (report is null)
