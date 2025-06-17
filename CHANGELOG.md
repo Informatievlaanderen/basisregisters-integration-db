@@ -1,3 +1,10 @@
+## [3.1.7](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.6...v3.1.7) (2025-06-17)
+
+
+### Bug Fixes
+
+* **reporting:** filter correct months for monthly ([407f059](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/407f05966bf4819f22b9db1eb8a294339ea3bd86))
+
 ## [3.1.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.5...v3.1.6) (2025-06-12)
 
 
