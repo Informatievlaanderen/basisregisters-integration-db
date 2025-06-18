@@ -5,6 +5,7 @@
     using Amazon.SimpleEmail;
     using Amazon.SimpleEmail.Model;
     using Configuration;
+    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public interface IEmailSender
@@ -17,19 +18,28 @@
         private readonly IAmazonSimpleEmailService _amazonSimpleEmailService;
         private readonly VekaOptions _vekaOptions;
         private readonly EmailOptions _emailOptions;
+        private readonly ILogger _logger;
 
         public EmailSender(
             IAmazonSimpleEmailService amazonSimpleEmailService,
             IOptions<EmailOptions> emailOptions,
-            IOptions<VekaOptions> vekaOptions)
+            IOptions<VekaOptions> vekaOptions,
+            ILoggerFactory loggerFactory)
         {
             _amazonSimpleEmailService = amazonSimpleEmailService;
             _vekaOptions = vekaOptions.Value;
             _emailOptions = emailOptions.Value;
+            _logger = loggerFactory.CreateLogger(GetType());
         }
 
         public async Task SendEmailFor(Melding melding)
         {
+            if (!_emailOptions.Enabled)
+            {
+                _logger.LogInformation("Email sending is disabled, not sending email for melding {MeldingId}.", melding.Id);
+                return;
+            }
+
             await _amazonSimpleEmailService.SendEmailAsync(
                 new SendEmailRequest
                 {
