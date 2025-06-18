@@ -1,3 +1,10 @@
+## [3.1.8](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.7...v3.1.8) (2025-06-18)
+
+
+### Bug Fixes
+
+* separate dynamodb table for veka projectionstate ([e864aae](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e864aae8aac99698f5663c3be01af46de2209039))
+
 ## [3.1.7](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.6...v3.1.7) (2025-06-17)
 
 
