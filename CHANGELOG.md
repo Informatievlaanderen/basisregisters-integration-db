@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.8...v3.2.0) (2025-06-18)
+
+
+### Features
+
+* add enabled toggle to veka email sending ([e50d97d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/e50d97df61cca85fbc88e323d573592f815a5d0e))
+
 ## [3.1.8](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.7...v3.1.8) (2025-06-18)
 
 
