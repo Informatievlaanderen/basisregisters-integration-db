@@ -354,9 +354,16 @@ public sealed class ReportService : BackgroundService
             }
 
             if(_firstRunOpenCases.HasValue && report.OpenCases == 0)
-                report.OpenCases = _firstRunOpenCases.Value;
-            else
-                report.OpenCases = openCase.Count;
+            {
+                var firstReport = new SuspiciousCaseReport(openCase.Key.NisCode, openCase.Key.SuspiciousCaseType, startMonth)
+                {
+                    OpenCases = _firstRunOpenCases.Value
+                };
+                monthlyReports.Add(firstReport);
+                _reportingContext.SuspiciousCaseReports.Add(firstReport);
+            }
+
+            report.OpenCases = openCase.Count;
         }
 
         foreach (var closedCase in closedCases)
