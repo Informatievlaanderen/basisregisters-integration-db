@@ -1,3 +1,11 @@
+## [3.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.0...v3.2.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* **reporting:** first month ([5bb4a73](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5bb4a73e02c0d473b3109d8e33c7e16104a4d655))
+* **reporting:** solving already solved case changed date ([095ac87](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/095ac877320a4f7eee4243dbe0917e6d5dd50252))
+
 # [3.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.1.8...v3.2.0) (2025-06-18)
 
 
