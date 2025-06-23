@@ -33,6 +33,9 @@ public sealed class SuspiciousCase
 
     public void Solve(DateOnly dateClosed)
     {
+        if(DateClosed is not null)
+            throw new InvalidOperationException("Cannot solve a case that is already closed.");
+
         DateClosed = dateClosed;
         Status = SuspiciousCaseStatus.Solved;
     }
