@@ -295,7 +295,7 @@ public sealed class ReportService : BackgroundService
 
         // close cases (solved or checked off) = they are in reported, but not in all cases
         reportedCases
-            .Where(x => !allSuspiciousCases.ContainsKey(x.Key))
+            .Where(x => !allSuspiciousCases.ContainsKey(x.Key) && x.Value.DateClosed is null)
             .ToList()
             .ForEach(x => x.Value.Solve(DateOnly.FromDateTime(DateTime.UtcNow)));
 
