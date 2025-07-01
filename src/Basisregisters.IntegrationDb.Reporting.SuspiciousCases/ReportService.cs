@@ -33,8 +33,6 @@ public sealed class ReportService : BackgroundService
     private readonly AzureBlobOptions _azureBlobOptions;
     private readonly ILogger<ReportService> _logger;
 
-    private int? _firstRunOpenCases = null;
-
     public ReportService(
         SuspiciousCaseReportingContext reportingContext,
         ISuspiciousCasesRepository suspiciousCasesRepository,
@@ -279,9 +277,6 @@ public sealed class ReportService : BackgroundService
         var reportedCases = (await _reportingContext.SuspiciousCases.ToListAsync(stoppingToken))
             .ToDictionary(x => new { x.NisCode, x.ObjectId, x.SuspiciousCaseType });
 
-        if (!reportedCases.Any())
-            _firstRunOpenCases = allSuspiciousCases.Count;
-
         // find cases that need to be reported
         var casesToReport = allSuspiciousCases
             .Where(x => !reportedCases.ContainsKey(x.Key))
@@ -351,16 +346,6 @@ public sealed class ReportService : BackgroundService
                 report = new SuspiciousCaseReport(openCase.Key.NisCode, openCase.Key.SuspiciousCaseType, startMonthOpenCases);
                 monthlyReports.Add(report);
                 _reportingContext.SuspiciousCaseReports.Add(report);
-            }
-
-            if(_firstRunOpenCases.HasValue && report.OpenCases == 0)
-            {
-                var firstReport = new SuspiciousCaseReport(openCase.Key.NisCode, openCase.Key.SuspiciousCaseType, startMonth)
-                {
-                    OpenCases = _firstRunOpenCases.Value
-                };
-                monthlyReports.Add(firstReport);
-                _reportingContext.SuspiciousCaseReports.Add(firstReport);
             }
 
             report.OpenCases = openCase.Count;
