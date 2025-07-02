@@ -1,3 +1,10 @@
+## [3.2.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.1...v3.2.2) (2025-07-02)
+
+
+### Bug Fixes
+
+* **reporting:** remove first report open cases count ([31affe4](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/31affe4146ae05e14922effdb5e5b09e848fa566))
+
 ## [3.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.0...v3.2.1) (2025-06-23)
 
 
