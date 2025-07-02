@@ -48,7 +48,7 @@
                 and leftStreetName.status in (2, 3)
                 and leftStreetName.is_removed = false
             JOIN {SchemaLatestItems.Municipality} as leftMuni on
-                rs.maintainer_id = leftMuni.nis_code
+                leftStreetName.nis_code = leftMuni.nis_code
                 and leftMuni.is_removed = false
             WHERE
                 rs.is_removed = false
@@ -64,7 +64,7 @@
                 and rightStreetName.status in (2, 3)
                 and rightStreetName.is_removed = false
             JOIN {SchemaLatestItems.Municipality} as rightMuni on
-                rs.maintainer_id = rightMuni.nis_code
+                rightStreetName.nis_code = rightMuni.nis_code
                 and rightMuni.is_removed = false
             WHERE
                 rs.is_removed = false
