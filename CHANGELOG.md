@@ -1,3 +1,10 @@
+## [3.2.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.2...v3.2.3) (2025-07-02)
+
+
+### Bug Fixes
+
+* **suspicious-case:** join by streetname for niscode GAWR-5650 ([bf84ee0](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/bf84ee072860b4c84be9324d6ad4ac7e3393a14f))
+
 ## [3.2.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.1...v3.2.2) (2025-07-02)
 
 
