@@ -1,3 +1,10 @@
+## [3.2.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.3...v3.2.4) (2025-08-19)
+
+
+### Bug Fixes
+
+* **reporting:** add order by objectid GAWR-7033 ([062c8b7](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/062c8b7510ca2adc6c15b664419104bf9eadfbcb))
+
 ## [3.2.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.2...v3.2.3) (2025-07-02)
 
 
