@@ -146,6 +146,7 @@ public sealed class ReportService : BackgroundService
                 .ThenBy(x => x.SuspiciousCaseType)
                 .ThenBy(x => x.DateAdded)
                 .ThenBy(x => x.DateClosed)
+                .ThenBy(x => x.ObjectId)
                 .Skip(offset)
                 .Take(take)
                 .ToList();
