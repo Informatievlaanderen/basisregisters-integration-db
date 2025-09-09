@@ -15,8 +15,8 @@
         public string? OudeStatus { get; set; }
         public string NieuweStatus { get; set; } = null!;
         public Guid InitiatorOrganisatieIdInternal { get; set; }
-        public string TijdstipWijzigingAsString { get; set; } = null!;
-        private DateTimeOffset TijdstipWijzigingAsDateTimeOffset { get; set; }
+        public string TijdstipWijzigingAsString { get; private set; } = null!;
+        public DateTimeOffset TijdstipWijzigingAsDateTimeOffset { get; private set; }
 
         public Instant TijdstipWijzigingTimestamp
         {
