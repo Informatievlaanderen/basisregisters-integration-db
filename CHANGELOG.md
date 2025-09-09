@@ -1,3 +1,10 @@
+## [3.3.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.1...v3.3.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* **gtmf:** add handler for MeldingsobjectGeslotenEvent ([ff3a174](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/ff3a174ce05590e0573a51e8886cb690f9d84f45))
+
 ## [3.3.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.0...v3.3.1) (2025-09-09)
 
 
