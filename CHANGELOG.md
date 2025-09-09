@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.4...v3.3.0) (2025-09-09)
+
+
+### Features
+
+* meldingsobjecten csv GAWR-7034 ([d197dca](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d197dcacc6024441c90d4e7cebd5909c334c03d7))
+
 ## [3.2.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.3...v3.2.4) (2025-08-19)
 
 
