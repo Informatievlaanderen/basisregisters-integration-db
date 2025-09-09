@@ -36,10 +36,7 @@ public class OrganizationApiClient : IOrganizationApiClient
 
         var httpClient = _factory.CreateClient();
         var response = await httpClient.GetAsync(CreateUri(ovoCode), cancellationToken);
-        if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
-        {
-            throw new OrganizationRegistryUnavailableException();
-        }
+        response.EnsureSuccessStatusCode();
 
         var results = await response.Content.ReadFromJsonAsync<IEnumerable<OrganizationDto>?>(cancellationToken: cancellationToken);
         return results?.FirstOrDefault()
@@ -63,8 +60,4 @@ public class OrganizationDto
 public class OrganizationRegistryOptions
 {
     public string BaseUrl { get; set; }
-}
-
-public class OrganizationRegistryUnavailableException : Exception
-{
 }
