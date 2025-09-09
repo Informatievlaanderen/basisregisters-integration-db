@@ -15,6 +15,7 @@
         public const string MeldingsobjectGeslotenNaOnderzoekAlsBehandelaarEvent = "MeldingsobjectGeslotenNaOnderzoekAlsBehandelaarEvent";
         public const string MeldingsobjectGeslotenNaOnderzoekAlsBronhouderEvent = "MeldingsobjectGeslotenNaOnderzoekAlsBronhouderEvent";
         public const string MeldingsobjectOpgelostEvent = "MeldingsobjectOpgelostEvent";
+        public const string MeldingsobjectGeslotenEvent = "MeldingsobjectGeslotenEvent";
         public const string MeldingAfgerondEvent = "MeldingAfgerondEvent";
 
         public static IEnumerable<string> All =>
@@ -30,6 +31,7 @@
                 MeldingsobjectGeslotenNaOnderzoekAlsBehandelaarEvent,
                 MeldingsobjectGeslotenNaOnderzoekAlsBronhouderEvent,
                 MeldingsobjectOpgelostEvent,
+                MeldingsobjectGeslotenEvent,
                 MeldingAfgerondEvent
             ];
 
@@ -42,7 +44,8 @@
                 MeldingsobjectAfgewezenNaOnderzoekAlsBehandelaarEvent,
                 MeldingsobjectGeslotenNaOnderzoekAlsBehandelaarEvent,
                 MeldingsobjectGeslotenNaOnderzoekAlsBronhouderEvent,
-                MeldingsobjectOpgelostEvent
+                MeldingsobjectOpgelostEvent,
+                MeldingsobjectGeslotenEvent
             ];
     }
 }
