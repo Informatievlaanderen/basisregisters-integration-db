@@ -145,11 +145,17 @@
 
             var organisatie = await GetOrAddOrganisatie(meldingsobjectEvent.GetInitiatorOrganisatie(), ct);
 
+            var huidigeStatus = _meldingenContext.MeldingsobjectStatuswijzigingen
+                .Where(x => x.MeldingsobjectId == meldingsobjectEvent.MeldingsobjectId)
+                .OrderByDescending(x => x.TijdstipWijzigingTimestamp)
+                .Select(x => x.NieuweStatus)
+                .FirstOrDefault();
+
             _meldingenContext.MeldingsobjectStatuswijzigingen.Add(
                 new MeldingsobjectStatuswijziging(
                     meldingsobjectEvent.MeldingsobjectId,
                     meldingsobjectEvent.MeldingId,
-                    meldingsobjectEvent.GetOudeStatus(),
+                    huidigeStatus ?? meldingsobjectEvent.GetOudeStatus(),
                     meldingsobjectEvent.GetNieuweStatus(),
                     organisatie.IdInternal,
                     Instant.FromDateTimeOffset(meldingsobjectEvent.AangemaaktOp),

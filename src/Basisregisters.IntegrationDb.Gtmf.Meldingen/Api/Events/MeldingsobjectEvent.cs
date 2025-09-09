@@ -24,6 +24,7 @@
                 MeldingEventTypes.MeldingsobjectGeslotenNaOnderzoekAlsBehandelaarEvent => MeldingsobjectStatussen.InOnderzoek,
                 MeldingEventTypes.MeldingsobjectGeslotenNaOnderzoekAlsBronhouderEvent => MeldingsobjectStatussen.InOnderzoek,
                 MeldingEventTypes.MeldingsobjectOpgelostEvent => MeldingsobjectStatussen.InOnderzoek,
+                MeldingEventTypes.MeldingsobjectGeslotenEvent => throw new NotSupportedException(),
                 _ => throw new NotImplementedException()
             };
         }
@@ -40,6 +41,7 @@
                 MeldingEventTypes.MeldingsobjectGeslotenNaOnderzoekAlsBehandelaarEvent => MeldingsobjectStatussen.Gesloten,
                 MeldingEventTypes.MeldingsobjectGeslotenNaOnderzoekAlsBronhouderEvent => MeldingsobjectStatussen.Gesloten,
                 MeldingEventTypes.MeldingsobjectOpgelostEvent => MeldingsobjectStatussen.Opgelost,
+                MeldingEventTypes.MeldingsobjectGeslotenEvent => MeldingsobjectStatussen.Gesloten,
                 _ => throw new NotImplementedException()
             };
         }
