@@ -1667,7 +1667,7 @@
           "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[22.0.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[22.0.0, )",
           "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": "[1.0.0, )",
-          "CsvHelper": "[33.0.1, )",
+          "CsvHelper": "[33.1.0, )",
           "Dapper": "[2.1.66, )",
           "Datadog.Trace.Bundle": "[3.16.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
@@ -1879,9 +1879,9 @@
       },
       "CsvHelper": {
         "type": "CentralTransitive",
-        "requested": "[33.0.1, )",
-        "resolved": "33.0.1",
-        "contentHash": "fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ=="
+        "requested": "[33.1.0, )",
+        "resolved": "33.1.0",
+        "contentHash": "kqfTOZGrn7NarNeXgjh86JcpTHUoeQDMB8t9NVa/ZtlSYiV1rxfRnQ49WaJsob4AiGrbK0XDzpyKkBwai4F8eg=="
       },
       "Dapper": {
         "type": "CentralTransitive",
