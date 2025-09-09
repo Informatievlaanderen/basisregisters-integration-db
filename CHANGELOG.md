@@ -1,3 +1,10 @@
+## [3.3.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.3...v3.3.4) (2025-09-09)
+
+
+### Bug Fixes
+
+* also check EF Local for current status ([2042922](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/20429226adf85b1759e91779b7627cc18c3c088b))
+
 ## [3.3.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.2...v3.3.3) (2025-09-09)
 
 
