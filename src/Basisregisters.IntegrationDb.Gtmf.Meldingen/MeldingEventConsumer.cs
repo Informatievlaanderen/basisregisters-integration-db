@@ -145,11 +145,7 @@
 
             var organisatie = await GetOrAddOrganisatie(meldingsobjectEvent.GetInitiatorOrganisatie(), ct);
 
-            var huidigeStatus = _meldingenContext.MeldingsobjectStatuswijzigingen
-                .Where(x => x.MeldingsobjectId == meldingsobjectEvent.MeldingsobjectId)
-                .OrderByDescending(x => x.TijdstipWijzigingAsDateTimeOffset)
-                .Select(x => x.NieuweStatus)
-                .FirstOrDefault();
+            var huidigeStatus = GetHuidigeStatus(meldingsobjectEvent.MeldingsobjectId);
 
             _meldingenContext.MeldingsobjectStatuswijzigingen.Add(
                 new MeldingsobjectStatuswijziging(
@@ -160,6 +156,21 @@
                     organisatie.IdInternal,
                     Instant.FromDateTimeOffset(meldingsobjectEvent.AangemaaktOp),
                     meldingsobjectEvent.ToelichtingMelder));
+        }
+
+        private string? GetHuidigeStatus(Guid meldingsobjectId)
+        {
+            return _meldingenContext.MeldingsobjectStatuswijzigingen.Local
+                       .Where(x => x.MeldingsobjectId == meldingsobjectId)
+                       .OrderByDescending(x => x.TijdstipWijzigingAsDateTimeOffset)
+                       .Select(x => x.NieuweStatus)
+                       .FirstOrDefault()
+                   ??
+                   _meldingenContext.MeldingsobjectStatuswijzigingen
+                       .Where(x => x.MeldingsobjectId == meldingsobjectId)
+                       .OrderByDescending(x => x.TijdstipWijzigingAsDateTimeOffset)
+                       .Select(x => x.NieuweStatus)
+                       .FirstOrDefault();
         }
 
         private async Task<Organisatie> GetOrAddOrganisatie(GtmfOrganisatie gtmfOrganisatie, CancellationToken ct)
