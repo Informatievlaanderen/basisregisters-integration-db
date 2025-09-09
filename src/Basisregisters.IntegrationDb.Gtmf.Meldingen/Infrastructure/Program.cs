@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
     using Amazon.SimpleNotificationService;
     using Api;
@@ -65,10 +66,12 @@
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.Configure<GtmfApiOptions>(hostContext.Configuration.GetSection("GtmfApi"));
+                    services.Configure<OrganizationRegistryOptions>(hostContext.Configuration.GetSection("OrganizationRegistry"));
                     services.Configure<DistributedLockOptions>(hostContext.Configuration.GetSection("DistributedLock"));
 
                     services.AddHttpClient();
                     services.AddSingleton<IGtmfApiProxy, GtmfApiProxy>();
+                    services.AddSingleton<IOrganizationApiClient, OrganizationApiClient>();
                     services.AddSingleton<IMeldingsobjectEventDeserializer, MeldingsobjectEventDeserializer>();
 
                     services.AddNpgsql<MeldingenContext>(

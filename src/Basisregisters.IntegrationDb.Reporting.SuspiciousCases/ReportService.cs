@@ -27,6 +27,7 @@ public sealed class ReportService : BackgroundService
     private readonly SuspiciousCaseReportingContext _reportingContext;
     private readonly ISuspiciousCasesRepository _suspiciousCasesRepository;
     private readonly IMunicipalityRepository _municipalityRepository;
+    private readonly IGtmfRepository _gtmfRepository;
     private readonly IHostApplicationLifetime _applicationLifetime;
     private readonly INotificationService _notificationService;
     private readonly BlobServiceClient _azureBlobServiceClient;
@@ -37,6 +38,7 @@ public sealed class ReportService : BackgroundService
         SuspiciousCaseReportingContext reportingContext,
         ISuspiciousCasesRepository suspiciousCasesRepository,
         IMunicipalityRepository municipalityRepository,
+        IGtmfRepository gtmfRepository,
         IHostApplicationLifetime applicationLifetime,
         INotificationService notificationService,
         BlobServiceClient azureBlobServiceClient,
@@ -46,6 +48,7 @@ public sealed class ReportService : BackgroundService
         _reportingContext = reportingContext;
         _suspiciousCasesRepository = suspiciousCasesRepository;
         _municipalityRepository = municipalityRepository;
+        _gtmfRepository = gtmfRepository;
         _applicationLifetime = applicationLifetime;
         _notificationService = notificationService;
         _azureBlobServiceClient = azureBlobServiceClient;
@@ -64,10 +67,12 @@ public sealed class ReportService : BackgroundService
             // make reports
             using var allCasesReportStream = await GenerateSuspiciousCasesReport(stoppingToken);
             using var monthlyReportStream = await GenerateMonthlyReport(stoppingToken);
+            using var meldingsobjectenCsvStream = await GenerateMeldingsobjectenCsv(stoppingToken);
 
             // upload to azure
             await UploadCsvToAzure("verdachte gevallen.csv", allCasesReportStream, stoppingToken);
             await UploadCsvToAzure("Monthly Snapshot.csv", monthlyReportStream, stoppingToken);
+            await UploadCsvToAzure("meldingsobjecten.csv", meldingsobjectenCsvStream, stoppingToken);
 
             await _notificationService.PublishToTopicAsync(
                 new NotificationMessage(
@@ -369,5 +374,70 @@ public sealed class ReportService : BackgroundService
         }
 
         await _reportingContext.SaveChangesAsync(stoppingToken);
+    }
+
+    private async Task<MemoryStream> GenerateMeldingsobjectenCsv(CancellationToken stoppingToken)
+    {
+        var meldingsobjecten = _gtmfRepository.GetAllMeldingsobjecten();
+
+        var cfgOut = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = ";",
+            Encoding = System.Text.Encoding.UTF8
+        };
+
+        var memoryStream = new MemoryStream();
+        await using var writer = new StreamWriter(memoryStream, leaveOpen: true);
+        await using var csvWriter = new CsvWriter(writer, cfgOut);
+
+        // header
+        csvWriter.WriteField("meldingsobject_id");
+        csvWriter.WriteField("melding_id");
+        csvWriter.WriteField("datum_indiening");
+        csvWriter.WriteField("datum_vaststelling");
+        csvWriter.WriteField("meldingsorganisatie_id_internal");
+        csvWriter.WriteField("meldingsorganisatie_id");
+        csvWriter.WriteField("referentie_melder");
+        csvWriter.WriteField("onderwerp");
+        csvWriter.WriteField("beschrijving");
+        csvWriter.WriteField("thema");
+        csvWriter.WriteField("oorzaak");
+        csvWriter.WriteField("thema_oorzaak");
+        csvWriter.WriteField("meldingsorganisatie");
+        csvWriter.WriteField("actieorganisatie");
+        csvWriter.WriteField("datum_wijziging");
+        csvWriter.WriteField("meldingstatus");
+
+        await csvWriter.NextRecordAsync();
+
+        const string DateFormat = "yyyy-MM-dd";
+
+        foreach (var meldingsobject in meldingsobjecten)
+        {
+            csvWriter.WriteField(meldingsobject.meldingsobject_id);
+            csvWriter.WriteField(meldingsobject.melding_id);
+            csvWriter.WriteField(meldingsobject.datum_indiening.ToString(DateFormat));
+            csvWriter.WriteField(meldingsobject.datum_vaststelling.ToString(DateFormat));
+            csvWriter.WriteField(meldingsobject.meldingsorganisatie_id_internal);
+            csvWriter.WriteField(meldingsobject.meldingsorganisatie_id);
+            csvWriter.WriteField(meldingsobject.referentie_melder);
+            csvWriter.WriteField(meldingsobject.onderwerp);
+            csvWriter.WriteField(meldingsobject.beschrijving);
+            csvWriter.WriteField(meldingsobject.thema);
+            csvWriter.WriteField(meldingsobject.oorzaak);
+            csvWriter.WriteField(meldingsobject.thema_oorzaak);
+            csvWriter.WriteField(meldingsobject.meldingsorganisatie);
+            csvWriter.WriteField(meldingsobject.actieorganisatie);
+            csvWriter.WriteField(meldingsobject.datum_wijziging.ToString(DateFormat));
+            csvWriter.WriteField(meldingsobject.meldingstatus);
+
+            await csvWriter.NextRecordAsync();
+        }
+
+        await csvWriter.FlushAsync();
+        await writer.FlushAsync(stoppingToken);
+        memoryStream.Position = 0;
+
+        return memoryStream;
     }
 }
