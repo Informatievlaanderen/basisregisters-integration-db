@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.0...v3.3.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* remove obsolete OrganizationRegistryUnavailableException ([4e92e0d](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/4e92e0d6c843dd3a62a58214b4d3f2b431491e9f))
+
 # [3.3.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.2.4...v3.3.0) (2025-09-09)
 
 
