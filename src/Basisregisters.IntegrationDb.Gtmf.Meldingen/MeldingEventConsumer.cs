@@ -147,7 +147,7 @@
 
             var huidigeStatus = _meldingenContext.MeldingsobjectStatuswijzigingen
                 .Where(x => x.MeldingsobjectId == meldingsobjectEvent.MeldingsobjectId)
-                .OrderByDescending(x => x.TijdstipWijzigingTimestamp)
+                .OrderByDescending(x => x.TijdstipWijzigingAsDateTimeOffset)
                 .Select(x => x.NieuweStatus)
                 .FirstOrDefault();
 
