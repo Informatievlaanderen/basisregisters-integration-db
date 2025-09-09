@@ -74,6 +74,7 @@ public sealed class Program
                 services.AddSingleton<IClock>(_ => SystemClock.Instance);
                 services.AddSingleton<IMunicipalityRepository>(_ => new MunicipalityRepository(connectionString));
                 services.AddSingleton<ISuspiciousCasesRepository>(_ => new SuspiciousCasesRepository(connectionString));
+                services.AddSingleton<IGtmfRepository>(_ => new GtmfRepository(connectionString));
 
                 services.Configure<AzureBlobOptions>(hostContext.Configuration.GetSection("AzureBlob"));
                 services.AddSingleton(sp =>

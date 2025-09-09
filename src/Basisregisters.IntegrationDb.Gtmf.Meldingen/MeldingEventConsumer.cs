@@ -19,6 +19,7 @@
         private readonly MeldingenContext _meldingenContext;
 
         private readonly IGtmfApiProxy _gtmfApiProxy;
+        private readonly IOrganizationApiClient _organizationApiClient;
         private readonly IMeldingsobjectEventDeserializer _meldingsobjectEventDeserializer;
         private readonly INotificationService _notificationService;
         private readonly ILogger _logger;
@@ -29,6 +30,7 @@
         public MeldingEventConsumer(
             MeldingenContext meldingenContext,
             IGtmfApiProxy gtmfApiProxy,
+            IOrganizationApiClient organizationApiClient,
             IMeldingsobjectEventDeserializer meldingsobjectEventDeserializer,
             INotificationService notificationService,
             ILoggerFactory loggerFactory,
@@ -36,6 +38,7 @@
         {
             _meldingenContext = meldingenContext;
             _gtmfApiProxy = gtmfApiProxy;
+            _organizationApiClient = organizationApiClient;
             _meldingsobjectEventDeserializer = meldingsobjectEventDeserializer;
             _notificationService = notificationService;
             _logger = loggerFactory.CreateLogger<MeldingEventConsumer>();
@@ -122,6 +125,8 @@
             var organisatie = await GetOrAddOrganisatie(indienerOrganisatie, ct);
             meldingsobject.MeldingsorganisatieIdInternal = organisatie.IdInternal;
 
+            await AddOrganisatieIfMissing(meldingsobject.OvoCode, ct);
+
             _meldingenContext.Meldingsobjecten.Add(meldingsobject);
             _meldingenContext.MeldingsobjectStatuswijzigingen.Add(
                 new MeldingsobjectStatuswijziging(
@@ -166,12 +171,32 @@
                 gtmfOrganisatie.Id,
                 Guid.NewGuid(),
                 gtmfOrganisatie.Naam,
-                gtmfOrganisatie.OvoCode, gtmfOrganisatie.KboNummer);
+                gtmfOrganisatie.OvoCode,
+                gtmfOrganisatie.KboNummer);
 
             _meldingenContext.Organisaties.Add(organisatie);
             _organisaties.Add(organisatie);
 
             return organisatie;
+        }
+
+        private async Task AddOrganisatieIfMissing(string ovoCode, CancellationToken ct)
+        {
+            var organisatie = _organisaties!.FirstOrDefault(x => x.OvoCode == ovoCode);
+            if (organisatie is null)
+            {
+                var organizationFromRegistry = await _organizationApiClient.GetByOvoCodeAsync(ovoCode, ct);
+
+                organisatie = new Organisatie(
+                    organizationFromRegistry.Id,
+                    organizationFromRegistry.Id,
+                    organizationFromRegistry.Name,
+                    organizationFromRegistry.OvoNumber,
+                    organizationFromRegistry.KboNumber);
+
+                _meldingenContext.Organisaties.Add(organisatie);
+                _organisaties!.Add(organisatie);
+            }
         }
     }
 }
