@@ -1,3 +1,10 @@
+## [3.3.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.2...v3.3.3) (2025-09-09)
+
+
+### Bug Fixes
+
+* EF ordering on TijdstipWijziging ([bccc770](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/bccc7706f26e2f092c627c8de9209a9fe0ce385e))
+
 ## [3.3.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.1...v3.3.2) (2025-09-09)
 
 
