@@ -22,17 +22,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EF.MigrationHelper", "src\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases", "src\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj", "{B6540121-7CE0-4E3C-B247-9E9E966EA8BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api\Basisregisters.IntegrationDb.SuspiciousCases.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api", "src\Basisregisters.IntegrationDb.Api\Basisregisters.IntegrationDb.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A5E1149A-0437-4CD0-93A2-6E7E059C74BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.Api.IntegrationTests\Basisregisters.IntegrationDb.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api.Tests", "test\Basisregisters.IntegrationDb.Api.Tests\Basisregisters.IntegrationDb.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.Integration.Veka", "src\Basisregisters.Integration.Veka\Basisregisters.Integration.Veka.csproj", "{71436A98-CF9A-4C6A-8ECB-9BF7B0AA7A6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.csproj", "{4B22C78C-C4F2-4038-903F-A68B46A9CEC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api.Abstractions", "src\Basisregisters.IntegrationDb.Api.Abstractions\Basisregisters.IntegrationDb.Api.Abstractions.csproj", "{4B22C78C-C4F2-4038-903F-A68B46A9CEC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.NationalRegistry.Tests", "test\Basisregisters.IntegrationDb.NationalRegistry.Tests\Basisregisters.IntegrationDb.NationalRegistry.Tests.csproj", "{DEBC4559-CD00-4BB0-A9F9-B01D07BEE1DF}"
 EndProject

@@ -49,6 +49,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj" />
-    <ProjectReference Include="..\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.csproj" />
+    <ProjectReference Include="..\Basisregisters.IntegrationDb.Api.Abstractions\Basisregisters.IntegrationDb.Api.Abstractions.csproj" />
   </ItemGroup>
 </Project>

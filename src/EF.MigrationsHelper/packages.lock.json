@@ -1666,7 +1666,7 @@
           "Be.Vlaanderen.Basisregisters.GrAr.Common": "[22.0.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[22.0.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[22.0.0, )",
-          "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": "[1.0.0, )",
+          "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": "[1.0.0, )",
           "CsvHelper": "[33.0.1, )",
           "Dapper": "[2.1.66, )",
           "Datadog.Trace.Bundle": "[3.16.0, )",
@@ -1696,7 +1696,7 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[9.0.4, )"
         }
       },
-      "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": {
+      "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": {
         "type": "Project",
         "dependencies": {
           "Be.Vlaanderen.Basisregisters.Api": "[24.0.0, )"
