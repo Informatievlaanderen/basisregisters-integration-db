@@ -141,6 +141,8 @@ namespace Basisregisters.IntegrationDb.NationalRegistry
                     .ToList();
                 FilesOutput.WriteDbfFile(result, directory);
                 FilesOutput.WriteShapeFile(result, directory);
+                FilesOutput.WriteInhabitedDbfFile(result, directory);
+                FilesOutput.WriteInhabitedShapeFile(result, directory);
 
                 var unmatchedRecords = new List<UnmatchedFlatFileRecord>();
                 unmatchedRecords.AddRange(streetNameMatchRunner.ConvertToUnmatchedFlatFileRecords(unmatchedStreetNames));
