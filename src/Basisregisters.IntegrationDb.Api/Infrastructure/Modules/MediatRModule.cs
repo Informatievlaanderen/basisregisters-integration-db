@@ -2,8 +2,8 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure.Modules
 {
     using System.Linq;
     using Autofac;
-    using List;
     using MediatR;
+    using SuspiciousCase.List;
 
     public class MediatRModule : Module
     {

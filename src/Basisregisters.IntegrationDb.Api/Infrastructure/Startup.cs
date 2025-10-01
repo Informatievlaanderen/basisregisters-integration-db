@@ -4,6 +4,7 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
     using System.Linq;
     using System.Reflection;
     using Abstractions;
+    using Abstractions.SuspiciousCase;
     using Asp.Versioning.ApiExplorer;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
     using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using Modules;
+    using SuspiciousCase;
 
     /// <summary>Represents the startup process for the application.</summary>
     public class Startup
@@ -84,7 +86,7 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
                                     Url = new Uri("https://backoffice.basisregisters.vlaanderen")
                                 }
                             },
-                            XmlCommentPaths = new[] { typeof(Startup).GetTypeInfo().Assembly.GetName().Name! }
+                            XmlCommentPaths = [typeof(Startup).GetTypeInfo().Assembly.GetName().Name!]
                         },
                         MiddlewareHooks =
                         {
