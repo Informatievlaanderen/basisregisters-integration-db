@@ -4,9 +4,9 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Common.Notification;
     using Gtmf;
     using Microsoft.Extensions.Hosting;
-    using Notifications;
 
     public class GtmfConsumer : BackgroundService
     {

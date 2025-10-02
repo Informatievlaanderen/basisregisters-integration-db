@@ -1,6 +1,6 @@
-﻿namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Notifications
+﻿namespace Basisregisters.Integration.Common.Notification
 {
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
 
     public class NotificationMessage
     {
@@ -17,12 +17,5 @@
             Service = service;
             Warning = warning.ToString().ToLowerInvariant();
         }
-    }
-
-    public enum NotificationSeverity
-    {
-        Good,
-        Low,
-        Danger
     }
 }

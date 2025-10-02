@@ -1594,6 +1594,15 @@
         "resolved": "7.0.0",
         "contentHash": "sFbY65N/5GdsHx7nkdHFHUG+5Ar4W0w6Aks7Y2X+Q4NOTw6XyX2Il7jm+4tPkc//4mA3nG0RdxI8gKgoJitdLw=="
       },
+      "basisregisters.integration.common.notification": {
+        "type": "Project",
+        "dependencies": {
+          "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "Microsoft.Extensions.Configuration": "[9.0.5, )",
+          "Newtonsoft.Json": "[13.0.3, )"
+        }
+      },
       "basisregisters.integrationdb.gtmf.meldingen": {
         "type": "Project",
         "dependencies": {
@@ -1601,6 +1610,7 @@
           "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
           "Autofac": "[8.3.0, )",
           "Autofac.Extensions.DependencyInjection": "[10.0.0, )",
+          "Basisregisters.Integration.Common.Notification": "[1.0.0, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.0.0, )",
           "Be.Vlaanderen.Basisregisters.Utilities.Rfc3339DateTimeOffset": "[5.0.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",

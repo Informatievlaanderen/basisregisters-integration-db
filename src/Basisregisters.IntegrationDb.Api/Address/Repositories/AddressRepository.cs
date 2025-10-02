@@ -60,8 +60,6 @@ public class AddressRepository
             sql += " AND adr.version_timestamp < (now() - interval '2 days') AND bldu.version_timestamp < (now() - interval '2 days')";
         }
 
-        sql = $"{sql} LIMIT 1"; //TODO-pr temp
-
         await using var connection = new NpgsqlConnection(_connectionString);
 
         var addresses = await connection.QueryAsync<AddressWithGeometry>(sql);

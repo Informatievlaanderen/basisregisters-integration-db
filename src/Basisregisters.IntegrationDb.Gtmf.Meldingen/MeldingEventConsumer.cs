@@ -7,11 +7,11 @@
     using System.Threading.Tasks;
     using Api;
     using Api.Events;
+    using Integration.Common.Notification;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using NodaTime;
-    using Notifications;
     using GtmfOrganisatie = Api.Organisatie;
 
     public class MeldingEventConsumer : BackgroundService

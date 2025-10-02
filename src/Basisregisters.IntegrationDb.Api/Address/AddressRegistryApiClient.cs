@@ -1,6 +1,5 @@
 ﻿namespace Basisregisters.IntegrationDb.Api.Address;
 
-using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;

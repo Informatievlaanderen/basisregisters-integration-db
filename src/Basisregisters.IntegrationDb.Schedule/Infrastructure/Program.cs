@@ -1,23 +1,18 @@
-﻿namespace Basisregisters.Integration.Veka
+﻿namespace Basisregisters.IntegrationDb.Schedule.Infrastructure
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
-    using Amazon.DynamoDBv2;
-    using Amazon.SimpleEmail;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
-    using Configuration;
     using Destructurama;
-    using Gtmf;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Serilog;
     using Serilog.Debugging;
-    using Serilog.Extensions.Logging;
 
     public sealed class Program
     {
@@ -63,43 +58,24 @@
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    var loggerFactory = new SerilogLoggerFactory(Log.Logger);
+                    services
+                        .Configure<DistributedLockOptions>(hostContext.Configuration.GetSection("DistributedLock"))
+                        .Configure<IntegrationDbApiOptions>(hostContext.Configuration.GetSection("IntegrationDbApi"));
 
-                    services.Configure<VekaOptions>(hostContext.Configuration.GetSection("Veka"));
-                    services.Configure<EmailOptions>(hostContext.Configuration.GetSection("Email"));
-                    services.Configure<GtmfApiOptions>(hostContext.Configuration.GetSection("GtmfApi"));
-                    services.Configure<DistributedLockOptions>(hostContext.Configuration.GetSection("DistributedLock"));
-
-                    services.AddHttpClient();
-
-                    if (hostContext.Configuration.GetValue<string>("DOTNET_ENVIRONMENT") == "Development")
-                    {
-                        services.AddSingleton<IProjectionState, FakeProjectionState>();
-                    }
-                    else
-                    {
-                        services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
-                        services.AddSingleton<IProjectionState, DynamoDbProjectionState>();
-                    }
-
-                    services.AddSingleton<IGtmfApiProxy, GtmfApiProxy>();
-
-                    services.AddAWSService<IAmazonSimpleEmailService>();
-                    services.AddSingleton<IEmailSender, EmailSender>();
-
-                    services.AddNotificationService(hostContext.Configuration["TopicArn"]!);
+                    services
+                        .AddHttpClient()
+                        .AddNotificationService(hostContext.Configuration["TopicArn"]!)
+                        .AddSingleton<IntegrationDbApiClient>();
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureContainer<ContainerBuilder>((_, builder) =>
                 {
-                    var services = new ServiceCollection();
-
                     builder
-                        .RegisterType<GtmfConsumer>()
+                        .RegisterType<CorrectAddressesBackgroundService>()
                         .As<IHostedService>()
                         .SingleInstance();
 
-                    builder.Populate(services);
+                    builder.Populate(new ServiceCollection());
                 })
                 .UseConsoleLifetime()
                 .Build();
@@ -107,7 +83,7 @@
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
             var configuration = host.Services.GetRequiredService<IConfiguration>();
 
-            logger.LogInformation("Starting Integration.Veka");
+            logger.LogInformation("Starting IntegrationDb.Schedule");
 
             try
             {

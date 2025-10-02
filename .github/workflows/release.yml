@@ -144,6 +144,21 @@ jobs:
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
       prerestore-script: ./pre-restore.sh
     secrets: inherit
+  
+  build-integration-schedule:
+    name: Build Integration Schedule
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
+    needs: [ set-release-version ]
+    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
+    with:
+      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
+      image-file: integration-schedule-image.tar
+      image-name: integration-schedule
+      build-project: Basisregisters.IntegrationDb.Schedule
+      semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
+    secrets: inherit
 
   pack-api:
     name: Pack Api Abstractions
@@ -171,7 +186,8 @@ jobs:
       build-reporting-suspicious-cases,
       pack-api, 
       build-data-integrity,
-      build-gtmf-meldingen
+      build-gtmf-meldingen,
+      build-integration-schedule
       ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
@@ -304,7 +320,8 @@ jobs:
           'bosa-full-download',
           'reporting-suspicious-cases',
           'data-integrity',
-          'gtmf-meldingen'
+          'gtmf-meldingen',
+          #'integration-schedule'
           ]
     steps:
       - name: Configure AWS credentials
@@ -377,6 +394,7 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
+          #'integration-schedule',
           'integration-api'
         ]
     with:
@@ -433,6 +451,7 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
+          #'integration-schedule',
           'integration-api'
         ]
     with:

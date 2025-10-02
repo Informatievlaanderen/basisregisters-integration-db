@@ -1,4 +1,4 @@
-﻿namespace Basisregisters.IntegrationDb.Gtmf.Meldingen.Notifications
+﻿namespace Basisregisters.Integration.Common.Notification
 {
     using System;
     using System.Text.Json;
@@ -11,7 +11,7 @@
         Task PublishToTopicAsync(NotificationMessage message);
     }
 
-    public class NotificationService : INotificationService, IDisposable
+    internal class NotificationService : INotificationService, IDisposable
     {
         private readonly IAmazonSimpleNotificationService _amazonSimpleNotificationService;
         private readonly string _topicArn;
