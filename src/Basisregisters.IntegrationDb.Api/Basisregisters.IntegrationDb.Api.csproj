@@ -39,6 +39,8 @@
   
     <PackageReference Include="Autofac" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions" />
     
     <PackageReference Include="Be.Vlaanderen.Basisregisters.Api" />
     <PackageReference Include="Be.Vlaanderen.Basisregisters.Auth.AcmIdm" />

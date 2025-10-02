@@ -1,6 +1,7 @@
 namespace Basisregisters.IntegrationDb.Api.Infrastructure.Modules
 {
     using System.Collections.Generic;
+    using Address;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
@@ -36,7 +37,8 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure.Modules
 
             builder
                 .RegisterModule(new MediatRModule())
-                .RegisterModule(new SuspiciousCasesModule(_configuration, _services, _loggerFactory));
+                .RegisterModule(new SuspiciousCasesModule(_configuration, _services, _loggerFactory))
+                .RegisterModule(new AddressModule(_configuration, _services));
 
             _services.AddAcmIdmAuthorizationHandlers();
 

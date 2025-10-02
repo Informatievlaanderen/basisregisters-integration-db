@@ -3,7 +3,6 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
     using System;
     using System.Linq;
     using System.Reflection;
-    using Abstractions;
     using Abstractions.SuspiciousCase;
     using Asp.Versioning.ApiExplorer;
     using Autofac;
@@ -77,7 +76,7 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
                             ApiInfo = (_, description) => new OpenApiInfo
                             {
                                 Version = description.ApiVersion.ToString(),
-                                Title = "Basisregisters Vlaanderen Verdachte Gevallen API",
+                                Title = "Basisregisters Vlaanderen Integratie Db API",
                                 Description = GetApiLeadingText(description),
                                 Contact = new OpenApiContact
                                 {
@@ -100,16 +99,19 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
                                     health.AddNpgSql(
                                         connectionString.Value!,
                                         name: $"npgsql-{connectionString.Key.ToLowerInvariant()}",
-                                        tags: new[] {DatabaseTag, "sql", "npgsql"});
+                                        tags: [DatabaseTag, "sql", "npgsql"]);
                             },
                             Authorization = options => { options.AddAddressPolicies([]); }
                         }
                     }
                 .EnableJsonErrorActionFilterOption())
                 .AddValidatorsFromAssemblyContaining<Startup>()
+                .AddSingleton<IActionContextAccessor, ActionContextAccessor>() // Used to retrieve the authenticated user claims.
+
+                // SuspiciousCase
                 .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"))
                 .AddHostedService<RefreshCountService>()
-                .AddSingleton<IActionContextAccessor, ActionContextAccessor>(); // Used to retrieve the authenticated user claims.
+                ;
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new ApiModule(_configuration, services, _loggerFactory));
@@ -141,7 +143,7 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
                     Api =
                     {
                         VersionProvider = apiVersionProvider,
-                        Info = groupName => $"Basisregisters Vlaanderen - Verdachte Gevallen API {groupName}",
+                        Info = groupName => $"Basisregisters Vlaanderen - Integratie Db API {groupName}",
                         CSharpClientOptions =
                         {
                             ClassName = "Api",
@@ -176,6 +178,6 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
 
         private static string GetApiLeadingText(ApiVersionDescription description)
             =>
-                $"Momenteel leest u de documentatie voor versie {description.ApiVersion} van de Basisregisters Vlaanderen Verdachte Gevallen API{string.Format(description.IsDeprecated ? ", **deze API versie is niet meer ondersteund * *." : ".")}";
+                $"Momenteel leest u de documentatie voor versie {description.ApiVersion} van de Basisregisters Vlaanderen Integratie Db API{string.Format(description.IsDeprecated ? ", **deze API versie is niet meer ondersteund * *." : ".")}";
     }
 }
