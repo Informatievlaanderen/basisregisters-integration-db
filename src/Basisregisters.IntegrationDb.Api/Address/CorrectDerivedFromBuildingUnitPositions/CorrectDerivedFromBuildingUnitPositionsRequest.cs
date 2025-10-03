@@ -5,4 +5,4 @@ using Abstractions.Address.CorrectDerivedFromBuildingUnitPositions;
 using MediatR;
 
 public sealed record CorrectDerivedFromBuildingUnitPositionsRequest(ICollection<int>? AddressIds)
-    : IRequest<CorrectieAfgeleidVanGebouwEenhedenResponse>;
+    : IRequest<CorrigerenAfgeleidVanGebouwEenhedenResponse>;

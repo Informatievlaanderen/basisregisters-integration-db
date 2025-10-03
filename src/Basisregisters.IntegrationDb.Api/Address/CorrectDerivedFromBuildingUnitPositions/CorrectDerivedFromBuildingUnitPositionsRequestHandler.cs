@@ -14,7 +14,7 @@
     using NetTopologySuite.Utilities;
     using Repositories;
 
-    public sealed class CorrectDerivedFromBuildingUnitPositionsRequestHandler : IRequestHandler<CorrectDerivedFromBuildingUnitPositionsRequest, CorrectieAfgeleidVanGebouwEenhedenResponse>
+    public sealed class CorrectDerivedFromBuildingUnitPositionsRequestHandler : IRequestHandler<CorrectDerivedFromBuildingUnitPositionsRequest, CorrigerenAfgeleidVanGebouwEenhedenResponse>
     {
         private readonly AddressRepository _addressRepository;
         private readonly AddressRegistryApiClient _client;
@@ -27,7 +27,7 @@
             _client = client;
         }
 
-        public async Task<CorrectieAfgeleidVanGebouwEenhedenResponse> Handle(CorrectDerivedFromBuildingUnitPositionsRequest request, CancellationToken cancellationToken)
+        public async Task<CorrigerenAfgeleidVanGebouwEenhedenResponse> Handle(CorrectDerivedFromBuildingUnitPositionsRequest request, CancellationToken cancellationToken)
         {
             var addresses = await _addressRepository.GetAddressesToCorrectPosition(request.AddressIds);
 
@@ -46,7 +46,7 @@
                 await _client.CorrectAddressPosition(address.PersistentLocalId, apiRequest, cancellationToken);
             }
 
-            return new CorrectieAfgeleidVanGebouwEenhedenResponse
+            return new CorrigerenAfgeleidVanGebouwEenhedenResponse
             {
                 Aantal = addresses.Count
             };

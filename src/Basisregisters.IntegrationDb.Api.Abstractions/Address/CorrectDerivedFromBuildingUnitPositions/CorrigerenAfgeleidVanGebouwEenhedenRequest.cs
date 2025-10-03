@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 [DataContract(Name = "CorrectieAfgeleidVanGebouwEenhedenRequest", Namespace = "")]
-public sealed class CorrectieAfgeleidVanGebouwEenhedenRequest
+public sealed class CorrigerenAfgeleidVanGebouwEenhedenRequest
 {
     [DataMember(Name = "adressen", Order = 0)]
     [JsonProperty(Required = Required.Default)]

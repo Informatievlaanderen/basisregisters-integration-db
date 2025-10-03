@@ -38,17 +38,17 @@ namespace Basisregisters.IntegrationDb.Api.Address
         /// <param name="cancellationToken"></param>
         /// <response code="202"></response>
         /// <returns></returns>
-        [HttpPost("corrigeer/afgeleid-van-gebouweenheid-posities")]
-        [ProducesResponseType(typeof(CorrectieAfgeleidVanGebouwEenhedenResponse), StatusCodes.Status202Accepted)]
+        [HttpPost("corrigeren/afgeleid-van-gebouweenheid-posities")]
+        [ProducesResponseType(typeof(CorrigerenAfgeleidVanGebouwEenhedenResponse), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.InterneBijwerker)]
         public async Task<IActionResult> CorrectDerivedFromBuildingUnitPositions(
-            [FromBody] CorrectieAfgeleidVanGebouwEenhedenRequest? request,
+            [FromBody] CorrigerenAfgeleidVanGebouwEenhedenRequest? request,
             [FromServices] CorrectieAfgeleidVanGebouwEenhedenRequestValidator validator,
             CancellationToken cancellationToken)
         {
-            request ??= new CorrectieAfgeleidVanGebouwEenhedenRequest();
+            request ??= new CorrigerenAfgeleidVanGebouwEenhedenRequest();
             await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var internalRequest = new CorrectDerivedFromBuildingUnitPositionsRequest(request.Adressen);
@@ -58,7 +58,7 @@ namespace Basisregisters.IntegrationDb.Api.Address
         }
     }
 
-    public class CorrectieAfgeleidVanGebouwEenhedenRequestValidator : AbstractValidator<CorrectieAfgeleidVanGebouwEenhedenRequest>
+    public class CorrectieAfgeleidVanGebouwEenhedenRequestValidator : AbstractValidator<CorrigerenAfgeleidVanGebouwEenhedenRequest>
     {
         public CorrectieAfgeleidVanGebouwEenhedenRequestValidator()
         {
