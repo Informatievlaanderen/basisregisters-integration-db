@@ -542,14 +542,6 @@
           "TimeZoneConverter": "7.0.0"
         }
       },
-      "GeoJSON.Net": {
-        "type": "Transitive",
-        "resolved": "1.4.1",
-        "contentHash": "jGl6JvyQV4hS3JsZ7FXTmB1tXE1kadXl2iD8H9OIqe1a5q7OfskDh0Cy2+YrEZ13eI4DJ8xTbDJXz2tldKyM8g==",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3"
-        }
-      },
       "IdentityModel": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -1860,6 +1852,15 @@
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
           "Serilog": "4.2.0"
+        }
+      },
+      "GeoJSON.Net": {
+        "type": "CentralTransitive",
+        "requested": "[1.4.1, )",
+        "resolved": "1.4.1",
+        "contentHash": "jGl6JvyQV4hS3JsZ7FXTmB1tXE1kadXl2iD8H9OIqe1a5q7OfskDh0Cy2+YrEZ13eI4DJ8xTbDJXz2tldKyM8g==",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
         }
       },
       "MediatR": {

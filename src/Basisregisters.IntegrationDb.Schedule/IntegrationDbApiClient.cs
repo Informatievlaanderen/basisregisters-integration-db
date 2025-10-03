@@ -55,14 +55,16 @@ public class IntegrationDbApiClient
 
         var response = await tokenClient.RequestTokenAsync(OidcConstants.GrantTypes.ClientCredentials);
         if (string.IsNullOrEmpty(response.AccessToken))
-            throw new ApplicationException($"Could not get access token: {response.Error}");
+        {
+            throw new Exception($"Could not get access token: {response.Error}");
+        }
 
         _accessToken = new AccessToken(response.AccessToken, response.ExpiresIn);
 
         return response.AccessToken;
     }
 
-    private class AccessToken
+    private sealed class AccessToken
     {
         private readonly DateTime _expiresAt;
 
