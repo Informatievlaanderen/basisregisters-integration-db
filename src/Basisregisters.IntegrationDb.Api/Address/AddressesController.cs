@@ -42,9 +42,6 @@ namespace Basisregisters.IntegrationDb.Api.Address
         [ProducesResponseType(typeof(CorrectieAfgeleidVanGebouwEenhedenResponse), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        //[SwaggerResponseExample(StatusCodes.Status202Accepted, typeof(CorrectDerivedFromBuildingUnitPositionsResponseExample))]
-        //[SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples))]
-        //[SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = PolicyNames.Adres.InterneBijwerker)]
         public async Task<IActionResult> CorrectDerivedFromBuildingUnitPositions(
             [FromBody] CorrectieAfgeleidVanGebouwEenhedenRequest? request,

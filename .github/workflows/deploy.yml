@@ -48,7 +48,7 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
-          #'integration-schedule',
+          'integration-schedule',
           'integration-api'
         ]
     with:

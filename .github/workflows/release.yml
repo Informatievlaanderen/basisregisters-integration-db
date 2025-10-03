@@ -321,7 +321,7 @@ jobs:
           'reporting-suspicious-cases',
           'data-integrity',
           'gtmf-meldingen',
-          #'integration-schedule'
+          'integration-schedule'
           ]
     steps:
       - name: Configure AWS credentials
@@ -394,7 +394,7 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
-          #'integration-schedule',
+          'integration-schedule',
           'integration-api'
         ]
     with:
@@ -451,7 +451,7 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
-          #'integration-schedule',
+          'integration-schedule',
           'integration-api'
         ]
     with:
