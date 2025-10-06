@@ -53,17 +53,17 @@ jobs:
         echo "version=$(cat semver)" >> "$GITHUB_OUTPUT"
       shell: bash
 
-  build-api-suspicious-cases:
-    name: Build Api Suspicious Cases
+  build-api:
+    name: Build Api
     uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
       registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
-      image-file: suspicious-cases-api-image.tar
-      image-name: suspicious-cases-api
-      test-project: Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests
-      build-project: Basisregisters.IntegrationDb.SuspiciousCases.Api
+      image-file: api-image.tar
+      image-name: api
+      test-project: Basisregisters.IntegrationDb.Api.Tests
+      build-project: Basisregisters.IntegrationDb.Api
       semver: ${{ needs.set-release-version.outputs.version }}
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
       prerestore-script: ./pre-restore.sh
@@ -144,16 +144,31 @@ jobs:
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
       prerestore-script: ./pre-restore.sh
     secrets: inherit
+  
+  build-integration-schedule:
+    name: Build Integration Schedule
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
+    needs: [ set-release-version ]
+    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
+    with:
+      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
+      image-file: integration-schedule-image.tar
+      image-name: integration-schedule
+      build-project: Basisregisters.IntegrationDb.Schedule
+      semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
+    secrets: inherit
 
-  pack-api-suspicious-cases:
-    name: Pack Api Suspicious Cases Abstractions
+  pack-api:
+    name: Pack Api Abstractions
     uses: Informatievlaanderen/build-pipeline/.github/workflows/pack-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
-      pack-file: Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions
-      test-project: Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests
-      build-project: Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions
+      pack-file: Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions
+      test-project: Basisregisters.IntegrationDb.Api.Tests
+      build-project: Basisregisters.IntegrationDb.Api.Abstractions
       semver: ${{ needs.set-release-version.outputs.version }}
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
       prerestore-script: ./pre-restore.sh
@@ -165,13 +180,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ 
       set-release-version, 
-      build-api-suspicious-cases, 
+      build-api, 
       build-integration-veka, 
       build-bosa-full-download,
       build-reporting-suspicious-cases,
-      pack-api-suspicious-cases, 
+      pack-api, 
       build-data-integrity,
-      build-gtmf-meldingen
+      build-gtmf-meldingen,
+      build-integration-schedule
       ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
@@ -227,11 +243,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests markdown argparse
 
-    - name: Download NuGet Api Suspicious Cases
+    - name: Download NuGet Api
       uses: actions/download-artifact@v4
       continue-on-error: false
       with:
-        name: nuget-Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions-${{ needs.set-release-version.outputs.version }}
+        name: nuget-Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions-${{ needs.set-release-version.outputs.version }}
         path: dist/nuget/
 
     - name: Run Semantic Release
@@ -276,16 +292,16 @@ jobs:
       shell: bash
       run: dotnet --info
 
-    - name: Download NuGet package api-suspicious-cases
+    - name: Download NuGet package api
       uses: actions/download-artifact@v4
       with:
-        name: nuget-Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions-${{ needs.release.outputs.version }}
+        name: nuget-Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions-${{ needs.release.outputs.version }}
         path: ~/
 
     - name: Publish packages to NuGet
       shell: bash
       run: |
-        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
+        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
       env:
         SEMVER: ${{  needs.release.outputs.version }}
         WORKSPACE: ${{ github.workspace }}
@@ -299,12 +315,13 @@ jobs:
     strategy:
       matrix:
         image: [
-          'suspicious-cases-api',
+          'api',
           'integration-veka',
           'bosa-full-download',
           'reporting-suspicious-cases',
           'data-integrity',
-          'gtmf-meldingen'
+          'gtmf-meldingen',
+          'integration-schedule'
           ]
     steps:
       - name: Configure AWS credentials
@@ -377,7 +394,8 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
-          'integration-suspicious-cases-api'
+          'integration-schedule',
+          'integration-api'
         ]
     with:
       environment: tst
@@ -433,7 +451,8 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
-          'integration-suspicious-cases-api'
+          'integration-schedule',
+          'integration-api'
         ]
     with:
       environment: stg

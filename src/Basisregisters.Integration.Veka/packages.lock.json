@@ -496,6 +496,15 @@
         "type": "Transitive",
         "resolved": "9.0.5",
         "contentHash": "nhtTvAgKTD7f6t0bkOb4/hNv0PShb8GHs5Fhn7PvYhwhyWiVyVBvL2vTGH0Hlw5jOZQmWkzQxjY6M/h4tl8M6Q=="
+      },
+      "basisregisters.integration.common.notification": {
+        "type": "Project",
+        "dependencies": {
+          "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "Microsoft.Extensions.Configuration": "[9.0.5, )",
+          "Newtonsoft.Json": "[13.0.3, )"
+        }
       }
     },
     "net9.0/linux-arm64": {

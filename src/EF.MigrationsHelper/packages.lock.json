@@ -1594,6 +1594,15 @@
         "resolved": "7.0.0",
         "contentHash": "sFbY65N/5GdsHx7nkdHFHUG+5Ar4W0w6Aks7Y2X+Q4NOTw6XyX2Il7jm+4tPkc//4mA3nG0RdxI8gKgoJitdLw=="
       },
+      "basisregisters.integration.common.notification": {
+        "type": "Project",
+        "dependencies": {
+          "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "Microsoft.Extensions.Configuration": "[9.0.5, )",
+          "Newtonsoft.Json": "[13.0.3, )"
+        }
+      },
       "basisregisters.integrationdb.gtmf.meldingen": {
         "type": "Project",
         "dependencies": {
@@ -1601,6 +1610,7 @@
           "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
           "Autofac": "[8.3.0, )",
           "Autofac.Extensions.DependencyInjection": "[10.0.0, )",
+          "Basisregisters.Integration.Common.Notification": "[1.0.0, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.0.0, )",
           "Be.Vlaanderen.Basisregisters.Utilities.Rfc3339DateTimeOffset": "[5.0.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
@@ -1666,7 +1676,7 @@
           "Be.Vlaanderen.Basisregisters.GrAr.Common": "[22.0.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[22.0.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[22.0.0, )",
-          "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": "[1.0.0, )",
+          "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": "[1.0.0, )",
           "CsvHelper": "[33.0.1, )",
           "Dapper": "[2.1.66, )",
           "Datadog.Trace.Bundle": "[3.16.0, )",
@@ -1696,10 +1706,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[9.0.4, )"
         }
       },
-      "Be.Vlaanderen.Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions": {
+      "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": {
         "type": "Project",
         "dependencies": {
-          "Be.Vlaanderen.Basisregisters.Api": "[24.0.0, )"
+          "Be.Vlaanderen.Basisregisters.Api": "[24.1.0, )"
         }
       },
       "Autofac": {
@@ -1762,9 +1772,9 @@
       },
       "Be.Vlaanderen.Basisregisters.Api": {
         "type": "CentralTransitive",
-        "requested": "[24.0.0, )",
-        "resolved": "24.0.0",
-        "contentHash": "1ohRUYTZWJdpTqsN/DWQg21XRY8u4sIXVAdO15do2uqqBrgf9m17JCb+kLuhsFv+ICCPCocP3p0i0bkwpFE1lw==",
+        "requested": "[24.1.0, )",
+        "resolved": "24.1.0",
+        "contentHash": "hcXBIwOflwBM09ZquNLjwBbqGurnpbK2vHNeIse2LhHm4BlbS+sMIOeIlPVW1oMJdwGiJ5DR4s/PNFFihMvRHQ==",
         "dependencies": {
           "Asp.Versioning.Mvc.ApiExplorer": "8.1.0",
           "Autofac": "8.2.1",
