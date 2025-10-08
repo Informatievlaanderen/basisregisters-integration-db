@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.4...v3.4.0) (2025-10-08)
+
+
+### Features
+
+* add inhabited shp file (CLI_bewoond) ([d817738](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d817738829511d064d71d2c2a433d828a644133f))
+
 ## [3.3.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.3...v3.3.4) (2025-09-09)
 
 
