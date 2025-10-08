@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.4.0...v3.4.1) (2025-10-08)
+
+
+### Bug Fixes
+
+* dockerfile to get latest base image + updates certificates ([c719e02](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/c719e0214bf9594205f361aea2debd1488d35bb3))
+
 # [3.4.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.3.4...v3.4.0) (2025-10-08)
 
 
