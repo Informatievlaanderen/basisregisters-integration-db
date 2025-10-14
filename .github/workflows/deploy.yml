@@ -48,7 +48,8 @@ jobs:
           'integration-reporting-suspicious-cases',
           'integration-data-integrity',
           'integration-gtmf-meldingen',
-          'integration-suspicious-cases-api'
+          'integration-schedule',
+          'integration-api'
         ]
     with:
       environment: ${{ github.event.inputs.environment }}

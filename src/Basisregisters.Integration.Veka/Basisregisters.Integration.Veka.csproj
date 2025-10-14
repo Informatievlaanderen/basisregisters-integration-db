@@ -51,4 +51,8 @@
     <PackageReference Include="SourceLink.Embed.AllSourceFiles" PrivateAssets="all" />
     <PackageReference Include="SourceLink.Copy.PdbFiles" PrivateAssets="all" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basisregisters.Integration.Common.Notification\Basisregisters.Integration.Common.Notification.csproj" />
+  </ItemGroup>
 </Project>

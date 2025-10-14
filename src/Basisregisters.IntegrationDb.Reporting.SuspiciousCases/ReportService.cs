@@ -206,7 +206,7 @@ public sealed class ReportService : BackgroundService
 
     private static string GetDutchDescription(SuspiciousCasesType type)
     {
-        if (Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.SuspiciousCase.AllCases.TryGetValue(type, out var suspiciousCase))
+        if (Api.Abstractions.SuspiciousCase.SuspiciousCase.AllCases.TryGetValue(type, out var suspiciousCase))
         {
             return suspiciousCase.Description;
         }

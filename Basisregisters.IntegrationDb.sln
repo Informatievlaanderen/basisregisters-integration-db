@@ -22,17 +22,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EF.MigrationHelper", "src\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases", "src\Basisregisters.IntegrationDb.SuspiciousCases\Basisregisters.IntegrationDb.SuspiciousCases.csproj", "{B6540121-7CE0-4E3C-B247-9E9E966EA8BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api\Basisregisters.IntegrationDb.SuspiciousCases.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api", "src\Basisregisters.IntegrationDb.Api\Basisregisters.IntegrationDb.Api.csproj", "{F3D39574-A172-40C5-A072-D33D19576419}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A5E1149A-0437-4CD0-93A2-6E7E059C74BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests\Basisregisters.IntegrationDb.SuspiciousCases.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api.IntegrationTests", "test\Basisregisters.IntegrationDb.Api.IntegrationTests\Basisregisters.IntegrationDb.Api.IntegrationTests.csproj", "{012CD10E-1EDE-4014-B7CE-B870E62D1BEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests", "test\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests\Basisregisters.IntegrationDb.SuspiciousCases.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api.Tests", "test\Basisregisters.IntegrationDb.Api.Tests\Basisregisters.IntegrationDb.Api.Tests.csproj", "{2046F886-AA42-4EAD-A8FC-F8FC10A743F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.Integration.Veka", "src\Basisregisters.Integration.Veka\Basisregisters.Integration.Veka.csproj", "{71436A98-CF9A-4C6A-8ECB-9BF7B0AA7A6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions", "src\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions\Basisregisters.IntegrationDb.SuspiciousCases.Api.Abstractions.csproj", "{4B22C78C-C4F2-4038-903F-A68B46A9CEC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.Api.Abstractions", "src\Basisregisters.IntegrationDb.Api.Abstractions\Basisregisters.IntegrationDb.Api.Abstractions.csproj", "{4B22C78C-C4F2-4038-903F-A68B46A9CEC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basisregisters.IntegrationDb.NationalRegistry.Tests", "test\Basisregisters.IntegrationDb.NationalRegistry.Tests\Basisregisters.IntegrationDb.NationalRegistry.Tests.csproj", "{DEBC4559-CD00-4BB0-A9F9-B01D07BEE1DF}"
 EndProject
@@ -47,6 +47,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Gtmf.Meldingen", "src\Basisregisters.IntegrationDb.Gtmf.Meldingen\Basisregisters.IntegrationDb.Gtmf.Meldingen.csproj", "{36676515-2269-48F9-90CC-041D5585A110}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Reporting.SuspiciousCases", "src\Basisregisters.IntegrationDb.Reporting.SuspiciousCases\Basisregisters.IntegrationDb.Reporting.SuspiciousCases.csproj", "{DE7AA519-4385-4C65-A095-5729C96E4FF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.IntegrationDb.Schedule", "src\Basisregisters.IntegrationDb.Schedule\Basisregisters.IntegrationDb.Schedule.csproj", "{680E1FA7-48BA-4EC6-9A9C-8C382608434F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basisregisters.Integration.Common.Notification", "src\Basisregisters.Integration.Common.Notification\Basisregisters.Integration.Common.Notification.csproj", "{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -226,6 +230,30 @@ Global
 		{DE7AA519-4385-4C65-A095-5729C96E4FF4}.Release|x64.Build.0 = Release|Any CPU
 		{DE7AA519-4385-4C65-A095-5729C96E4FF4}.Release|x86.ActiveCfg = Release|Any CPU
 		{DE7AA519-4385-4C65-A095-5729C96E4FF4}.Release|x86.Build.0 = Release|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Debug|x64.Build.0 = Debug|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Debug|x86.Build.0 = Debug|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Release|x64.ActiveCfg = Release|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Release|x64.Build.0 = Release|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Release|x86.ActiveCfg = Release|Any CPU
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F}.Release|x86.Build.0 = Release|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Debug|x64.Build.0 = Debug|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Debug|x86.Build.0 = Debug|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Release|x64.ActiveCfg = Release|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Release|x64.Build.0 = Release|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Release|x86.ActiveCfg = Release|Any CPU
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,6 +272,8 @@ Global
 		{EA1DCD1C-D519-42B5-BE1F-374DFDA2E7CA} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{36676515-2269-48F9-90CC-041D5585A110} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 		{DE7AA519-4385-4C65-A095-5729C96E4FF4} = {C2F8FF63-7A48-4179-A720-86206C42F496}
+		{680E1FA7-48BA-4EC6-9A9C-8C382608434F} = {C2F8FF63-7A48-4179-A720-86206C42F496}
+		{0804F9E5-F416-43FA-8B6F-0B95BBFDE2BD} = {C2F8FF63-7A48-4179-A720-86206C42F496}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2EB87445-E263-4E1E-89CC-3839170028E5}
