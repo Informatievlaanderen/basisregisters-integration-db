@@ -77,10 +77,25 @@
             using var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
             dbfFile.WriteTo(fileStream, CancellationToken.None);
         }
+        public static void WriteInhabitedDbfFile(IList<AddressWithRegisteredCount> addressesWithRegisteredCount, string directory)
+        {
+            var dbfFile = CreateInhabitedResultFile(addressesWithRegisteredCount);
+            using var fileStream = File.Create(Path.Combine(directory, dbfFile.Name));
+            dbfFile.WriteTo(fileStream, CancellationToken.None);
+        }
 
         public static void WriteShapeFile(IList<AddressWithRegisteredCount> addressesWithRegisteredCount, string directory)
         {
-            var files = CreateShapeFiles(addressesWithRegisteredCount);
+            var files = CreateShapeFiles("CLI", addressesWithRegisteredCount);
+            foreach (var extractFile in files)
+            {
+                using var fileStream = File.Create(Path.Combine(directory, extractFile.Name));
+                extractFile.WriteTo(fileStream, CancellationToken.None);
+            }
+        }
+        public static void WriteInhabitedShapeFile(IList<AddressWithRegisteredCount> addressesWithRegisteredCount, string directory)
+        {
+            var files = CreateShapeFiles("CLI_bewoond", addressesWithRegisteredCount);
             foreach (var extractFile in files)
             {
                 using var fileStream = File.Create(Path.Combine(directory, extractFile.Name));
@@ -88,7 +103,7 @@
             }
         }
 
-        private static IEnumerable<ExtractFile> CreateShapeFiles(IList<AddressWithRegisteredCount> matchedRecords)
+        private static IEnumerable<ExtractFile> CreateShapeFiles(string fileName, IList<AddressWithRegisteredCount> matchedRecords)
         {
             var content = matchedRecords
                 .Select(x =>
@@ -115,7 +130,7 @@
                 double.PositiveInfinity);
 
             yield return ExtractBuilder.CreateShapeFile<PointShapeContent>(
-                "CLI",
+                fileName,
                 ShapeType.Point,
                 content.Select(x => x.Content),
                 ShapeContent.Read,
@@ -123,14 +138,14 @@
                 boundingBox);
 
             yield return ExtractBuilder.CreateShapeIndexFile(
-                "CLI",
+                fileName,
                 ShapeType.Point,
                 content.Select(x => x.ContentLength),
                 () => content.Count,
                 boundingBox);
 
             yield return ExtractBuilder.CreateProjectedCoordinateSystemFile(
-                "CLI",
+                fileName,
                 ProjectedCoordinateSystem.Belge_Lambert_1972);
         }
 
@@ -161,6 +176,47 @@
             return ExtractBuilder.CreateDbfFile<AddressWithRegisteredCount, AddressMatchDatabaseRecord>(
                 "CLI",
                 new AddressMatchDbaseSchema(),
+                addressesWithRegisteredCount,
+                () => addressesWithRegisteredCount.Count,
+                TransformRecord);
+        }
+
+        private static ExtractFile CreateInhabitedResultFile(
+            IList<AddressWithRegisteredCount> addressesWithRegisteredCount)
+        {
+            string ConvertToBewoond(int? registeredCount)
+            {
+                return registeredCount is null
+                    ? "Onbekend"
+                    : registeredCount == 0
+                        ? "Onbewoond"
+                        : "Bewoond";
+            }
+
+            byte[] TransformRecord(AddressWithRegisteredCount addressWithRegisteredCount)
+            {
+                var item = new AddressMatchInhabitedDatabaseRecord
+                {
+                    ID = { Value = $"https://data.vlaanderen.be/id/adres/{addressWithRegisteredCount.Address.AddressPersistentLocalId}" },
+                    StraatnaamID = { Value = $"https://data.vlaanderen.be/id/straatnaam/{addressWithRegisteredCount.Address.StreetNamePersistentLocalId}" },
+                    StraatNM = { Value = addressWithRegisteredCount.StreetName.NameDutch! },
+                    HuisNR = { Value = addressWithRegisteredCount.Address.HouseNumber },
+                    BusNR = { Value = addressWithRegisteredCount.Address.BoxNumber },
+                    NisGemCode = { Value = addressWithRegisteredCount.StreetName.NisCode },
+                    GemNM = { Value = addressWithRegisteredCount.StreetName.MunicipalityName },
+                    PKanCode = { Value = addressWithRegisteredCount.Address.PostalCode },
+                    Herkomst = { Value = addressWithRegisteredCount.Address.Specification },
+                    Methode = { Value = addressWithRegisteredCount.Address.Method },
+                    Bewoond = { Value = ConvertToBewoond(addressWithRegisteredCount.RegisteredCount) },
+                    HuisnrStat = { Value = addressWithRegisteredCount.Address.Status },
+                };
+
+                return item.ToBytes(DbaseCodePage.Western_European_ANSI.ToEncoding()!);
+            }
+
+            return ExtractBuilder.CreateDbfFile<AddressWithRegisteredCount, AddressMatchInhabitedDatabaseRecord>(
+                "CLI_bewoond",
+                new AddressMatchInhabitedDbaseSchema(),
                 addressesWithRegisteredCount,
                 () => addressesWithRegisteredCount.Count,
                 TransformRecord);
