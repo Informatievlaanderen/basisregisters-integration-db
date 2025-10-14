@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.4.1...v3.5.0) (2025-10-14)
+
+
+### Features
+
+* add "correct addresses" endpoint and schedule GAWR-7043 ([3eb484b](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/3eb484b70bee8c4cfdbe59a587f1ba14d50804b8))
+
 ## [3.4.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.4.0...v3.4.1) (2025-10-08)
 
 
