@@ -145,15 +145,15 @@ jobs:
       prerestore-script: ./pre-restore.sh
     secrets: inherit
   
-  build-integration-schedule:
+  build-schedule:
     name: Build Integration Schedule
     uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
       registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/integration-db
-      image-file: integration-schedule-image.tar
-      image-name: integration-schedule
+      image-file: schedule-image.tar
+      image-name: schedule
       build-project: Basisregisters.IntegrationDb.Schedule
       semver: ${{ needs.set-release-version.outputs.version }}
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
@@ -187,7 +187,7 @@ jobs:
       pack-api, 
       build-data-integrity,
       build-gtmf-meldingen,
-      build-integration-schedule
+      build-schedule
       ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
@@ -321,7 +321,7 @@ jobs:
           'reporting-suspicious-cases',
           'data-integrity',
           'gtmf-meldingen',
-          'integration-schedule'
+          'schedule'
           ]
     steps:
       - name: Configure AWS credentials
