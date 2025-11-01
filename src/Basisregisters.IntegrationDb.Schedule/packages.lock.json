@@ -23,11 +23,11 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "Direct",
-        "requested": "[3.7.406.19, )",
-        "resolved": "3.7.406.19",
-        "contentHash": "73imXALjCXNQ3KkTQJeibAxMVN9jVwarVB5YmdrLPFif8WvCdPRc5vXO3ra+EGUtOs+9aJaHenA4uXegaEiNiA==",
+        "requested": "[3.7.508.4, )",
+        "resolved": "3.7.508.4",
+        "contentHash": "LNBzcEHL3bchpvsuQwTKw4I48bOwmpRdhlsOqXUC95FXyjWRigfg4Ph/Gp+DJnmG0aCgtV8A4a/3XN2wCAwJtg==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.500.41, 4.0.0)"
         }
       },
       "AWSSDK.Extensions.NETCore.Setup": {
@@ -44,11 +44,11 @@
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "Direct",
-        "requested": "[3.7.400.131, )",
-        "resolved": "3.7.400.131",
-        "contentHash": "3hGmeDJK7S3BfK3LABgX6gRgoxQXh8o/+Hn+vQcbAsCLsjnzg+hYXky0v4IXp6YDcfP8gx3L4ExN8bIuMWwSYQ==",
+        "requested": "[3.7.502.6, )",
+        "resolved": "3.7.502.6",
+        "contentHash": "aOoMvLAQ6ShyIc5tVn7I/CR2aKrEmN1z2TfXqyZNFi2V4QauCRZtNz+6kE6L5t7G5yzq3oZQB4UwxWpGAvHZuA==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.500.41, 4.0.0)"
         }
       },
       "Be.Vlaanderen.Basisregisters.Auth.AcmIdm": {
@@ -291,8 +291,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.402.37",
-        "contentHash": "SCAW51UFo0vvYxDN+zq7w7voWcX7O2cb31eQDbUniCDwyFvTcwSNRH+tKoNwbv4wRlH7dYFE5q2XvwsUtt5QuA=="
+        "resolved": "3.7.500.41",
+        "contentHash": "1pZ4ab/ZE7v9B0eylCZS+tr/kEdc+aagfRXkknIgXpyKQKMa1etSogs98UJdwqIOgzCR4vBLkNWPh9n6wV9BKQ=="
       },
       "Be.Vlaanderen.Basisregisters.NisCodeService.Abstractions": {
         "type": "Transitive",
@@ -589,7 +589,7 @@
         "type": "Project",
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
-          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.502.6, )",
           "Microsoft.Extensions.Configuration": "[9.0.5, )",
           "Newtonsoft.Json": "[13.0.3, )"
         }
