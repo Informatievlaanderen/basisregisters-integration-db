@@ -1,5 +1,6 @@
 namespace Basisregisters.IntegrationDb.Api.Address
 {
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Abstractions.Address.CorrectDerivedFromBuildingUnitPositions;
@@ -7,6 +8,8 @@ namespace Basisregisters.IntegrationDb.Api.Address
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common.Oslo.Extensions;
+    using Be.Vlaanderen.Basisregisters.GrAr.Edit.Validators;
     using CorrectDerivedFromBuildingUnitPositions;
     using FluentValidation;
     using MediatR;
@@ -51,7 +54,10 @@ namespace Basisregisters.IntegrationDb.Api.Address
             request ??= new CorrigerenAfgeleidVanGebouwEenhedenRequest();
             await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-            var internalRequest = new CorrectDerivedFromBuildingUnitPositionsRequest(request.Adressen);
+            var addressIds = request.Adressen!
+                .Select(adres => adres.AsIdentifier().Map(int.Parse).Value)
+                .ToList();
+            var internalRequest = new CorrectDerivedFromBuildingUnitPositionsRequest(addressIds);
 
             var response = await _mediator.Send(internalRequest, cancellationToken);
             return Accepted(response);
@@ -67,7 +73,14 @@ namespace Basisregisters.IntegrationDb.Api.Address
                 RuleFor(x => x.Adressen)
                     .Must(value => value!.Count <= 100)
                     .WithMessage("Maximaal 100 adressen per keer toegestaan.")
-                    ;
+                    .WithErrorCode("AdressenLijstTeGroot");
+
+                RuleForEach(x => x.Adressen)
+                    .Must(value =>
+                        OsloPuriValidator.TryParseIdentifier(value, out var addressId)
+                        && int.TryParse(addressId, out _))
+                    .WithMessage((_, id) => $"Onbestaand adres '{id}'.")
+                    .WithErrorCode("AdresIdIsOnbestaand");
             });
         }
     }
