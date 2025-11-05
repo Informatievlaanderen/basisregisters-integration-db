@@ -1,3 +1,10 @@
+## [3.5.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.1...v3.5.2) (2025-11-05)
+
+
+### Bug Fixes
+
+* change address id to puri ([89ffa96](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/89ffa96d47a2322ba5ebad0c1931e08385d234a9))
+
 ## [3.5.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.0...v3.5.1) (2025-10-14)
 
 
