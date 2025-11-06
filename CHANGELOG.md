@@ -1,3 +1,10 @@
+## [3.5.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.2...v3.5.3) (2025-11-06)
+
+
+### Bug Fixes
+
+* addressids can be null ([9f79234](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/9f792345e98c020637de0e54778bda8a475f172e))
+
 ## [3.5.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.1...v3.5.2) (2025-11-05)
 
 
