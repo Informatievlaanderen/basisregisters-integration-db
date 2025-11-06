@@ -54,7 +54,7 @@ namespace Basisregisters.IntegrationDb.Api.Address
             request ??= new CorrigerenAfgeleidVanGebouwEenhedenRequest();
             await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-            var addressIds = request.Adressen!
+            var addressIds = request.Adressen?
                 .Select(adres => adres.AsIdentifier().Map(int.Parse).Value)
                 .ToList();
             var internalRequest = new CorrectDerivedFromBuildingUnitPositionsRequest(addressIds);
