@@ -32,7 +32,7 @@ public class IntegrationDbApiClient
         var httpClient = _httpClientFactory.CreateClient();
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-        var response = await httpClient.PostAsync($"{_options.BaseUrl.TrimEnd('/')}/v2/adressen/corrigeer/afgeleid-van-gebouweenheid-posities", null, cancellationToken: cancellationToken);
+        var response = await httpClient.PostAsync($"{_options.BaseUrl.TrimEnd('/')}/v2/adressen/corrigeren/afgeleid-van-gebouweenheid-posities", null, cancellationToken: cancellationToken);
         response.EnsureSuccessStatusCode();
     }
 
