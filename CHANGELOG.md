@@ -1,3 +1,10 @@
+## [3.5.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.4...v3.5.5) (2025-11-07)
+
+
+### Bug Fixes
+
+* **api:** correct address position return faster when no ids are given ([77c4130](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/77c413082bfda76da23a9fb7f4dec263fa59bdb1))
+
 ## [3.5.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.3...v3.5.4) (2025-11-07)
 
 
