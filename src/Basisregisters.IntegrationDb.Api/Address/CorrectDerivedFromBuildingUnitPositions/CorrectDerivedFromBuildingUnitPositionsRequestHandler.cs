@@ -1,5 +1,6 @@
 ﻿namespace Basisregisters.IntegrationDb.Api.Address.CorrectDerivedFromBuildingUnitPositions
 {
+    using System.Collections.Generic;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -30,8 +31,30 @@
         public async Task<CorrigerenAfgeleidVanGebouwEenhedenResponse> Handle(CorrectDerivedFromBuildingUnitPositionsRequest request, CancellationToken cancellationToken)
         {
             var addresses = await _addressRepository.GetAddressesToCorrectPosition(request.AddressIds);
+            if (request.AddressIds is null)
+            {
+                _ = Task.Run(async () =>
+                {
+                    await ProcessAddresses(addresses, CancellationToken.None);
+                }, CancellationToken.None);
 
-            foreach (var address in addresses)
+                return new CorrigerenAfgeleidVanGebouwEenhedenResponse
+                {
+                    Aantal = addresses.Count
+                };
+            }
+
+            await ProcessAddresses(addresses, cancellationToken);
+
+            return new CorrigerenAfgeleidVanGebouwEenhedenResponse
+            {
+                Aantal = addresses.Count
+            };
+        }
+
+        private async Task ProcessAddresses(ICollection<AddressWithGeometry> addressesToProcess, CancellationToken cancellationToken)
+        {
+            foreach (var address in addressesToProcess)
             {
                 var geometry = new WKTReader().Read(address.Geometry);
                 var geometryAsGml = GetGml(geometry);
@@ -45,11 +68,6 @@
 
                 await _client.CorrectAddressPosition(address.PersistentLocalId, apiRequest, cancellationToken);
             }
-
-            return new CorrigerenAfgeleidVanGebouwEenhedenResponse
-            {
-                Aantal = addresses.Count
-            };
         }
 
         private static string GetGml(Geometry geometry)
