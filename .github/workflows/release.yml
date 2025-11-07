@@ -440,7 +440,7 @@ jobs:
 
   deploy_services_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ deploy_to_test_start_slack, release ]
+    needs: [ deploy_to_staging_start_slack, release ]
     name: Deploy
     uses: informatievlaanderen/build-pipeline/.github/workflows/deploy-v4.yml@main
     strategy:
