@@ -1,3 +1,10 @@
+## [3.5.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.3...v3.5.4) (2025-11-07)
+
+
+### Bug Fixes
+
+* **schedule:** url typo ([f4ce9e2](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/f4ce9e264e2ee6eaa12f9ad8a88a7a2b36438267))
+
 ## [3.5.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.2...v3.5.3) (2025-11-06)
 
 
