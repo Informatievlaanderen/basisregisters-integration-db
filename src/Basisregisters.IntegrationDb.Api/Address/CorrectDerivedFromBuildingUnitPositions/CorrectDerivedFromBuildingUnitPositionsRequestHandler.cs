@@ -9,9 +9,12 @@
     using System.Xml;
     using Abstractions.Address.CorrectDerivedFromBuildingUnitPositions;
     using AddressRegistry.Api.BackOffice.Abstractions.Requests;
+    using Be.Vlaanderen.Basisregisters.AspNetCore.Mvc.Middleware;
     using Be.Vlaanderen.Basisregisters.GrAr.Common.SpatialTools.GeometryCoordinates;
     using Be.Vlaanderen.Basisregisters.GrAr.Edit.Contracts;
     using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Net.Http.Headers;
     using NetTopologySuite.Geometries;
     using NetTopologySuite.IO;
     using NetTopologySuite.Utilities;
@@ -20,15 +23,18 @@
     public sealed class CorrectDerivedFromBuildingUnitPositionsRequestHandler : IRequestHandler<CorrectDerivedFromBuildingUnitPositionsRequest,
         CorrigerenAfgeleidVanGebouwEenhedenResponse>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly AddressRepository _addressRepository;
         private readonly AddressRegistryApiClient _client;
         private readonly Channel<AddressCorrectionWorkItem> _channel;
 
         public CorrectDerivedFromBuildingUnitPositionsRequestHandler(
+            IHttpContextAccessor httpContextAccessor,
             AddressRepository addressRepository,
             AddressRegistryApiClient client,
             Channel<AddressCorrectionWorkItem> channel)
         {
+            _httpContextAccessor = httpContextAccessor;
             _addressRepository = addressRepository;
             _client = client;
             _channel = channel;
@@ -40,7 +46,12 @@
             var addresses = await _addressRepository.GetAddressesToCorrectPosition(request.AddressIds);
             if (request.AddressIds is null)
             {
-                await _channel.Writer.WriteAsync(new AddressCorrectionWorkItem(addresses.ToList()), cancellationToken);
+                await _channel.Writer.WriteAsync(
+                    new AddressCorrectionWorkItem(
+                        addresses.ToList(),
+                        _httpContextAccessor.HttpContext!.Response.Headers[AddCorrelationIdToResponseMiddleware.HeaderName],
+                        _httpContextAccessor.HttpContext!.Request.Headers[HeaderNames.Authorization]
+                    ), cancellationToken);
 
                 return new CorrigerenAfgeleidVanGebouwEenhedenResponse
                 {
@@ -70,7 +81,12 @@
                     Positie = geometryAsGml
                 };
 
-                await _client.CorrectAddressPosition(address.PersistentLocalId, apiRequest, cancellationToken);
+                await _client.CorrectAddressPosition(
+                    address.PersistentLocalId,
+                    apiRequest,
+                    _httpContextAccessor.HttpContext!.Response.Headers[AddCorrelationIdToResponseMiddleware.HeaderName],
+                    _httpContextAccessor.HttpContext!.Request.Headers[HeaderNames.Authorization],
+                    cancellationToken);
             }
         }
 

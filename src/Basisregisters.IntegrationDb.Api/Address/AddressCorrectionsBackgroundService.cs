@@ -2,21 +2,17 @@ namespace Basisregisters.IntegrationDb.Api.Address;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using System.Xml;
 using AddressRegistry.Api.BackOffice.Abstractions.Requests;
-using Be.Vlaanderen.Basisregisters.GrAr.Common.SpatialTools.GeometryCoordinates;
 using Be.Vlaanderen.Basisregisters.GrAr.Edit.Contracts;
 using CorrectDerivedFromBuildingUnitPositions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NetTopologySuite.Geometries;
+using Microsoft.Extensions.Primitives;
 using NetTopologySuite.IO;
-using NetTopologySuite.Utilities;
 using Repositories;
 
 public sealed class AddressCorrectionBackgroundService : BackgroundService
@@ -44,7 +40,12 @@ public sealed class AddressCorrectionBackgroundService : BackgroundService
                 using var scope = _serviceScopeFactory.CreateScope();
                 var client = scope.ServiceProvider.GetRequiredService<AddressRegistryApiClient>();
 
-                await ProcessAddresses(workItem.Addresses, client, stoppingToken);
+                await ProcessAddresses(
+                    workItem.Addresses,
+                    workItem.CorrelationIdHeader,
+                    workItem.AuthorizationHeader,
+                    client,
+                    stoppingToken);
 
                 _logger.LogInformation("Processed {Count} addresses", workItem.Addresses.Count);
             }
@@ -57,6 +58,8 @@ public sealed class AddressCorrectionBackgroundService : BackgroundService
 
     private async Task ProcessAddresses(
         IReadOnlyCollection<AddressWithGeometry> addresses,
+        StringValues? correlationIdHeader,
+        StringValues authorizationHeader,
         AddressRegistryApiClient client,
         CancellationToken cancellationToken)
     {
@@ -72,7 +75,12 @@ public sealed class AddressCorrectionBackgroundService : BackgroundService
                 Positie = geometryAsGml
             };
 
-            await client.CorrectAddressPosition(address.PersistentLocalId, apiRequest, cancellationToken);
+            await client.CorrectAddressPosition(
+                address.PersistentLocalId,
+                apiRequest,
+                correlationIdHeader,
+                authorizationHeader,
+                cancellationToken);
         }
     }
 }
@@ -80,9 +88,16 @@ public sealed class AddressCorrectionBackgroundService : BackgroundService
 public sealed class AddressCorrectionWorkItem
 {
     public IReadOnlyCollection<AddressWithGeometry> Addresses { get; }
+    public StringValues? CorrelationIdHeader { get; set; }
+    public StringValues AuthorizationHeader { get; set; }
 
-    public AddressCorrectionWorkItem(IReadOnlyCollection<AddressWithGeometry> addresses)
+    public AddressCorrectionWorkItem(
+        IReadOnlyCollection<AddressWithGeometry> addresses,
+        StringValues? correlationIdHeader,
+        StringValues authorizationHeader)
     {
         Addresses = addresses;
+        CorrelationIdHeader = correlationIdHeader;
+        AuthorizationHeader = authorizationHeader;
     }
 }
