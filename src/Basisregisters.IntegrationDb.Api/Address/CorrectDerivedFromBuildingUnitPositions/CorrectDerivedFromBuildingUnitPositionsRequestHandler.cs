@@ -1,8 +1,10 @@
 ﻿namespace Basisregisters.IntegrationDb.Api.Address.CorrectDerivedFromBuildingUnitPositions
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading;
+    using System.Threading.Channels;
     using System.Threading.Tasks;
     using System.Xml;
     using Abstractions.Address.CorrectDerivedFromBuildingUnitPositions;
@@ -15,28 +17,30 @@
     using NetTopologySuite.Utilities;
     using Repositories;
 
-    public sealed class CorrectDerivedFromBuildingUnitPositionsRequestHandler : IRequestHandler<CorrectDerivedFromBuildingUnitPositionsRequest, CorrigerenAfgeleidVanGebouwEenhedenResponse>
+    public sealed class CorrectDerivedFromBuildingUnitPositionsRequestHandler : IRequestHandler<CorrectDerivedFromBuildingUnitPositionsRequest,
+        CorrigerenAfgeleidVanGebouwEenhedenResponse>
     {
         private readonly AddressRepository _addressRepository;
         private readonly AddressRegistryApiClient _client;
+        private readonly Channel<AddressCorrectionWorkItem> _channel;
 
         public CorrectDerivedFromBuildingUnitPositionsRequestHandler(
             AddressRepository addressRepository,
-            AddressRegistryApiClient client)
+            AddressRegistryApiClient client,
+            Channel<AddressCorrectionWorkItem> channel)
         {
             _addressRepository = addressRepository;
             _client = client;
+            _channel = channel;
         }
 
-        public async Task<CorrigerenAfgeleidVanGebouwEenhedenResponse> Handle(CorrectDerivedFromBuildingUnitPositionsRequest request, CancellationToken cancellationToken)
+        public async Task<CorrigerenAfgeleidVanGebouwEenhedenResponse> Handle(CorrectDerivedFromBuildingUnitPositionsRequest request,
+            CancellationToken cancellationToken)
         {
             var addresses = await _addressRepository.GetAddressesToCorrectPosition(request.AddressIds);
             if (request.AddressIds is null)
             {
-                _ = Task.Run(async () =>
-                {
-                    await ProcessAddresses(addresses, CancellationToken.None);
-                }, CancellationToken.None);
+                await _channel.Writer.WriteAsync(new AddressCorrectionWorkItem(addresses.ToList()), cancellationToken);
 
                 return new CorrigerenAfgeleidVanGebouwEenhedenResponse
                 {
@@ -70,17 +74,18 @@
             }
         }
 
-        private static string GetGml(Geometry geometry)
+        public static string GetGml(Geometry geometry)
         {
             var builder = new StringBuilder();
             var settings = new XmlWriterSettings { Indent = false, OmitXmlDeclaration = true };
-            using (var xmlwriter = XmlWriter.Create(builder, settings))
+            using (var xmlWriter = XmlWriter.Create(builder, settings))
             {
-                xmlwriter.WriteStartElement("gml", "Point", "http://www.opengis.net/gml/3.2");
-                xmlwriter.WriteAttributeString("srsName", "https://www.opengis.net/def/crs/EPSG/0/31370");
-                Write(geometry.Coordinate, xmlwriter);
-                xmlwriter.WriteEndElement();
+                xmlWriter.WriteStartElement("gml", "Point", "http://www.opengis.net/gml/3.2");
+                xmlWriter.WriteAttributeString("srsName", "https://www.opengis.net/def/crs/EPSG/0/31370");
+                Write(geometry.Coordinate, xmlWriter);
+                xmlWriter.WriteEndElement();
             }
+
             return builder.ToString();
         }
 
