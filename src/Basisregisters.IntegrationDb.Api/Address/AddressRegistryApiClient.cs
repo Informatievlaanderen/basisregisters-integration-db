@@ -28,7 +28,8 @@ public class AddressRegistryApiClient
     public async Task CorrectAddressPosition(int addressPersistentLocalId, CorrectAddressPositionRequest request, CancellationToken cancellationToken)
     {
         var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add(AddCorrelationIdToResponseMiddleware.HeaderName, _httpContextAccessor.HttpContext!.Response.Headers[AddCorrelationIdToResponseMiddleware.HeaderName].ToString());
+        if(_httpContextAccessor.HttpContext is not null)
+            client.DefaultRequestHeaders.Add(AddCorrelationIdToResponseMiddleware.HeaderName, _httpContextAccessor.HttpContext!.Response.Headers[AddCorrelationIdToResponseMiddleware.HeaderName].ToString());
 
         var copyHeaders = new[] { "Authorization" };
         foreach (var headerName in copyHeaders)
