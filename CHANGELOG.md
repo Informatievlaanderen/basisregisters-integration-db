@@ -1,3 +1,10 @@
+## [3.6.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.1...v3.6.2) (2025-11-10)
+
+
+### Bug Fixes
+
+* pass headers to backgroundservice ([5a4e102](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5a4e102a932f821dceb7e5c4fb18893ed43c1bab))
+
 ## [3.6.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.0...v3.6.1) (2025-11-10)
 
 
