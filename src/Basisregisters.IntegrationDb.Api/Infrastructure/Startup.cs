@@ -3,7 +3,9 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
     using System;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Channels;
     using Abstractions.SuspiciousCase;
+    using Address;
     using Asp.Versioning.ApiExplorer;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
@@ -111,6 +113,9 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
                 // SuspiciousCase
                 .Configure<ResponseOptions>(_configuration.GetSection("ResponseOptions"))
                 .AddHostedService<RefreshCountService>()
+
+                .AddSingleton(Channel.CreateUnbounded<AddressCorrectionWorkItem>())
+                .AddHostedService<AddressCorrectionBackgroundService>()
                 ;
 
             var containerBuilder = new ContainerBuilder();
