@@ -1,3 +1,10 @@
+## [3.6.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.0...v3.6.1) (2025-11-10)
+
+
+### Bug Fixes
+
+* **correct:** possible null ref httpcontext ([a7ce902](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a7ce90278237de7c048fa9dd47cdb7d4192f4649))
+
 # [3.6.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.5...v3.6.0) (2025-11-10)
 
 
