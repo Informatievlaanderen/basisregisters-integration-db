@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.5...v3.6.0) (2025-11-10)
+
+
+### Features
+
+* add background service for address corrections ([6dda19a](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6dda19a7dc4a49260a487ffe3a17fd1207cce8e9))
+
 ## [3.5.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.5.4...v3.5.5) (2025-11-07)
 
 
