@@ -1,3 +1,10 @@
+## [3.6.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.2...v3.6.3) (2025-11-20)
+
+
+### Bug Fixes
+
+* **integration:** add command timeout address corrections ([fdffb9f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/fdffb9feefb503d137886a4be1bd62b4b76ae95c))
+
 ## [3.6.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.1...v3.6.2) (2025-11-10)
 
 
