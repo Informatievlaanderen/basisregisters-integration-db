@@ -62,7 +62,7 @@ public class AddressRepository
 
         await using var connection = new NpgsqlConnection(_connectionString);
 
-        var addresses = await connection.QueryAsync<AddressWithGeometry>(sql);
+        var addresses = await connection.QueryAsync<AddressWithGeometry>(sql, commandTimeout: 60 * 15);
 
         return addresses.ToList();
     }
