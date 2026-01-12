@@ -39,9 +39,9 @@
       },
       "Fastenshtein": {
         "type": "Direct",
-        "requested": "[1.0.10, )",
-        "resolved": "1.0.10",
-        "contentHash": "fZ5DKypgdTkwfchV4fZ5OFFGYu49B8YbUMr6hN6Azl7IziIsyKARqdU3EZt/oQJyV71eQxpY9jL2J1tXb2gvlQ=="
+        "requested": "[1.0.11, )",
+        "resolved": "1.0.11",
+        "contentHash": "SqehpfsttF3qhYb2eNnKrZpeD21AihWYbPibS1QP6CSkV9Q5p0Mn+abSExjoRA8AJWKHNFYK/jCfRJ0S7KfhnA=="
       },
       "FlatFiles": {
         "type": "Direct",
