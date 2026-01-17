@@ -80,8 +80,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.402.37",
-        "contentHash": "SCAW51UFo0vvYxDN+zq7w7voWcX7O2cb31eQDbUniCDwyFvTcwSNRH+tKoNwbv4wRlH7dYFE5q2XvwsUtt5QuA=="
+        "resolved": "3.7.500.68",
+        "contentHash": "gSscTOEDP1CS04Dab4hyBjlTNTnoG4LS3F9o6xtN6iAjMkTs5a8sAbJGAVX888/JjTFHe6yGQVGowWuiej6VmQ=="
       },
       "Azure.Core": {
         "type": "Transitive",
@@ -1598,7 +1598,7 @@
         "type": "Project",
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
-          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.502.33, )",
           "Microsoft.Extensions.Configuration": "[9.0.5, )",
           "Newtonsoft.Json": "[13.0.3, )"
         }
@@ -1607,7 +1607,7 @@
         "type": "Project",
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "[3.7.400, )",
-          "AWSSDK.SimpleNotificationService": "[3.7.400.131, )",
+          "AWSSDK.SimpleNotificationService": "[3.7.502.33, )",
           "Autofac": "[8.3.0, )",
           "Autofac.Extensions.DependencyInjection": "[10.0.0, )",
           "Basisregisters.Integration.Common.Notification": "[1.0.0, )",
@@ -1733,7 +1733,7 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "CentralTransitive",
-        "requested": "[3.7.406.19, )",
+        "requested": "[3.7.509.22, )",
         "resolved": "3.7.406.17",
         "contentHash": "HmCeGXJwbflvvtcLTXIPJsI4XsQslUZ4BPPUmyHNLmQJdORJ8veln/tsNPFWDlhjhZ1KI3jSDTdkQZsxPNqfVg==",
         "dependencies": {
@@ -1754,11 +1754,11 @@
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "CentralTransitive",
-        "requested": "[3.7.400.131, )",
-        "resolved": "3.7.400.131",
-        "contentHash": "3hGmeDJK7S3BfK3LABgX6gRgoxQXh8o/+Hn+vQcbAsCLsjnzg+hYXky0v4IXp6YDcfP8gx3L4ExN8bIuMWwSYQ==",
+        "requested": "[3.7.502.33, )",
+        "resolved": "3.7.502.33",
+        "contentHash": "YfL6Ct8djtZaUsOapTTDQJVXMRLJgTgNTMqluyj0rYyGeTwEnbJyM/y/984567eEXhkWWnRZ8oJTTFpax7yrxA==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.500.68, 4.0.0)"
         }
       },
       "Azure.Storage.Blobs": {
