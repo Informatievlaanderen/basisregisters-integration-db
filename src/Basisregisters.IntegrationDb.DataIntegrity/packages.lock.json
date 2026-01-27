@@ -16,11 +16,11 @@
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "Direct",
-        "requested": "[3.7.400.131, )",
-        "resolved": "3.7.400.131",
-        "contentHash": "3hGmeDJK7S3BfK3LABgX6gRgoxQXh8o/+Hn+vQcbAsCLsjnzg+hYXky0v4IXp6YDcfP8gx3L4ExN8bIuMWwSYQ==",
+        "requested": "[3.7.502.37, )",
+        "resolved": "3.7.502.37",
+        "contentHash": "37mc6EKDfPdutEgI1KzFJzw/jjAKfBoqHizIGHrW2j05Dn/pSMLHMWJ+345FikbTCaRDM0baKqzR40NhdKx/+A==",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.37, 4.0.0)"
+          "AWSSDK.Core": "[3.7.500.72, 4.0.0)"
         }
       },
       "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": {
@@ -240,8 +240,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.402.37",
-        "contentHash": "SCAW51UFo0vvYxDN+zq7w7voWcX7O2cb31eQDbUniCDwyFvTcwSNRH+tKoNwbv4wRlH7dYFE5q2XvwsUtt5QuA=="
+        "resolved": "3.7.500.72",
+        "contentHash": "98CjznHNfmJktESa8NLk5zE2uA+VtUVceYgTioUhFRowEf8JUPo5mC5JTPDN3ltAGQk1d+pAg3rnmfM3bNUQQQ=="
       },
       "Datadog.Trace": {
         "type": "Transitive",
@@ -561,7 +561,7 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "CentralTransitive",
-        "requested": "[3.7.406.19, )",
+        "requested": "[3.7.510.1, )",
         "resolved": "3.7.406.17",
         "contentHash": "HmCeGXJwbflvvtcLTXIPJsI4XsQslUZ4BPPUmyHNLmQJdORJ8veln/tsNPFWDlhjhZ1KI3jSDTdkQZsxPNqfVg==",
         "dependencies": {
