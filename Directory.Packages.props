@@ -5,10 +5,10 @@
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.400" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.406.19" />
-    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="3.7.400.131" />
-    <PackageVersion Include="AWSSDK.SimpleEmail" Version="3.7.402.74" />
+    <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.3.21" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.12" />
+    <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.2.15" />
+    <PackageVersion Include="AWSSDK.SimpleEmail" Version="4.0.2.12" />
     <PackageVersion Include="Autofac" Version="8.3.0" />
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions" Version="5.1.3" />
