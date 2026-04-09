@@ -62,6 +62,7 @@
                         var matches = addresses
                             .Where(a =>
                                 nationalRegistryAddress.HouseNumberBoxNumbers.SelectMany(x => x.GetValues())
+                                    .Distinct()
                                     .Any(r =>
                                         string.Equals(
                                             r.HouseNumber,

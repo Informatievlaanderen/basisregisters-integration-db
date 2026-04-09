@@ -149,7 +149,7 @@
             var address = new NationalRegistryAddress(record);
 
             address.HouseNumberBoxNumbers.First().Should().BeOfType<SpecificPrefix>();
-            var houseNumberWithBoxNumbers = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+            var houseNumberWithBoxNumbers = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).Distinct().ToList();
             houseNumberWithBoxNumbers.Should().HaveCount(2);
             houseNumberWithBoxNumbers.First().HouseNumber.Should().Be(record.HouseNumber);
             houseNumberWithBoxNumbers.First().BoxNumber.Should().Be(boxNumber);

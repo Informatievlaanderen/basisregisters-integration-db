@@ -232,7 +232,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             };
             var address = new NationalRegistryAddress(record);
 
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).Distinct().ToList();
 
             foreach (var expectedBoxNumber in expectedBoxNumbers)
             {
@@ -1123,10 +1123,26 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0003", "B003", "3", "B003")]
+        [InlineData("0067", "B003", "67", "3")]
+        [InlineData("0185", "E/B1", "185E", "1")]
+        public void Niel(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "11030",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
-            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).ToList();
+            var result = address.HouseNumberBoxNumbers.SelectMany(x => x.GetValues()).Distinct().ToList();
 
             result.Should().NotBeEmpty();
             result.Count(x => x.HouseNumber == expectedHouseNumber && x.BoxNumber == expectedBoxNumber).Should().Be(1);
