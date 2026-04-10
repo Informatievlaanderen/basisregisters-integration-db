@@ -1,7 +1,6 @@
 namespace Basisregisters.IntegrationDb.NationalRegistry.Model
 {
     using System.Collections.Generic;
-    using System.Linq;
     using HouseNumberBoxNumberImplementations;
     using HouseNumberBoxNumberImplementations.Municipalities;
 
@@ -100,6 +99,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Pittem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Niel(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Arendonk(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Leopoldsburg(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
