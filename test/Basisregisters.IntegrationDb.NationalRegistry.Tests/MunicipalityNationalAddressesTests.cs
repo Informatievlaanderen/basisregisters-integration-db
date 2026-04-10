@@ -1188,6 +1188,24 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0043", "A0/1", "43A", "0/1")]
+        [InlineData("0017", " 0/1", "17", "0/1")]
+        [InlineData("0017", "0/1 ", "17", "0/1")]
+        [InlineData("0018", "0/1 ", "18", "1")]
+        [InlineData("0018", " 0/1", "18", "1")]
+        public void Bree(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "72004",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
