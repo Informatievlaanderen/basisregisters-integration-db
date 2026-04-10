@@ -9,11 +9,11 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
         { }
 
         public override bool IsMatch() => NisCode == "23100" && IndexSourceValue.Length == 4 &&
-                                          IndexSourceValue[0].ToString().ToUpper() == "B" && IsNumeric(IndexSourceValue[1..]);
+                                          char.ToUpperInvariant(IndexSourceValue[0]) == 'B' && IsNumeric(IndexSourceValue[1..]);
 
         public override IList<HouseNumberWithBoxNumber> GetValues()
         {
-            if (IndexSourceValue[0].ToString().ToUpper() == "B" && IsNumeric(IndexSourceValue[1..]))
+            if (char.ToUpperInvariant(IndexSourceValue[0]) == 'B' && IsNumeric(IndexSourceValue[1..]))
             {
                 return
                 [

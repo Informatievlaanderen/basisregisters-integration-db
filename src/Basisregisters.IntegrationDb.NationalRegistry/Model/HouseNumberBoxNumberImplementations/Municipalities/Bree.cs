@@ -32,7 +32,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model.HouseNumberBoxNumb
                 [
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,
-                        IndexSourceValue[1..]
+                        TrimmedIndexSourceValue
                     ),
                     new HouseNumberWithBoxNumber(
                         HouseNumberSourceValue,

@@ -102,6 +102,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Leopoldsburg(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Linkebeek(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Bree(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new ErpeMere(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
