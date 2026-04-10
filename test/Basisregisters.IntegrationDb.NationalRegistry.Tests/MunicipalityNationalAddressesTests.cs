@@ -1139,6 +1139,23 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0004", "D000", "4", "D")]
+        [InlineData("0001", "Bb09", "1", "Bb09")]
+        [InlineData("0066", "Cb01", "66C", "b01")]
+        [InlineData("0001", "Ab09", "1A", "9")]
+        public void Arendonk(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "13001",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);

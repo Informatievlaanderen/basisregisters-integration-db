@@ -99,6 +99,7 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Model
             yield return new Maasmechelen(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Pittem(_record.NisCode, _record.HouseNumber, _record.Index);
             yield return new Niel(_record.NisCode, _record.HouseNumber, _record.Index);
+            yield return new Arendonk(_record.NisCode, _record.HouseNumber, _record.Index);
         }
 
         private IEnumerable<HouseNumberBoxNumbersBase> GetHouseNumberBoxNumbers()
