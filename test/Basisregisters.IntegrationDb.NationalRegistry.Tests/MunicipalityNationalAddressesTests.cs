@@ -1156,6 +1156,21 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
 
+        [Theory]
+        [InlineData("0081", "B000", "81", "B")]
+        [InlineData("0081", "A000", "81", "A")]
+        [InlineData("0002", "B011", "2", "11")]
+        public void Leopoldsburg(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "71034",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
         private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
