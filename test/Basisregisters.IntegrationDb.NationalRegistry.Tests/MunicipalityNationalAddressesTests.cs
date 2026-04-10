@@ -1171,6 +1171,23 @@ namespace Basisregisters.IntegrationDb.NationalRegistry.Tests
 
             OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
         }
+
+        [Theory]
+        [InlineData("0043", "B001", "43", "1")]
+        [InlineData("0043", "b001", "43", "1")]
+        [InlineData("0081", "BA02", "81", "BA02")]
+        public void Linkebeek(string houseNumber, string index, string expectedHouseNumber, string? expectedBoxNumber)
+        {
+            var record = new FlatFileRecord
+            {
+                NisCode = "23100",
+                HouseNumber = houseNumber,
+                Index = new NationalRegistryIndex(index)
+            };
+
+            OneAddressShouldMatchExpected(record, expectedHouseNumber, expectedBoxNumber);
+        }
+
         private void OneAddressShouldMatchExpected(FlatFileRecord record, string expectedHouseNumber, string? expectedBoxNumber)
         {
             var address = new NationalRegistryAddress(record);
