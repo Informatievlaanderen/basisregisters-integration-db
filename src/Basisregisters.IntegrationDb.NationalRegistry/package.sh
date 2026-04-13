@@ -1,6 +1,7 @@
 #!/bin/sh
 
 dotnet restore ../..
+rm -rf dist
 dotnet build --no-incremental --no-restore -c Release --self-contained -r win-x64
 dotnet publish -o dist --no-build --no-restore -c Release -p:PublishReadyToRun=True --self-contained -r win-x64
 rm dist/appsettings.*.json
