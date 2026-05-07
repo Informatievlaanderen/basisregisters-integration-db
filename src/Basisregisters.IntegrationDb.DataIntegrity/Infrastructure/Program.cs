@@ -2,11 +2,15 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
     using Amazon.SimpleNotificationService;
     using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
     using Be.Vlaanderen.Basisregisters.GrAr.Notifications;
     using Destructurama;
+    using Feeds;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -69,7 +73,26 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                         new NotificationService(sp.GetRequiredService<IAmazonSimpleNotificationService>(),
                             hostContext.Configuration.GetValue<string>("TopicArn")!));
 
-                    services.AddSingleton<DataIntegrityRepository>(_ => new DataIntegrityRepository(connectionString));
+                    services.AddSingleton<SuspiciousCasesIntegrityRepository>(_ => new SuspiciousCasesIntegrityRepository(connectionString));
+
+                    services
+                        .AddDbContextFactory<DataIntegrityContext>((serviceProvider, options) =>
+                        {
+                            options.ConfigureWarnings(warnings =>
+                            {
+                                // for some reason it keeps saying it has pending changes even when starting from 0.
+                                warnings.Ignore(RelationalEventId.PendingModelChangesWarning);
+                            });
+                            options.UseLoggerFactory(serviceProvider.GetRequiredService<ILoggerFactory>());
+                            options.UseNpgsql(connectionString, npgSqlOptions =>
+                            {
+                                npgSqlOptions.MigrationsHistoryTable(
+                                    DataIntegrityContext.MigrationsTableName,
+                                    DataIntegrityContext.Schema);
+                            });
+                        });
+
+                    services.AddSingleton<IFeedIntegrityRepository, MunicipalityViewRepository>();
 
                     services.AddHostedService<DataIntegrityService>();
                 })
@@ -86,6 +109,12 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                 await DistributedLock<Program>.RunAsync(
                     async () =>
                     {
+                        await using var context = await host.Services
+                            .GetRequiredService<IDbContextFactory<DataIntegrityContext>>()
+                            .CreateDbContextAsync();
+
+                        await context.Database.MigrateAsync(CancellationToken.None);
+
                         await host.RunAsync().ConfigureAwait(false);
                     },
                     DistributedLockOptions.LoadFromConfiguration(configuration),
