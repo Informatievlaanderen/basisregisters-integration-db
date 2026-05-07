@@ -8,7 +8,7 @@
     using SuspiciousCases.Views.Internal;
     using SuspiciousCases.Infrastructure;
 
-    public sealed class DataIntegrityRepository(string connectionString)
+    public sealed class SuspiciousCasesIntegrityRepository(string connectionString)
     {
         public async Task<IList<DataIntegrityError>> GetErrors()
         {
