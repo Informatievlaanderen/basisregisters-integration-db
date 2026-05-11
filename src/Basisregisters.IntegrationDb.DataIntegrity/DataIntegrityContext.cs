@@ -13,6 +13,8 @@ public sealed class DataIntegrityContext : DbContext
     public const string Schema = "integration_data_integrity";
 
     public DbSet<MunicipalityFeedIntegrity> MunicipalityFeedIntegrity => Set<MunicipalityFeedIntegrity>();
+    public DbSet<PostalFeedIntegrity> PostalFeedIntegrity => Set<PostalFeedIntegrity>();
+    public DbSet<PostalNameFeedIntegrity> PostalNameFeedIntegrity => Set<PostalNameFeedIntegrity>();
 
     public DataIntegrityContext()
     { }
