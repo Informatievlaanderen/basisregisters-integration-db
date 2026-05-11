@@ -129,8 +129,4 @@ public sealed class MunicipalityViewRepository : IFeedIntegrityRepository
     public static string RefreshSql => $@"
         REFRESH MATERIALIZED VIEW CONCURRENTLY {DataIntegrityContext.Schema}.{MunicipalityFeedIntegrityConfiguration.ViewName};
     ";
-
-    public static string SelectViewResultsSql => $@"
-        SELECT nis_code FROM {DataIntegrityContext.Schema}.{MunicipalityFeedIntegrityConfiguration.ViewName};
-    ";
 }

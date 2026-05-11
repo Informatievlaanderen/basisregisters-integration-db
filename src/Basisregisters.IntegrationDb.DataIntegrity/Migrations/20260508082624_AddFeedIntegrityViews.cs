@@ -19,12 +19,15 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
                 name: DataIntegrityContext.Schema);
 
             migrationBuilder.Sql(MunicipalityViewRepository.DropAndCreateMunicipalityViewSql);
+            migrationBuilder.Sql(PostalViewRepository.DropAndCreatePostalViewSql);
+            migrationBuilder.Sql(PostalNameViewRepository.DropAndCreatePostalNameViewSql);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.municipality_feed_latest_integrity");
+            migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.postal_feed_latest_integrity");
         }
     }
 }

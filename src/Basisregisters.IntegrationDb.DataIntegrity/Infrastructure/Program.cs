@@ -93,8 +93,10 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                         });
 
                     services.AddSingleton<IFeedIntegrityRepository, MunicipalityViewRepository>();
+                    services.AddSingleton<IFeedIntegrityRepository, PostalViewRepository>();
+                    services.AddSingleton<IFeedIntegrityRepository, PostalNameViewRepository>();
 
-                    services.AddHostedService<DataIntegrityService>();
+                    //services.AddHostedService<DataIntegrityService>();
                 })
                 .UseConsoleLifetime()
                 .Build();
