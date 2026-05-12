@@ -21,6 +21,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
             migrationBuilder.Sql(MunicipalityViewRepository.DropAndCreateMunicipalityViewSql);
             migrationBuilder.Sql(PostalViewRepository.DropAndCreatePostalViewSql);
             migrationBuilder.Sql(PostalNameViewRepository.DropAndCreatePostalNameViewSql);
+            migrationBuilder.Sql(StreetNameViewRepository.DropAndCreateStreetNameViewSql);
         }
 
         /// <inheritdoc />
@@ -28,6 +29,8 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
         {
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.municipality_feed_latest_integrity");
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.postal_feed_latest_integrity");
+            migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.postal_name_feed_latest_integrity");
+            migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.streetname_feed_latest_integrity");
         }
     }
 }
