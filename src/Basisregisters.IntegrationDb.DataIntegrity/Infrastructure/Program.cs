@@ -89,6 +89,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                                 npgSqlOptions.MigrationsHistoryTable(
                                     DataIntegrityContext.MigrationsTableName,
                                     DataIntegrityContext.Schema);
+                                npgSqlOptions.CommandTimeout(600);
                             });
                         });
 
@@ -96,6 +97,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                     services.AddSingleton<IFeedIntegrityRepository, PostalViewRepository>();
                     services.AddSingleton<IFeedIntegrityRepository, PostalNameViewRepository>();
                     services.AddSingleton<IFeedIntegrityRepository, StreetNameViewRepository>();
+                    services.AddSingleton<IFeedIntegrityRepository, AddressViewRepository>();
 
                     //services.AddHostedService<DataIntegrityService>();
                 })
