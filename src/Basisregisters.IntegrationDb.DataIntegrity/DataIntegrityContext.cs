@@ -64,7 +64,7 @@ public class ConfigBasedDataIntegrationContextFactory : IDesignTimeDbContextFact
                     DataIntegrityContext.MigrationsTableName,
                     DataIntegrityContext.Schema);
                 npgSqlOptions.UseNetTopologySuite();
-                npgSqlOptions.CommandTimeout(260);
+                npgSqlOptions.CommandTimeout(600);
             });
 
         return new DataIntegrityContext(builder.Options);

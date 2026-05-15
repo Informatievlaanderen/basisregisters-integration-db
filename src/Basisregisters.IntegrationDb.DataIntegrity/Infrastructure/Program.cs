@@ -104,7 +104,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                     services.AddSingleton<IFeedIntegrityRepository, ParcelViewRepository>();
                     services.AddSingleton<IFeedIntegrityRepository, ParcelAddressViewRepository>();
 
-                    //services.AddHostedService<DataIntegrityService>();
+                    services.AddHostedService<DataIntegrityService>();
                 })
                 .UseConsoleLifetime()
                 .Build();
