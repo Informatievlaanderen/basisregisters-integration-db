@@ -24,6 +24,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
             migrationBuilder.Sql(StreetNameViewRepository.DropAndCreateStreetNameViewSql);
             migrationBuilder.Sql(AddressViewRepository.DropAndCreateAddressViewSql);
             migrationBuilder.Sql(BuildingViewRepository.DropAndCreateBuildingViewSql);
+            migrationBuilder.Sql(BuildingUnitViewRepository.DropAndCreateBuildingUnitViewSql);
         }
 
         /// <inheritdoc />
@@ -35,6 +36,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.streetname_feed_latest_integrity");
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.address_feed_latest_integrity");
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.building_feed_latest_integrity");
+            migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.building_unit_feed_latest_integrity");
         }
     }
 }

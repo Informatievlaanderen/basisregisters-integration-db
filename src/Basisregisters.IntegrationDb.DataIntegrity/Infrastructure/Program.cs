@@ -99,6 +99,7 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Infrastructure
                     services.AddSingleton<IFeedIntegrityRepository, StreetNameViewRepository>();
                     services.AddSingleton<IFeedIntegrityRepository, AddressViewRepository>();
                     services.AddSingleton<IFeedIntegrityRepository, BuildingViewRepository>();
+                    services.AddSingleton<IFeedIntegrityRepository, BuildingUnitViewRepository>();
 
                     //services.AddHostedService<DataIntegrityService>();
                 })
