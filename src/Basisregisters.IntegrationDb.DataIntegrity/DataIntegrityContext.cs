@@ -17,6 +17,7 @@ public sealed class DataIntegrityContext : DbContext
     public DbSet<PostalNameFeedIntegrity> PostalNameFeedIntegrity => Set<PostalNameFeedIntegrity>();
     public DbSet<StreetNameFeedIntegrity> StreetNameFeedIntegrity => Set<StreetNameFeedIntegrity>();
     public DbSet<AddressFeedIntegrity> AddressFeedIntegrity => Set<AddressFeedIntegrity>();
+    public DbSet<BuildingFeedIntegrity> BuildingFeedIntegrity => Set<BuildingFeedIntegrity>();
 
     public DataIntegrityContext()
     { }
