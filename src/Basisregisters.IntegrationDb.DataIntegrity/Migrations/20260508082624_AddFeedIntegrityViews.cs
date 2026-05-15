@@ -25,7 +25,9 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
             // migrationBuilder.Sql(AddressViewRepository.DropAndCreateAddressViewSql);
             // migrationBuilder.Sql(BuildingViewRepository.DropAndCreateBuildingViewSql);
             // migrationBuilder.Sql(BuildingUnitViewRepository.DropAndCreateBuildingUnitViewSql);
-            migrationBuilder.Sql(BuildingUnitAddressViewRepository.DropAndCreateBuildingUnitAddressViewSql);
+            //migrationBuilder.Sql(BuildingUnitAddressViewRepository.DropAndCreateBuildingUnitAddressViewSql);
+            migrationBuilder.Sql(ParcelViewRepository.DropAndCreateParcelViewSql);
+            migrationBuilder.Sql(ParcelAddressViewRepository.DropAndCreateParcelAddressViewSql);
         }
 
         /// <inheritdoc />
@@ -39,6 +41,8 @@ namespace Basisregisters.IntegrationDb.DataIntegrity.Migrations
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.building_feed_latest_integrity");
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.building_unit_feed_latest_integrity");
             migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.building_unit_addresses_feed_latest_integrity");
+            migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.parcel_feed_latest_integrity");
+            migrationBuilder.Sql($"DROP MATERIALIZED VIEW IF EXISTS {DataIntegrityContext.Schema}.parcel_addresses_feed_latest_integrity");
         }
     }
 }
