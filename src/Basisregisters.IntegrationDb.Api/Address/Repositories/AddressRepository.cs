@@ -21,7 +21,7 @@ public class AddressRepository
     {
         var sql = """
                   select adr.persistent_local_id as PersistentLocalId, st_astext(bldu.geometry) as geometry
-                  from integration_address.address_latest_items adr
+                  from integration_address.address_latest_items_v2 adr
                   --Adressen met koppeling naar een gebouweenheid
                   inner join integration_building.building_unit_addresses bldua
                   	on adr.persistent_local_id = bldua.address_persistent_local_id

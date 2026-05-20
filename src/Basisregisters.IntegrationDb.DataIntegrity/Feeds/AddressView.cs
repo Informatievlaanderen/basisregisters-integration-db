@@ -71,7 +71,7 @@ public sealed class AddressViewRepository : IFeedIntegrityRepository
 	            removed,
 	            version_as_string)) as hash,
 	        geometry
-        FROM integration_address.address_latest_items
+        FROM integration_address.address_latest_items_v2
 ";
 
     public static string SelectAddressFeedSql => @"
