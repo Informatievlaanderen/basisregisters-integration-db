@@ -43,7 +43,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Repositories
                                 	, a.house_number as HouseNumber
                                 	, a.box_number as BoxNumber
                                 	, a.officially_assigned as OfficiallyAssigned
-                                from integration_address.address_latest_items a
+                                from integration_address.address_latest_items_v2 a
                                 where a.removed = false and a.postal_code is not null
                                 order by a.persistent_local_id
                                 """;

@@ -39,7 +39,7 @@
             , a.oslo_position_method as Method
             , a.oslo_position_specification as Specification
             , a.geometry as Position
-            from integration_address.address_latest_items as a
+            from integration_address.address_latest_items_v2 as a
             JOIN integration_streetname.streetname_latest_items as s on a.street_name_persistent_local_id = s.persistent_local_id
             WHERE a.removed = false and a.oslo_status in ('InGebruik', 'Voorgesteld')
             ;";
