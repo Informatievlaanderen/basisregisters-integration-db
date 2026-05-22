@@ -126,7 +126,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:name>
                     <com:streetNameStatus>
                       <com:status>retired</com:status>
-                      <com:validFrom>2002-08-31T15:19:02Z</com:validFrom>
+                      <com:validFrom>2015-08-31T15:19:02Z</com:validFrom>
                       <com:validTo>2015-08-31T15:19:02Z</com:validTo>
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
@@ -152,7 +152,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:name>
                     <com:streetNameStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2016-10-03T06:46:40Z</com:validFrom>
+                      <com:validFrom>2016-10-03T06:44:22Z</com:validFrom>
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:isAssignedByMunicipality>
@@ -173,7 +173,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:name>
                     <com:streetNameStatus>
                       <com:status>proposed</com:status>
-                      <com:validFrom>2024-01-31T13:16:03Z</com:validFrom>
+                      <com:validFrom>2024-01-31T13:16:08Z</com:validFrom>
                     </com:streetNameStatus>
                     <com:type>streetname</com:type>
                     <com:homonymAddition>HO</com:homonymAddition>

@@ -211,7 +211,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2014-04-04T16:44:32Z</com:validFrom>
+                      <com:validFrom>2024-04-04T16:44:37Z</com:validFrom>
                     </com:addressStatus>
                     <com:houseNumber>1</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
@@ -248,7 +248,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                     </com:position>
                     <com:addressStatus>
                       <com:status>current</com:status>
-                      <com:validFrom>2014-04-04T16:44:32Z</com:validFrom>
+                      <com:validFrom>2024-04-04T16:44:37Z</com:validFrom>
                     </com:addressStatus>
                     <com:houseNumber>2</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>

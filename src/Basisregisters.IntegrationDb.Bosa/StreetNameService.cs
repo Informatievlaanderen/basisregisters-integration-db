@@ -31,6 +31,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     .Select(streetName =>
                     {
                         var beginLifeSpanVersion = GetBeginLifeSpanVersion(streetName);
+                        var validFrom = GetZuluVersionAsString(streetName.VersionTimestamp);
                         var endLifeSpanVersion = GetEndLifeSpanVersion(streetName);
 
                         return new XmlStreetName
@@ -47,7 +48,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                             Status = new XmlStreetNameStatus
                             {
                                 Status = GetStatus(streetName),
-                                ValidFrom = beginLifeSpanVersion,
+                                ValidFrom = validFrom,
                                 ValidTo = endLifeSpanVersion
                             },
                             Type = "streetname",

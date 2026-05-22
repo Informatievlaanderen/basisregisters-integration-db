@@ -64,6 +64,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 var municipality = municipalities[streetName.NisCode];
 
                 var beginLifeSpanVersion = GetZuluVersionAsString(address.CreatedOn);
+                var validFrom = GetZuluVersionAsString(address.VersionTimestamp);
                 var endLifeSpanVersion = GetEndLifeSpanVersion(address);
 
                 var xmlAddress = new XmlAddress
@@ -102,7 +103,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                     Status = new XmlAddressStatus
                     {
                         Status = GetStatus(address),
-                        ValidFrom = beginLifeSpanVersion
+                        ValidFrom = validFrom
                     },
                     HasStreetName = new XmlCode
                     {
