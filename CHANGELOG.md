@@ -1,3 +1,10 @@
+## [3.7.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.7.0...v3.7.1) (2026-05-27)
+
+
+### Bug Fixes
+
+* **susp-case:** correct migration by dropping and recreating count view ([de1fb03](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/de1fb0374eea49115fe4cc848b2202bf6cfadaab))
+
 # [3.7.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.3...v3.7.0) (2026-05-27)
 
 
