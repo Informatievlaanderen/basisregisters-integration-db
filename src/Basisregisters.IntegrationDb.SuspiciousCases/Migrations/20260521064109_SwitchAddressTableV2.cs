@@ -13,6 +13,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Drop);
+
             migrationBuilder.Sql(ActiveAddressLinkedToMultipleBuildingUnitsConfiguration.Create);
             migrationBuilder.Sql(ActiveAddressOutsideMunicipalityBoundsConfiguration.Create);
             migrationBuilder.Sql(AddressLongerThanTwoYearsProposedConfiguration.Create);
@@ -24,6 +26,8 @@ namespace Basisregisters.IntegrationDb.SuspiciousCases.Migrations
             migrationBuilder.Sql(ActiveAddressButInActiveStreetName.Create);
             migrationBuilder.Sql(InactiveAddressLinkedToParcelOrBuildingUnit.Create);
             migrationBuilder.Sql(InactiveParcelLinkedToAddress.Create);
+
+            migrationBuilder.Sql(SuspiciousCaseCountConfiguration.Create);
         }
 
         /// <inheritdoc />
