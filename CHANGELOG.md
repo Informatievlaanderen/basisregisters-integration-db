@@ -1,3 +1,23 @@
+# [3.7.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.3...v3.7.0) (2026-05-27)
+
+
+### Features
+
+* add address ([b9343ab](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/b9343abe833a48eb2910efa0f26d9bbc2d476c3c))
+* add building view ([8f1e697](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/8f1e697758e796ec74d7066767fca9f68e9aa8ca))
+* add buildingunit address view ([a43beb3](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/a43beb3a1dec50fca3df7901d4fca679be7e366e))
+* add buildingunit view ([5d7ea69](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/5d7ea6981cd7270406570daa97093044f8f62b3b))
+* add parcel views ([6ec5650](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/6ec56502dfb46aae3fdb3913e8bf2ba7d8195d99))
+* add postal/postalname views ([09c121f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/09c121f1e5492fe1c15661c5e32c27850430115c))
+* add streetname view ([8d00c5f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/8d00c5f2280825e6d07e1502cc6e7a7c989c3d6c))
+* **integrity:** add changefeed municipality integrity ([d777ff5](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d777ff593b9056a0880afa26ceaf8100ce53f489))
+* **natreg:** add Arendonk cases ([07820d6](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/07820d6c974499b41f5f1e17e22b9de4994473fe))
+* **natreg:** add Bree cases ([f8e1d8c](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/f8e1d8c0bd95b979bfc7c73a762c4776db0ffd8f))
+* **natreg:** add ErpeMere cases ([d94317a](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/d94317af0421c96cc5bff7a7e482694db2fa336d))
+* **natreg:** add Leopoldsburg cases ([1e42e61](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/1e42e61c008fe9ea6df792090f8dcbc857050b55))
+* **natreg:** add Linkebeek cases ([8c217f8](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/8c217f865776fa69736edbf7860b24bd48f99f02))
+* **natreg:** add Niel cases ([780f058](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/780f0585d5aa57919daedf752265a9a3cbb2c452))
+
 ## [3.6.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.6.2...v3.6.3) (2025-11-20)
 
 
