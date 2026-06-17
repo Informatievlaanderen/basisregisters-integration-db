@@ -24,18 +24,15 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
 
         public GivenDecentraleBijwerkerWithUnknownOvoCode()
         {
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
+                    User = new ClaimsPrincipal(new[]
                     {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO003105") })
-                        }),
-                    }
+                        new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO003105") })
+                    })
                 });
 
             Mock<INisCodeService> nisCodeService = new();
@@ -45,7 +42,7 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
 
             var suspiciousCasesController = new SuspiciousCasesController(
                 new Mock<IMediator>().Object,
-                actionContextAccessor.Object,
+                httpContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
                 nisCodeService.Object,

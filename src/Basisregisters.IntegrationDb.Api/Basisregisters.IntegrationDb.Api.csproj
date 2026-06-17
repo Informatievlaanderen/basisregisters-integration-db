@@ -9,12 +9,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\net8.0\Basisregisters.IntegrationDb.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\net10.0\Basisregisters.IntegrationDb.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <DefineConstants>TRACE;DEBUG;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\net8.0\Basisregisters.IntegrationDb.Api.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\net10.0\Basisregisters.IntegrationDb.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
 
@@ -36,12 +36,12 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
-  
+
     <PackageReference Include="Autofac" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
     <PackageReference Include="Dapper" />
     <PackageReference Include="Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions" />
-    
+
     <PackageReference Include="Be.Vlaanderen.Basisregisters.Api" />
     <PackageReference Include="Be.Vlaanderen.Basisregisters.Auth.AcmIdm" />
     <PackageReference Include="Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded" />

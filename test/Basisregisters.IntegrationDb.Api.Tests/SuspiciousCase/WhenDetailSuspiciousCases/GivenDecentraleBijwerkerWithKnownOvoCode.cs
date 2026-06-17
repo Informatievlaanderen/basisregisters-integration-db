@@ -4,19 +4,18 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading;
-    using Basisregisters.IntegrationDb.Api.SuspiciousCase;
-    using Basisregisters.IntegrationDb.Api.SuspiciousCase.Detail;
-    using Basisregisters.IntegrationDb.SuspiciousCases;
+    using Api.SuspiciousCase;
+    using Api.SuspiciousCase.Detail;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Configuration;
     using Moq;
     using NisCodeService.Abstractions;
+    using SuspiciousCases;
     using Xunit;
 
     public class GivenDecentraleBijwerkerWithKnownOvoCode
@@ -29,18 +28,15 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
 
         public GivenDecentraleBijwerkerWithKnownOvoCode()
         {
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
+                    User = new ClaimsPrincipal(new[]
                     {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, OvoCode) })
-                        }),
-                    }
+                        new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, OvoCode) })
+                    })
                 });
 
             Mock<INisCodeService> nisCodeService = new();
@@ -50,7 +46,7 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
 
             var suspiciousCasesController = new SuspiciousCasesController(
                 _mediator.Object,
-                actionContextAccessor.Object,
+                httpContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
                 nisCodeService.Object,
@@ -62,7 +58,8 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
                 }
             };
 
-            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, CancellationToken.None).Result;
+            _response = suspiciousCasesController.Detail((int)SuspiciousCasesType.StreetNameLongerThanTwoYearsProposed, CancellationToken.None)
+                .Result;
         }
 
         [Fact]

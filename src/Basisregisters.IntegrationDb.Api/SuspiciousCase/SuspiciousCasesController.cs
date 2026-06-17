@@ -34,7 +34,7 @@ namespace Basisregisters.IntegrationDb.Api.SuspiciousCase
     public class SuspiciousCasesController : ApiController
     {
         private readonly IMediator _mediator;
-        private readonly IActionContextAccessor _actionContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOvoCodeWhiteList _ovoCodeWhiteList;
         private readonly IOrganisationWhiteList _organisationWhiteList;
         private readonly INisCodeService _nisCodeService;
@@ -43,14 +43,14 @@ namespace Basisregisters.IntegrationDb.Api.SuspiciousCase
 
         public SuspiciousCasesController(
             IMediator mediator,
-            IActionContextAccessor actionContextAccessor,
+            IHttpContextAccessor httpContextAccessor,
             IOvoCodeWhiteList ovoCodeWhiteList,
             IOrganisationWhiteList organisationWhiteList,
             INisCodeService nisCodeService,
             IConfiguration configuration)
         {
             _mediator = mediator;
-            _actionContextAccessor = actionContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
             _ovoCodeWhiteList = ovoCodeWhiteList;
             _organisationWhiteList = organisationWhiteList;
             _nisCodeService = nisCodeService;
@@ -146,7 +146,7 @@ namespace Basisregisters.IntegrationDb.Api.SuspiciousCase
 
         private async Task<string?> DetermineNisCode(string? nisCode, CancellationToken cancellationToken)
         {
-            var ovoCode = _actionContextAccessor.ActionContext!.HttpContext.FindOvoCodeClaim();
+            var ovoCode = _httpContextAccessor.HttpContext!.FindOvoCodeClaim();
 
             if (!string.IsNullOrWhiteSpace(ovoCode))
             {
@@ -165,7 +165,7 @@ namespace Basisregisters.IntegrationDb.Api.SuspiciousCase
                 return await _nisCodeService.Get(ovoCode, validFrom, cancellationToken);
             }
 
-            var orgCode = _actionContextAccessor.ActionContext!.HttpContext.FindOrgCodeClaim();
+            var orgCode = _httpContextAccessor.HttpContext!.FindOrgCodeClaim();
             if (!string.IsNullOrWhiteSpace(orgCode) && _organisationWhiteList.IsWhiteListed(orgCode))
             {
                 if (string.IsNullOrWhiteSpace(nisCode))
