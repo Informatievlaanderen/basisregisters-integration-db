@@ -1,3 +1,15 @@
+# [4.0.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.7.1...v4.0.0) (2026-06-17)
+
+
+### Features
+
+* update packages + upgrade to dotnet 10 ([edbd091](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/edbd091fd90fe7050fb69d9a4c4f4a8acc1c4038))
+
+
+### BREAKING CHANGES
+
+* update to dotnet 10
+
 ## [3.7.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.7.0...v3.7.1) (2026-05-27)
 
 
