@@ -6,7 +6,7 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
-    using Basisregisters.IntegrationDb.Api.SuspiciousCase;
+    using Api.SuspiciousCase;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
@@ -14,7 +14,6 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Primitives;
     using Moq;
@@ -32,18 +31,15 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
             const string ovoCode = "OVO002037";
             const string expectedNisCode = "31005";
 
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
+                    User = new ClaimsPrincipal(new[]
                     {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, ovoCode) })
-                        }),
-                    }
+                        new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, ovoCode) })
+                    })
                 });
 
             Mock<INisCodeService> nisCodeService = new();
@@ -53,7 +49,7 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
 
             _suspiciousCasesController = new SuspiciousCasesController(
                 _mediator.Object,
-                actionContextAccessor.Object,
+                httpContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
                 nisCodeService.Object,

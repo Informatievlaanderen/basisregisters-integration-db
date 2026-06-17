@@ -24,23 +24,20 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenDetailSuspic
 
         public GivenGlobaleBijwerkerWithNonWhiteListedOrgCode()
         {
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
+                    User = new ClaimsPrincipal(new[]
                     {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOrgCode, "0643634986") })
-                        }),
-                    }
+                        new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "066368723") })
+                    })
                 });
 
             var suspiciousCasesController = new SuspiciousCasesController(
                 new Mock<IMediator>().Object,
-                actionContextAccessor.Object,
+                httpContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
                 new HardCodedNisCodeService(),

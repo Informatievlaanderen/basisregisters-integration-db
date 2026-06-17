@@ -4,14 +4,13 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenListSuspicio
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading;
-    using Basisregisters.IntegrationDb.Api.SuspiciousCase;
+    using Api.SuspiciousCase;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Configuration;
     using Moq;
     using NisCodeService.Abstractions;
@@ -23,28 +22,26 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenListSuspicio
 
         public GivenDecentraleBijwerkerWithUnknownOvoCode()
         {
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            var ovoCode = "OVO003105";
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
+                    User = new ClaimsPrincipal(new[]
                     {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO003105") })
-                        }),
-                    }
+                        new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, ovoCode) })
+                    })
                 });
 
             Mock<INisCodeService> nisCodeService = new();
             nisCodeService
-                .Setup(x => x.Get("OVO003105", It.IsAny<DateTime>(), CancellationToken.None))
+                .Setup(x => x.Get(ovoCode, It.IsAny<DateTime>(), CancellationToken.None))
                 .ReturnsAsync(string.Empty);
 
             var suspiciousCasesController = new SuspiciousCasesController(
                 new Mock<IMediator>().Object,
-                actionContextAccessor.Object,
+                httpContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
                 new OrganisationWhiteList(new List<string>()),
                 nisCodeService.Object,

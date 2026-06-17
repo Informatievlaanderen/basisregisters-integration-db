@@ -5,7 +5,7 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenListSuspicio
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
-    using Basisregisters.IntegrationDb.Api.SuspiciousCase;
+    using Api.SuspiciousCase;
     using Be.Vlaanderen.Basisregisters.Auth;
     using Be.Vlaanderen.Basisregisters.Auth.AcmIdm;
     using FluentAssertions;
@@ -13,7 +13,6 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenListSuspicio
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Primitives;
     using Moq;
@@ -26,25 +25,22 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenListSuspicio
 
         public GivenGlobaleBijwerkerWithoutNisCodeHeader()
         {
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            var ovoCode = "0643634986";
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
-                    {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOrgCode, "0643634986") })
-                        }),
-                    }
+                    User = new ClaimsPrincipal([
+                        new ClaimsIdentity([new Claim(AcmIdmClaimTypes.VoOrgCode, ovoCode)])
+                    ])
                 });
 
             _suspiciousCasesController = new SuspiciousCasesController(
                 Mock.Of<IMediator>(),
-                actionContextAccessor.Object,
+                httpContextAccessor.Object,
                 new OvoCodeWhiteList(new List<string>()),
-                new OrganisationWhiteList(new List<string> { "0643634986" }),
+                new OrganisationWhiteList(new List<string> { ovoCode }),
                 new HardCodedNisCodeService(),
                 new ConfigurationBuilder().Build())
             {

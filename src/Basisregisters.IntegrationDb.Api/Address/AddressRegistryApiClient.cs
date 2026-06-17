@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using AddressRegistry.Api.BackOffice.Abstractions.Requests;
 using Be.Vlaanderen.Basisregisters.AspNetCore.Mvc.Middleware;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 

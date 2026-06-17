@@ -26,24 +26,22 @@ namespace Basisregisters.IntegrationDb.Api.Tests.SuspiciousCase.WhenListSuspicio
 
         public GivenInterneBijwerkerWithoutNisCodeHeader()
         {
-            Mock<IActionContextAccessor> actionContextAccessor = new();
-            actionContextAccessor
-                .Setup(x => x.ActionContext)
-                .Returns(new ActionContext
+            Mock<IHttpContextAccessor> httpContextAccessor = new();
+            var ovoCode = "OVO002949";
+            httpContextAccessor
+                .Setup(x => x.HttpContext)
+                .Returns(new DefaultHttpContext
                 {
-                    HttpContext = new DefaultHttpContext
+                    User = new ClaimsPrincipal(new[]
                     {
-                        User = new ClaimsPrincipal(new[]
-                        {
-                            new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, "OVO002949") })
-                        }),
-                    }
+                        new ClaimsIdentity(new[] { new Claim(AcmIdmClaimTypes.VoOvoCode, ovoCode) })
+                    })
                 });
 
             _suspiciousCasesController = new SuspiciousCasesController(
                 Mock.Of<IMediator>(),
-                actionContextAccessor.Object,
-                new OvoCodeWhiteList(new List<string> { "OVO002949" }),
+                httpContextAccessor.Object,
+                new OvoCodeWhiteList(new List<string> { ovoCode }),
                 new OrganisationWhiteList(new List<string>()),
                 new HardCodedNisCodeService(),
                 new ConfigurationBuilder().Build())
