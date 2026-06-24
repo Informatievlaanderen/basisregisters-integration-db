@@ -6,10 +6,15 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.Linq;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common.NetTopology;
     using Be.Vlaanderen.Basisregisters.GrAr.Common.SpatialTools.GeometryCoordinates;
+    using Be.Vlaanderen.Basisregisters.GrAr.CrsTransform;
+    using Infrastructure.Options;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
     using Model.Database;
     using Model.Xml;
+    using NetTopologySuite.Geometries;
     using NodaTime;
     using Repositories;
 
@@ -19,9 +24,12 @@ namespace Basisregisters.IntegrationDb.Bosa
         IStreetNameRepository streetNameRepo,
         IMunicipalityRepository municipalityRepo,
         IPostalInfoRepository postalInfoRepo,
+        IOptions<FullDownloadOptions> options,
         ILoggerFactory loggerFactory) : BaseRegistryService, IRegistryService
     {
-        private static string GetFileName() => $"FlandersAddress{DateTimeOffset.Now:yyyyMMdd}L72";
+        private bool UseLambert2008 => options.Value.UseLambert2008;
+        private string GetFileName() =>
+            $"FlandersAddress{DateTimeOffset.Now:yyyyMMdd}L{(UseLambert2008 ? "08" : "72")}";
 
         public string GetXmlFileName() => $"{GetFileName()}.xml";
         public string GetZipFileName() => $"{GetFileName()}.zip";
@@ -66,6 +74,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 var beginLifeSpanVersion = GetZuluVersionAsString(address.CreatedOn);
                 var validFrom = GetZuluVersionAsString(address.VersionTimestamp);
                 var endLifeSpanVersion = GetEndLifeSpanVersion(address);
+                var position = GetPosition(address);
 
                 var xmlAddress = new XmlAddress
                 {
@@ -87,10 +96,9 @@ namespace Basisregisters.IntegrationDb.Bosa
                                 {
                                     AxisLabels = "x y",
                                     SrsDimension = 2,
-                                    SrsName = $"http://www.opengis.net/def/crs/EPSG/0/{address.SrId}",
+                                    SrsName = $"http://www.opengis.net/def/crs/EPSG/0/{position.srId}",
                                     UomLabels = "m m",
-                                    Value =
-                                        $"{address.X.ToPointGeometryCoordinateValueFormat()} {address.Y.ToPointGeometryCoordinateValueFormat()}"
+                                    Value = GetCoordinates(position.x, position.y)
                                 }
                             }
                         },
@@ -145,6 +153,16 @@ namespace Basisregisters.IntegrationDb.Bosa
             RegistryXmlSerializer.Serialize(serializable, outputStream);
         }
 
+        private (double x, double y, int srId) GetPosition(Address address)
+        {
+            if (!UseLambert2008 || address.SrId == SystemReferenceId.SridLambert2008)
+                return (address.X, address.Y, address.SrId);
+
+            var point = NtsGeometryFactory.CreateGeometryFactoryLambert72().CreatePoint(new Coordinate(address.X, address.Y));
+            var transformed = point.TransformFromLambert72To08();
+            return (transformed.X, transformed.Y, SystemReferenceId.SridLambert2008);
+        }
+
         private static string? GetEndLifeSpanVersion(Address address)
         {
             return address.Status is AddressStatus.Rejected or AddressStatus.Retired
@@ -191,6 +209,11 @@ namespace Basisregisters.IntegrationDb.Bosa
                 AddressStatus.Rejected => "retired",
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }
+
+        private static string GetCoordinates(double x, double y)
+        {
+            return $"{x.ToPointGeometryCoordinateValueFormat()} {y.ToPointGeometryCoordinateValueFormat()}";
         }
     }
 }

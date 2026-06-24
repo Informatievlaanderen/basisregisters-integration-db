@@ -44,9 +44,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Common": {
         "type": "Direct",
-        "requested": "[24.1.0, )",
-        "resolved": "24.1.0",
-        "contentHash": "lvhTpJST/yIAq3kI5w9EEiZaiyxgu6JEKANdXjZVj1jI7RbIJ9qsu+fLun/J5B2zlzHBayY3uRznIsdR7pGnxw==",
+        "requested": "[24.3.0, )",
+        "resolved": "24.3.0",
+        "contentHash": "jV0O1o7sj7WnnvHklfXmVC0KP8vrXXy/uKjbXf2s3TPqyyJAvH54NFua03NE9jDFg4clcw6bNGYluDhh5EUPgA==",
         "dependencies": {
           "Be.Vlaanderen.Basisregisters.AggregateSource": "11.0.0",
           "Be.Vlaanderen.Basisregisters.CommandHandling": "11.0.0",
@@ -56,9 +56,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Extracts": {
         "type": "Direct",
-        "requested": "[24.1.0, )",
-        "resolved": "24.1.0",
-        "contentHash": "K6OSWuB23J4oCnyBhLze2jldqTmYUVHStKHEIsdYbVPL1hIIFOEjR99zoHEHGmLV0iu134/9mpFTWHHXgRl0AA==",
+        "requested": "[24.3.0, )",
+        "resolved": "24.3.0",
+        "contentHash": "1kQ95xVdAmBvK0YDSi7e4Z/wa9jfp91KoXA7Uf9fEMh08U4BNCyhTMGX7pJacyUKwwuQSqmTigOzuQvN86Djlw==",
         "dependencies": {
           "Be.Vlaanderen.Basisregisters.Api": "27.0.0",
           "Be.Vlaanderen.Basisregisters.Shaperon": "11.1.0"
@@ -66,9 +66,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Notifications": {
         "type": "Direct",
-        "requested": "[24.1.0, )",
-        "resolved": "24.1.0",
-        "contentHash": "iLLoD+clbCTFZFEXG1geKh1l9oWmNOhBVrSnDAAzhsahW/4qFabuBhnfyEB19UP/SiWlSxf8WRW5Tg4PUm3gGg==",
+        "requested": "[24.3.0, )",
+        "resolved": "24.3.0",
+        "contentHash": "QteLlRC0QmCLuyrYg3fj1xs02nDLN6QcU8cVM4trJrCF48zws4pr9fffWdSkIH68KjvKlTrmZvvuIL43F/Sgfg==",
         "dependencies": {
           "AWSSDK.SimpleNotificationService": "4.0.2.36"
         }
