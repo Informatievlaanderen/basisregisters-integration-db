@@ -4,10 +4,16 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common.NetTopology;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common.SpatialTools.GeometryCoordinates;
+    using Be.Vlaanderen.Basisregisters.GrAr.CrsTransform;
     using FluentAssertions;
+    using Infrastructure.Options;
     using Microsoft.Extensions.Logging.Abstractions;
+    using Microsoft.Extensions.Options;
     using Model.Database;
     using Moq;
+    using NetTopologySuite.Geometries;
     using NodaTime;
     using NodaTime.Testing;
     using Repositories;
@@ -141,7 +147,14 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 .Returns(_given);
 
             var clock = new FakeClock(NodaConstants.UnixEpoch);
-            var service = new AddressService(clock, addressRepo.Object, streetNameRepo.Object, municipalityRepo.Object, postalInfoRepo.Object, new NullLoggerFactory());
+            var downloadOptions = Options.Create(new FullDownloadOptions
+            {
+                UploadBucket = string.Empty,
+                FileNameFormat = string.Empty,
+                FtpFolder = string.Empty,
+                UseLambert2008 = false
+            });
+            var service = new AddressService(clock, addressRepo.Object, streetNameRepo.Object, municipalityRepo.Object, postalInfoRepo.Object, downloadOptions, new NullLoggerFactory());
 
             await using var outputStream = new MemoryStream();
             service.CreateXml(outputStream);
@@ -272,6 +285,73 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 """;
 
             xml.Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task GivenAddressWithLambert72AndUseLambert2008IsTrue_ThenCoordinatesAreConvertedToLambert2008()
+        {
+            var address = new Address(
+                AddressNamespace,
+                200001,
+                14602,
+                "2230",
+                Date,
+                Date,
+                188473.52,
+                193390.22,
+                31370,
+                GeometryMethod.DerivedFromObject,
+                GeometrySpecification.BuildingUnit,
+                AddressStatus.Current,
+                "59",
+                null,
+                true
+            );
+
+            var municipalities = new Municipality[]
+            {
+                new(MunicipalityNamespace, "13013", Date, "Gemeente", "GemeenteFR", "GemeenteDE", "GemeenteEN", MunicipalityStatus.Current)
+            };
+            var postalInfos = new PostalInfo[] { new(PostalInfoNamespace, "2230", Date, "Postcode") };
+            var streetNames = new StreetNameIdentifier[] { new(StreetNameNamespace, 14602, Date, "13013", MunicipalityStatus.Current) };
+
+            var municipalityRepo = new Mock<IMunicipalityRepository>();
+            municipalityRepo.Setup(x => x.GetFlemish()).Returns(municipalities);
+
+            var postalInfoRepo = new Mock<IPostalInfoRepository>();
+            postalInfoRepo.Setup(x => x.GetFlemish()).Returns(postalInfos);
+
+            var streetNameRepo = new Mock<IStreetNameRepository>();
+            streetNameRepo.Setup(x => x.GetFlemishIdentifiers()).Returns(streetNames);
+
+            var addressRepo = new Mock<IAddressRepository>();
+            addressRepo.Setup(x => x.GetFlemish()).Returns(new[] { address });
+
+            var downloadOptions = Options.Create(new FullDownloadOptions
+            {
+                UploadBucket = string.Empty,
+                FileNameFormat = string.Empty,
+                FtpFolder = string.Empty,
+                UseLambert2008 = true
+            });
+
+            var clock = new FakeClock(NodaConstants.UnixEpoch);
+            var service = new AddressService(clock, addressRepo.Object, streetNameRepo.Object, municipalityRepo.Object, postalInfoRepo.Object, downloadOptions, new NullLoggerFactory());
+
+            await using var outputStream = new MemoryStream();
+            service.CreateXml(outputStream);
+
+            var xml = Encoding.UTF8.GetString(outputStream.ToArray()).Trim();
+
+            var point = NtsGeometryFactory.CreateGeometryFactoryLambert72().CreatePoint(new Coordinate(188473.52, 193390.22));
+            var transformed = point.TransformFromLambert72To08();
+            var expectedCoords = $"{transformed.X.ToPointGeometryCoordinateValueFormat()} {transformed.Y.ToPointGeometryCoordinateValueFormat()}";
+
+            xml.Should().Contain($"srsName=\"http://www.opengis.net/def/crs/EPSG/0/{SystemReferenceId.SridLambert2008}\"");
+            xml.Should().Contain(expectedCoords);
+            xml.Should().NotContain($"srsName=\"http://www.opengis.net/def/crs/EPSG/0/{SystemReferenceId.SridLambert72}\"");
+
+            service.GetZipFileName().Should().Contain("L08");
         }
     }
 }

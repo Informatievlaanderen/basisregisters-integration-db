@@ -46,7 +46,8 @@ namespace Basisregisters.IntegrationDb.Bosa
         {
             try
             {
-                var fullZipFileName = string.Format(_options.FileNameFormat, DateTimeOffset.Now.ToString("yyyyMMdd"));
+                var lambertVersion = _options.UseLambert2008 ? "08" : "72";
+                var fullZipFileName = string.Format(_options.FileNameFormat, DateTimeOffset.Now.ToString("yyyyMMdd"), lambertVersion);
 
                 var zipExists = await _blobClient.BlobExistsAsync(new BlobName(fullZipFileName), stoppingToken);
                 if (zipExists)

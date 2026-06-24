@@ -6,5 +6,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Infrastructure.Options
         public required string FileNameFormat { get; set; }
         public bool UploadToFtp { get; set; }
         public required string FtpFolder { get; set; }
+        public bool UseLambert2008 { get; set; }
     }
 }
