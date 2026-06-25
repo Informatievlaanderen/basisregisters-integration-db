@@ -52,11 +52,11 @@
       },
       "Datadog.Trace.Bundle": {
         "type": "Direct",
-        "requested": "[3.46.0, )",
-        "resolved": "3.46.0",
-        "contentHash": "dlcxJakbE4JrZlUho9Qnhq5vAun4e3JhUx9N+KZO+fiEDLSm/d7ezrZIwRQOXmgy4r5YeqQNzZiQsCPXZ8dhuw==",
+        "requested": "[3.47.0, )",
+        "resolved": "3.47.0",
+        "contentHash": "Cx0S9UGBYLOuU3fpI7/FE5HYUlk2GkSj/ITn6ZCxP/2nSxiG9MYB+oFb0JOjFg48mIvv+CrU5w1dPFediErRcA==",
         "dependencies": {
-          "Datadog.Trace": "3.46.0"
+          "Datadog.Trace": "3.47.0"
         }
       },
       "Destructurama.JsonNet": {
@@ -244,8 +244,8 @@
       },
       "Datadog.Trace": {
         "type": "Transitive",
-        "resolved": "3.46.0",
-        "contentHash": "Ht7MIx8sDaqi6OIkS276bq0mSESd4dzRQW6JC6J/FpekwEDj9boAXWHo7ZQptozVoBw0nvbNGak1WtfRuccNWQ=="
+        "resolved": "3.47.0",
+        "contentHash": "74AOdM3nWlmajJrNNm/mei6p2C2N2m8EXD82t4zFEIXQlucqanFEuf8NoLhVsMLNrVjmwxAyi7kTOApR/JWchw=="
       },
       "Microsoft.EntityFrameworkCore": {
         "type": "Transitive",
