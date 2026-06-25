@@ -17,7 +17,7 @@
       "allowedVersions": "<13.0.0"
     },
     {
-      "matchUpdateTypes": ["patch"],
+      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
       "platformAutomerge": true
     }
