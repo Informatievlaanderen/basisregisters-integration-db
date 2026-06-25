@@ -65,11 +65,11 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.CrsTransform": {
         "type": "Direct",
-        "requested": "[24.3.0, )",
-        "resolved": "24.3.0",
-        "contentHash": "LGRAS26TW8xhhxyA48EW1eMZxQdH/tXOKUT2/6HXmYCNO6oA2BMgMfTODeHFBqoxL7hdFATltM6D1ZHwJEefug==",
+        "requested": "[24.4.1, )",
+        "resolved": "24.4.1",
+        "contentHash": "6lykM7rZfPhC55FIXi8cT0ccGM/rUzOJ7BomWS+Td1ujC2OUQKmHmbicVQawBMvPNAROIrnxRA33TfgdwVRjzg==",
         "dependencies": {
-          "Be.Vlaanderen.Basisregisters.GrAr.Common": "24.3.0",
+          "Be.Vlaanderen.Basisregisters.GrAr.Common": "24.4.1",
           "NetTopologySuite.Features": "2.2.0"
         }
       },
