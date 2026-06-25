@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.0.0...v4.1.0) (2026-06-25)
+
+
+### Features
+
+* **bosa:** add lambert08 support ([42c99bb](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/42c99bbfcf7608776d17614ddc69eae66bff8f2f))
+
 # [4.0.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v3.7.1...v4.0.0) (2026-06-17)
 
 
