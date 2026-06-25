@@ -1077,7 +1077,7 @@
           "Autofac": "[9.3.0, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.BlobStore": "[5.1.0, )",
-          "Be.Vlaanderen.Basisregisters.GrAr.Common": "[24.3.0, )",
+          "Be.Vlaanderen.Basisregisters.GrAr.Common": "[24.4.1, )",
           "Be.Vlaanderen.Basisregisters.GrAr.CrsTransform": "[24.3.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[24.3.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.3.0, )",
@@ -1217,9 +1217,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Common": {
         "type": "CentralTransitive",
-        "requested": "[24.3.0, )",
-        "resolved": "24.3.0",
-        "contentHash": "jV0O1o7sj7WnnvHklfXmVC0KP8vrXXy/uKjbXf2s3TPqyyJAvH54NFua03NE9jDFg4clcw6bNGYluDhh5EUPgA==",
+        "requested": "[24.4.1, )",
+        "resolved": "24.4.1",
+        "contentHash": "Dc0hALU1OcxqmJZy6Dr7xE4DoWkpIp/6M2aa9aMR6jQbyvoJdJHRjxyg+dhe6tKR7mlmibVD2FzwmTpcJF7m2g==",
         "dependencies": {
           "Be.Vlaanderen.Basisregisters.AggregateSource": "11.0.0",
           "Be.Vlaanderen.Basisregisters.CommandHandling": "11.0.0",

@@ -36,7 +36,7 @@
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.Auth.AcmIdm" Version="5.0.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.Aws.DistributedMutex" Version="5.1.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.BlobStore" Version="5.1.0" />
-    <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Common" Version="24.3.0" />
+    <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Common" Version="24.4.1" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.CrsTransform" Version="24.3.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Extracts" Version="24.3.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Notifications" Version="24.3.0" />
