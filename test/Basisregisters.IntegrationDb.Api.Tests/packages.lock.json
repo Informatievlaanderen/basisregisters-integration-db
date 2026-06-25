@@ -1179,7 +1179,7 @@
           "Autofac": "[9.3.0, )",
           "Autofac.Extensions.DependencyInjection": "[11.0.1, )",
           "Basisregisters.IntegrationDb.SuspiciousCases": "[1.0.0, )",
-          "Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions": "[6.0.1, )",
+          "Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions": "[6.0.3, )",
           "Be.Vlaanderen.Basisregisters.Api": "[27.0.0, )",
           "Be.Vlaanderen.Basisregisters.Auth.AcmIdm": "[5.0.0, )",
           "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": "[1.0.0, )",
@@ -1245,9 +1245,9 @@
       },
       "Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions": {
         "type": "CentralTransitive",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "aQsRKpovQdVAMBUB+dno6tqeUWpONXaEF7tKlTIvBa4+sED83uTYJMYipTH4ZFIZM3h7HvoDXOCJZKVrhpkiZA==",
+        "requested": "[6.0.3, )",
+        "resolved": "6.0.3",
+        "contentHash": "e5pTID+LETyJVnfjZk7yfzFSCOv06eo2Fm1z3juhY+6dtCIXb3IJYTKTl6/Hvbyikg2uAQzCE1LLWqn7TVlPsA==",
         "dependencies": {
           "Autofac": "9.1.0",
           "Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore": "11.0.0",

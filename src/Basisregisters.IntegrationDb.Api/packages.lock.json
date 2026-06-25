@@ -28,9 +28,9 @@
       },
       "Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions": {
         "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "aQsRKpovQdVAMBUB+dno6tqeUWpONXaEF7tKlTIvBa4+sED83uTYJMYipTH4ZFIZM3h7HvoDXOCJZKVrhpkiZA==",
+        "requested": "[6.0.3, )",
+        "resolved": "6.0.3",
+        "contentHash": "e5pTID+LETyJVnfjZk7yfzFSCOv06eo2Fm1z3juhY+6dtCIXb3IJYTKTl6/Hvbyikg2uAQzCE1LLWqn7TVlPsA==",
         "dependencies": {
           "Autofac": "9.1.0",
           "Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore": "11.0.0",

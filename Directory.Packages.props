@@ -11,7 +11,7 @@
     <PackageVersion Include="AWSSDK.SimpleEmail" Version="4.0.3.8" />
     <PackageVersion Include="Autofac" Version="9.3.0" />
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="11.0.1" />
-    <PackageVersion Include="Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions" Version="6.0.1" />
+    <PackageVersion Include="Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions" Version="6.0.3" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="Dapper" Version="2.1.79" />
     <PackageVersion Include="FluentFTP" Version="54.2.0" />
