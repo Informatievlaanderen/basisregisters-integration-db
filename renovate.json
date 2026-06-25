@@ -11,6 +11,14 @@
     {
       "matchPackageNames": ["FluentAssertions"],
       "allowedVersions": "<8.0.0"
+    },
+    {
+      "matchPackageNames": ["MediatR"],
+      "allowedVersions": "<13.0.0"
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
     }
   ]
 }
