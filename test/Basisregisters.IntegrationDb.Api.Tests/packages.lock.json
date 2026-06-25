@@ -1177,7 +1177,7 @@
         "dependencies": {
           "AspNetCore.HealthChecks.NpgSql": "[9.0.0, )",
           "Autofac": "[9.2.0, )",
-          "Autofac.Extensions.DependencyInjection": "[11.0.0, )",
+          "Autofac.Extensions.DependencyInjection": "[11.0.1, )",
           "Basisregisters.IntegrationDb.SuspiciousCases": "[1.0.0, )",
           "Be.Vlaanderen.Basisregisters.AddressRegistry.Api.BackOffice.Abstractions": "[6.0.1, )",
           "Be.Vlaanderen.Basisregisters.Api": "[27.0.0, )",
@@ -1226,12 +1226,12 @@
       },
       "Autofac.Extensions.DependencyInjection": {
         "type": "CentralTransitive",
-        "requested": "[11.0.0, )",
-        "resolved": "11.0.0",
-        "contentHash": "/FSrJyYEsptkV9O3L95dTAoGO6XGSQFDENWHFcHxW0oQIEvW56Mgr01qO53EIEIDDvMFqszBU+uIm9fzGARLPQ==",
+        "requested": "[11.0.1, )",
+        "resolved": "11.0.1",
+        "contentHash": "mLTdO01UpM/hbVSG6ldQSJCxYGybfeVNiDTYAHfMl/400aI/6cnTmSKxLHpqp96ebamxlwS/a6ujeaH9DOGzbA==",
         "dependencies": {
-          "Autofac": "9.1.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.4"
+          "Autofac": "9.2.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.9"
         }
       },
       "AWSSDK.DynamoDBv2": {

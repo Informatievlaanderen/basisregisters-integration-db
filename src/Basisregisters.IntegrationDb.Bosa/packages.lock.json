@@ -1173,7 +1173,7 @@
       },
       "Autofac.Extensions.DependencyInjection": {
         "type": "CentralTransitive",
-        "requested": "[11.0.0, )",
+        "requested": "[11.0.1, )",
         "resolved": "11.0.0",
         "contentHash": "/FSrJyYEsptkV9O3L95dTAoGO6XGSQFDENWHFcHxW0oQIEvW56Mgr01qO53EIEIDDvMFqszBU+uIm9fzGARLPQ==",
         "dependencies": {
