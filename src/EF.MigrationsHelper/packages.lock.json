@@ -1283,7 +1283,7 @@
           "AWSSDK.SimpleNotificationService": "[4.0.3.8, )",
           "Basisregisters.IntegrationDb.SuspiciousCases": "[1.0.0, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.1.0, )",
-          "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.3.0, )",
+          "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.4.1, )",
           "Dapper": "[2.1.79, )",
           "Datadog.Trace.Bundle": "[3.47.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
@@ -1375,7 +1375,7 @@
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Common": "[24.4.1, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[24.4.1, )",
-          "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.3.0, )",
+          "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.4.1, )",
           "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": "[1.0.0, )",
           "CsvHelper": "[33.1.0, )",
           "Dapper": "[2.1.79, )",
@@ -1553,9 +1553,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Notifications": {
         "type": "CentralTransitive",
-        "requested": "[24.3.0, )",
-        "resolved": "24.3.0",
-        "contentHash": "QteLlRC0QmCLuyrYg3fj1xs02nDLN6QcU8cVM4trJrCF48zws4pr9fffWdSkIH68KjvKlTrmZvvuIL43F/Sgfg==",
+        "requested": "[24.4.1, )",
+        "resolved": "24.4.1",
+        "contentHash": "Fvjz05TA26kP/Ie2+18xMtuHN5j4Y8XDfwEzeAbVI9iFHqJJTBJFcGtJKBOxo5JkK6cmMBPPS0A/sTD6PhEKDg==",
         "dependencies": {
           "AWSSDK.SimpleNotificationService": "4.0.2.36"
         }
