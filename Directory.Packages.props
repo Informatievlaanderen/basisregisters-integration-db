@@ -23,7 +23,7 @@
     <PackageVersion Include="MediatR.Contracts" Version="2.0.1" />
     <PackageVersion Include="Polly" Version="8.7.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.29.1" />
-    <PackageVersion Include="Datadog.Trace.Bundle" Version="3.47.0" />
+    <PackageVersion Include="Datadog.Trace.Bundle" Version="3.48.0" />
     <PackageVersion Include="Fastenshtein" Version="1.0.12" />
     <PackageVersion Include="FlatFiles" Version="5.0.4" />
     <PackageVersion Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
