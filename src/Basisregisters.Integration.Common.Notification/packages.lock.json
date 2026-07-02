@@ -4,11 +4,11 @@
     "net10.0": {
       "AWSSDK.Extensions.NETCore.Setup": {
         "type": "Direct",
-        "requested": "[4.0.100, )",
-        "resolved": "4.0.100",
-        "contentHash": "nRLxyw+WU6oJkA+Czm9OH6OILTiQWCGD62guUkSsGZUeeDPJ0I1SfN3ynkvygxh+qfbl7KnwFGEFNTZLP1flfA==",
+        "requested": "[4.0.100.1, )",
+        "resolved": "4.0.100.1",
+        "contentHash": "BbyTnJcTSHmnjNVQjqg3R3GwB0WYlQ2DieB7WW+5w9K7kh4BDM7iTAjtIHkwGwLDopC4/GtkuKnosOzUiHBqkQ==",
         "dependencies": {
-          "AWSSDK.Core": "4.0.100",
+          "AWSSDK.Core": "4.0.100.1",
           "Microsoft.Extensions.Configuration.Abstractions": "2.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.0.0"
@@ -16,11 +16,11 @@
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "Direct",
-        "requested": "[4.0.100, )",
-        "resolved": "4.0.100",
-        "contentHash": "adgqt1kgWt96MfYSRfaEXymQyh4coT9TopERWKfUDp9puXMmUTF9TFxy2gNyZ4AX5vfjUBHo+/0YW4qJ8fHG8w==",
+        "requested": "[4.0.100.1, )",
+        "resolved": "4.0.100.1",
+        "contentHash": "xeTKUU0g1rzEzoO3S41P7pYzXESt0nHLpCESPBJ6DaReuwfI7X1t4t5Zfd/Av3OTFRAVhhSfq3kutszY2P6JCw==",
         "dependencies": {
-          "AWSSDK.Core": "[4.0.100, 5.0.0)"
+          "AWSSDK.Core": "[4.0.100.1, 5.0.0)"
         }
       },
       "Microsoft.Extensions.Configuration": {
@@ -53,8 +53,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "4.0.100",
-        "contentHash": "7BqWwpzoTYsG5w7H2yuhdu7ZG2cw6GANhkKCzygGv0hoOaCXYy4fQu1satpGJ2wtTErM2aXkdo6qKDHgIeSVkA=="
+        "resolved": "4.0.100.1",
+        "contentHash": "kOSGVgWvxz3V8CYX9BDQ46DLsHumW0YjOMJHpns5iNCt1kzEISpTluL/+HMmXMoqIS+KSeoEvjtJWclaoGVlKw=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Transitive",
