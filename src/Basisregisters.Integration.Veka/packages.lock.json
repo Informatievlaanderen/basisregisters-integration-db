@@ -20,9 +20,9 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "Direct",
-        "requested": "[4.0.100.2, )",
-        "resolved": "4.0.100.2",
-        "contentHash": "fAqKkTLdwSX075GStxoP36cAiffoeL83aiVSdb01vAyPS2EVDc7xZkODni1DGm1iLK52N4TkKfwN0FjlcgeD8A==",
+        "requested": "[4.0.101, )",
+        "resolved": "4.0.101",
+        "contentHash": "C9Bar8VqtVA6AmMJglqvjzpjYmfcE/IfUQeYwWo9VEomRRFDYkGHaxw+XdjWpxzrc6zdd9s8KnLmZ0ikJ5USaQ==",
         "dependencies": {
           "AWSSDK.Core": "[4.0.100.2, 5.0.0)"
         }
