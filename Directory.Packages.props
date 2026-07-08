@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.100.2" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.100.2" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.101" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="4.0.100.2" />
     <PackageVersion Include="AWSSDK.SimpleEmail" Version="4.0.100.2" />
     <PackageVersion Include="Autofac" Version="9.3.0" />
