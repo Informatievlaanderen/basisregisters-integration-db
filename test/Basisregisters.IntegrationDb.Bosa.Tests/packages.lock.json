@@ -1074,7 +1074,7 @@
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "[4.0.100.3, )",
           "AWSSDK.SimpleNotificationService": "[4.0.100.3, )",
-          "Autofac": "[9.3.0, )",
+          "Autofac": "[9.3.1, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.BlobStore": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Common": "[24.4.1, )",
@@ -1100,9 +1100,9 @@
       },
       "Autofac": {
         "type": "CentralTransitive",
-        "requested": "[9.3.0, )",
-        "resolved": "9.3.0",
-        "contentHash": "OXigGAa1oFYbHmI9lEEYYSRQvbtGC3AnNdg+4BEhHa0x8XlJrYOS7Sg5fZtmlrHPLp+gRsDnz2aqbsglNUnv0g=="
+        "requested": "[9.3.1, )",
+        "resolved": "9.3.1",
+        "contentHash": "WCDp+kYLr+r9enkRDt4PYRzj321P/c+8SICxHhWo9gkVNqE9EziiYyUMa7A0ce27SK6qgRWYCK0zp19J2ykVHw=="
       },
       "Autofac.Extensions.DependencyInjection": {
         "type": "CentralTransitive",
