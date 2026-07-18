@@ -24,9 +24,9 @@
       },
       "Npgsql.EntityFrameworkCore.PostgreSQL": {
         "type": "Direct",
-        "requested": "[10.0.2, )",
-        "resolved": "10.0.2",
-        "contentHash": "PsNYgPOSW41Xx19gin7y4EdZAPteWr9Cb01XkdObxOsPzi+mgBupBEN7J7+erXFsROPOILM7MlIoO9QzL8+LGQ==",
+        "requested": "[10.0.3, )",
+        "resolved": "10.0.3",
+        "contentHash": "IPGrrZnRkuW7OlHDhUESZz4G5DLkW7Nej/O3Cx+0iTsgyU5XJxBgpsvTHLloo3WWuAKKbDHXBvWPVkX1deRh1Q==",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "[10.0.4, 11.0.0)",
           "Microsoft.EntityFrameworkCore.Relational": "[10.0.4, 11.0.0)",
@@ -1326,7 +1326,7 @@
           "NetTopologySuite": "[2.6.0, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "NodaTime": "[3.3.3, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.3, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[10.0.2, )",
           "Polly": "[8.7.0, )",
           "Serilog": "[4.3.1, )",
@@ -1353,7 +1353,7 @@
           "Microsoft.Extensions.Configuration.FileExtensions": "[10.0.9, )",
           "Microsoft.Extensions.Configuration.Json": "[10.0.9, )",
           "Microsoft.Extensions.Hosting": "[10.0.9, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.3, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[10.0.2, )",
           "Serilog": "[4.3.1, )",
           "Serilog.Enrichers.Environment": "[3.0.1, )",
@@ -1382,7 +1382,7 @@
           "Datadog.Trace.Bundle": "[3.48.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
           "NodaTime": "[3.3.3, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.3, )",
           "Serilog": "[4.3.1, )",
           "Serilog.Enrichers.Environment": "[3.0.1, )",
           "Serilog.Enrichers.Thread": "[4.0.0, )",
@@ -1402,7 +1402,7 @@
           "Microsoft.Extensions.Configuration.EnvironmentVariables": "[10.0.9, )",
           "Microsoft.Extensions.Configuration.FileExtensions": "[10.0.9, )",
           "Microsoft.Extensions.Configuration.Json": "[10.0.9, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.2, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.3, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[10.0.2, )"
         }
       },
