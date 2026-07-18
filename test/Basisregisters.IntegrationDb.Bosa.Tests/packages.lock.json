@@ -32,11 +32,11 @@
       },
       "NodaTime.Testing": {
         "type": "Direct",
-        "requested": "[3.3.2, )",
-        "resolved": "3.3.2",
-        "contentHash": "QtluHon9TOnmcgzMUvViyroYdnyZ7fTi1rdInOb6kYXTLaoEicpZf/XCoqM61whI3blABphjIUNTac4Ea1aOMg==",
+        "requested": "[3.3.3, )",
+        "resolved": "3.3.3",
+        "contentHash": "HXxij1x6brpOtTnWvauL2Ir9ydyObPGERyOHelHtnACbl/ctJXsRMqvF09ajJTa588pfuVhEvjo5/WzkCh8vlQ==",
         "dependencies": {
-          "NodaTime": "3.3.2"
+          "NodaTime": "3.3.3"
         }
       },
       "xunit": {
