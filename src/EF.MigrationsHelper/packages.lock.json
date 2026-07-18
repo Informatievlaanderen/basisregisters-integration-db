@@ -1309,7 +1309,7 @@
           "AWSSDK.Extensions.NETCore.Setup": "[4.0.100.5, )",
           "AWSSDK.SimpleNotificationService": "[4.0.100.5, )",
           "Autofac": "[9.3.1, )",
-          "Autofac.Extensions.DependencyInjection": "[11.0.1, )",
+          "Autofac.Extensions.DependencyInjection": "[11.0.2, )",
           "Basisregisters.Integration.Common.Notification": "[1.0.0, )",
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.Utilities.Rfc3339DateTimeOffset": "[5.1.0, )",
@@ -1420,11 +1420,11 @@
       },
       "Autofac.Extensions.DependencyInjection": {
         "type": "CentralTransitive",
-        "requested": "[11.0.1, )",
-        "resolved": "11.0.1",
-        "contentHash": "mLTdO01UpM/hbVSG6ldQSJCxYGybfeVNiDTYAHfMl/400aI/6cnTmSKxLHpqp96ebamxlwS/a6ujeaH9DOGzbA==",
+        "requested": "[11.0.2, )",
+        "resolved": "11.0.2",
+        "contentHash": "i2wSkhnmhl3pUMOVfV7+bpurjIutz9yp8pilDRzUgPtUcRR+FdV7jZ/JLMPpUvoND2JMduN0prDtlNfkUVjkTw==",
         "dependencies": {
-          "Autofac": "9.2.0",
+          "Autofac": "9.3.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.9"
         }
       },
