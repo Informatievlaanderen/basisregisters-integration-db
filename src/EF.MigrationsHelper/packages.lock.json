@@ -296,8 +296,8 @@
       },
       "Datadog.Trace": {
         "type": "Transitive",
-        "resolved": "3.48.0",
-        "contentHash": "2SGQTXM+t3E9BBNTylpXy0wQZD0h4c27gzICUtW402GpPPoh7VWhFw2f9BGBb7koazAr6OjCsjHhNp11gACmnQ=="
+        "resolved": "3.49.0",
+        "contentHash": "YTpJQcU+psHou1bx4sB/1DjujE69ok80PwS8JrYHbt+TWuFk+Khdzq2UdxJe5mc5KoU1ooRGNDoxYlg/SfASXA=="
       },
       "FluentValidation": {
         "type": "Transitive",
@@ -1285,7 +1285,7 @@
           "Be.Vlaanderen.Basisregisters.Aws.DistributedMutex": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.4.1, )",
           "Dapper": "[2.1.79, )",
-          "Datadog.Trace.Bundle": "[3.48.0, )",
+          "Datadog.Trace.Bundle": "[3.49.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
           "Microsoft.Extensions.Configuration": "[10.0.10, )",
           "Microsoft.Extensions.Configuration.EnvironmentVariables": "[10.0.10, )",
@@ -1379,7 +1379,7 @@
           "Be.Vlaanderen.Basisregisters.IntegrationDb.Api.Abstractions": "[1.0.0, )",
           "CsvHelper": "[33.1.0, )",
           "Dapper": "[2.1.79, )",
-          "Datadog.Trace.Bundle": "[3.48.0, )",
+          "Datadog.Trace.Bundle": "[3.49.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
           "NodaTime": "[3.3.3, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.3, )",
@@ -1589,11 +1589,11 @@
       },
       "Datadog.Trace.Bundle": {
         "type": "CentralTransitive",
-        "requested": "[3.48.0, )",
-        "resolved": "3.48.0",
-        "contentHash": "wL8OJP9Jii4TgeTSigSOppzd7OUfnlGigYaCfBa3PaJ9WRk9giqmEuz32MubiGO8e0zwC/rYThuFG2XIsVQIrg==",
+        "requested": "[3.49.0, )",
+        "resolved": "3.49.0",
+        "contentHash": "HKn7L+zsDP3UXNerVynAUdqg9GgAP4+qOKlehStHljcFN2akIQvciIr3XF/eOLcjw0D6s3gIsOF9LI7hcDjB9A==",
         "dependencies": {
-          "Datadog.Trace": "3.48.0"
+          "Datadog.Trace": "3.49.0"
         }
       },
       "Destructurama.JsonNet": {
