@@ -39,7 +39,7 @@
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Common" Version="24.4.1" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.CrsTransform" Version="24.4.1" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Extracts" Version="24.4.1" />
-    <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Notifications" Version="24.4.1" />
+    <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Notifications" Version="25.3.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.NisCodeService.HardCoded" Version="7.0.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.Shaperon" Version="11.1.0" />
     <PackageVersion Include="Be.Vlaanderen.Basisregisters.Utilities.Rfc3339DateTimeOffset" Version="5.1.0" />
