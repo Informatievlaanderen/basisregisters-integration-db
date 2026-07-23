@@ -1078,7 +1078,7 @@
           "Be.Vlaanderen.Basisregisters.BlobStore": "[5.1.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Common": "[24.4.1, )",
           "Be.Vlaanderen.Basisregisters.GrAr.CrsTransform": "[24.4.1, )",
-          "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[24.4.1, )",
+          "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[25.3.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.4.1, )",
           "Dapper": "[2.1.79, )",
           "Datadog.Trace.Bundle": "[3.49.0, )",
@@ -1238,9 +1238,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Extracts": {
         "type": "CentralTransitive",
-        "requested": "[24.4.1, )",
-        "resolved": "24.4.1",
-        "contentHash": "ZSmCkQne+UijJo0GEIZqHL8Xx2UPl9KD/yErbbiRM5lIwiH/VHAUD/ALZ7nObrvdQFdNTYh5qxpVBviYfToSfQ==",
+        "requested": "[25.3.0, )",
+        "resolved": "25.3.0",
+        "contentHash": "npUzyn5U/iQJIhjb0LJfLwBvIq6PYLCl5BiEz3bri9e7qNE3jYAMrSv6dOGQH6jeswhocC44KNsiJmfD8JNdig==",
         "dependencies": {
           "Be.Vlaanderen.Basisregisters.Api": "27.0.0",
           "Be.Vlaanderen.Basisregisters.Shaperon": "11.1.0"
