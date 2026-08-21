@@ -20,20 +20,20 @@
       },
       "AWSSDK.DynamoDBv2": {
         "type": "Direct",
-        "requested": "[4.0.101.3, )",
-        "resolved": "4.0.101.3",
-        "contentHash": "JRTYN2xgYePc4Xc75RpypPYcMfs+5zabr94Apy/PWuvirpi6XFE93vwmyg9WzE3jteGE3uYQmKy9C7yPpuxeuw==",
+        "requested": "[4.0.103.4, )",
+        "resolved": "4.0.103.4",
+        "contentHash": "uXH67JhaTnD64vnX6DfNsRk/KSCdw9npdhsreWi33MZE0pdzr6KDj5m6iWsd+PDkI1tAjB7ht2S20rwdwhuppA==",
         "dependencies": {
-          "AWSSDK.Core": "[4.0.100.6, 5.0.0)"
+          "AWSSDK.Core": "[4.0.102, 5.0.0)"
         }
       },
       "AWSSDK.Extensions.NETCore.Setup": {
         "type": "Direct",
-        "requested": "[4.0.100.5, )",
-        "resolved": "4.0.100.5",
-        "contentHash": "+5yKoSO0h9uLlm52Hso1tG3C/e3/DTRTXQ/ZAqi6K8XUyHdZnULxjNzPe+zLOCj9VW5cCu4cWw2r1IF0VR5t4g==",
+        "requested": "[4.0.101, )",
+        "resolved": "4.0.101",
+        "contentHash": "K3vKEDtBM28OZAx6HAmnJeg0t5lSpGximBLLH+hQnI75W4FP2I25w5QMuqgvTxS5XXNSx9G4x66VRhLtoHERHw==",
         "dependencies": {
-          "AWSSDK.Core": "4.0.100.6",
+          "AWSSDK.Core": "4.0.102",
           "Microsoft.Extensions.Configuration.Abstractions": "2.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.0.0"
@@ -41,11 +41,11 @@
       },
       "AWSSDK.SimpleNotificationService": {
         "type": "Direct",
-        "requested": "[4.0.100.5, )",
-        "resolved": "4.0.100.5",
-        "contentHash": "zvMLVR+3mAWs3k8+wmrhpD7+7L4KKYPAM5P1moZqej/F8ER4UWqrlLrpyUJamugd+KRh74e8ILH9h9Izbmen0w==",
+        "requested": "[4.0.100.10, )",
+        "resolved": "4.0.100.10",
+        "contentHash": "j0vjkNmfS3HjDAElKocSTUb+rP8R3wQ6Pv/WZOtNIKrE+1se7u4OD/yR+ByfizogwkZDoIj0YExtcGJcj4KMKA==",
         "dependencies": {
-          "AWSSDK.Core": "[4.0.100.6, 5.0.0)"
+          "AWSSDK.Core": "[4.0.102, 5.0.0)"
         }
       },
       "Be.Vlaanderen.Basisregisters.Auth.AcmIdm": {
@@ -288,8 +288,8 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "4.0.100.6",
-        "contentHash": "n5B+GywQ+B6E92ULn75KzF1Mn9USXZocgAkZ6NTDsYgHQFfXldC2+CBZgpg/by2OuuJ/TvEeRwHDCE+0xRBsFw=="
+        "resolved": "4.0.102",
+        "contentHash": "sjkYreyNPlYTnAxdnqd3MBoeTNZHXOzV9lKULS5VAn+6MJIqu87aZLlm56KhDANOBXRxwDJIW668ZlsFhaB6Zw=="
       },
       "Be.Vlaanderen.Basisregisters.NisCodeService.Abstractions": {
         "type": "Transitive",
@@ -608,8 +608,8 @@
       "basisregisters.integration.common.notification": {
         "type": "Project",
         "dependencies": {
-          "AWSSDK.Extensions.NETCore.Setup": "[4.0.100.5, )",
-          "AWSSDK.SimpleNotificationService": "[4.0.100.5, )",
+          "AWSSDK.Extensions.NETCore.Setup": "[4.0.101, )",
+          "AWSSDK.SimpleNotificationService": "[4.0.100.10, )",
           "Microsoft.Extensions.Configuration": "[10.0.10, )",
           "Newtonsoft.Json": "[13.0.4, )"
         }
