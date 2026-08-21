@@ -522,7 +522,7 @@
       "basisregisters.integrationdb.suspiciouscases": {
         "type": "Project",
         "dependencies": {
-          "Autofac": "[9.3.1, )",
+          "Autofac": "[9.3.2, )",
           "Microsoft.EntityFrameworkCore.InMemory": "[10.0.10, )",
           "Microsoft.Extensions.Configuration": "[10.0.10, )",
           "Microsoft.Extensions.Configuration.EnvironmentVariables": "[10.0.10, )",
@@ -534,9 +534,9 @@
       },
       "Autofac": {
         "type": "CentralTransitive",
-        "requested": "[9.3.1, )",
-        "resolved": "9.3.1",
-        "contentHash": "WCDp+kYLr+r9enkRDt4PYRzj321P/c+8SICxHhWo9gkVNqE9EziiYyUMa7A0ce27SK6qgRWYCK0zp19J2ykVHw=="
+        "requested": "[9.3.2, )",
+        "resolved": "9.3.2",
+        "contentHash": "an3dLpmXWvb2aBP5qyA7GVEcXhoG+W/EtFRa3sBYzJdXSNDnB0aoeo4MgOQru0G5sjNDGYM3D3CnBzNFXEVOOA=="
       },
       "AWSSDK.DynamoDBv2": {
         "type": "CentralTransitive",
