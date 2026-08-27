@@ -206,7 +206,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 AddressStatus.Proposed => "proposed",
                 AddressStatus.Current => "current",
                 AddressStatus.Retired => "retired",
-                AddressStatus.Rejected => "retired",
+                AddressStatus.Rejected => "rejected",
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

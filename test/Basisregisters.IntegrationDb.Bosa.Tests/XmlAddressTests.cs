@@ -52,6 +52,23 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 ),
                 new Address(
                     AddressNamespace,
+                    200005,
+                    14602,
+                    "2230",
+                    Date,
+                    Date,
+                    188473.52,
+                    193390.22,
+                    31370,
+                    GeometryMethod.DerivedFromObject,
+                    GeometrySpecification.BuildingUnit,
+                    AddressStatus.Rejected,
+                    "59",
+                    "0102",
+                    true
+                ),
+                new Address(
+                    AddressNamespace,
                     30328681,
                     6345,
                     "2520",
@@ -189,6 +206,44 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:validFrom>2023-11-08T23:00:00Z</com:validFrom>
                     </com:addressStatus>
                     <com:boxNumber>0101</com:boxNumber>
+                    <com:houseNumber>59</com:houseNumber>
+                    <com:officiallyAssigned>true</com:officiallyAssigned>
+                    <com:hasStreetName>
+                      <com:namespace>https://data.vlaanderen.be/id/straatnaam/</com:namespace>
+                      <com:objectIdentifier>14602</com:objectIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
+                    </com:hasStreetName>
+                    <com:hasMunicipality>
+                      <com:namespace>https://data.vlaanderen.be/id/gemeente/</com:namespace>
+                      <com:objectIdentifier>13013</com:objectIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
+                    </com:hasMunicipality>
+                    <com:hasPostalInfo>
+                      <com:namespace>https://data.vlaanderen.be/id/postinfo/</com:namespace>
+                      <com:objectIdentifier>2230</com:objectIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
+                    </com:hasPostalInfo>
+                  </tns:address>
+                  <tns:address beginLifeSpanVersion="2023-11-08T23:00:00Z" endLifeSpanVersion="2023-11-08T23:00:00Z">
+                    <com:code>
+                      <com:namespace>https://data.vlaanderen.be/id/adres/</com:namespace>
+                      <com:objectIdentifier>200005</com:objectIdentifier>
+                      <com:versionIdentifier>2023-11-09T00:00:00+01:00</com:versionIdentifier>
+                    </com:code>
+                    <com:position>
+                      <com:pointGeometry>
+                        <com:point>
+                          <com:pos axisLabels="x y" srsDimension="2" srsName="http://www.opengis.net/def/crs/EPSG/0/31370" uomLabels="m m">188473.52 193390.22</com:pos>
+                        </com:point>
+                      </com:pointGeometry>
+                      <com:positionGeometryMethod>derivedFromObject</com:positionGeometryMethod>
+                      <com:positionSpecification>buildingUnit</com:positionSpecification>
+                    </com:position>
+                    <com:addressStatus>
+                      <com:status>rejected</com:status>
+                      <com:validFrom>2023-11-08T23:00:00Z</com:validFrom>
+                    </com:addressStatus>
+                    <com:boxNumber>0102</com:boxNumber>
                     <com:houseNumber>59</com:houseNumber>
                     <com:officiallyAssigned>true</com:officiallyAssigned>
                     <com:hasStreetName>

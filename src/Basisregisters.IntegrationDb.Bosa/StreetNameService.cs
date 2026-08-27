@@ -131,7 +131,7 @@ namespace Basisregisters.IntegrationDb.Bosa
                 StreetNameStatus.Proposed => "proposed",
                 StreetNameStatus.Current => "current",
                 StreetNameStatus.Retired => "retired",
-                StreetNameStatus.Rejected => "retired",
+                StreetNameStatus.Rejected => "rejected",
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

@@ -27,7 +27,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 new StreetName(
                     StreetNameNamespace,
                     27114,
-                    StreetNameStatus.Retired,
+                    StreetNameStatus.Rejected,
                     new DateTimeOffset(2015, 08, 31, 17, 19, 02, 397, TimeSpan.FromHours(2)),
                     new DateTimeOffset(2002, 08, 31, 17, 19, 02, 397, TimeSpan.FromHours(2)),
                     "NIjverheidslaan",
@@ -134,7 +134,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                       <com:spelling>NIjverheidslaan</com:spelling>
                     </com:name>
                     <com:streetNameStatus>
-                      <com:status>retired</com:status>
+                      <com:status>rejected</com:status>
                       <com:validFrom>2015-08-31T15:19:02Z</com:validFrom>
                       <com:validTo>2015-08-31T15:19:02Z</com:validTo>
                     </com:streetNameStatus>
