@@ -53,9 +53,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Common": {
         "type": "Direct",
-        "requested": "[24.4.1, )",
-        "resolved": "24.4.1",
-        "contentHash": "Dc0hALU1OcxqmJZy6Dr7xE4DoWkpIp/6M2aa9aMR6jQbyvoJdJHRjxyg+dhe6tKR7mlmibVD2FzwmTpcJF7m2g==",
+        "requested": "[26.1.0, )",
+        "resolved": "26.1.0",
+        "contentHash": "ewY+/sRBnfCBFTZuL9u1uRiz/Uy5T15GFQU619I39X7VleQDe/Q1buKaEO8LRYzHUKM6rsEmDdsB48mIPmKX8w==",
         "dependencies": {
           "Be.Vlaanderen.Basisregisters.AggregateSource": "11.0.0",
           "Be.Vlaanderen.Basisregisters.CommandHandling": "11.0.0",
