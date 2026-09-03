@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.1.0...v4.2.0) (2026-09-03)
+
+
+### Features
+
+* **bosa:** add rejected status GAWR-7674 ([29bdb0f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/29bdb0f1a4ce51f796955ddf8918ded248cc0a05))
+
 # [4.1.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.0.0...v4.1.0) (2026-06-25)
 
 
