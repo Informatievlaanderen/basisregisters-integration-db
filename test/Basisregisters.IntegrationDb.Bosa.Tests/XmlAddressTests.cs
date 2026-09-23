@@ -405,8 +405,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
             xml.Should().Contain($"srsName=\"http://www.opengis.net/def/crs/EPSG/0/{SystemReferenceId.SridLambert2008}\"");
             xml.Should().Contain(expectedCoords);
             xml.Should().NotContain($"srsName=\"http://www.opengis.net/def/crs/EPSG/0/{SystemReferenceId.SridLambert72}\"");
-
-            service.GetZipFileName().Should().Contain("L08");
         }
     }
 }

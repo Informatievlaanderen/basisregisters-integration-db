@@ -5,8 +5,6 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
     using System.Text;
     using System.Threading.Tasks;
     using FluentAssertions;
-    using Infrastructure.Options;
-    using Microsoft.Extensions.Options;
     using Model.Database;
     using Moq;
     using NodaTime;
@@ -41,14 +39,7 @@ namespace Basisregisters.IntegrationDb.Bosa.Tests
                 .Returns(_given);
 
             var clock = new FakeClock(NodaConstants.UnixEpoch);
-            var downloadOptions = Options.Create(new FullDownloadOptions
-            {
-                UploadBucket = string.Empty,
-                FileNameFormat = string.Empty,
-                FtpFolder = string.Empty,
-                UseLambert2008 = false
-            });
-            var service = new PostalInfoService(clock, repo.Object, downloadOptions);
+            var service = new PostalInfoService(clock, repo.Object);
 
             await using var outputStream = new MemoryStream();
             service.CreateXml(outputStream);

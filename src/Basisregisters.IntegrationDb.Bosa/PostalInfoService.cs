@@ -4,18 +4,15 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Infrastructure.Options;
-    using Microsoft.Extensions.Options;
     using Model.Xml;
     using NodaTime;
     using Repositories;
 
     public class PostalInfoService(
         IClock clock,
-        IPostalInfoRepository repo,
-        IOptions<FullDownloadOptions> options) : BaseRegistryService, IRegistryService
+        IPostalInfoRepository repo) : BaseRegistryService, IRegistryService
     {
-        private string GetFileName() => $"FlandersPostalInfo{DateTimeOffset.Now:yyyyMMdd}L{(options.Value.UseLambert2008 ? "08" : "72")}";
+        private string GetFileName() => $"FlandersPostalInfo{DateTimeOffset.Now:yyyyMMdd}";
 
         public string GetXmlFileName() => $"{GetFileName()}.xml";
         public string GetZipFileName() => $"{GetFileName()}.zip";

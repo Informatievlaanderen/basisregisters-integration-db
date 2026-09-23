@@ -9,15 +9,12 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Infrastructure.Options;
-    using Microsoft.Extensions.Options;
 
     public class StreetNameService(
         IClock clock,
-        IStreetNameRepository repo,
-        IOptions<FullDownloadOptions> options) : BaseRegistryService, IRegistryService
+        IStreetNameRepository repo) : BaseRegistryService, IRegistryService
     {
-        private string GetFileName() => $"FlandersStreetName{DateTimeOffset.Now:yyyyMMdd}L{(options.Value.UseLambert2008 ? "08" : "72")}";
+        private string GetFileName() => $"FlandersStreetName{DateTimeOffset.Now:yyyyMMdd}";
 
         public string GetXmlFileName() => $"{GetFileName()}.xml";
         public string GetZipFileName() => $"{GetFileName()}.zip";

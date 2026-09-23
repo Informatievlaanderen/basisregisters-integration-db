@@ -5,8 +5,6 @@ namespace Basisregisters.IntegrationDb.Bosa
     using System.IO;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Infrastructure.Options;
-    using Microsoft.Extensions.Options;
     using Model.Database;
     using Model.Xml;
     using NodaTime;
@@ -14,10 +12,9 @@ namespace Basisregisters.IntegrationDb.Bosa
 
     public class MunicipalityService(
         IClock clock,
-        IMunicipalityRepository repo,
-        IOptions<FullDownloadOptions> options) : BaseRegistryService, IRegistryService
+        IMunicipalityRepository repo) : BaseRegistryService, IRegistryService
     {
-        private string GetFileName() => $"FlandersMunicipality{DateTimeOffset.Now:yyyyMMdd}L{(options.Value.UseLambert2008 ? "08" : "72")}";
+        private string GetFileName() => $"FlandersMunicipality{DateTimeOffset.Now:yyyyMMdd}";
 
         public string GetXmlFileName() => $"{GetFileName()}.xml";
         public string GetZipFileName() => $"{GetFileName()}.zip";

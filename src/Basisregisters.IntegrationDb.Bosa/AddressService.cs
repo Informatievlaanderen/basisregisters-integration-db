@@ -28,8 +28,7 @@ namespace Basisregisters.IntegrationDb.Bosa
         ILoggerFactory loggerFactory) : BaseRegistryService, IRegistryService
     {
         private bool UseLambert2008 => options.Value.UseLambert2008;
-        private string GetFileName() =>
-            $"FlandersAddress{DateTimeOffset.Now:yyyyMMdd}L{(UseLambert2008 ? "08" : "72")}";
+        private string GetFileName() => $"FlandersAddress{DateTimeOffset.Now:yyyyMMdd}";
 
         public string GetXmlFileName() => $"{GetFileName()}.xml";
         public string GetZipFileName() => $"{GetFileName()}.zip";
