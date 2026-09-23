@@ -1,3 +1,5 @@
+## [4.2.1](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.0...v4.2.1) (2026-09-23)
+
 # [4.2.0](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.1.0...v4.2.0) (2026-09-03)
 
 
