@@ -1079,7 +1079,7 @@
           "Be.Vlaanderen.Basisregisters.GrAr.Common": "[24.4.1, )",
           "Be.Vlaanderen.Basisregisters.GrAr.CrsTransform": "[24.4.1, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Extracts": "[24.4.1, )",
-          "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[24.4.1, )",
+          "Be.Vlaanderen.Basisregisters.GrAr.Notifications": "[26.2.0, )",
           "Dapper": "[2.1.79, )",
           "Datadog.Trace.Bundle": "[3.50.0, )",
           "Destructurama.JsonNet": "[4.0.2, )",
@@ -1248,9 +1248,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Notifications": {
         "type": "CentralTransitive",
-        "requested": "[24.4.1, )",
-        "resolved": "24.4.1",
-        "contentHash": "Fvjz05TA26kP/Ie2+18xMtuHN5j4Y8XDfwEzeAbVI9iFHqJJTBJFcGtJKBOxo5JkK6cmMBPPS0A/sTD6PhEKDg==",
+        "requested": "[26.2.0, )",
+        "resolved": "26.2.0",
+        "contentHash": "nKM6WRhdFiXb5lZVKCjSuGsp0e3mow3ofXSBCM3qtJUL/acSe/ZzsIMvDSSJIJm/nMDHmMpNIDW2hJyUgrs23w==",
         "dependencies": {
           "AWSSDK.SimpleNotificationService": "4.0.2.36"
         }
