@@ -21,7 +21,7 @@ public sealed class AddressFeedIntegrityConfiguration : IEntityTypeConfiguration
         builder
             .ToView(ViewName, DataIntegrityContext.Schema)
             .HasNoKey()
-            .ToSqlQuery(@$"SELECT persistent_local_id FROM {DataIntegrityContext.Schema}.{ViewName};");
+            .ToSqlQuery(@$"SELECT persistent_local_id FROM {DataIntegrityContext.Schema}.{ViewName}");
 
         builder.Property(x => x.PersistentLocalId).HasColumnName("persistent_local_id");
     }

@@ -21,7 +21,7 @@ public sealed class MunicipalityFeedIntegrityConfiguration : IEntityTypeConfigur
         builder
             .ToView(ViewName, DataIntegrityContext.Schema)
             .HasNoKey()
-            .ToSqlQuery(@$"SELECT nis_code FROM {DataIntegrityContext.Schema}.municipality_feed_latest_integrity;");
+            .ToSqlQuery(@$"SELECT nis_code FROM {DataIntegrityContext.Schema}.municipality_feed_latest_integrity");
 
         builder.Property(x => x.NisCode).HasColumnName("nis_code");
     }

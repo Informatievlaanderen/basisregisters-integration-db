@@ -21,7 +21,7 @@ public sealed class PostalNameFeedIntegrityConfiguration : IEntityTypeConfigurat
         builder
             .ToView(ViewName, DataIntegrityContext.Schema)
             .HasNoKey()
-            .ToSqlQuery(@$"SELECT postal_code FROM {DataIntegrityContext.Schema}.{ViewName};");
+            .ToSqlQuery(@$"SELECT postal_code FROM {DataIntegrityContext.Schema}.{ViewName}");
 
         builder.Property(x => x.PostalCode).HasColumnName("postal_code");
     }
