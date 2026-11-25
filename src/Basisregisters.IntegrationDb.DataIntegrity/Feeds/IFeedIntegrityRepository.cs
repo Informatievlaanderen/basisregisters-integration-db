@@ -8,5 +8,5 @@ public interface IFeedIntegrityRepository
 {
     string RegisterName { get; }
     Task RefreshViewAsync(CancellationToken cancellationToken);
-    Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken);
+    Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken);
 }

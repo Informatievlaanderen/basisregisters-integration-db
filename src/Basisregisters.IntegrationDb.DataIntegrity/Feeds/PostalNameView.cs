@@ -45,7 +45,7 @@ public sealed class PostalNameViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -103,7 +103,7 @@ public sealed class PostalNameViewRepository : IFeedIntegrityRepository
             ON latest.postal_code = feed.postal_code
         WHERE latest.hash IS DISTINCT FROM feed.hash
         ORDER BY COALESCE(latest.postal_code, feed.postal_code)
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS postal_name_feed_latest_integrity_postal_code_idx
             ON {DataIntegrityContext.Schema}.{PostalNameFeedIntegrityConfiguration.ViewName} (postal_code);

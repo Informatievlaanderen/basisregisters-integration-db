@@ -46,7 +46,7 @@ public sealed class AddressViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -55,44 +55,45 @@ public sealed class AddressViewRepository : IFeedIntegrityRepository
             .ToListAsync(cancellationToken);
     }
 
-    public static string SelectAddressLatestSql => @"
+    public static string SelectAddressLatestSql => $@"
         SELECT
 	        persistent_local_id,
-	        MD5(CONCAT(
-	            persistent_local_id,
-	            postal_code,
-	            street_name_persistent_local_id,
-	            status,
-	            house_number,
-	            box_number,
-	            position_method,
-	            position_specification,
-	            CASE WHEN officially_assigned IS NULL THEN False ELSE officially_assigned END,
-	            removed,
-	            version_as_string)) as hash,
-	        geometry
+	        {FeedSql.Hash(
+	            "persistent_local_id",
+	            "postal_code",
+	            "street_name_persistent_local_id",
+	            "status",
+	            "house_number",
+	            "box_number",
+	            "position_method",
+	            "position_specification",
+	            "COALESCE(officially_assigned, False)",
+	            "removed",
+	            "version_as_string")} as hash,
+	        geometry,
+            removed as is_removed
         FROM integration_address.address_latest_items_v2
 ";
 
-    public static string SelectAddressFeedSql => @"
+    public static string SelectAddressFeedSql => $@"
         SELECT
             persistent_local_id,
-            MD5(CONCAT(
-                persistent_local_id,
-                postal_code,
-                street_name_persistent_local_id,
-                CASE WHEN status = 'Proposed' THEN 1
+            {FeedSql.Hash(
+                "persistent_local_id",
+                "postal_code",
+                "street_name_persistent_local_id",
+                @"CASE WHEN status = 'Proposed' THEN 1
                     WHEN status = 'Current' THEN 2
                     WHEN status = 'Retired' THEN 3
                     WHEN status = 'Rejected' THEN 4
-                END,
-                house_number,
-                box_number,
-                CASE WHEN position_method = 'AppointedByAdministrator' THEN 1
+                END",
+                "house_number",
+                "box_number",
+                @"CASE WHEN position_method = 'AppointedByAdministrator' THEN 1
                     WHEN position_method = 'DerivedFromObject' THEN 2
                     WHEN position_method = 'Interpolated' THEN 3
-                END,
-                CASE WHEN position_specification = 'Municipality' THEN 1
+                END",
+                @"CASE WHEN position_specification = 'Municipality' THEN 1
                     WHEN position_specification = 'Street' THEN 2
                     WHEN position_specification = 'Parcel' THEN 3
                     WHEN position_specification = 'Lot' THEN 4
@@ -102,10 +103,10 @@ public sealed class AddressViewRepository : IFeedIntegrityRepository
                     WHEN position_specification = 'BuildingUnit' THEN 8
                     WHEN position_specification = 'Entry' THEN 9
                     WHEN position_specification = 'RoadSegment' THEN 11
-                END,
-                CASE WHEN officially_assigned IS NULL THEN False ELSE officially_assigned END,
-                is_removed,
-                version_id_as_string)) as hash,
+                END",
+                "COALESCE(officially_assigned, False)",
+                "is_removed",
+                "version_id_as_string")} as hash,
             geometry
         FROM changefeed.addresses
 ";
@@ -129,15 +130,15 @@ public sealed class AddressViewRepository : IFeedIntegrityRepository
                 feed.hash as feed_hash,
                 latest.geometry as latest_geometry,
                 CASE
-                    WHEN latest.geometry IS NULL OR feed.geometry IS NULL THEN NULL
-                    WHEN ST_SRID(feed.geometry) = ST_SRID(latest.geometry) THEN feed.geometry
+                    WHEN feed.geometry IS NULL THEN NULL
+                    WHEN latest.geometry IS NULL OR ST_SRID(feed.geometry) = ST_SRID(latest.geometry) THEN feed.geometry
                     ELSE ST_Transform(feed.geometry, ST_SRID(latest.geometry))
                 END as feed_geometry,
                 latest.hash IS DISTINCT FROM feed.hash as hash_mismatch
             FROM latest
             FULL OUTER JOIN feed
                 ON latest.persistent_local_id = feed.persistent_local_id
-            WHERE feed.hash IS NOT NULL
+            WHERE {FeedSql.SkipRemovedMissingFromFeed}
         )
         SELECT
             persistent_local_id,
@@ -161,7 +162,7 @@ public sealed class AddressViewRepository : IFeedIntegrityRepository
                 ELSE NOT ST_DWithin(latest_geometry, feed_geometry, {GeometryToleranceInMeters})
             END
         ORDER BY persistent_local_id
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS address_feed_latest_integrity_persistent_local_id_idx
             ON {DataIntegrityContext.Schema}.{AddressFeedIntegrityConfiguration.ViewName} (persistent_local_id);

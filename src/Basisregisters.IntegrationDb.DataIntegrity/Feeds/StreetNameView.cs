@@ -45,7 +45,7 @@ public sealed class StreetNameViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -54,48 +54,47 @@ public sealed class StreetNameViewRepository : IFeedIntegrityRepository
             .ToListAsync(cancellationToken);
     }
 
-    public static string SelectStreetNameLatestSql => @"
+    private static readonly string[] NameColumns =
+    [
+        "name_dutch",
+        "name_french",
+        "name_german",
+        "name_english",
+        "homonym_addition_dutch",
+        "homonym_addition_french",
+        "homonym_addition_german",
+        "homonym_addition_english",
+    ];
+
+    public static string SelectStreetNameLatestSql => $@"
         SELECT
 	        persistent_local_id,
-	        MD5(CONCAT(
-	        persistent_local_id,
-	        status,
-	        nis_code,
-	        CASE WHEN name_dutch is null THEN '' ELSE name_dutch END,
-	        CASE WHEN name_french is null THEN '' ELSE name_french END,
-	        CASE WHEN name_german is null THEN '' ELSE name_german END,
-	        CASE WHEN name_english is null THEN '' ELSE name_english END,
-	        CASE WHEN homonym_addition_dutch is null THEN '' ELSE homonym_addition_dutch END,
-	        CASE WHEN homonym_addition_french is null THEN '' ELSE homonym_addition_french END,
-	        CASE WHEN homonym_addition_german is null THEN '' ELSE homonym_addition_german END,
-	        CASE WHEN homonym_addition_english is null THEN '' ELSE homonym_addition_english END,
-	        is_removed,
-	        version_as_string)) as hash
+	        {FeedSql.Hash([
+	            "persistent_local_id",
+	            "status",
+	            "nis_code",
+	            ..NameColumns,
+	            "is_removed",
+	            "version_as_string"])} as hash,
+            is_removed
         FROM integration_streetname.streetname_latest_items
 ";
 
-    public static string SelectStreetNameFeedSql => @"
+    public static string SelectStreetNameFeedSql => $@"
         SELECT
 	        persistent_local_id,
-	        MD5(CONCAT(
-	        persistent_local_id,
-	        CASE WHEN status = 'Proposed' THEN 0
-		         WHEN status = 'Current' THEN 1
-	             WHEN status = 'Retired' THEN 2
-	             WHEN status = 'Rejected' THEN 3
-	        ELSE -1
-	        END,
-	        nis_code,
-	        CASE WHEN name_dutch is null THEN '' ELSE name_dutch END,
-	        CASE WHEN name_french is null THEN '' ELSE name_french END,
-	        CASE WHEN name_german is null THEN '' ELSE name_german END,
-	        CASE WHEN name_english is null THEN '' ELSE name_english END,
-	        CASE WHEN homonym_addition_dutch is null THEN '' ELSE homonym_addition_dutch END,
-	        CASE WHEN homonym_addition_french is null THEN '' ELSE homonym_addition_french END,
-	        CASE WHEN homonym_addition_german is null THEN '' ELSE homonym_addition_german END,
-	        CASE WHEN homonym_addition_english is null THEN '' ELSE homonym_addition_english END,
-	        is_removed,
-	        version_id_as_string)) as hash
+	        {FeedSql.Hash([
+	            "persistent_local_id",
+	            @"CASE WHEN status = 'Proposed' THEN 0
+	                 WHEN status = 'Current' THEN 1
+	                 WHEN status = 'Retired' THEN 2
+	                 WHEN status = 'Rejected' THEN 3
+	            ELSE -1
+	            END",
+	            "nis_code",
+	            ..NameColumns,
+	            "is_removed",
+	            "version_id_as_string"])} as hash
         FROM changefeed.streetnames
 ";
 
@@ -118,10 +117,10 @@ public sealed class StreetNameViewRepository : IFeedIntegrityRepository
         FROM latest
         FULL OUTER JOIN feed
             ON latest.persistent_local_id = feed.persistent_local_id
-        WHERE feed.hash IS NOT NULL
-            AND latest.hash IS DISTINCT FROM feed.hash
+        WHERE latest.hash IS DISTINCT FROM feed.hash
+            AND {FeedSql.SkipRemovedMissingFromFeed}
         ORDER BY COALESCE(latest.persistent_local_id, feed.persistent_local_id)
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS streetname_feed_latest_integrity_persistent_local_id_idx
             ON {DataIntegrityContext.Schema}.{StreetNameFeedIntegrityConfiguration.ViewName} (persistent_local_id);
