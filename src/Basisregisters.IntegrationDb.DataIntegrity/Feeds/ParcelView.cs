@@ -45,7 +45,7 @@ public sealed class ParcelViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -54,21 +54,25 @@ public sealed class ParcelViewRepository : IFeedIntegrityRepository
             .ToListAsync(cancellationToken);
     }
 
-    public static string SelectParcelLatestSql => @"
+    // is_removed is not compared: changefeed.parcels has no is_removed column (see basisregisters-feed-consumers).
+    public static string SelectParcelLatestSql => $@"
         SELECT
             capakey as persistent_local_id,
-            MD5(CONCAT(capakey,
-                status,
-                version_as_string)) as hash
+            {FeedSql.Hash(
+                "capakey",
+                "status",
+                "version_as_string")} as hash,
+            is_removed
 	    FROM integration_parcel.parcel_latest_items_v2
 ";
 
-    public static string SelectParcelSql => @"
+    public static string SelectParcelSql => $@"
         SELECT
             vbr_capakey as persistent_local_id,
-            MD5(CONCAT(vbr_capakey,
-                status,
-                version_id_as_string)) as hash
+            {FeedSql.Hash(
+                "vbr_capakey",
+                "status",
+                "version_id_as_string")} as hash
 	    FROM changefeed.parcels
 ";
 
@@ -91,10 +95,10 @@ public sealed class ParcelViewRepository : IFeedIntegrityRepository
         FROM latest
         FULL OUTER JOIN feed
             ON latest.persistent_local_id = feed.persistent_local_id
-        WHERE feed.hash IS NOT NULL
-            AND latest.hash IS DISTINCT FROM feed.hash
+        WHERE latest.hash IS DISTINCT FROM feed.hash
+            AND {FeedSql.SkipRemovedMissingFromFeed}
         ORDER BY COALESCE(latest.persistent_local_id, feed.persistent_local_id)
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS parcel_feed_latest_integrity_persistent_local_id_idx
             ON {DataIntegrityContext.Schema}.{ParcelFeedIntegrityConfiguration.ViewName} (persistent_local_id);

@@ -46,7 +46,7 @@ public sealed class BuildingUnitViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -55,33 +55,35 @@ public sealed class BuildingUnitViewRepository : IFeedIntegrityRepository
             .ToListAsync(cancellationToken);
     }
 
-    public static string SelectBuildingUnitLatestSql => @"
+    public static string SelectBuildingUnitLatestSql => $@"
         SELECT
             building_unit_persistent_local_id as persistent_local_id,
-            MD5(CONCAT(
-	            building_unit_persistent_local_id,
-	            building_persistent_local_id,
-	            status,
-	            ""function"",
-	            geometry_method,
-	            has_deviation,
-	            is_removed,
-	            version_as_string)) as hash,
-            geometry
+            {FeedSql.Hash(
+	            "building_unit_persistent_local_id",
+	            "building_persistent_local_id",
+	            "status",
+	            "\"function\"",
+	            "geometry_method",
+	            "has_deviation",
+	            "is_removed",
+	            "version_as_string")} as hash,
+            geometry,
+            is_removed
         FROM integration_building.building_unit_latest_items
 ";
 
-    public static string SelectBuildingUnitFeedSql => @"
+    public static string SelectBuildingUnitFeedSql => $@"
         SELECT
             persistent_local_id,
-                MD5(CONCAT(persistent_local_id,
-                building_persistent_local_id,
-                status,
-                ""function"",
-                geometry_method,
-                has_deviation,
-                is_removed,
-                version_id_as_string)) as hash,
+            {FeedSql.Hash(
+                "persistent_local_id",
+                "building_persistent_local_id",
+                "status",
+                "\"function\"",
+                "geometry_method",
+                "has_deviation",
+                "is_removed",
+                "version_id_as_string")} as hash,
             ""position"" as geometry
         FROM changefeed.buildingunits
 ";
@@ -105,15 +107,15 @@ public sealed class BuildingUnitViewRepository : IFeedIntegrityRepository
                 feed.hash as feed_hash,
                 latest.geometry as latest_geometry,
                 CASE
-                    WHEN latest.geometry IS NULL OR feed.geometry IS NULL THEN NULL
-                    WHEN ST_SRID(feed.geometry) = ST_SRID(latest.geometry) THEN feed.geometry
+                    WHEN feed.geometry IS NULL THEN NULL
+                    WHEN latest.geometry IS NULL OR ST_SRID(feed.geometry) = ST_SRID(latest.geometry) THEN feed.geometry
                     ELSE ST_Transform(feed.geometry, ST_SRID(latest.geometry))
                 END as feed_geometry,
                 latest.hash IS DISTINCT FROM feed.hash as hash_mismatch
             FROM latest
             FULL OUTER JOIN feed
                 ON latest.persistent_local_id = feed.persistent_local_id
-            WHERE feed.hash IS NOT NULL
+            WHERE {FeedSql.SkipRemovedMissingFromFeed}
         )
         SELECT
             persistent_local_id,
@@ -137,7 +139,7 @@ public sealed class BuildingUnitViewRepository : IFeedIntegrityRepository
                 ELSE NOT ST_DWithin(latest_geometry, feed_geometry, {GeometryToleranceInMeters})
             END
         ORDER BY persistent_local_id
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS building_unit_feed_latest_integrity_persistent_local_id_idx
             ON {DataIntegrityContext.Schema}.{BuildingUnitFeedIntegrityConfiguration.ViewName} (persistent_local_id);

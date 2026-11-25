@@ -45,7 +45,7 @@ public sealed class PostalViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -54,27 +54,28 @@ public sealed class PostalViewRepository : IFeedIntegrityRepository
             .ToListAsync(cancellationToken);
     }
 
-    public static string SelectPostalLatestSql => @"
+    // The "T" must be quoted: unquoted, 'DDTH' is parsed as day-of-month with ordinal suffix and the hour is lost.
+    private const string VersionFormat = @"'YYYY-MM-DD""T""HH24:MI:SS'";
+
+    public static string SelectPostalLatestSql => $@"
         SELECT
             postal_code,
-            MD5(
-	            CONCAT(
-	            postal_code,
-	            nis_code,
-	            is_retired,
-	            to_char(version_timestamp, 'YYYY-MM-DDTHH24:MI:SS'))) as hash
+            {FeedSql.Hash(
+	            "postal_code",
+	            "nis_code",
+	            "is_retired",
+	            $"to_char(version_timestamp, {VersionFormat})")} as hash
         FROM integration_postal.postal_latest_items
 ";
 
-    public static string SelectPostalFeedSql => @"
+    public static string SelectPostalFeedSql => $@"
         SELECT
             postal_code,
-            MD5(
-	            CONCAT(
-	            postal_code,
-	            nis_code,
-	            CASE WHEN status = 'Realized' THEN False ELSE True END,
-        	    to_char(version_id, 'YYYY-MM-DDTHH24:MI:SS'))) as hash
+            {FeedSql.Hash(
+	            "postal_code",
+	            "nis_code",
+	            "CASE WHEN status = 'Realized' THEN False ELSE True END",
+	            $"to_char(version_id, {VersionFormat})")} as hash
 	    FROM changefeed.postal_information
 	    WHERE is_removed = false
 ";
@@ -100,7 +101,7 @@ public sealed class PostalViewRepository : IFeedIntegrityRepository
             ON latest.postal_code = feed.postal_code
         WHERE latest.hash IS DISTINCT FROM feed.hash
         ORDER BY COALESCE(latest.postal_code, feed.postal_code)
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS postal_feed_latest_integrity_postal_code_idx
             ON {DataIntegrityContext.Schema}.{PostalFeedIntegrityConfiguration.ViewName} (postal_code);

@@ -45,7 +45,7 @@ public sealed class ParcelAddressViewRepository : IFeedIntegrityRepository
         await context.Database.ExecuteSqlRawAsync(RefreshSql, cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<string>> GetIntegrityErrorsAsync(CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -107,7 +107,10 @@ public sealed class ParcelAddressViewRepository : IFeedIntegrityRepository
             FROM latest
             FULL OUTER JOIN feed
                 ON latest.persistent_local_id = feed.persistent_local_id
-            WHERE feed.hash IS NOT NULL
+            WHERE NOT (feed.hash IS NULL AND EXISTS (
+                SELECT 1 FROM integration_parcel.parcel_latest_items_v2 removed
+                WHERE removed.capakey = latest.persistent_local_id
+                    AND removed.is_removed))
         )
         SELECT
             persistent_local_id,
@@ -117,7 +120,7 @@ public sealed class ParcelAddressViewRepository : IFeedIntegrityRepository
         FROM comparison
         WHERE hash_mismatch
         ORDER BY persistent_local_id
-        LIMIT 1000;
+        LIMIT {FeedSql.MaxRows};
 
         CREATE UNIQUE INDEX IF NOT EXISTS parcel_addresses_feed_latest_integrity_persistent_local_id_idx
             ON {DataIntegrityContext.Schema}.{ParcelAddressFeedIntegrityConfiguration.ViewName} (persistent_local_id);

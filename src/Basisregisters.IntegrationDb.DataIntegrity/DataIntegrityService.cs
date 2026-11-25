@@ -64,13 +64,15 @@
             foreach (var feedIntegrityRepository in _feedIntegrityRepositories)
             {
                 await feedIntegrityRepository.RefreshViewAsync(stoppingToken);
-                var feedErrors = (await feedIntegrityRepository.GetIntegrityErrorsAsync(stoppingToken)).ToList();
-                if(feedErrors.Any())
+                var feedErrors = await feedIntegrityRepository.GetIntegrityErrorsAsync(stoppingToken);
+                if (feedErrors.Any())
                 {
                     feedErrorsFound = true;
+                    var count = feedErrors.Count >= FeedSql.MaxRows ? $"{FeedSql.MaxRows}+" : feedErrors.Count.ToString();
                     await _notificationService.PublishToTopicAsync(new NotificationMessage(
                         "DataIntegrity",
-                        $"Feed Integrity Errors ({feedIntegrityRepository.RegisterName}): " + string.Join(", ", feedErrors.Take(10)),
+                        $"Feed Integrity Errors ({feedIntegrityRepository.RegisterName}): {count} - "
+                        + string.Join(", ", feedErrors.Take(10)),
                         "Data Integrity",
                         NotificationSeverity.Danger));
                 }
