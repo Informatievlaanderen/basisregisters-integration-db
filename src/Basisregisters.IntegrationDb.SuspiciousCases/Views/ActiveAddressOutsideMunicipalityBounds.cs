@@ -45,7 +45,13 @@
             FROM {SchemaLatestItems.Address} a
             JOIN {SchemaLatestItems.StreetName} s ON s.persistent_local_id = a.street_name_persistent_local_id
             JOIN {SchemaLatestItems.Municipality} m ON s.municipality_id = m.municipality_id
-            LEFT JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code AND ST_Within(a.geometry, mg.geometry)
+            LEFT JOIN {SchemaLatestItems.MunicipalityGeometries} mg ON m.nis_code = mg.nis_code
+                -- Addresses can be in Lambert72 or Lambert08: compare against the municipality geometry in the same SRID.
+                AND CASE
+                    WHEN ST_SRID(a.geometry) = ST_SRID(mg.geometry_lambert08) THEN ST_Within(a.geometry, mg.geometry_lambert08)
+                    WHEN ST_SRID(a.geometry) = ST_SRID(mg.geometry) THEN ST_Within(a.geometry, mg.geometry)
+                    ELSE ST_Within(ST_Transform(a.geometry, ST_SRID(mg.geometry)), mg.geometry)
+                END
             WHERE
                 a.removed = false
                 AND a.status in (1, 2)
