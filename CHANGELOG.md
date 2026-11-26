@@ -1,3 +1,10 @@
+## [4.2.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.2...v4.2.3) (2026-11-26)
+
+
+### Bug Fixes
+
+* **integrity:** correct views ([fc19b35](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/fc19b35ded259c5f683864107b04046bce63814e))
+
 ## [4.2.2](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.1...v4.2.2) (2026-11-23)
 
 
