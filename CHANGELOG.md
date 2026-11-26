@@ -1,3 +1,10 @@
+## [4.2.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.3...v4.2.4) (2026-11-26)
+
+
+### Bug Fixes
+
+* **suspicious:** correct lambert08 ([96b41e1](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/96b41e12e4abe9da9651d7d6d627699eb8396f76))
+
 ## [4.2.3](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.2...v4.2.3) (2026-11-26)
 
 
