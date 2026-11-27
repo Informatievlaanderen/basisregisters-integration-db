@@ -157,11 +157,12 @@ namespace Basisregisters.IntegrationDb.Api.Infrastructure
                     }
                 });
 
+            // Don't resolve from serviceProvider here: it's the Configure scope, which is disposed by the time ApplicationStarted fires.
             appLifetime.ApplicationStarted.Register(() =>
             {
                 MigrationsHelper.Run(
                     _configuration.GetConnectionString("Integration")!,
-                    serviceProvider.GetRequiredService<ILoggerFactory>());
+                    loggerFactory);
             });
 
             StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag, loggerFactory).GetAwaiter().GetResult();
