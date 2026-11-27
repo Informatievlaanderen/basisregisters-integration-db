@@ -85,9 +85,9 @@
       },
       "Be.Vlaanderen.Basisregisters.GrAr.Notifications": {
         "type": "Direct",
-        "requested": "[24.4.1, )",
-        "resolved": "24.4.1",
-        "contentHash": "Fvjz05TA26kP/Ie2+18xMtuHN5j4Y8XDfwEzeAbVI9iFHqJJTBJFcGtJKBOxo5JkK6cmMBPPS0A/sTD6PhEKDg==",
+        "requested": "[26.2.0, )",
+        "resolved": "26.2.0",
+        "contentHash": "nKM6WRhdFiXb5lZVKCjSuGsp0e3mow3ofXSBCM3qtJUL/acSe/ZzsIMvDSSJIJm/nMDHmMpNIDW2hJyUgrs23w==",
         "dependencies": {
           "AWSSDK.SimpleNotificationService": "4.0.2.36"
         }
