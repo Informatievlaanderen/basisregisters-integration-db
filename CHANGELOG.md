@@ -1,3 +1,10 @@
+## [4.2.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.4...v4.2.5) (2026-11-27)
+
+
+### Bug Fixes
+
+* **api:** startup migration fix dotnet upgrade ([699ccf5](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/699ccf5204b9fa3b3c4b975b911977bfafcf9d90))
+
 ## [4.2.4](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.3...v4.2.4) (2026-11-26)
 
 
