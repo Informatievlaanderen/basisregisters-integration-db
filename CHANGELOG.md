@@ -1,3 +1,10 @@
+## [4.2.6](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.5...v4.2.6) (2026-11-27)
+
+
+### Bug Fixes
+
+* **api:** correct address position takes into account srid ([33c4e9f](https://github.com/informatievlaanderen/basisregisters-integration-db/commit/33c4e9f1332592154579ef078f81cb7afc76de32))
+
 ## [4.2.5](https://github.com/informatievlaanderen/basisregisters-integration-db/compare/v4.2.4...v4.2.5) (2026-11-27)
 
 
