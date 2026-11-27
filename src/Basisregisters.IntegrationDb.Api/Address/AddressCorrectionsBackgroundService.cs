@@ -66,7 +66,7 @@ public sealed class AddressCorrectionBackgroundService : BackgroundService
         foreach (var address in addresses)
         {
             var geometry = new WKTReader().Read(address.Geometry);
-            var geometryAsGml = CorrectDerivedFromBuildingUnitPositionsRequestHandler.GetGml(geometry);
+            var geometryAsGml = CorrectDerivedFromBuildingUnitPositionsRequestHandler.GetGml(geometry, address.Srid);
 
             var apiRequest = new CorrectAddressPositionRequest
             {

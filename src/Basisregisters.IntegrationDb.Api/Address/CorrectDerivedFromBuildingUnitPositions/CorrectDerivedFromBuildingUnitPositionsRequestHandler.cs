@@ -72,7 +72,7 @@
             foreach (var address in addressesToProcess)
             {
                 var geometry = new WKTReader().Read(address.Geometry);
-                var geometryAsGml = GetGml(geometry);
+                var geometryAsGml = GetGml(geometry, address.Srid);
 
                 var apiRequest = new CorrectAddressPositionRequest
                 {
@@ -90,14 +90,26 @@
             }
         }
 
-        public static string GetGml(Geometry geometry)
+        private const int SridLambert72 = 31370;
+        private const int SridLambert08 = 3812;
+
+        /// <summary>
+        /// Builds the GML for the address registry. The srsName must match the SRID of the coordinates:
+        /// the address registry interprets the coordinates according to the srsName.
+        /// </summary>
+        public static string GetGml(Geometry geometry, int srid)
         {
+            if (srid is not (SridLambert72 or SridLambert08))
+            {
+                throw new System.InvalidOperationException($"Unsupported SRID {srid}, expected {SridLambert72} or {SridLambert08}.");
+            }
+
             var builder = new StringBuilder();
             var settings = new XmlWriterSettings { Indent = false, OmitXmlDeclaration = true };
             using (var xmlWriter = XmlWriter.Create(builder, settings))
             {
                 xmlWriter.WriteStartElement("gml", "Point", "http://www.opengis.net/gml/3.2");
-                xmlWriter.WriteAttributeString("srsName", "https://www.opengis.net/def/crs/EPSG/0/31370");
+                xmlWriter.WriteAttributeString("srsName", $"https://www.opengis.net/def/crs/EPSG/0/{srid}");
                 Write(geometry.Coordinate, xmlWriter);
                 xmlWriter.WriteEndElement();
             }
